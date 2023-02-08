@@ -1,6 +1,4 @@
 name: CI
-env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 on:
   push:
@@ -16,6 +14,9 @@ on:
     - reopened
     - synchronize
     - ready_for_review
+
+env:
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 jobs:
   build-lint-test:
