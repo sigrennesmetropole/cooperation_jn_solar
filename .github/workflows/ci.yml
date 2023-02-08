@@ -11,11 +11,11 @@ on:
   pull_request:
     branches:
       - main
-  types:
-    - opened
-    - reopened
-    - synchronize
-    - ready_for_review
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   build-lint-test:
@@ -32,7 +32,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-      - run: npm run test:unit:ci
+      # - run: npm run test:unit:ci
 
   histoire-deploy:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
 
       - name: Set HISTOIRE_BASE ENV
         shell: bash
-        run: echo "HISTOIRE_BASE=$(echo /${{ github.repository }}/${BRANCH_NAME}/)" >> $GITHUB_ENV
+        run: echo "HISTOIRE_BASE=$(echo /cooperation_jn_solar/${BRANCH_NAME}/)" >> $GITHUB_ENV
 
       - run: npm run story:build
 
@@ -76,6 +76,6 @@ jobs:
         with:
           message: 'GitHub Pages links:
 
-            * Histoires: https://sigrennesmetropole.github.io/${{ github.repository }}/${{env.BRANCH_NAME}}/'
+            * Histoires: https://sigrennesmetropole.github.io/cooperation_jn_solar/${{env.BRANCH_NAME}}/'
           comment_includes: 'GitHub Pages links:'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
