@@ -4,9 +4,6 @@ import SidePanel from '@/components/home/SidePanel.vue'
 import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
 import mapConfig from './map.config.json'
-import { usePanelsStore } from '@/stores/panels'
-
-const panelStore = usePanelsStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -17,7 +14,7 @@ onBeforeMount(() => {
 <template>
   <main class="h-screen flex">
     <aside class="z-10 absolute">
-      <SidePanel v-show="panelStore.isPlanningViewShown === false">
+      <SidePanel>
         <RouterView :key="$route.fullPath" />
       </SidePanel>
     </aside>
@@ -29,8 +26,7 @@ onBeforeMount(() => {
     <!-- <LegalLink
       class="absolute z-20 bottom-3 left-3"
       v-show="
-        panelStore.isInformationPanelShown === false ||
-        panelStore.isPlanningViewShown === true
+        panelStore.isInformationPanelShown === false
       "
       :text-color="'neutral-900'"
     >

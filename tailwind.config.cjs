@@ -70,7 +70,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ['Poppins'],
         'dm-sans': ['DM Sans'],
       },
       colors: {
