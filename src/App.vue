@@ -14,7 +14,7 @@ onBeforeMount(() => {
 <template>
   <main class="h-screen flex">
     <aside class="z-10 absolute">
-      <SidePanel>
+      <SidePanel :is-retractable="false">
         <RouterView :key="$route.fullPath" />
       </SidePanel>
     </aside>
