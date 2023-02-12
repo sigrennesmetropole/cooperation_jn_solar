@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 
 const checked = ref(false)
 const displayError = ref(false)
-
-function openPopUpTermsOfUse() {}
+const showPopTermOfUse = ref(false)
 
 function clickButtonBegin() {
   if (!checked.value) {
@@ -16,17 +16,13 @@ function clickButtonBegin() {
 </script>
 
 <template>
-  <div class="flex p-0 gap-3">
-    <input
-      type="checkbox"
-      v-model="checked"
-      class="bg-white border-slate-400 shadow-sm rounded"
-    />
+  <div class="flex p-0 gap-3 items-center">
+    <input type="checkbox" v-model="checked" class="shadow-sm w-5 h-5" />
     <span class="font-normal text-base leading-6 color-black">
       J'ai lu et j'accepte les
       <span
         class="underline decoration-1 cursor-pointer"
-        @click="openPopUpTermsOfUse()"
+        @click="showPopTermOfUse = true"
       >
         conditions d'utilisation.
       </span>
@@ -45,4 +41,6 @@ function clickButtonBegin() {
       Veuillez cocher la case ci-dessus pour accepter les conditions
     </span>
   </div>
+
+  <TermsOfUsePopup v-if="showPopTermOfUse" @close="showPopTermOfUse = false" />
 </template>
