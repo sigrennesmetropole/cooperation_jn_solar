@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
+import 'cooperation_jn_common_ui/dist/style.css'
 
 declare global {
   interface Window {

@@ -4,6 +4,14 @@ import UiPanelControlButton from '@/components/ui/UiPanelControlButton.vue'
 import { computed } from 'vue'
 
 const panelStore = usePanelsStore()
+
+defineProps({
+  isRetractable: {
+    type: Boolean,
+    default: true,
+  },
+})
+
 function toggleInformationPanel() {
   panelStore.toggleInformationPanel()
 }
@@ -23,7 +31,7 @@ const leftAlignment = computed(() =>
     >
       <slot></slot>
     </div>
-    <div class="max-h-0 top-28">
+    <div class="max-h-0 top-28" v-show="isRetractable">
       <UiPanelControlButton
         :anchor-position="'left'"
         :is-open="panelStore.isInformationPanelShown"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import FooterArea from '@/components/home/FooterArea.vue'
 import ButtonWithCheckboxBegin from '@/components/home/ButtonWithCheckboxBegin.vue'
+import { FooterArea } from 'cooperation_jn_common_ui'
 </script>
 
 <template>
