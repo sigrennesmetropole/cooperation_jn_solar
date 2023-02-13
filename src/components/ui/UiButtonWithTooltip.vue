@@ -9,7 +9,7 @@ const displayTooltip = ref(false)
 <template>
   <div class="absolute right-2 top-2 z-9 flex">
     <div
-      class="w-12 h-12 p-3 bg-white rounded"
+      class="w-12 h-12 bg-white rounded flex items-center justify-center cursor-pointer"
       @click="displayTooltip = !displayTooltip"
     >
       <img v-if="!displayTooltip" :src="iconTooltip" class="w-5 h-5" />
