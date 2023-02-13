@@ -4,6 +4,7 @@ import SidePanel from '@/components/home/SidePanel.vue'
 import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
 import mapConfig from './map.config.json'
+import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -23,15 +24,7 @@ onBeforeMount(() => {
       <MapComponent></MapComponent>
     </div>
 
-    <!-- <LegalLink
-      class="absolute z-20 bottom-3 left-3"
-      v-show="
-        panelStore.isInformationPanelShown === false
-      "
-      :text-color="'neutral-900'"
-    >
-    </LegalLink>
-     -->
+    <UiButtonWithTooltip />
   </main>
 </template>
 
