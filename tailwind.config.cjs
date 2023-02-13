@@ -57,6 +57,7 @@ module.exports = {
     'before:bg-neutral-500',
     'text-neutral-900',
     'before:bg-neutral-900',
+    'border-red-600',
 
     'before:border-indigo-500',
     'before:border-indigo-600',
