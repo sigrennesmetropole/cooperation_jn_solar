@@ -7,7 +7,7 @@ const displayTooltip = ref(false)
 </script>
 
 <template>
-  <div class="absolute right-2 top-2 z-10 flex">
+  <div class="absolute right-2 top-2 z-9 flex">
     <div
       class="w-12 h-12 p-3 bg-white rounded"
       @click="displayTooltip = !displayTooltip"
@@ -16,7 +16,7 @@ const displayTooltip = ref(false)
       <img v-else :src="iconTooltipRed" class="w-5 h-5" />
     </div>
   </div>
-  <div class="absolute right-2 top-16 z-10 flex w-1/2" v-if="displayTooltip">
+  <div class="absolute right-2 top-16 z-9 flex w-1/2" v-if="displayTooltip">
     <div class="bg-neutral-800 opacity-80 p-2 gap-3 rounded">
       <span class="text-sm font-normal text-neutral-200">
         Les niveaux de potentiel solaire sont estimés sur la base de calculs
