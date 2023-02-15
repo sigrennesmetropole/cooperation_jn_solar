@@ -15,16 +15,12 @@ export default defineConfig({
         title: 'Homepage', // No toggle
       },
       {
-        id: 'map',
-        title: 'Map',
+        id: 'pcaetpage',
+        title: 'PCAET Page',
       },
       {
         id: 'ui-base',
         title: 'UI Base',
-      },
-      {
-        id: 'sidepanel',
-        title: 'Side Panel',
       },
     ],
   },
