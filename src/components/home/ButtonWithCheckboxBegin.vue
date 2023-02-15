@@ -43,4 +43,5 @@ function clickButtonBegin() {
   </div>
 
   <TermsOfUsePopup v-if="showPopTermOfUse" @close="showPopTermOfUse = false" />
+  <div class="flex grow"></div>
 </template>
