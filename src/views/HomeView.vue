@@ -7,5 +7,5 @@ import UiSolarPanelTitle from '@/components/ui/UiSolarPanelTitle.vue'
 <template>
   <UiSolarPanelTitle></UiSolarPanelTitle>
   <ButtonWithCheckboxBegin />
-  <FooterArea></FooterArea>
+  <FooterArea class="mt-auto"></FooterArea>
 </template>
