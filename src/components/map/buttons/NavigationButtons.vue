@@ -30,7 +30,7 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
 }
 
 const shouldDisplayHomeButton = () => {
-  return ![viewList.home].includes(viewStore.currentView)
+  return [viewList.home, viewList['map-pcaet']].includes(viewStore.currentView)
 }
 </script>
 
