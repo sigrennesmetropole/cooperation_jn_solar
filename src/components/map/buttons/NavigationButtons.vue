@@ -40,7 +40,7 @@ const shouldDisplayHomeButton = () => {
   >
     <UiIconButton
       class="rounded-lg px-3 py-3"
-      @click="router.push('/home')"
+      @click="router.push('/map-pcaet')"
       v-show="shouldDisplayHomeButton()"
       ><IconHome
     /></UiIconButton>
