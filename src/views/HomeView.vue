@@ -9,5 +9,5 @@ import ProcessSteps from '@/components/home/ProcessSteps.vue'
   <UiSolarPanelTitle></UiSolarPanelTitle>
   <ProcessSteps></ProcessSteps>
   <ButtonWithCheckboxBegin />
-  <FooterArea></FooterArea>
+  <FooterArea class="mt-auto"></FooterArea>
 </template>
