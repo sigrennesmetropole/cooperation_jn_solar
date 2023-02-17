@@ -30,7 +30,7 @@
   "dependencies": {
     "@pinia/testing": "^0.0.14",
     "@vcmap/core": "^5.0.0-rc.25",
-    "cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui",
+    "cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui#82611a7",
     "node-fetch": "^3.3.0",
     "ol": "^7.1.0",
     "pinia": "^2.0.21",
