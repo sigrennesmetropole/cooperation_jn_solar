@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <div class="flex flex-row items-start p-0 gap-[18px]">
     <div class="flex flex-col items-start p-0 gap-6">
