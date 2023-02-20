@@ -8,8 +8,10 @@ export async function createNewViewpointFromAddress(
   const vp = await rennesApp.maps?.activeMap.getViewpoint()
   if (vp) {
     const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
-    vpJson.cameraPosition = [position[0], position[1], 100]
+    vpJson.cameraPosition = [position[0], position[1], 500]
+    vpJson.pitch = -45
     const newVp = new Viewpoint(vpJson)
+
     rennesApp.maps?.activeMap.gotoViewpoint(newVp)
   }
 }

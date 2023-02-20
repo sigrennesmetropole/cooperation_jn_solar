@@ -27,7 +27,7 @@ const searchAddress = async () => {
 const goToAddress = (item: Address) => {
   search.value = item.addr3
   autocompletion.value = []
-  createNewViewpointFromAddress(rennesApp, [parseInt(item.x), parseInt(item.y)])
+  createNewViewpointFromAddress(rennesApp, [item.x as number, item.y as number])
 }
 </script>
 
