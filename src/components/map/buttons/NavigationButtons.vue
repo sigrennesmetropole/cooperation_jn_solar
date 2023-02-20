@@ -2,10 +2,11 @@
 import { inject, computed } from 'vue'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
-import IconHome from '@/components/ui/icons/IconHome.vue'
-import IconPlus from '@/components/ui/icons/IconPlus.vue'
-import IconMinus from '@/components/ui/icons/IconMinus.vue'
-import UiIconButton from '@/components/ui/UiIconButton.vue'
+import { IconHome } from 'cooperation_jn_common_ui'
+import { IconPlus } from 'cooperation_jn_common_ui'
+import { IconMinus } from 'cooperation_jn_common_ui'
+import { UiIconButton } from 'cooperation_jn_common_ui'
+
 import CompassComponent from '@/components/map/CompassComponent.vue'
 
 import { useViewsStore } from '@/stores/views'

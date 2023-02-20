@@ -2,7 +2,7 @@
 import { Viewpoint, type VcsMap, type ViewpointOptions } from '@vcmap/core'
 import { inject, onMounted, ref } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
-import IconCompass from '../ui/icons/IconCompass.vue'
+import { IconCompass } from 'cooperation_jn_common_ui'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
