@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ButtonWithCheckboxBegin from '@/components/home/ButtonWithCheckboxBegin.vue'
-import { FooterArea } from 'cooperation_jn_common_ui'
+import { FooterArea } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiSolarPanelTitle from '@/components/ui/UiSolarPanelTitle.vue'
 import ProcessSteps from '@/components/home/ProcessSteps.vue'
 </script>
