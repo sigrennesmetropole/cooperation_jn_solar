@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import UiSolarPanelLogo from '@/components/ui/UiSolarPanelLogo.vue'
-import { UiAbstractTitle } from 'cooperation_jn_common_ui'
+import { UiAbstractTitle } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 const title = 'Cadastre Solaire'
 const abstract =

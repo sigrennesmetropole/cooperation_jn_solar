@@ -2,10 +2,10 @@
 import { inject, computed } from 'vue'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
-import { IconHome } from 'cooperation_jn_common_ui'
-import { IconPlus } from 'cooperation_jn_common_ui'
-import { IconMinus } from 'cooperation_jn_common_ui'
-import { UiIconButton } from 'cooperation_jn_common_ui'
+import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { IconMinus } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 import CompassComponent from '@/components/map/CompassComponent.vue'
 
