@@ -8,6 +8,7 @@ import { useViewsStore } from './stores/views'
 import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import { viewList } from './model/views.model'
+import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 
 const viewStore = useViewsStore()
 
@@ -38,6 +39,12 @@ function isLeftPanelRetractable() {
       v-if="viewStore.currentView == viewList['roof-selection']"
       class="absolute z-20 top-5 left-5"
     ></UiSearchBar>
+
+    <UiPopUpBottomInformation
+      v-if="viewStore.currentView == viewList['roof-selection']"
+      :text="'Cliquez sur le bâtiment que vous souhaitez sélectionner.'"
+      class="absolute z-20 bottom-5 left-[35%]"
+    />
 
     <UiButtonWithTooltip />
   </main>
