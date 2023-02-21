@@ -15,6 +15,11 @@ const routes = [
     name: 'map-pcaet',
     component: () => import('../views/MapPCAETView.vue'),
   },
+  {
+    path: '/roof-selection',
+    name: 'roof-selection',
+    component: () => import('../views/RoofSelectionView.vue'),
+  },
   // TODO: Create 404 route?
 ]
 
