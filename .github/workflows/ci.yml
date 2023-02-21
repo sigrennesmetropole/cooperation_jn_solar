@@ -29,6 +29,9 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
+      - uses: jgierer12/npm-auth-gpr@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm ci
       - run: npm run lint
       - run: npm run build
@@ -45,6 +48,9 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
+      - uses: jgierer12/npm-auth-gpr@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: npm ci
 
       - name: Get branch name (merge)
