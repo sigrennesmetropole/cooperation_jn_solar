@@ -6,7 +6,7 @@
   },
   "scripts": {
     "start": "npm run dev",
-    "postinstall": "cd node_modules/cooperation_jn_common_ui && npm run build && cd ../../",
+    "postinstall": "cd node_modules/@sigrennesmetropole/cooperation_jn_common_ui && npm run build && cd ../../",
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@pinia/testing": "^0.0.14",
     "@vcmap/core": "^5.0.0-rc.25",
-    "cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui",
+    "@sigrennesmetropole/cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui#87a63a0",
     "node-fetch": "^3.3.0",
     "ol": "^7.1.0",
     "pinia": "^2.0.21",

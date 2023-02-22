@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { inject } from 'vue'
+import { inject, computed } from 'vue'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
-import IconHome from '@/components/ui/icons/IconHome.vue'
-import UiIconButton from '@/components/ui/UiIconButton.vue'
+import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { IconMinus } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+
 import CompassComponent from '@/components/map/CompassComponent.vue'
+
 import { useViewsStore } from '@/stores/views'
 import { viewList } from '@/model/views.model'
 import type { RennesApp } from '@/services/RennesApp'
@@ -30,27 +34,35 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
 }
 
 const shouldDisplayHomeButton = () => {
-  return ![viewList.home].includes(viewStore.currentView)
+  return [viewList.home, viewList['map-pcaet']].includes(viewStore.currentView)
 }
+const heightClass = computed(() => {
+  if (!shouldDisplayHomeButton()) {
+    return ['h-[14rem]']
+  } else {
+    return ['h-[18rem]']
+  }
+})
 </script>
 
 <template>
   <div
-    class="h-[15rem] h-90 transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center overflow-hidden w-32 select-none"
+    :class="heightClass"
+    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center overflow-hidden w-32 select-none"
   >
     <UiIconButton
-      class="rounded-lg px-3 py-3"
-      @click="router.push('/home')"
+      class="rounded-lg"
+      @click="router.push('/map-pcaet')"
       v-show="shouldDisplayHomeButton()"
       ><IconHome
     /></UiIconButton>
     <div class="flex flex-col zoom-buttons text-2xl [&>*]:p-2" role="group">
-      <UiIconButton class="rounded-t-lg" @click="() => zoom(false)"
-        >+</UiIconButton
-      >
-      <UiIconButton class="rounded-b-lg" @click="() => zoom(true)"
-        >-</UiIconButton
-      >
+      <UiIconButton class="rounded-t-lg" @click="() => zoom(false)">
+        <IconPlus />
+      </UiIconButton>
+      <UiIconButton class="rounded-b-lg" @click="() => zoom(true)">
+        <IconMinus />
+      </UiIconButton>
     </div>
     <CompassComponent />
   </div>
