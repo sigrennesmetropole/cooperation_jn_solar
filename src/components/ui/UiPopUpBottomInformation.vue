@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import iconMultiplyAmber from '@/assets/icons/icon-multiply-Amber.svg'
+import iconMultiplyAmber from '@/assets/icons/icon-multiply-amber.svg'
 import { computed, ref } from 'vue'
 
 const displayPopup = ref(true)
