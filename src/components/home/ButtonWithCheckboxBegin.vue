@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
+import { useRouter } from 'vue-router'
 
 const checked = ref(false)
 const displayError = ref(false)
 const showPopTermOfUse = ref(false)
+const router = useRouter()
 
 function clickButtonBegin() {
   if (!checked.value) {
@@ -12,6 +14,7 @@ function clickButtonBegin() {
     return
   }
   displayError.value = false
+  router.push('/map-pcaet')
 }
 </script>
 

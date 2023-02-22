@@ -20,6 +20,11 @@ const routes = [
     name: 'roof-selected-information',
     component: () => import('../views/RoofSelectedInformation.vue'),
   },
+  {
+    path: '/roof-selection',
+    name: 'roof-selection',
+    component: () => import('../views/RoofSelectionView.vue'),
+  },
   // TODO: Create 404 route?
 ]
 
