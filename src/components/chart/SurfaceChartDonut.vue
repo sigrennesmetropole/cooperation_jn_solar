@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UiCharDonut from '@/components/ui/UiChartDonut.vue'
+import UiChartDonut from '@/components/ui/UiChartDonut.vue'
 import { reactive } from 'vue'
 
 const dataGraph = reactive({
@@ -13,6 +13,6 @@ const dataGraph = reactive({
 
 <template>
   <div class="mt-12 flex flex-row items-center justify-center">
-    <UiCharDonut :dataGraph="dataGraph"></UiCharDonut>
+    <UiChartDonut :dataGraph="dataGraph"></UiChartDonut>
   </div>
 </template>
