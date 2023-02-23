@@ -65,7 +65,6 @@ const goToAddress = async (
   item: AddressRva | AddressOrganization,
   type: string
 ) => {
-  console.log(typeof item)
   if (type === 'rva') {
     item = item as AddressRva
     search.value = item.addr3
