@@ -16,6 +16,11 @@ const routes = [
     component: () => import('../views/MapPCAETView.vue'),
   },
   {
+    path: '/roof-selected-information',
+    name: 'roof-selected-information',
+    component: () => import('../views/RoofSelectedInformation.vue'),
+  },
+  {
     path: '/roof-selection',
     name: 'roof-selection',
     component: () => import('../views/RoofSelectionView.vue'),

@@ -29,15 +29,17 @@
   },
   "dependencies": {
     "@pinia/testing": "^0.0.14",
-    "@vcmap/core": "^5.0.0-rc.25",
     "@sigrennesmetropole/cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui#87a63a0",
+    "@vcmap/core": "^5.0.0-rc.25",
+    "apexcharts": "^3.37.0",
     "node-fetch": "^3.3.0",
     "ol": "^7.1.0",
     "pinia": "^2.0.21",
     "rollup-plugin-strip-pragma": "^1.0.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "vue": "^3.2.38",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vue3-apexcharts": "^1.4.1"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.14.0",
