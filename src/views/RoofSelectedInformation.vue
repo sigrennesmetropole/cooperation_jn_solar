@@ -4,6 +4,7 @@ import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
 import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
 import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
+import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 
 const viewStore = useViewsStore()
 
@@ -26,4 +27,20 @@ onBeforeMount(async () => {
       <SurfaceChartDonut></SurfaceChartDonut>
     </div>
   </div>
+
+  <UiDisclosure>
+    <template v-slot:title>
+      <span class="font-dm-sans font-medium text-base color-black">
+        Comment est calculé l’ensolleillement ?
+      </span>
+    </template>
+    <template v-slot:contents>
+      <span class="font-dm-sans font-medium text-sm color-black">
+        L’ensoleillement (ou irradiance) est la quantité d’énergie solaire reçue
+        par le toit chaque année (en kWh/m2/an). Pour son calcul, la course du
+        soleil et l'ombrage, mais aussi les caractéristiques du toit (pente,
+        cheminée, etc.) sont pris en compte.
+      </span>
+    </template>
+  </UiDisclosure>
 </template>
