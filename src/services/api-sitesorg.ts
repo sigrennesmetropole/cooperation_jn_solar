@@ -4,7 +4,7 @@ class ApiSitesorgService {
   private baseUrl = 'https://api-sitesorg.sig.rennesmetropole.fr/v1/'
 
   async sendRequest(url: string) {
-    const api_key = import.meta.env.VITE_API_KEY_SITESORG
+    const api_key = '025cc36fddfe4ae6bf013fbf0c9a623f'
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -18,7 +18,8 @@ class ApiSitesorgService {
   async fetchOrganizations(search: string) {
     const baseUrl = this.baseUrl + 'recherche'
     const url =
-      baseUrl + `?termes=${search}&termes_op=AND&type=organismeoffset=0&limit=3`
+      baseUrl +
+      `?termes=${search}&termes_op=AND&type=organisme&offset=0&limit=3`
     return await this.sendRequest(url)
   }
 

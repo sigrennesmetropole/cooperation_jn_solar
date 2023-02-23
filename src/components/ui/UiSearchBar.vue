@@ -15,6 +15,7 @@ import { useRouter } from 'vue-router'
 const search = ref('')
 const adressStore = useAddressStore()
 const router = useRouter()
+const addressSelected: Ref<AddressRva | AddressOrganization | null> = ref(null)
 const autocompletion: Ref<{
   addressRva: AddressRva[]
   addressOrganization: AddressOrganization[]
@@ -139,7 +140,7 @@ function emptySearch() {
     </div>
 
     <div
-      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg"
+      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
       v-if="
         autocompletion.addressRva.length > 0 ||
         autocompletion.addressOrganization.length > 0
@@ -150,7 +151,9 @@ function emptySearch() {
           v-for="item in autocompletion.addressRva"
           :key="item.idaddress"
           @click="goToAddress(item, 'rva')"
+          @mouseover="addressSelected = item"
           class="cursor-pointer border-b border-neutral-200"
+          :class="addressSelected === item ? 'bg-neutral-100' : ''"
         >
           {{ item.addr3 }}
         </li>
@@ -161,12 +164,14 @@ function emptySearch() {
           :key="item.addr"
           @click="goToAddress(item, 'organization')"
           class="cursor-pointer border-b border-neutral-200"
+          @mouseover="addressSelected = item"
           :class="{
             'border-none':
               item ===
               autocompletion.addressOrganization[
                 autocompletion.addressOrganization.length - 1
               ],
+            'bg-neutral-100': addressSelected === item,
           }"
         >
           {{ item.addr }}

@@ -36,7 +36,11 @@ function isLeftPanelRetractable() {
     </div>
 
     <UiSearchBar
-      v-if="viewStore.currentView == viewList['roof-selection']"
+      v-if="
+        [viewList['roof-selection'], viewList['map-pcaet']].includes(
+          viewStore.currentView
+        )
+      "
       class="absolute z-20 top-5 left-5"
     ></UiSearchBar>
 

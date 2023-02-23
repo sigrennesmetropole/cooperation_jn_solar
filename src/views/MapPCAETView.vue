@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { FooterArea } from '@sigrennesmetropole/cooperation_jn_common_ui'
-import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import TextDidYouKnow from '@/components/pcaet/TextDidYouKnow.vue'
 import FigureEnergy from '@/components/pcaet/FigureEnergy.vue'
 import { useViewsStore } from '@/stores/views'
@@ -15,8 +14,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <UiSearchBar></UiSearchBar>
-  <TextDidYouKnow></TextDidYouKnow>
+  <TextDidYouKnow class="mt-9"></TextDidYouKnow>
   <FigureEnergy></FigureEnergy>
   <FooterArea class="mt-auto"></FooterArea>
 </template>
