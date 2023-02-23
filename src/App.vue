@@ -52,7 +52,15 @@ function isLeftPanelRetractable() {
       class="absolute z-20 bottom-5 left-[35%]"
     />
 
-    <UiButtonWithTooltip />
+    <UiButtonWithTooltip
+      text="Les niveaux de potentiel solaire sont estimés sur la base de calculs
+        s'appuyant sur la maquette 3D métropolitaine et des données
+        météorologiques.
+      "
+      widthButton="12"
+      heightButton="12"
+      widthBoxText="w-[500px]"
+    />
   </main>
 </template>
 
