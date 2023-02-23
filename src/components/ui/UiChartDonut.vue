@@ -1,14 +1,26 @@
 <script setup lang="ts">
-const series = [35, 15, 5, 45]
-const chartOptions = {
+import { ref } from 'vue'
+
+const props = defineProps<{
+  dataGraph: {
+    series: number[]
+    labels: string[]
+    colors: string[]
+    labelTotal: string
+    labelTotalValue: string
+  }
+}>()
+
+const series = ref(props.dataGraph.series)
+const chartOptions = ref({
   dataLabels: {
     enabled: false,
   },
   legend: {
     show: false,
   },
-  labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-  colors: ['#FEF08A', '#FEF9C3', '#CBD5E1', '#334155'],
+  labels: props.dataGraph.labels,
+  colors: props.dataGraph.colors,
   plotOptions: {
     pie: {
       donut: {
@@ -17,9 +29,9 @@ const chartOptions = {
           total: {
             show: true,
             showAlways: true,
-            label: 'Surface favorable',
+            label: props.dataGraph.labelTotal,
             formatter: function () {
-              return '50%'
+              return props.dataGraph.labelTotalValue
             },
             fontSize: '11px',
           },
@@ -28,7 +40,7 @@ const chartOptions = {
       },
     },
   },
-}
+})
 </script>
 
 <template>

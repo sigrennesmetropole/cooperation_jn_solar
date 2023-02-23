@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import UiSearchBar from '@/components/ui/UiSearchBar.vue'
-import UiCharDonut from '@/components/ui/UiChartDonut.vue'
+import { useViewsStore } from '@/stores/views'
+import { onBeforeMount } from 'vue'
+import { viewList } from '@/model/views.model'
+import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
+
+const viewStore = useViewsStore()
+
+onBeforeMount(async () => {
+  viewStore.setCurrentView(viewList['roof-selected-information'])
+})
 </script>
 
 <template>
-  <UiSearchBar></UiSearchBar>
-  <div class="flex flex-row items-center justify-center">
-    <UiCharDonut></UiCharDonut>
+  <div class="mt-12 flex flex-row items-center justify-center">
+    <SurfaceChartDonut></SurfaceChartDonut>
   </div>
 </template>
