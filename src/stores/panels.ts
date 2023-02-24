@@ -6,10 +6,10 @@ export type typePanel = 'left' | 'right'
 
 export const usePanelsStore = defineStore('panels', () => {
   const typePanelDisplay: Ref<typePanel> = ref('left')
-  const isInformationPanelLeftShown: Ref<boolean> = ref(true)
+  const isInformationPanelShown: Ref<boolean> = ref(true)
 
-  function toggleInformationPanelLeft() {
-    isInformationPanelLeftShown.value = !isInformationPanelLeftShown.value
+  function toggleInformationPanel() {
+    isInformationPanelShown.value = !isInformationPanelShown.value
   }
 
   function setTypePanelDisplay(typePanel: typePanel) {
@@ -17,8 +17,8 @@ export const usePanelsStore = defineStore('panels', () => {
   }
 
   return {
-    isInformationPanelLeftShown,
-    toggleInformationPanelLeft,
+    isInformationPanelShown,
+    toggleInformationPanel,
     typePanelDisplay,
     setTypePanelDisplay,
   }

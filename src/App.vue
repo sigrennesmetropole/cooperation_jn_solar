@@ -56,6 +56,11 @@ function isLeftPanelRetractable() {
       :text="'Cliquez sur le bâtiment que vous souhaitez sélectionner.'"
       class="absolute z-20 bottom-5 left-[35%]"
     />
+    <UiPopUpBottomInformation
+      v-else-if="viewStore.currentView == viewList['step-sunshine']"
+      :text="'Cliquez sur le pan de toit que vous souhaitez sélectionner.'"
+      class="absolute z-20 bottom-5 left-[20%]"
+    />
 
     <UiButtonWithTooltip
       text="Les niveaux de potentiel solaire sont estimés sur la base de calculs

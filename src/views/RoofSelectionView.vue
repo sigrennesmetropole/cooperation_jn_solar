@@ -10,5 +10,10 @@ const panelsStore = usePanelsStore()
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('left')
+  panelsStore.isInformationPanelShown = false
 })
 </script>
+
+<template>
+  <div></div>
+</template>
