@@ -25,6 +25,11 @@ const routes = [
     name: 'roof-selection',
     component: () => import('../views/RoofSelectionView.vue'),
   },
+  {
+    path: '/step-sunshine',
+    name: 'step-sunshine',
+    component: () => import('../views/StepSunshineView.vue'),
+  },
   // TODO: Create 404 route?
 ]
 

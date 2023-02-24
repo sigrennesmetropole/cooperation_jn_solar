@@ -2,15 +2,24 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const usePanelsStore = defineStore('panels', () => {
-  const isInformationPanelShown: Ref<boolean> = ref(true)
+export type typePanel = 'left' | 'right'
 
-  function toggleInformationPanel() {
-    isInformationPanelShown.value = !isInformationPanelShown.value
+export const usePanelsStore = defineStore('panels', () => {
+  const typePanelDisplay: Ref<typePanel> = ref('left')
+  const isInformationPanelLeftShown: Ref<boolean> = ref(true)
+
+  function toggleInformationPanelLeft() {
+    isInformationPanelLeftShown.value = !isInformationPanelLeftShown.value
+  }
+
+  function setTypePanelDisplay(typePanel: typePanel) {
+    typePanelDisplay.value = typePanel
   }
 
   return {
-    isInformationPanelShown,
-    toggleInformationPanel,
+    isInformationPanelLeftShown,
+    toggleInformationPanelLeft,
+    typePanelDisplay,
+    setTypePanelDisplay,
   }
 })

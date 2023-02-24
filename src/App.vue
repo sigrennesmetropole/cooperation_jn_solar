@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount, provide } from 'vue'
-import SidePanel from '@/components/home/SidePanel.vue'
+import SidePanelLeft from '@/components/home/SidePanelLeft.vue'
+import SidePanelRight from '@/components/home/SidePanelRight.vue'
 import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
 import mapConfig from './map.config.json'
@@ -9,8 +10,10 @@ import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
+import { usePanelsStore } from '@/stores/panels'
 
 const viewStore = useViewsStore()
+const panelStore = usePanelsStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -25,10 +28,20 @@ function isLeftPanelRetractable() {
 
 <template>
   <main class="h-screen flex">
-    <aside class="z-10 absolute">
-      <SidePanel :is-retractable="isLeftPanelRetractable()">
+    <aside
+      class="z-10 absolute"
+      :class="panelStore.typePanelDisplay == 'right' ? 'right-0' : 'left-0'"
+    >
+      <SidePanelLeft
+        :is-retractable="isLeftPanelRetractable()"
+        v-if="panelStore.typePanelDisplay == 'left'"
+      >
         <RouterView :key="$route.fullPath" />
-      </SidePanel>
+      </SidePanelLeft>
+
+      <SidePanelRight v-if="panelStore.typePanelDisplay == 'right'">
+        <RouterView :key="$route.fullPath" />
+      </SidePanelRight>
     </aside>
 
     <div class="grow">

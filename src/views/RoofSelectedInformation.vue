@@ -5,6 +5,7 @@ import { viewList } from '@/model/views.model'
 import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
 import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
+import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
 
 const viewStore = useViewsStore()
 
@@ -43,4 +44,6 @@ onBeforeMount(async () => {
       </span>
     </template>
   </UiDisclosure>
+
+  <BoxStep2></BoxStep2>
 </template>
