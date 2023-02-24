@@ -9,7 +9,7 @@ import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
-import { usePanelsStore } from '@/stores/panels'
+import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
@@ -37,14 +37,17 @@ const isDisplaySearchBar = computed(() => {
   <main class="h-screen flex">
     <aside
       class="z-10 absolute"
-      :class="panelStore.typePanelDisplay == 'right' ? 'right-0' : 'left-0'"
+      :class="panelStore.isRightPanel() ? 'right-0' : 'left-0'"
     >
       <SidePanel :is-retractable="isLeftPanelRetractable()">
         <RouterView :key="$route.fullPath" />
       </SidePanel>
     </aside>
 
-    <div class="grow">
+    <div
+      class="grow"
+      :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
+    >
       <MapComponent></MapComponent>
     </div>
 

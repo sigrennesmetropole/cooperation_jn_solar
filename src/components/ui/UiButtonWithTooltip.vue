@@ -7,7 +7,10 @@ import { computed } from 'vue'
 const props = defineProps({
   text: String,
   widthButton: String,
-  heightButton: String,
+  heightButton: {
+    type: String,
+    default: '12',
+  },
   widthBoxText: String,
   positionRight: {
     type: String,
