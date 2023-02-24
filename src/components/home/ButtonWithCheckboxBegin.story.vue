@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import ButtonWithCheckboxBegin from './ButtonWithCheckboxBegin.vue'
+import ButtonWithCheckboxBegin from '@/components/home/ButtonWithCheckboxBegin.vue'
 </script>
 
 <template>

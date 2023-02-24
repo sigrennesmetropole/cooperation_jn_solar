@@ -73,6 +73,12 @@
       },
       "activeOnStartup": false,
       "zIndex": 1
+    },
+    {
+      "name": "customLayerSearchAddress",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 4
     }
   ],
   "viewpoints": [
