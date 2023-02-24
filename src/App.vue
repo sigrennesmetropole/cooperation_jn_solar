@@ -9,8 +9,10 @@ import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
+import { usePanelsStore } from '@/stores/panels'
 
 const viewStore = useViewsStore()
+const panelStore = usePanelsStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -25,7 +27,10 @@ function isLeftPanelRetractable() {
 
 <template>
   <main class="h-screen flex">
-    <aside class="z-10 absolute">
+    <aside
+      class="z-10 absolute"
+      :class="panelStore.typePanelDisplay == 'right' ? 'right-0' : 'left-0'"
+    >
       <SidePanel :is-retractable="isLeftPanelRetractable()">
         <RouterView :key="$route.fullPath" />
       </SidePanel>
@@ -52,7 +57,15 @@ function isLeftPanelRetractable() {
       class="absolute z-20 bottom-5 left-[35%]"
     />
 
-    <UiButtonWithTooltip />
+    <UiButtonWithTooltip
+      text="Les niveaux de potentiel solaire sont estimés sur la base de calculs
+        s'appuyant sur la maquette 3D métropolitaine et des données
+        météorologiques.
+      "
+      widthButton="12"
+      heightButton="12"
+      widthBoxText="w-[500px]"
+    />
   </main>
 </template>
 

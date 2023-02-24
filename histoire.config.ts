@@ -23,6 +23,10 @@ export default defineConfig({
         title: 'Simulation Step',
       },
       {
+        id: 'roof-selected-information',
+        title: 'Roof Selected Information Page',
+      },
+      {
         id: 'ui-base',
         title: 'UI Base',
       },
