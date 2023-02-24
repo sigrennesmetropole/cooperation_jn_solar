@@ -9,6 +9,6 @@ const panelsStore = usePanelsStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selection'])
-  panelsStore.toggleInformationPanelLeft()
+  panelsStore.setTypePanelDisplay('left')
 })
 </script>

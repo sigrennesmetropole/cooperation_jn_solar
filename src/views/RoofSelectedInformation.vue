@@ -6,11 +6,14 @@ import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
 import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
+import { usePanelsStore } from '@/stores/panels'
 
 const viewStore = useViewsStore()
+const panelsStore = usePanelsStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
+  panelsStore.setTypePanelDisplay('left')
 })
 </script>
 

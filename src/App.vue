@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onBeforeMount, provide } from 'vue'
-import SidePanelLeft from '@/components/home/SidePanelLeft.vue'
-import SidePanelRight from '@/components/home/SidePanelRight.vue'
+import SidePanel from '@/components/home/SidePanel.vue'
 import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
 import mapConfig from './map.config.json'
@@ -32,16 +31,9 @@ function isLeftPanelRetractable() {
       class="z-10 absolute"
       :class="panelStore.typePanelDisplay == 'right' ? 'right-0' : 'left-0'"
     >
-      <SidePanelLeft
-        :is-retractable="isLeftPanelRetractable()"
-        v-if="panelStore.typePanelDisplay == 'left'"
-      >
+      <SidePanel :is-retractable="isLeftPanelRetractable()">
         <RouterView :key="$route.fullPath" />
-      </SidePanelLeft>
-
-      <SidePanelRight v-if="panelStore.typePanelDisplay == 'right'">
-        <RouterView :key="$route.fullPath" />
-      </SidePanelRight>
+      </SidePanel>
     </aside>
 
     <div class="grow">
