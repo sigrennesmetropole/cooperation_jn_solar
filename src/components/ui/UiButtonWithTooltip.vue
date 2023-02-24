@@ -4,22 +4,38 @@ import iconTooltip from '@/assets/icons/icon-tooltip.svg'
 import iconTooltipRed from '@/assets/icons/icon-tooltip-red.svg'
 import { computed } from 'vue'
 
-const props = defineProps<{
-  text: string
-  widthButton: string
-  heightButton: string
-  widthBoxText: string
-}>()
+const props = defineProps({
+  text: String,
+  widthButton: String,
+  heightButton: String,
+  widthBoxText: String,
+  positionRight: {
+    type: String,
+    default: '16px',
+  },
+})
 
 const displayTooltip = ref(false)
 
 const classDimensionButton = computed(() => {
   return 'w-' + props.widthButton + ' h-' + props.heightButton
 })
+
+const stylePositionButton = computed(() => {
+  const positionTop = 'top: 16px;'
+  const positionRight = 'right: ' + props.positionRight + ';'
+  return positionTop + ' ' + positionRight
+})
+
+const stylePositionText = computed(() => {
+  const positionTop = 'top: ' + (parseInt(props.heightButton) * 4 + 20) + 'px;'
+  const positionRight = 'right: ' + props.positionRight + ';'
+  return positionTop + ' ' + positionRight
+})
 </script>
 
 <template>
-  <div class="absolute right-4 top-4 z-9">
+  <div class="absolute z-9" :style="stylePositionButton">
     <div
       class="bg-white rounded flex items-center justify-center cursor-pointer"
       :class="classDimensionButton"
@@ -30,9 +46,9 @@ const classDimensionButton = computed(() => {
     </div>
   </div>
   <div
-    class="absolute right-4 z-50"
+    class="absolute z-50"
     :class="props.widthBoxText"
-    :style="'top: ' + (parseInt(props.heightButton) * 4 + 20) + 'px;'"
+    :style="stylePositionText"
     v-if="displayTooltip"
   >
     <div class="bg-neutral-800 opacity-80 p-2 gap-3 rounded">
