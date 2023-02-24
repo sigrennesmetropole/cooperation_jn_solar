@@ -5,9 +5,11 @@ import UiMap from '@/components/ui/UiMap.vue'
 import { RENNES_LAYERNAMES, useLayersStore } from '@/stores/layers'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
+import { usePanelsStore } from '@/stores/panels'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
+const panelStore = usePanelsStore()
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -41,5 +43,7 @@ async function setLayerVisible(layerName: string, visible: boolean) {
 
 <template>
   <UiMap></UiMap>
-  <NavigationButtons />
+  <NavigationButtons
+    :class="panelStore.typePanelDisplay == 'right' ? 'mr-[440px]' : ''"
+  />
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, provide } from 'vue'
+import { onBeforeMount, provide, computed } from 'vue'
 import SidePanel from '@/components/home/SidePanel.vue'
 import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
@@ -23,6 +23,14 @@ function isLeftPanelRetractable() {
   const retractableList = [viewList['map-pcaet']]
   return retractableList.includes(viewStore.currentView)
 }
+
+const isDisplaySearchBar = computed(() => {
+  return [
+    viewList['roof-selection'],
+    viewList['map-pcaet'],
+    viewList['roof-selected-information'],
+  ].includes(viewStore.currentView)
+})
 </script>
 
 <template>
@@ -41,13 +49,7 @@ function isLeftPanelRetractable() {
     </div>
 
     <UiSearchBar
-      v-if="
-        [
-          viewList['roof-selection'],
-          viewList['map-pcaet'],
-          viewList['roof-selected-information'],
-        ].includes(viewStore.currentView)
-      "
+      v-if="isDisplaySearchBar"
       class="absolute z-20 top-5 left-5"
     ></UiSearchBar>
 
@@ -63,6 +65,7 @@ function isLeftPanelRetractable() {
     />
 
     <UiButtonWithTooltip
+      v-if="isDisplaySearchBar"
       text="Les niveaux de potentiel solaire sont estimés sur la base de calculs
         s'appuyant sur la maquette 3D métropolitaine et des données
         météorologiques.
