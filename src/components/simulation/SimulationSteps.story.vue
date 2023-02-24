@@ -3,7 +3,7 @@ import SimulationStep from './SimulationSteps.vue'
 </script>
 
 <template>
-  <Story title="Simulation Step" group="pcaetpage">
+  <Story title="Simulation Steps" group="simulation-step">
     <template #default>
       <SimulationStep class="w-[402px]"></SimulationStep>
     </template>

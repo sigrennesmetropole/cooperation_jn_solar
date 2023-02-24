@@ -4,7 +4,7 @@ import potentiel from '@/assets/icons/potentiel.svg'
 </script>
 
 <template>
-  <Story title="Simulation Illustration Step" group="pcaetpage">
+  <Story title="Simulation Illustration Step" group="simulation-step">
     <template #default>
       <StepIllustration
         :image="potentiel"

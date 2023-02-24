@@ -19,6 +19,10 @@ export default defineConfig({
         title: 'PCAET Page',
       },
       {
+        id: 'simulation-step',
+        title: 'Simulation Step',
+      },
+      {
         id: 'ui-base',
         title: 'UI Base',
       },
