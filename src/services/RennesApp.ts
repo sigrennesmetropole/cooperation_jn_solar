@@ -1,4 +1,5 @@
-import { VcsApp, Context, CesiumMap } from '@vcmap/core'
+import { VcsApp, Context, CesiumMap, EventType } from '@vcmap/core'
+import mapClickAndMoveInteraction from '@/interactions/clickAndMoveInteraction'
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -16,6 +17,11 @@ export class RennesApp extends VcsApp {
     if (cesiumMap && cesiumMap instanceof CesiumMap) {
       cesiumMap.getScene().globe.maximumScreenSpaceError = 1
     }
+
+    this.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
+    this.maps.eventHandler.addPersistentInteraction(
+      new mapClickAndMoveInteraction(this)
+    )
   }
 
   get3DMap(): CesiumMap {
