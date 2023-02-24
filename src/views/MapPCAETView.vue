@@ -5,11 +5,14 @@ import FigureEnergy from '@/components/pcaet/FigureEnergy.vue'
 import { useViewsStore } from '@/stores/views'
 import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
+import { usePanelsStore } from '@/stores/panels'
 
+const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['map-pcaet'])
+  panelsStore.setTypePanelDisplay('left')
 })
 </script>
 
