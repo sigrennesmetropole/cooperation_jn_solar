@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import SimulationStep from './SimulationStep.vue'
+import SimulationStep from './SimulationSteps.vue'
 </script>
 
 <template>
