@@ -8,23 +8,16 @@ const props = defineProps<{
 }>()
 
 function favorablePercentage() {
-  return (
-    ((props.roofSurface.level_1 + props.roofSurface.level_2) /
-      (props.roofSurface.level_1 +
-        props.roofSurface.level_2 +
-        props.roofSurface.level_3 +
-        props.roofSurface.level_4)) *
-    100
+  const total = props.roofSurface.values.reduce(
+    (partialSum, a) => partialSum + a,
+    0
   )
+  const favorable = props.roofSurface.values[0] + props.roofSurface.values[1]
+  return (favorable / total) * 100
 }
 
 const dataGraph = reactive({
-  series: [
-    props.roofSurface.level_1,
-    props.roofSurface.level_2,
-    props.roofSurface.level_3,
-    props.roofSurface.level_4,
-  ],
+  series: props.roofSurface.values,
   labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
   colors: ['#FEF08A', '#FEF9C3', '#CBD5E1', '#334155'],
   labelTotal: 'Surface favorable',

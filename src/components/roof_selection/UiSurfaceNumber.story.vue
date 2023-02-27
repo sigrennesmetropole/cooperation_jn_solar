@@ -7,7 +7,7 @@ import UiSurfaceNumber from '@/components/roof_selection/UiSurfaceNumber.vue'
     <template #default>
       <UiSurfaceNumber
         class="w-[402px] h-[100px]"
-        :allArea="90"
+        :totalArea="90"
         :favorableArea="44"
       >
       </UiSurfaceNumber>

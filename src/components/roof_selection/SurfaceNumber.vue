@@ -13,7 +13,7 @@ const props = defineProps<{
     <SurfaceChartDonut :roofSurface="props.roofSurface"></SurfaceChartDonut>
   </div>
   <UiSurfaceNumber
-    :allArea="props.roofSurface.total"
+    :totalArea="props.roofSurface.total"
     :favorableArea="props.roofSurface.favorable"
   ></UiSurfaceNumber>
 </template>
