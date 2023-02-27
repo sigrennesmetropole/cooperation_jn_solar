@@ -2,12 +2,12 @@
 import { useViewsStore } from '@/stores/views'
 import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
-import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
 import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
 import { usePanelsStore } from '@/stores/panels'
 import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
+import type { RoofSurface } from '@/model/roof.mode'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
@@ -16,6 +16,16 @@ onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
 })
+
+// TODO: obtain this RoofSurface from the current selected
+const roofSurface: RoofSurface = {
+  level_1_area: 35,
+  level_2_area: 15,
+  level_3_area: 5,
+  level_4_area: 45,
+  favorable_area: 44,
+  total_area: 90,
+}
 </script>
 
 <template>
@@ -26,10 +36,7 @@ onBeforeMount(async () => {
       text="La surface favorable correspond à un potentiel supérieur à 1200 kWh/m2/an."
       widthBoxText="w-[300px]"
     ></UiButtonWithTooltip>
-    <div class="flex flex-row items-center justify-center">
-      <SurfaceChartDonut></SurfaceChartDonut>
-    </div>
-    <SurfaceNumber :allArea="90" :favorableArea="44"></SurfaceNumber>
+    <SurfaceNumber :roofSurface="roofSurface"></SurfaceNumber>
   </div>
 
   <UiDisclosure>

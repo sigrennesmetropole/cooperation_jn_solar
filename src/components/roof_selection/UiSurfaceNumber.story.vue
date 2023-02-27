@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
+import UiSurfaceNumber from '@/components/roof_selection/UiSurfaceNumber.vue'
 </script>
 
 <template>
   <Story title="Surface Number" group="pcaetpage">
     <template #default>
-      <SurfaceNumber
+      <UiSurfaceNumber
         class="w-[402px] h-[100px]"
         :allArea="90"
         :favorableArea="44"
       >
-      </SurfaceNumber>
+      </UiSurfaceNumber>
     </template>
   </Story>
 </template>

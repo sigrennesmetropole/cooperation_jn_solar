@@ -1,36 +1,19 @@
 <script setup lang="ts">
-import RightFlatArrow from '@/assets/illustrations/right-flat-arrow.svg'
+import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
+import UiSurfaceNumber from '@/components/roof_selection/UiSurfaceNumber.vue'
+import type { RoofSurface } from '@/model/roof.mode'
 
-defineProps({
-  allArea: {
-    type: Number,
-    required: true,
-  },
-  favorableArea: {
-    type: Number,
-    required: true,
-  },
-})
+const props = defineProps<{
+  roofSurface: RoofSurface
+}>()
 </script>
 
 <template>
-  <div class="flex flex-row p-4 gap-4 bg-slate-50 rounded-br-lg rounded-bl-lg">
-    <div class="flex flex-col p-0">
-      <h2 class="font-dm-sans font-bold text-2xl text-center">
-        {{ allArea }} m&sup2;
-      </h2>
-      <p class="font-dm-sans font-normal text-sm text-neutral-700 text-center">
-        Surface de toiture du bâtiment
-      </p>
-    </div>
-    <img :src="RightFlatArrow" />
-    <div>
-      <h2 class="font-dm-sans font-bold text-2xl text-center">
-        {{ favorableArea }} m&sup2;
-      </h2>
-      <p class="font-dm-sans font-normal text-sm text-neutral-700 text-center">
-        Surface favorable au photovoltaïque
-      </p>
-    </div>
+  <div class="flex flex-row items-center justify-center">
+    <SurfaceChartDonut :roofSurface="props.roofSurface"></SurfaceChartDonut>
   </div>
+  <UiSurfaceNumber
+    :allArea="props.roofSurface.total_area"
+    :favorableArea="props.roofSurface.favorable_area"
+  ></UiSurfaceNumber>
 </template>
