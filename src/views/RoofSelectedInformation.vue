@@ -19,12 +19,12 @@ onBeforeMount(async () => {
 
 // TODO: obtain this RoofSurface from the current selected
 const roofSurface: RoofSurface = {
-  level_1_area: 35,
-  level_2_area: 15,
-  level_3_area: 5,
-  level_4_area: 45,
-  favorable_area: 44,
-  total_area: 90,
+  level_1: 35,
+  level_2: 15,
+  level_3: 5,
+  level_4: 45,
+  favorable: 44,
+  total: 90,
 }
 </script>
 
