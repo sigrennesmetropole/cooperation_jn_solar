@@ -7,6 +7,7 @@ import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
 import { usePanelsStore } from '@/stores/panels'
+import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
@@ -18,9 +19,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div
-    class="mt-12 w-[402px] h-[360px] bg-white border border-slate-100 rounded relative"
-  >
+  <div class="mt-12 bg-white border border-slate-100 rounded relative">
     <UiButtonWithTooltip
       widthButton="4"
       heightButton="4"
@@ -30,6 +29,7 @@ onBeforeMount(async () => {
     <div class="flex flex-row items-center justify-center">
       <SurfaceChartDonut></SurfaceChartDonut>
     </div>
+    <SurfaceNumber :allArea="90" :favorableArea="44"></SurfaceNumber>
   </div>
 
   <UiDisclosure>
