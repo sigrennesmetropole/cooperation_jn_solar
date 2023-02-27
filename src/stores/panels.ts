@@ -4,22 +4,29 @@ import { defineStore } from 'pinia'
 
 export type typePanel = 'left' | 'right'
 
+export const PANEL_WIDTH = '450px' as const
+
 export const usePanelsStore = defineStore('panels', () => {
   const typePanelDisplay: Ref<typePanel> = ref('left')
-  const isInformationPanelLeftShown: Ref<boolean> = ref(true)
+  const isInformationPanelShown: Ref<boolean> = ref(true)
 
-  function toggleInformationPanelLeft() {
-    isInformationPanelLeftShown.value = !isInformationPanelLeftShown.value
+  function toggleInformationPanel() {
+    isInformationPanelShown.value = !isInformationPanelShown.value
   }
 
   function setTypePanelDisplay(typePanel: typePanel) {
     typePanelDisplay.value = typePanel
   }
 
+  function isRightPanel() {
+    return typePanelDisplay.value === 'right'
+  }
+
   return {
-    isInformationPanelLeftShown,
-    toggleInformationPanelLeft,
+    isInformationPanelShown,
+    toggleInformationPanel,
     typePanelDisplay,
     setTypePanelDisplay,
+    isRightPanel,
   }
 })
