@@ -16,14 +16,16 @@ const classPopup = computed(() => {
 </script>
 
 <template>
-  <div :class="classPopup" class="w-[427px] px-4 py-3 gap-4 bg-white rounded">
+  <div :class="classPopup" class="px-4 py-3 gap-3 bg-white rounded">
     <div class="flex flex-row items-center justify-center">
       <span class="font-dm-sans font-normal text-sm color-black">
         {{ text }}
       </span>
     </div>
 
-    <div class="flex flex-row items-center justify-center cursor-pointer">
+    <div
+      class="flex flex-row items-center justify-center cursor-pointer ml-auto"
+    >
       <img
         :src="iconMultiplyAmber"
         class="w-4 h-4"

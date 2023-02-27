@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { usePanelsStore } from '@/stores/panels'
+import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import UiPanelControlButton from '@/components/ui/UiPanelControlButton.vue'
 import { computed } from 'vue'
 
@@ -13,11 +13,11 @@ defineProps({
 })
 
 function toggleInformationPanel() {
-  panelStore.toggleInformationPanelLeft()
+  panelStore.toggleInformationPanel()
 }
 
 const leftAlignment = computed(() =>
-  panelStore.isInformationPanelLeftShown
+  panelStore.isInformationPanelShown
     ? 'relative top-28'
     : 'absolute left-0 top-28'
 )
@@ -26,15 +26,16 @@ const leftAlignment = computed(() =>
 <template>
   <div class="flex shadow-sm min-h-screen">
     <div
-      class="px-6 py-8 bg-white flex flex-col gap-8 w-[450px] max-h-screen overflow-y-auto scrollbar-hide"
-      v-if="panelStore.isInformationPanelLeftShown"
+      class="px-6 py-8 bg-white flex flex-col gap-8 max-h-screen overflow-y-auto scrollbar-hide"
+      :class="`w-[${PANEL_WIDTH}]`"
+      v-if="panelStore.isInformationPanelShown"
     >
       <slot></slot>
     </div>
     <div class="max-h-0 top-28" v-show="isRetractable">
       <UiPanelControlButton
         :anchor-position="'left'"
-        :is-open="panelStore.isInformationPanelLeftShown"
+        :is-open="panelStore.isInformationPanelShown"
         @click="toggleInformationPanel"
         :class="leftAlignment"
       ></UiPanelControlButton>
