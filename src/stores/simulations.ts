@@ -4,6 +4,8 @@ import { defineStore } from 'pinia'
 
 export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
+  const currentSubStep: Ref<number> = ref(1)
+
   function setCurrentStep(step: number) {
     if (step < 0) {
       currentStep.value = 0
@@ -24,6 +26,7 @@ export const useSimulationStore = defineStore('simulation', () => {
 
   return {
     currentStep,
+    currentSubStep,
     setCurrentStep,
     goToPreviousStep,
     goToNextStep,

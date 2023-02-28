@@ -3,8 +3,10 @@ import { onBeforeMount } from 'vue'
 import { usePanelsStore } from '@/stores/panels'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
-import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import { useSimulationStore } from '@/stores/simulations'
+import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
+import StepTitle from '@/components/simulation/StepTitle.vue'
+import StepDescription from '@/components/simulation/StepDescription.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -22,7 +24,10 @@ onBeforeMount(() => {
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
   ></SimulationSteps>
-  <div>Navigation image</div>
-  <p>Text</p>
-  <div>Collapsible</div>
+  <StepTitle :step="simulationStore.currentStep"></StepTitle>
+  <StepDescription
+    :step="simulationStore.currentStep"
+    :substep="simulationStore.currentSubStep"
+  ></StepDescription>
+  <div>Custom content</div>
 </template>
