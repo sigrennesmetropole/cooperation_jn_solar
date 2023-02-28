@@ -6,6 +6,7 @@ import { useViewsStore } from '@/stores/views'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import TitleSimmulationStep from '@/components/simulation/TitleSimmulationStep.vue'
+import StepDescription from '@/components/simulation/StepDescription.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -26,6 +27,9 @@ onBeforeMount(() => {
   <TitleSimmulationStep
     :step="simulationStore.currentStep"
   ></TitleSimmulationStep>
-  <p>Text</p>
-  <div>Collapsible</div>
+  <StepDescription
+    :step="simulationStore.currentStep"
+    :substep="simulationStore.currentSubStep"
+  ></StepDescription>
+  <div>Custom content</div>
 </template>
