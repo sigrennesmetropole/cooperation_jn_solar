@@ -4,6 +4,50 @@ Code de l'application de coopération sur le cadastre solairede Rennes Métropol
 
 ## Quick start
 
+### Package common_ui from github registry
+
+#### Installation
+
+This app install the [@sigrennesmetropole/cooperation_jn_common_ui](https://github.com/sigrennesmetropole/cooperation_jn_common_ui/pkgs/npm/cooperation_jn_common_ui) package.
+Although this package is public, you still need a Private Access Token (PAT) from github to download it.
+
+In order to do that you need to follow [this instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+And create a token with package:read permission.
+
+##### With userconfig
+
+Then, in your personnal ~/.npmrc you need to add this line:
+
+```shell
+//npm.pkg.github.com/:_authToken=<YOUR PAT>
+```
+
+And then install dependencies with:
+
+```shell
+npm i --userconfig
+```
+
+##### With projectconfig
+
+Or, you could also change ./npmrc project file, and replace NPM_TOKEN by your PAT.
+
+**Careful!** If you change the project npmrc file, you must be careful and not commit the change.
+The docker image in the CI is build by replacing the ${NPM_TOKEN} by the GITHUB_TOKEN of the repository.
+The CI will fail.
+Moreover if you commit your own PAT, it will be invalidated by Github.
+
+If you want to work by changing the project .npmrc, the easiest way is probably to ignore it in your git index before changing it:
+
+```shell
+git update-index --skip-worktree .npmrc
+```
+
+#### Upgrade
+
+The [@sigrennesmetropole/cooperation_jn_common_ui](https://github.com/sigrennesmetropole/cooperation_jn_common_ui/pkgs/npm/cooperation_jn_common_ui) package is frequently patch.
+Try to keep it up-to-date.
+
 ### Run the app in dev mode
 
 ```shell

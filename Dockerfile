@@ -1,6 +1,7 @@
 FROM node:16-alpine AS build
 
-COPY package.json package-lock.json /app/
+ARG NPM_TOKEN
+COPY package.json package-lock.json .npmrc /app/
 WORKDIR /app
 RUN npm ci
 COPY . /app
