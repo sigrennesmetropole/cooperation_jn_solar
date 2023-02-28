@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UiTitleStep from './UiTitleStep.vue'
+import UiStepTitle from './UiStepTitle.vue'
 
 import installation from '@/assets/icons/installation.svg'
 import potentiel from '@/assets/icons/potentiel.svg'
@@ -21,8 +21,8 @@ const titles = [
 </script>
 
 <template>
-  <UiTitleStep
+  <UiStepTitle
     :image-source="imageSources[props.step - 1]"
     :title="titles[props.step - 1]"
-  ></UiTitleStep>
+  ></UiStepTitle>
 </template>

@@ -3,9 +3,9 @@ import { onBeforeMount } from 'vue'
 import { usePanelsStore } from '@/stores/panels'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
-import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import { useSimulationStore } from '@/stores/simulations'
-import TitleSimmulationStep from '@/components/simulation/TitleSimmulationStep.vue'
+import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
+import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
 
 const panelsStore = usePanelsStore()
@@ -24,9 +24,7 @@ onBeforeMount(() => {
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
   ></SimulationSteps>
-  <TitleSimmulationStep
-    :step="simulationStore.currentStep"
-  ></TitleSimmulationStep>
+  <StepTitle :step="simulationStore.currentStep"></StepTitle>
   <StepDescription
     :step="simulationStore.currentStep"
     :substep="simulationStore.currentSubStep"
