@@ -5,6 +5,7 @@ import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import { useSimulationStore } from '@/stores/simulations'
+import TitleSimmulationStep from '@/components/simulation/TitleSimmulationStep.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -22,7 +23,9 @@ onBeforeMount(() => {
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
   ></SimulationSteps>
-  <div>Navigation image</div>
+  <TitleSimmulationStep
+    :step="simulationStore.currentStep"
+  ></TitleSimmulationStep>
   <p>Text</p>
   <div>Collapsible</div>
 </template>
