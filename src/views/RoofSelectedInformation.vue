@@ -2,7 +2,7 @@
 import { useViewsStore } from '@/stores/views'
 import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
-import UiButtonWithTooltip from '@/components/ui/UiButtonWithTooltip.vue'
+import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
 import { usePanelsStore } from '@/stores/panels'

@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@pinia/testing": "^0.0.14",
-    "@sigrennesmetropole/cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui#87a63a0",
+    "@sigrennesmetropole/cooperation_jn_common_ui": "github:sigrennesmetropole/cooperation_jn_common_ui#718ef47",
     "@vcmap/core": "^5.0.0-rc.25",
     "apexcharts": "^3.37.0",
     "node-fetch": "^3.3.0",
