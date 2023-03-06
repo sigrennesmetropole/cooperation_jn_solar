@@ -20,6 +20,7 @@ onMounted(async () => {
         :roof-surface="roofSurface"
         :label="'Pan de toit n°' + (index + 1)"
         :selected="index === 0"
+        :is-open="index === 0"
       ></RoofAccordion>
     </template>
   </div>

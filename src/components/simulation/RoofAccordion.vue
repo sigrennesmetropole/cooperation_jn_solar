@@ -10,9 +10,10 @@ const props = defineProps<{
   roofSurface: RoofSurfaceModel
   label: string
   selected: Boolean
+  isOpen: Boolean
 }>()
 
-const displayContents = ref(false)
+const displayContents = ref(props.isOpen)
 </script>
 
 <template>
@@ -23,7 +24,7 @@ const displayContents = ref(false)
   >
     <button
       class="flex flex-row items-center p-0 gap-2"
-      :aria-expanded="displayContents"
+      :aria-expanded="displayContents == true"
     >
       <div class="flex flex-row py-0 px-2 gap-3 grow">
         <label class="flex flex-row p-0 gap-3 grow">
