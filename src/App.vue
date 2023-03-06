@@ -7,6 +7,7 @@ import mapConfig from './map.config.json'
 import { useViewsStore } from './stores/views'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
+import LeaveButton from './components/simulation/LeaveButton.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
@@ -62,6 +63,12 @@ function fakeNextStep() {
       v-if="isDisplaySearchBar"
       class="absolute z-20 top-5 left-5"
     ></UiSearchBar>
+
+    <LeaveButton
+      v-if="viewStore.currentView === viewList['step-sunshine']"
+      class="absolute z-20 right-0"
+    >
+    </LeaveButton>
 
     <UiPopUpBottomInformation
       v-if="viewStore.currentView == viewList['roof-selection']"
