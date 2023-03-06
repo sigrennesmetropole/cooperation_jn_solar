@@ -17,6 +17,8 @@ const roofSurface: RoofSurface = {
       <RoofAccordion
         :roof-surface="roofSurface"
         class="w-[468px]"
+        :label="'Pan de toit n°1'"
+        :selected="true"
       ></RoofAccordion>
     </template>
   </Story>
