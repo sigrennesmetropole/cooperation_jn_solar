@@ -7,6 +7,8 @@ import { useSimulationStore } from '@/stores/simulations'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
+import CustomContent from '@/components/simulation/CustomContent.vue'
+import FooterButtons from '@/components/simulation/FooterButtons.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -19,7 +21,6 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-start p-0 gap-2.5 h-9"></div>
   <SimulationSteps
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
@@ -29,5 +30,7 @@ onBeforeMount(() => {
     :step="simulationStore.currentStep"
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
-  <div>Custom content</div>
+  <CustomContent :step="simulationStore.currentStep"></CustomContent>
+  <div class="h-full border-b border-neutral-200 -mx-6"></div>
+  <FooterButtons></FooterButtons>
 </template>
