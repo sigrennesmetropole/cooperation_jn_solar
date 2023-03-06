@@ -7,7 +7,7 @@ import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep2 from '@/components/roof_selection/BoxStep2.vue'
 import { usePanelsStore } from '@/stores/panels'
 import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
-import type { RoofSurface } from '@/model/roof.mode'
+import type { RoofSurface } from '@/model/roof.model'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()

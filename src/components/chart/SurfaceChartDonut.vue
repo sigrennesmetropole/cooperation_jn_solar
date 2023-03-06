@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import UiChartDonut from '@/components/ui/UiChartDonut.vue'
-import type { RoofSurface } from '@/model/roof.mode'
+import type { RoofSurface } from '@/model/roof.model'
 import { reactive } from 'vue'
 
 const props = defineProps<{
