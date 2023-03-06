@@ -18,8 +18,13 @@ const displayContents = ref(false)
 <template>
   <div
     class="box-border flex flex-col justify-center py-4 px-3 gap-3 bg-slate-50 border-[1px] border-slate-600 rounded-lg"
+    @click="displayContents = !displayContents"
+    role="button"
   >
-    <div class="flex flex-row items-center p-0 gap-2">
+    <button
+      class="flex flex-row items-center p-0 gap-2"
+      :aria-expanded="displayContents"
+    >
       <div class="flex flex-row py-0 px-2 gap-3 grow">
         <div class="flex flex-row p-0 gap-3 grow">
           <input
@@ -31,17 +36,15 @@ const displayContents = ref(false)
             :aria-checked="props.selected == true"
             :aria-label="props.label"
           />
-          <label class="font-dm-sans text-base font-medium grow">{{
+          <label class="font-dm-sans text-base font-medium grow text-left">{{
             label
           }}</label>
         </div>
 
-        <button @click="displayContents = !displayContents">
-          <img v-if="!displayContents" :src="iconArrowDown" class="w-5 h-5" />
-          <img v-else :src="iconArrowUp" class="w-5 h-5" />
-        </button>
+        <img v-if="!displayContents" :src="iconArrowDown" class="w-5 h-5" />
+        <img v-else :src="iconArrowUp" class="w-5 h-5" />
       </div>
-    </div>
+    </button>
     <div class="flex flex-col p-0 bg-white" v-if="displayContents">
       <div
         class="box-border flex flex-col p-5 gap-4 border-[1px] border-slate-200 rounded-lg"
