@@ -21,6 +21,7 @@ onMounted(async () => {
         :label="'Pan de toit n°' + (index + 1)"
         :selected="index === 0"
         :is-open="index === 0"
+        :is-recommended="index === 0"
       ></RoofAccordion>
     </template>
   </div>

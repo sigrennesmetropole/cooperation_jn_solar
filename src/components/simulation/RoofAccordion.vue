@@ -2,6 +2,7 @@
 import informationIcon from '@/assets/icons/informationIcon.svg'
 import iconArrowDown from '@/assets/icons/arrow-down.svg'
 import iconArrowUp from '@/assets/icons/arrow-up.svg'
+import iconStar from '@/assets/icons/star.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 
 import { ref } from 'vue'
@@ -11,6 +12,7 @@ const props = defineProps<{
   label: string
   selected: Boolean
   isOpen: Boolean
+  isRecommended: Boolean
 }>()
 
 const displayContents = ref(props.isOpen)
@@ -26,8 +28,8 @@ const displayContents = ref(props.isOpen)
       class="flex flex-row items-center p-0 gap-2"
       :aria-expanded="displayContents == true"
     >
-      <div class="flex flex-row py-0 px-2 gap-3 grow">
-        <label class="flex flex-row p-0 gap-3 grow">
+      <div class="flex flex-row py-0 px-2 gap-3 grow items-center">
+        <label class="flex flex-row p-0 gap-3 grow items-center">
           <input
             role="radio"
             type="radio"
@@ -41,7 +43,13 @@ const displayContents = ref(props.isOpen)
             label
           }}</span>
         </label>
-
+        <div
+          v-if="props.isRecommended"
+          class="bg-amber-400 flex flex-row py-1 px-2 gap-2 rounded items-center"
+        >
+          <img :src="iconStar" class="w-3 h-3" />
+          <span class="font-dm-sans font-medium text-sm">Recommandé</span>
+        </div>
         <img v-if="!displayContents" :src="iconArrowDown" class="w-5 h-5" />
         <img v-else :src="iconArrowUp" class="w-5 h-5" />
       </div>
