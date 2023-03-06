@@ -14,7 +14,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="flex flex-col p-0 gap-6">
+  <div class="flex flex-col p-0 gap-6" role="radiogroup">
     <template v-for="(roofSurface, index) in state.roofSurfaces" :key="index">
       <RoofAccordion
         :roof-surface="roofSurface"

@@ -8,7 +8,7 @@ import { ref } from 'vue'
 
 const props = defineProps<{
   roofSurface: RoofSurfaceModel
-  label: String
+  label: string
   selected: Boolean
 }>()
 
@@ -23,10 +23,13 @@ const displayContents = ref(false)
       <div class="flex flex-row py-0 px-2 gap-3 grow">
         <div class="flex flex-row p-0 gap-3 grow">
           <input
+            role="radio"
             type="radio"
             class="border-black"
             name="roofSideSelection"
             :checked="props.selected == true"
+            :aria-checked="props.selected == true"
+            :aria-label="props.label"
           />
           <label class="font-dm-sans text-base font-medium grow">{{
             label
