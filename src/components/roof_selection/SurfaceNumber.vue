@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
 import UiSurfaceNumber from '@/components/roof_selection/UiSurfaceNumber.vue'
-import type { RoofSurface } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
 const props = defineProps<{
-  roofSurface: RoofSurface
+  roofSurface: RoofSurfaceModel
 }>()
 </script>
 

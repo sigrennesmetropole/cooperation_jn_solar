@@ -2,12 +2,12 @@
 import informationIcon from '@/assets/icons/informationIcon.svg'
 import iconArrowDown from '@/assets/icons/arrow-down.svg'
 import iconArrowUp from '@/assets/icons/arrow-up.svg'
-import type { RoofSurface } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
 import { ref } from 'vue'
 
 const props = defineProps<{
-  roofSurface: RoofSurface
+  roofSurface: RoofSurfaceModel
   label: String
   selected: Boolean
 }>()

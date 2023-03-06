@@ -1,9 +1,9 @@
-import type { RoofSurface } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 import { roofSurfaceFixtures } from '@/model/roof.fixtures'
 
 class ApiClientService {
   async fetchRoofSurfaceFixtures() {
-    return new Promise<RoofSurface[]>((resolve) => {
+    return new Promise<RoofSurfaceModel[]>((resolve) => {
       resolve(roofSurfaceFixtures())
     })
   }

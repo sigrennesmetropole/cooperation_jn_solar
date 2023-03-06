@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import RoofAccordion from './RoofAccordion.vue'
-import type { RoofSurface } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 import { onMounted, reactive } from 'vue'
 import { apiClientService } from '@/services/roof'
 
 const state = reactive({
-  roofSurfaces: null as null | RoofSurface[],
+  roofSurfaces: null as null | RoofSurfaceModel[],
 })
 
 onMounted(async () => {

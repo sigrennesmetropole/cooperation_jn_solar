@@ -1,4 +1,4 @@
-export type RoofSurface = {
+export type RoofSurfaceModel = {
   values: number[]
   favorable: number
   total: number

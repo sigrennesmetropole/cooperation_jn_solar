@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import RoofAccordion from './RoofAccordion.vue'
-import type { RoofSurface } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
-const roofSurface: RoofSurface = {
+const roofSurface: RoofSurfaceModel = {
   values: [10, 20, 30, 40],
   favorable: 44,
   total: 90,
