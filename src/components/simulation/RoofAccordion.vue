@@ -1,8 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import informationIcon from '@/assets/icons/informationIcon.svg'
+</script>
 
 <template>
   <div
-    class="box-border flex flex-col justify-center items-start py-4 px-3 gap-3 bg-slate-50 border-[1px] border-slate-600 rounded-lg"
+    class="box-border flex flex-col justify-center py-4 px-3 gap-3 bg-slate-50 border-[1px] border-slate-600 rounded-lg"
   >
     <div class="flex flex-row items-center p-0 gap-2">
       <div class="flex flex-row items-center py-0 px-2 gap-3">
@@ -11,29 +13,35 @@
         <span>Up arrow</span>
       </div>
     </div>
-    <div class="flex flex-col items-start p-0 bg-white">
+    <div class="flex flex-col p-0 bg-white">
       <div
-        class="box-border flex flex-col items-start p-5 gap-4 border-[1px] border-slate-200 rounded-lg"
+        class="box-border flex flex-col p-5 gap-4 border-[1px] border-slate-200 rounded-lg"
       >
-        <div class="flex flex-row items-start p-0 gap-4">
-          <div class="flex flex-col items-start p-0">
-            <h3 class="font-dm-sans font-bold text-[28px] leading-7">46 m2</h3>
+        <div class="flex flex-row p-0 gap-4">
+          <div class="flex flex-col items-start p-0 grow">
+            <h3 class="font-dm-sans font-bold text-[28px] leading-7">
+              46 m&sup2;
+            </h3>
             <p class="font-dm-sans text-sm font-medium text-neutral-900">
               de surface favorable
             </p>
             <p class="font-dm-sans text-sm font-normal text-neutral-600">
-              sur 90m2
+              sur 90 m&sup2;
             </p>
           </div>
-          <div>icon tooltip</div>
+          <img :src="informationIcon" class="w-[18px] h-[18px]" />
         </div>
-        <div>line</div>
-        <div class="flex flex-row items-start py-0 px-1.5 gap-6">
-          <div class="flex flex-row justify-between items-center p-0 gap-2">
+        <div class="border-b border-neutral-300"></div>
+        <div class="flex flex-row py-0 px-1.5 gap-6">
+          <div
+            class="flex flex-row justify-between items-center p-0 gap-2 grow"
+          >
             <p class="font-dm-sans text-sm font-normal">Orientation</p>
             <p class="font-dm-sans font-bold text-base">Sud</p>
           </div>
-          <div class="flex flex-row justify-between items-center p-0 gap-2">
+          <div
+            class="flex flex-row justify-between items-center p-0 gap-2 grow"
+          >
             <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
             <p class="font-dm-sans font-bold text-base">47,9°</p>
           </div>
