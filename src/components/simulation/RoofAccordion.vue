@@ -2,7 +2,13 @@
 import informationIcon from '@/assets/icons/informationIcon.svg'
 import iconArrowDown from '@/assets/icons/arrow-down.svg'
 import iconArrowUp from '@/assets/icons/arrow-up.svg'
+import type { RoofSurface } from '@/model/roof.model'
+
 import { ref } from 'vue'
+
+const props = defineProps<{
+  roofSurface: RoofSurface
+}>()
 
 const displayContents = ref(false)
 </script>
@@ -33,13 +39,13 @@ const displayContents = ref(false)
         <div class="flex flex-row p-0 gap-4">
           <div class="flex flex-col items-start p-0 grow">
             <h3 class="font-dm-sans font-bold text-[28px] leading-7">
-              46 m&sup2;
+              {{ props.roofSurface.favorable }} m&sup2;
             </h3>
             <p class="font-dm-sans text-sm font-medium text-neutral-900">
               de surface favorable
             </p>
             <p class="font-dm-sans text-sm font-normal text-neutral-600">
-              sur 90 m&sup2;
+              sur {{ props.roofSurface.total }} m&sup2;
             </p>
           </div>
           <img :src="informationIcon" class="w-[18px] h-[18px]" />
@@ -50,13 +56,17 @@ const displayContents = ref(false)
             class="flex flex-row justify-between items-center p-0 gap-2 grow"
           >
             <p class="font-dm-sans text-sm font-normal">Orientation</p>
-            <p class="font-dm-sans font-bold text-base">Sud</p>
+            <p class="font-dm-sans font-bold text-base">
+              {{ props.roofSurface.orientation }}
+            </p>
           </div>
           <div
             class="flex flex-row justify-between items-center p-0 gap-2 grow"
           >
             <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
-            <p class="font-dm-sans font-bold text-base">47,9°</p>
+            <p class="font-dm-sans font-bold text-base">
+              {{ props.roofSurface.incliniasion }}°
+            </p>
           </div>
         </div>
       </div>
