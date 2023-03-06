@@ -4,10 +4,10 @@ import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
-import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
+import BoxStep2 from '@/components/roof_selection/BoxStep2.vue'
 import { usePanelsStore } from '@/stores/panels'
 import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
-import type { RoofSurface } from '@/model/roof.mode'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
@@ -18,10 +18,12 @@ onBeforeMount(async () => {
 })
 
 // TODO: obtain this RoofSurface from the current selected
-const roofSurface: RoofSurface = {
+const roofSurface: RoofSurfaceModel = {
   values: [35, 15, 5, 45],
   favorable: 44,
   total: 90,
+  orientation: 'sud',
+  incliniasion: 47,
 }
 </script>
 

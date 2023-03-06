@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import UiChartDonut from '@/components/ui/UiChartDonut.vue'
-import type { RoofSurface } from '@/model/roof.mode'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 import { reactive } from 'vue'
 
 const props = defineProps<{
-  roofSurface: RoofSurface
+  roofSurface: RoofSurfaceModel
 }>()
 
 function favorablePercentage() {

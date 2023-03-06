@@ -7,6 +7,7 @@ import { useSimulationStore } from '@/stores/simulations'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
+import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -29,5 +30,7 @@ onBeforeMount(() => {
     :step="simulationStore.currentStep"
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
-  <div>Custom content</div>
+  <RoofAccordionOptions
+    v-if="simulationStore.currentStep === 1"
+  ></RoofAccordionOptions>
 </template>
