@@ -19,6 +19,8 @@ const roofSurface: RoofSurfaceModel = {
         class="w-[468px]"
         :label="'Pan de toit n°1'"
         :selected="true"
+        :is-open="true"
+        :is-recommended="true"
       ></RoofAccordion>
     </template>
   </Story>
