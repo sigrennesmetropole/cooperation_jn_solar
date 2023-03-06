@@ -26,20 +26,20 @@ const displayContents = ref(false)
       :aria-expanded="displayContents"
     >
       <div class="flex flex-row py-0 px-2 gap-3 grow">
-        <div class="flex flex-row p-0 gap-3 grow">
+        <label class="flex flex-row p-0 gap-3 grow">
           <input
             role="radio"
             type="radio"
-            class="border-black"
+            class="checked:bg-black checked:hover:bg-black checked:active:bg-black checked:focus:bg-black focus:bg-black focus:outline-none focus:ring-1 focus:ring-black"
             name="roofSideSelection"
             :checked="props.selected == true"
             :aria-checked="props.selected == true"
             :aria-label="props.label"
           />
-          <label class="font-dm-sans text-base font-medium grow text-left">{{
+          <span class="font-dm-sans text-base font-medium grow text-left">{{
             label
-          }}</label>
-        </div>
+          }}</span>
+        </label>
 
         <img v-if="!displayContents" :src="iconArrowDown" class="w-5 h-5" />
         <img v-else :src="iconArrowUp" class="w-5 h-5" />
