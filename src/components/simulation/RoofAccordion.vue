@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import informationIcon from '@/assets/icons/informationIcon.svg'
+import iconArrowDown from '@/assets/icons/arrow-down.svg'
+import iconArrowUp from '@/assets/icons/arrow-up.svg'
+import { ref } from 'vue'
+
+const displayContents = ref(false)
 </script>
 
 <template>
@@ -7,13 +12,21 @@ import informationIcon from '@/assets/icons/informationIcon.svg'
     class="box-border flex flex-col justify-center py-4 px-3 gap-3 bg-slate-50 border-[1px] border-slate-600 rounded-lg"
   >
     <div class="flex flex-row items-center p-0 gap-2">
-      <div class="flex flex-row items-center py-0 px-2 gap-3">
-        <div class="flex flex-row items-center p-0 gap-3"></div>
-        <span>radio button</span>
-        <span>Up arrow</span>
+      <div class="flex flex-row py-0 px-2 gap-3 grow">
+        <div class="flex flex-row p-0 gap-3 grow">
+          <input type="radio" class="border-black" />
+          <label class="font-dm-sans text-base font-medium grow"
+            >Pan de toit n°1</label
+          >
+        </div>
+
+        <button @click="displayContents = !displayContents">
+          <img v-if="!displayContents" :src="iconArrowDown" class="w-5 h-5" />
+          <img v-else :src="iconArrowUp" class="w-5 h-5" />
+        </button>
       </div>
     </div>
-    <div class="flex flex-col p-0 bg-white">
+    <div class="flex flex-col p-0 bg-white" v-if="displayContents">
       <div
         class="box-border flex flex-col p-5 gap-4 border-[1px] border-slate-200 rounded-lg"
       >
