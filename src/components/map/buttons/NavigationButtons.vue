@@ -6,6 +6,7 @@ import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconMinus } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { UiDescribeButtonCompass } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 import CompassComponent from '@/components/map/CompassComponent.vue'
 
@@ -65,5 +66,9 @@ const heightClass = computed(() => {
       </UiIconButton>
     </div>
     <CompassComponent />
+  </div>
+
+  <div class="absolute right-[130px] bottom-12">
+    <UiDescribeButtonCompass></UiDescribeButtonCompass>
   </div>
 </template>
