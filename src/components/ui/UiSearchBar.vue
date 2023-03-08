@@ -135,11 +135,11 @@ const isEmptySearch = computed(() => {
     <div
       class="flex flex-row items-center h-11 shadow-lg rounded p-0 mb-0 bg-white w-[402px]"
     >
-      <div class="flex flex-row items-center justify-center w-10 h-full">
+      <div class="flex flex-row items-center justify-center w-10 h-full ml-2">
         <img :src="iconTarget" class="w-4 h-4" />
       </div>
       <input
-        class="w-full h-full rounded-l-none rounded-r-lg p-2 text-base font-medium font-dm-sans placeholder-black"
+        class="w-full h-full border-none p-2 text-base font-medium font-dm-sans placeholder-black"
         type="text"
         placeholder="Entrez votre adresse ici"
         v-model="search"
