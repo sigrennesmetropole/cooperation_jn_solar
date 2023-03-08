@@ -20,7 +20,7 @@ function mySetupApp({ app, story, variant }) {
           labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
           colors: ['#FEF08A', '#FEF9C3', '#CBD5E1', '#334155'],
           labelTotal: 'Surface favorable',
-          labelTotalValue: '50%',
+          labelTotalValue: '50',
         }"
       >
       </UiChartDonut>
