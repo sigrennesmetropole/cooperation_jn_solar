@@ -4,6 +4,7 @@ export type View =
   | 'roof-selection'
   | 'roof-selected-information'
   | 'step-sunshine'
+  | 'legal-notice'
 
 export const viewList: Record<View, View> = {
   home: 'home',
@@ -11,4 +12,5 @@ export const viewList: Record<View, View> = {
   'roof-selection': 'roof-selection',
   'roof-selected-information': 'roof-selected-information',
   'step-sunshine': 'step-sunshine',
+  'legal-notice': 'legal-notice',
 }
