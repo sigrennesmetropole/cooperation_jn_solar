@@ -23,14 +23,11 @@ const classPopup = computed(() => {
       </span>
     </div>
 
-    <div
+    <button
       class="flex flex-row items-center justify-center cursor-pointer ml-auto"
+      @click="displayPopup = false"
     >
-      <img
-        :src="iconMultiplyAmber"
-        class="w-4 h-4"
-        @click="displayPopup = false"
-      />
-    </div>
+      <img :src="iconMultiplyAmber" class="w-4 h-4" />
+    </button>
   </div>
 </template>
