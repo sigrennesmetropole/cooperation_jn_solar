@@ -1,4 +1,5 @@
 import { VcsApp, Context, CesiumMap, Viewpoint } from '@vcmap/core'
+import { useMapStore } from '@/stores/map'
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -8,6 +9,7 @@ export class RennesApp extends VcsApp {
   }
 
   async initializeMap() {
+    const mapStore = useMapStore()
     const context = new Context(this.mapConfig)
     await this.addContext(context)
 
@@ -18,6 +20,7 @@ export class RennesApp extends VcsApp {
       const homeViewPoint = this.viewpoints.getByKey('home') as Viewpoint
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
+      mapStore.isInitializeMap = true
     }
   }
 
