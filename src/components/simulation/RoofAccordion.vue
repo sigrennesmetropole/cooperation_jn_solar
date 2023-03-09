@@ -70,21 +70,16 @@ const displayContents = ref(props.isOpen)
               sur {{ props.roofSurface.total }} m&sup2;
             </p>
           </div>
-          <div class="relative flex flex-col p-2 gap-2.5">
+          <div class="relative flex flex-col p-2 gap-2.5" @click.stop="">
             <UiButtonWithTooltip
-              text="Les niveaux de potentiel solaire sont estimés sur la base de calculs
-        s'appuyant sur la maquette 3D métropolitaine et des données
-        météorologiques.
-      "
+              text="À ce stade, la surface favorable est calculée uniquement à partir du potentiel solaire. Les obstacles éventuels de la toiture seront pris en compte dans l’étape suivante."
               widthButton="5"
               heightButton="5"
               position-top="0px"
               position-right="0px"
-              widthBoxText="w-[500px]"
+              widthBoxText="w-[299px]"
             ></UiButtonWithTooltip>
           </div>
-
-          <!-- <img :src="informationIcon" class="w-[18px] h-[18px]" /> -->
         </div>
         <div class="border-b border-neutral-300"></div>
         <div class="flex flex-row py-0 px-1.5 gap-6">
