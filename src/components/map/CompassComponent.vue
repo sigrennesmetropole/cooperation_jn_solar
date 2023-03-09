@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { Viewpoint, type VcsMap, type ViewpointOptions } from '@vcmap/core'
-import { inject, onMounted, ref } from 'vue'
+import { inject, ref } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import { UiCompass } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const vpPitch = ref<number>(0)
 const vpHeading = ref<number>(0)
 const previousVp = ref<Viewpoint | null>(null)
 
-onMounted(() => {
-  if (rennesApp.get3DMap()) {
+const mapStore = useMapStore()
+
+mapStore.$subscribe(async () => {
+  if (mapStore.isInitializeMap) {
     syncCompass(rennesApp.get3DMap())
   }
 })
