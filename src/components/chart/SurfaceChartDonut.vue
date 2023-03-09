@@ -19,9 +19,9 @@ function favorablePercentage() {
 const dataGraph = reactive({
   series: props.roofSurface.values,
   labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-  colors: ['#FEF08A', '#FEF9C3', '#CBD5E1', '#334155'],
-  labelTotal: 'Surface favorable',
-  labelTotalValue: `${favorablePercentage()} %`,
+  colors: ['#334155', '#CBD5E1', '#FEF9C3', '#FEF08A'],
+  labelTotal: 'de surface favorable',
+  labelTotalValue: `${favorablePercentage()}`,
 })
 </script>
 

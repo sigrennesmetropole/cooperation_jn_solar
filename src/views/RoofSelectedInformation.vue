@@ -19,7 +19,7 @@ onBeforeMount(async () => {
 
 // TODO: obtain this RoofSurface from the current selected
 const roofSurface: RoofSurfaceModel = {
-  values: [35, 15, 5, 45],
+  values: [45, 5, 15, 35],
   favorable: 44,
   total: 90,
   orientation: 'sud',
