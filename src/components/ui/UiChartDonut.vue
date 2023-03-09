@@ -43,6 +43,11 @@ const chartOptions = ref({
 })
 
 const labelFormatted = computed(() => {
+  /*
+   Examples: 
+    labelTotal = 'de surface favorable' => part1 = 'de surface' part2 = 'favorable'
+    labelTotal = 'de surface favorable et plus' => part1 = 'de surface' part2 = 'favora...'
+  */
   const lengthLabelTotal = props.dataGraph.labelTotal.length
   const part1 = props.dataGraph.labelTotal.slice(0, 10)
   let part2 = props.dataGraph.labelTotal.slice(11, lengthLabelTotal)

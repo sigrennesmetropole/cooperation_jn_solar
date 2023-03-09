@@ -10,7 +10,7 @@ const router = useRouter()
     class="flex flex-col items-center justify-center border border-slate-600 rounded"
   >
     <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
-      Etape 2
+      Étape 2
     </span>
     <img class="w-15 h-15 mt-2" :src="iconInstallation" alt="" />
     <span class="font-dm-sans font-bold text-lg text-center">
