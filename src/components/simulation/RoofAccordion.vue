@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import informationIcon from '@/assets/icons/informationIcon.svg'
+import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import iconArrowDown from '@/assets/icons/arrow-down.svg'
 import iconArrowUp from '@/assets/icons/arrow-up.svg'
 import iconStar from '@/assets/icons/star.svg'
@@ -70,7 +70,21 @@ const displayContents = ref(props.isOpen)
               sur {{ props.roofSurface.total }} m&sup2;
             </p>
           </div>
-          <img :src="informationIcon" class="w-[18px] h-[18px]" />
+          <div class="relative flex flex-col p-2 gap-2.5">
+            <UiButtonWithTooltip
+              text="Les niveaux de potentiel solaire sont estimés sur la base de calculs
+        s'appuyant sur la maquette 3D métropolitaine et des données
+        météorologiques.
+      "
+              widthButton="5"
+              heightButton="5"
+              position-top="0px"
+              position-right="0px"
+              widthBoxText="w-[500px]"
+            ></UiButtonWithTooltip>
+          </div>
+
+          <!-- <img :src="informationIcon" class="w-[18px] h-[18px]" /> -->
         </div>
         <div class="border-b border-neutral-300"></div>
         <div class="flex flex-row py-0 px-1.5 gap-6">
