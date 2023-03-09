@@ -7,6 +7,7 @@ import { UiCompass } from '@sigrennesmetropole/cooperation_jn_common_ui'
 const rennesApp = inject('rennesApp') as RennesApp
 const vpPitch = ref<number>(0)
 const vpHeading = ref<number>(0)
+const previousVp = ref<Viewpoint | null>(null)
 
 onMounted(() => {
   if (rennesApp.get3DMap()) {
@@ -17,9 +18,14 @@ onMounted(() => {
 function syncCompass(map: VcsMap) {
   map.postRender.addEventListener(({ map }) => {
     const vp = map.getViewpointSync()
-    if (vp && vp.isValid()) {
+    if (
+      vp &&
+      vp.isValid() &&
+      (previousVp.value === null || !vp.equals(previousVp.value))
+    ) {
       vpPitch.value = vp.pitch
       vpHeading.value = vp.heading
+      previousVp.value = vp
     }
   })
 }
@@ -27,9 +33,12 @@ function syncCompass(map: VcsMap) {
 const headingMap = async (event: { angle: number; animate: boolean }) => {
   const vp = await rennesApp.maps?.activeMap.getViewpoint()
   if (vp) {
-    vp.heading = event.angle
-    vp.animate = event.animate
-    rennesApp.maps?.activeMap.gotoViewpoint(vp)
+    const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
+    vpJson.heading = event.angle
+    vpJson.animate = event.animate
+    vpJson.cameraPosition = undefined
+    const newVp = new Viewpoint(vpJson)
+    rennesApp.maps?.activeMap.gotoViewpoint(newVp)
   }
 }
 

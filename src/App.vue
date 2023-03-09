@@ -7,12 +7,15 @@ import mapConfig from './map.config.json'
 import { useViewsStore } from './stores/views'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
+import LeaveButton from './components/simulation/LeaveButton.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
+import { useRouter } from 'vue-router'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
+const router = useRouter()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -20,7 +23,7 @@ onBeforeMount(() => {
 })
 
 function isLeftPanelRetractable() {
-  const retractableList = [viewList['map-pcaet']]
+  const retractableList = [viewList['map-pcaet'], viewList['roof-selection']]
   return retractableList.includes(viewStore.currentView)
 }
 
@@ -31,6 +34,11 @@ const isDisplaySearchBar = computed(() => {
     viewList['roof-selected-information'],
   ].includes(viewStore.currentView)
 })
+
+function fakeNextStep() {
+  panelStore.isCompletelyHidden = false
+  router.push({ name: 'roof-selected-information' })
+}
 </script>
 
 <template>
@@ -72,6 +80,12 @@ const isDisplaySearchBar = computed(() => {
       class="absolute z-20 top-5 left-5"
     ></UiSearchBar>
 
+    <LeaveButton
+      v-if="viewStore.currentView === viewList['step-sunshine']"
+      class="absolute z-20 right-0"
+    >
+    </LeaveButton>
+
     <UiPopUpBottomInformation
       v-if="viewStore.currentView == viewList['roof-selection']"
       :text="'Cliquez sur le bâtiment que vous souhaitez sélectionner.'"
@@ -82,6 +96,18 @@ const isDisplaySearchBar = computed(() => {
       :text="'Cliquez sur le pan de toit que vous souhaitez sélectionner.'"
       class="absolute z-20 bottom-5 left-[20%]"
     />
+    <button
+      class="absolute z-20 bottom-5 left-[10%] bg-white text-black"
+      @click="fakeNextStep()"
+      v-if="viewStore.currentView == viewList['roof-selection']"
+    >
+      Fake select roof button
+      <br />
+      <span class="text-sm font-light">
+        (While waiting the roof selection,<br />
+        click here to display the next step)
+      </span>
+    </button>
 
     <UiButtonWithTooltip
       v-if="isDisplaySearchBar"

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, computed } from 'vue'
 import type { Ref } from 'vue'
 import iconTarget from '@/assets/icons/target.svg'
 import iconMagnifyingGlass from '@/assets/icons/magnifying-glass.svg'
+import iconSearchEmpty from '@/assets/icons/search-empty.svg'
 import { apiRvaService } from '@/services/api-rva'
 import { apiSitesorgService } from '@/services/api-sitesorg'
 import { createNewViewpointFromAddress } from '@/services/address'
@@ -11,6 +12,7 @@ import type { AddressRva, AddressOrganization } from '@/model/address.model'
 import iconMultiply from '@/assets/icons/icon-multiply.svg'
 import { useAddressStore } from '@/stores/address'
 import { useRouter } from 'vue-router'
+import { usePanelsStore } from '@/stores/panels'
 
 const search = ref('')
 const adressStore = useAddressStore()
@@ -25,6 +27,14 @@ const autocompletion: Ref<{
 })
 
 const rennesApp = inject('rennesApp') as RennesApp
+const panelsStore = usePanelsStore()
+const SIZE_BEGIN_SEARCH = 4
+
+onMounted(() => {
+  if (adressStore.address !== '') {
+    search.value = adressStore.address
+  }
+})
 
 const searchAddresses = async () => {
   let data = await apiRvaService.fetchAddress(search.value)
@@ -53,7 +63,7 @@ const searchOrganizations = async () => {
 }
 
 const searchAddressesOrOrganizations = async () => {
-  if (search.value.length < 8) {
+  if (search.value.length < SIZE_BEGIN_SEARCH) {
     resetAutocompletion()
     return
   }
@@ -65,6 +75,8 @@ const goToAddress = async (
   item: AddressRva | AddressOrganization,
   type: string
 ) => {
+  adressStore.setAddress(search.value)
+  router.push('/roof-selection')
   if (type === 'rva') {
     item = item as AddressRva
     search.value = item.addr3
@@ -89,23 +101,33 @@ const goToAddress = async (
   }
 }
 
-onMounted(() => {
-  if (adressStore.address !== '') {
-    search.value = adressStore.address
-  }
-})
-
 function clickSearch() {
-  adressStore.setAddress(search.value)
-  router.push('/roof-selection')
+  if (autocompletion.value.addressRva.length > 0) {
+    goToAddress(autocompletion.value.addressRva[0], 'rva')
+  } else if (autocompletion.value.addressOrganization.length > 0) {
+    goToAddress(autocompletion.value.addressOrganization[0], 'organization')
+  }
 }
 
 function emptySearch() {
   search.value = ''
   adressStore.setAddress('')
   resetAutocompletion()
+  panelsStore.isCompletelyHidden = false
   router.push('/map-pcaet')
 }
+
+const isEmptySearch = computed(() => {
+  if (
+    search.value.length >= SIZE_BEGIN_SEARCH &&
+    adressStore.address === '' &&
+    autocompletion.value.addressRva.length === 0 &&
+    autocompletion.value.addressOrganization.length === 0
+  ) {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
@@ -130,12 +152,13 @@ function emptySearch() {
       >
         <img :src="iconMultiply" class="w-4 h-4" />
       </div>
-      <div
+      <button
         class="flex flex-row items-center justify-center w-11 h-full cursor-pointer border-l border-neutral-200"
+        :disabled="isEmptySearch || search.length < SIZE_BEGIN_SEARCH"
         @click="clickSearch"
       >
         <img :src="iconMagnifyingGlass" class="w-4 h-4" />
-      </div>
+      </button>
     </div>
 
     <div
@@ -176,6 +199,15 @@ function emptySearch() {
           {{ item.addr }}
         </li>
       </ul>
+    </div>
+    <div
+      v-else-if="isEmptySearch"
+      class="flex flex-row items-center rounded px-3 py-4 mt-0 shadow-lg bg-white"
+    >
+      <img :src="iconSearchEmpty" class="w-4 h-4" />
+      <span class="text-base font-medium font-dm-sans ml-2">
+        Aucun résultat
+      </span>
     </div>
   </div>
 </template>
