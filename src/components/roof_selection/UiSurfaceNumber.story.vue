@@ -3,7 +3,7 @@ import UiSurfaceNumber from '@/components/roof_selection/UiSurfaceNumber.vue'
 </script>
 
 <template>
-  <Story title="Surface Number" group="pcaetpage">
+  <Story title="Surface Number" group="roof-selected-information">
     <template #default>
       <UiSurfaceNumber
         class="w-[402px] h-[100px]"

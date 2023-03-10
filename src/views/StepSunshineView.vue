@@ -9,6 +9,7 @@ import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
 import CustomContent from '@/components/simulation/CustomContent.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
+import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -31,6 +32,9 @@ onBeforeMount(() => {
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
   <CustomContent :step="simulationStore.currentStep"></CustomContent>
+  <RoofAccordionOptions
+    v-if="simulationStore.currentStep === 1"
+  ></RoofAccordionOptions>
   <div class="h-full border-b border-neutral-200 -mx-6"></div>
   <FooterButtons></FooterButtons>
 </template>

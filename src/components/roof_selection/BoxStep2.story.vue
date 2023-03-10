@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BoxStep2 from '@/components/roofSelection/BoxStep2.vue'
+import BoxStep2 from '@/components/roof_selection/BoxStep2.vue'
 </script>
 
 <template>

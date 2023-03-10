@@ -24,11 +24,14 @@ const leftAlignment = computed(() =>
 </script>
 
 <template>
-  <div class="flex shadow-sm min-h-screen">
+  <div
+    class="flex shadow-sm min-h-screen"
+    v-show="!panelStore.isCompletelyHidden"
+  >
     <div
       class="px-6 py-8 bg-white flex flex-col gap-8 max-h-screen overflow-y-auto scrollbar-hide"
       :class="`w-[${PANEL_WIDTH}]`"
-      v-if="panelStore.isInformationPanelShown"
+      v-show="panelStore.isInformationPanelShown"
     >
       <slot></slot>
     </div>

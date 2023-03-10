@@ -9,6 +9,7 @@ export const PANEL_WIDTH = '450px' as const
 export const usePanelsStore = defineStore('panels', () => {
   const typePanelDisplay: Ref<typePanel> = ref('left')
   const isInformationPanelShown: Ref<boolean> = ref(true)
+  const isCompletelyHidden: Ref<boolean> = ref(false)
 
   function toggleInformationPanel() {
     isInformationPanelShown.value = !isInformationPanelShown.value
@@ -28,5 +29,6 @@ export const usePanelsStore = defineStore('panels', () => {
     typePanelDisplay,
     setTypePanelDisplay,
     isRightPanel,
+    isCompletelyHidden,
   }
 })
