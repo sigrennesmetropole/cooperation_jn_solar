@@ -16,7 +16,7 @@ function clickButtonNext() {
 </script>
 
 <template>
-  <div class="flex flex-row justify-between">
+  <div class="flex flex-row justify-between mb-4">
     <button
       @click="clickButtonCancel()"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
@@ -25,6 +25,7 @@ function clickButtonNext() {
         {{ simulationStore.currentStep == 1 ? 'Annuler' : 'Précédent' }}
       </span>
     </button>
+    <!-- While waiting for the UiButton import from common-ui -->
     <!-- <UiButton
             class="ui-btn-regular-size ui-btn-secondary"
             :disabled="false"
@@ -44,6 +45,7 @@ function clickButtonNext() {
         {{ simulationStore.currentStep == 1 ? 'Suivant' : 'Valider' }}</span
       >
     </button>
+    <!-- While waiting for the UiButton import from common-ui -->
     <!-- <UiButton
             class="ui-btn-regular-size ui-btn-primary"
             :disabled="false"

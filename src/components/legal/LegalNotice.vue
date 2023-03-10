@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import expandIcon from '../../assets/icons/expand-small-bigger-retract-smaller-big.svg'
+</script>
+
 <template>
   <div
     class="flex flex-col gap-12 w-[880px] h-fit bg-white rounded-xl px-8 py-16 mx-auto mt-32 mb-[78px]"
@@ -35,10 +39,7 @@
               href="https://e-demarches.rennes.fr/Rennes/workflow_url?ECITIZ_ACTIVITY_PATH=Demandeur&USAGER_PROCESS=CONTACT"
               target="_blank"
             >
-              <img
-                src="../../assets/icons/expand-small-bigger-retract-smaller-big.svg"
-                class="w-3.5 h-3.5 ml-2 mt-1"
-              />
+              <img :src="expandIcon" class="w-3.5 h-3.5 ml-2 mt-1" />
             </a>
           </div>
           <ul>
@@ -74,7 +75,7 @@
         <p>Ce projet a été soutenu par le programme France Relance.</p>
         <img
           class="h-[130px] w-[242.25px]"
-          src="../../assets/illustrations/etiquette-FR-kit-com 1.png"
+          src="../../assets/illustrations/etiquette-fr.png"
           alt=""
         />
       </div>
