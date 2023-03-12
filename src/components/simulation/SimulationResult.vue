@@ -39,7 +39,14 @@ const currentPower = computed(() =>
     class="box-border flex flex-col p-5 border-[1px] border-slate-200 rounded-lg"
   >
     <div class="flex flex-row justify-center items-center pt-4 px-0 pb-6">
-      <UiIconButton class="rounded-3xl" @click="decreaseCurrenNumSolarPanel">
+      <UiIconButton
+        class="rounded-3xl border-[1px]"
+        @click="decreaseCurrenNumSolarPanel"
+        :disabled="currentNumSolarPanel == 0"
+        :class="
+          currentNumSolarPanel == 0 ? 'border-neutral-300' : 'border-black'
+        "
+      >
         <IconMinus />
       </UiIconButton>
       <div class="flex flex-col items-center p-0">
@@ -58,7 +65,16 @@ const currentPower = computed(() =>
           </p>
         </div>
       </div>
-      <UiIconButton class="rounded-3xl" @click="increaseCurrenNumSolarPanel">
+      <UiIconButton
+        class="rounded-3xl border-[1px]"
+        @click="increaseCurrenNumSolarPanel"
+        :disabled="currentNumSolarPanel == props.maxNumSolarPanel"
+        :class="
+          currentNumSolarPanel == props.maxNumSolarPanel
+            ? 'border-neutral-300'
+            : 'border-black'
+        "
+      >
         <IconPlus />
       </UiIconButton>
     </div>
