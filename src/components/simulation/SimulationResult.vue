@@ -5,7 +5,7 @@ import type { RoofSurfaceModel } from '@/model/roof.model'
 import { ref, computed } from 'vue'
 
 const props = defineProps<{
-  roofSurface: RoofSurfaceModel
+  roofSurface: RoofSurfaceModel | null
   maxNumSolarPanel: number
 }>()
 
@@ -121,13 +121,13 @@ const currentPower = computed(() =>
       <div class="flex flex-col p-0 gap-2 items-start grow">
         <p class="font-dm-sans text-sm font-normal">Orientation</p>
         <p class="font-dm-sans text-base font-bold">
-          {{ props.roofSurface.orientation }}
+          {{ props.roofSurface ? props.roofSurface.orientation : 'N/A' }}
         </p>
       </div>
       <div class="flex flex-col p-0 gap-2 items-center grow">
         <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
         <p class="font-dm-sans text-base font-bold">
-          {{ props.roofSurface.incliniasion }}°
+          {{ props.roofSurface ? props.roofSurface.incliniasion : 'N/A' }}°
         </p>
       </div>
       <div class="flex flex-col p-0 gap-2 items-end grow">
