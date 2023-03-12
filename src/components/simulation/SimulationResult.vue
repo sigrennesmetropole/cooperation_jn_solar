@@ -43,17 +43,13 @@ function increase() {
         <p class="font-dm-sans text-sm font-normal">Orientation</p>
         <p class="font-dm-sans text-base font-bold">Sud</p>
       </div>
-      <div>
-        <div class="flex flex-col p-0 gap-2 items-center grow">
-          <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
-          <p class="font-dm-sans text-base font-bold">47.9°</p>
-        </div>
+      <div class="flex flex-col p-0 gap-2 items-center grow">
+        <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
+        <p class="font-dm-sans text-base font-bold">47.9°</p>
       </div>
-      <div>
-        <div class="flex flex-col p-0 gap-2 items-end grow">
-          <p class="font-dm-sans text-sm font-normal">Surface</p>
-          <p class="font-dm-sans text-base font-bold">9m&sup2;</p>
-        </div>
+      <div class="flex flex-col p-0 gap-2 items-end grow">
+        <p class="font-dm-sans text-sm font-normal">Surface</p>
+        <p class="font-dm-sans text-base font-bold">9m&sup2;</p>
       </div>
     </div>
   </div>
