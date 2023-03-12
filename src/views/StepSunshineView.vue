@@ -8,6 +8,7 @@ import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
+import SimulationResult from '@/components/simulation/SimulationResult.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -33,4 +34,10 @@ onBeforeMount(() => {
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
+  <SimulationResult
+    v-if="simulationStore.currentStep === 3"
+    :max-num-solar-panel="simulationStore.maxNumberSolarPanel"
+    :roof-surface="simulationStore.roofSurface"
+  >
+  </SimulationResult>
 </template>
