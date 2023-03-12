@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
-import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'
-import { IconMinus } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import solarPanel from '@/assets/icons/solar-panel.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { ref, computed } from 'vue'
@@ -47,7 +45,20 @@ const currentPower = computed(() =>
           currentNumSolarPanel == 0 ? 'border-neutral-300' : 'border-black'
         "
       >
-        <IconMinus />
+        <svg
+          width="20"
+          height="2"
+          viewBox="0 0 20 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.714355 1H19.2858"
+            :stroke="currentNumSolarPanel == 0 ? '#D4D4D4' : 'black'"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </UiIconButton>
       <div class="flex flex-col items-center p-0">
         <div class="flex flex-row items-center p-0 gap-2.5">
@@ -75,7 +86,34 @@ const currentPower = computed(() =>
             : 'border-black'
         "
       >
-        <IconPlus />
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 0.771484V19.3429"
+            :stroke="
+              currentNumSolarPanel == props.maxNumSolarPanel
+                ? '#D4D4D4'
+                : 'black'
+            "
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M0.714355 10H19.2858"
+            :stroke="
+              currentNumSolarPanel == props.maxNumSolarPanel
+                ? '#D4D4D4'
+                : 'black'
+            "
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </UiIconButton>
     </div>
     <div class="border-b border-neutral-300"></div>
