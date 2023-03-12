@@ -43,7 +43,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     goToPreviousStep,
     goToNextStep,
     maxNumberSolarPanel,
-    selectedNumberSolarPanel,
     roofSurface,
   }
 })
