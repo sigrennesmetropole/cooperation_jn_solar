@@ -116,7 +116,7 @@ function fakeNextStep() {
       "
       widthButton="12"
       heightButton="12"
-      widthBoxText="w-[500px]"
+      widthBoxText="w-[600px]"
     />
   </main>
 </template>
