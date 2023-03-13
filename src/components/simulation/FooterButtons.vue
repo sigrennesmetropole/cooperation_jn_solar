@@ -20,23 +20,19 @@ function clickButtonNext() {
 
 <template>
   <div class="flex flex-row justify-between mb-4">
-    <button 
-        v-if="simulationStore.currentStep == 1"
-        @click="clickButtonCancel()"
-        class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
+    <button
+      v-if="simulationStore.currentStep == 1"
+      @click="clickButtonCancel()"
+      class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="text-black text-base font-medium">
-          Annuler
-      </span>
+      <span class="text-black text-base font-medium"> Annuler </span>
     </button>
-    <button 
-        v-else-if="simulationStore.currentStep != 1"
-        @click="clickButtonPrevious()"
-        class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
+    <button
+      v-else-if="simulationStore.currentStep != 1"
+      @click="clickButtonPrevious()"
+      class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="text-black text-base font-medium">
-          Précédent
-      </span>
+      <span class="text-black text-base font-medium"> Précédent </span>
     </button>
     <button
       @click="clickButtonNext()"
@@ -48,7 +44,13 @@ function clickButtonNext() {
         alt=""
       />
       <span class="text-white text-base font-medium">
-        {{ simulationStore.currentStep == 1 ? 'Suivant' : (simulationStore.currentStep == 3) ? 'Continuer' : 'Valider' }}</span
+        {{
+          simulationStore.currentStep == 1
+            ? 'Suivant'
+            : simulationStore.currentStep == 3
+            ? 'Continuer'
+            : 'Valider'
+        }}</span
       >
     </button>
   </div>
