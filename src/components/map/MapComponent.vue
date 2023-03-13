@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, inject } from 'vue'
+import { onMounted, inject } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import { RENNES_LAYERNAMES, useLayersStore } from '@/stores/layers'
@@ -17,9 +17,9 @@ onMounted(async () => {
   await updateLayersVisibility()
 })
 
-onUnmounted(() => {
-  rennesApp.destroy()
-})
+// onUnmounted(() => {
+//   rennesApp.destroy()
+// })
 
 async function updateActiveMap() {
   await rennesApp.maps.setActiveMap('cesium')

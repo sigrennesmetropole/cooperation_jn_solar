@@ -45,10 +45,17 @@ function fakeNextStep() {
 </script>
 
 <template>
-  <main class="h-screen flex">
+  <main
+    :class="
+      viewStore.currentView == viewList['legal-notice']
+        ? ' h-screen flex'
+        : 'h-screen flex'
+    "
+  >
     <aside
       class="z-10 absolute"
       :class="panelStore.isRightPanel() ? 'right-0' : 'left-0'"
+      v-if="viewStore.currentView != viewList['legal-notice']"
     >
       <SidePanel :is-retractable="isLeftPanelRetractable()">
         <RouterView :key="$route.fullPath" />
@@ -56,10 +63,19 @@ function fakeNextStep() {
     </aside>
 
     <div
+      class="flex flex-row bg-neutral-100"
+      v-if="viewStore.currentView == viewList['legal-notice']"
+    >
+      <RouterView :key="$route.fullPath" />
+    </div>
+
+    <div
       class="grow"
       :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
     >
-      <MapComponent></MapComponent>
+      <MapComponent
+        v-if="viewStore.currentView != viewList['legal-notice']"
+      ></MapComponent>
     </div>
 
     <UiSearchBar
