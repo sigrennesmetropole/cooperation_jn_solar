@@ -5,7 +5,7 @@ const router = useRouter()
 </script>
 <template>
   <div
-    class="flex flex-col items-center pt-6 gap-6 border-b-[1px] border-neutral-100 w-[450px] h-[70px]"
+    class="flex flex-col items-center gap-6 border-b-[1px] border-neutral-100 h-[70px] pb-6"
   >
     <div class="flex flex-row items-stretch py-0 px-6 gap-3">
       <span class="font-dm-sans font-bold text-base text-justify w-[325px]">
@@ -16,7 +16,7 @@ const router = useRouter()
         @click="router.push('/roof-selection')"
       >
         <img :src="iconDelete" class="w-4 h-4" alt="" />
-        <span class="font-dm-sans font-normal text-xs">Quitter</span>
+        <span class="font-dm-sans font-normal text-xs ml-auto">Quitter</span>
       </button>
     </div>
   </div>
