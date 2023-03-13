@@ -7,6 +7,8 @@ import { useSimulationStore } from '@/stores/simulations'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
+import CustomContent from '@/components/simulation/CustomContent.vue'
+import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
 
 const panelsStore = usePanelsStore()
@@ -20,7 +22,6 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-start p-0 gap-2.5 h-9"></div>
   <SimulationSteps
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
@@ -30,7 +31,13 @@ onBeforeMount(() => {
     :step="simulationStore.currentStep"
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
+  <CustomContent
+    :step="simulationStore.currentStep"
+    :subStep="simulationStore.currentSubStep"
+  ></CustomContent>
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
+  <div class="h-full border-b border-neutral-200 -mx-6"></div>
+  <FooterButtons v-if="simulationStore.currentSubStep != 2"></FooterButtons>
 </template>
