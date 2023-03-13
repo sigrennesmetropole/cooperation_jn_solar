@@ -42,13 +42,7 @@ function fakeNextStep() {
 </script>
 
 <template>
-  <main
-    :class="
-      viewStore.currentView == viewList['legal-notice']
-        ? ' h-screen flex'
-        : 'h-screen flex'
-    "
-  >
+  <main class="h-screen flex">
     <aside
       class="z-10 absolute"
       :class="panelStore.isRightPanel() ? 'right-0' : 'left-0'"
@@ -61,7 +55,7 @@ function fakeNextStep() {
 
     <div
       class="flex flex-row bg-neutral-100"
-      v-if="viewStore.currentView == viewList['legal-notice']"
+      v-else-if="viewStore.currentView == viewList['legal-notice']"
     >
       <RouterView :key="$route.fullPath" />
     </div>

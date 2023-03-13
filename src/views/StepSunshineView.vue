@@ -31,10 +31,13 @@ onBeforeMount(() => {
     :step="simulationStore.currentStep"
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
-  <CustomContent :step="simulationStore.currentStep"></CustomContent>
-  <div class="h-full border-b border-neutral-200 -mx-6"></div>
+  <CustomContent
+    :step="simulationStore.currentStep"
+    :subStep="simulationStore.currentSubStep"
+  ></CustomContent>
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
-  <FooterButtons></FooterButtons>
+  <div class="h-full border-b border-neutral-200 -mx-6"></div>
+  <FooterButtons v-if="simulationStore.currentSubStep != 2"></FooterButtons>
 </template>

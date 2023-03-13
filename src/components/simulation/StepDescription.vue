@@ -22,7 +22,7 @@ const mainDescriptions = [
 
 const secondaryDescriptions = [
   null,
-  'Mon installation photovoltaique optimale :',
+  'Mon installation photovoltaïque simulée :',
   null,
 ]
 
