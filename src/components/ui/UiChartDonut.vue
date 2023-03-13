@@ -60,6 +60,10 @@ const labelFormatted = computed(() => {
 
 <template>
   <div class="relative">
+    <div
+      class="absolute z-5 top-[30px] left-[115px] w-[60px] h-[110px] bg-slate-100 rounded-r-full"
+    />
+
     <div class="absolute top-10 left-20">
       <div class="text-center">
         <span class="font-dm-sans font-bold text-3xl">
@@ -75,6 +79,7 @@ const labelFormatted = computed(() => {
         </span>
       </div>
     </div>
+
     <apexchart
       type="donut"
       width="228"
