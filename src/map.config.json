@@ -1,0 +1,116 @@
+{
+  "mapcontainer": "mapContainer",
+  "startingViewpointName": "rennes",
+  "locale": "fr",
+  "startingMapName": "cesium",
+
+  "maps": [
+    {
+      "type": "CesiumMap",
+      "name": "cesium",
+      "debugging": false,
+      "fxaa": false,
+      "enableLightning": true,
+      "allowSoftwareRendering": false,
+      "fogEnabled": true,
+      "fogEnabledMobile": true,
+      "fogDensity": 0.0002,
+      "fogDensityMobile": 0.0004,
+      "fogScreenSpaceError": 2,
+      "fogScreenSpaceErrorMobile": 4
+    }
+  ],
+  "layers": [
+    {
+      "name": "terrain",
+      "type": "TerrainLayer",
+      "url": "https://demo.virtualcitymap.de/rennes/datasource-data/b3ef17bf-fdde-4979-8f05-8b4db5811c43",
+      "activeOnStartup": true,
+      "requestVertexNormals": true,
+      "zIndex": 1
+    },
+    {
+      "type": "CesiumTilesetLayer",
+      "name": "building",
+      "url": "https://demo.virtualcitymap.de/rennes/datasource-data/f8a215a9-d0cc-4804-b284-0eac8a58924d",
+      "activeOnStartup": true,
+      "screenSpaceError": 16,
+      "screenSpaceErrorMobile": 32,
+      "zIndex": 1
+    },
+    {
+      "name": "rennesBase",
+      "type": "WMTSLayer",
+      "url": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
+      "layer": "ref_fonds:pvci_simple_gris",
+      "format": "image/png",
+      "tileMatrixSetID": "EPSG:3857",
+      "tileMatrixPrefix": "EPSG:3857:",
+      "extent": {
+        "coordinates": [
+          -2.1170142251181825, 47.78117827367612, -1.170835369910388,
+          48.39479586736775
+        ],
+        "epsg": "EPSG:4326",
+        "zIndex": 1
+      },
+      "activeOnStartup": true
+    },
+    {
+      "name": "rennesOrtho",
+      "type": "WMTSLayer",
+      "url": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
+      "layer": "raster:ortho2020",
+      "format": "image/jpeg",
+      "tileMatrixSetID": "EPSG:3857",
+      "tileMatrixPrefix": "EPSG:3857:",
+      "extent": {
+        "coordinates": [
+          -2.1170142251181825, 47.78117827367612, -1.170835369910388,
+          48.39479586736775
+        ],
+        "epsg": "EPSG:4326"
+      },
+      "activeOnStartup": false,
+      "zIndex": 1
+    }
+  ],
+  "viewpoints": [
+    {
+      "name": "rennes",
+      "cameraPosition": [-1.7219, 48.09, 30000],
+      "groundPosition": [-1.7219, 48.09, 30000],
+      "distance": 20,
+      "pitch": -90,
+      "roll": 0,
+      "heading": 0,
+      "animate": true,
+      "type": "Viewpoint",
+      "duration": 0.5,
+      "properties": {
+        "title": {
+          "en": "Rennes",
+          "fr": "Rennes"
+        }
+      }
+    },
+    {
+      "name": "home",
+      "cameraPosition": [-1.7219, 48.09, 30000],
+      "groundPosition": [-1.7219, 48.09, 30000],
+      "distance": 37039,
+      "pitch": -90,
+      "roll": 0,
+      "heading": 0,
+      "animate": true,
+      "type": "Viewpoint",
+      "duration": 0.5,
+      "properties": {
+        "title": {
+          "en": "Rennes",
+          "fr": "Rennes"
+        }
+      }
+    }
+  ]
+}
