@@ -10,6 +10,10 @@ function clickButtonCancel() {
   router.push('/roof-selection')
 }
 
+function clickButtonPrevious() {
+  simulationStore.goToPreviousStep()
+}
+
 function clickButtonNext() {
   simulationStore.goToNextStep()
 }
@@ -17,21 +21,43 @@ function clickButtonNext() {
 
 <template>
   <div class="flex flex-row justify-between mb-4">
-    <button
-      @click="clickButtonCancel()"
-      class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
+    <button 
+        v-if="simulationStore.currentStep == 1"
+        @click="clickButtonCancel()"
+        class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
       <span class="text-black text-base font-medium">
-        {{ simulationStore.currentStep == 1 ? 'Annuler' : 'Précédent' }}
+          Annuler
       </span>
     </button>
+    <button 
+        v-else="simulationStore.currentStep != 1"
+        @click="clickButtonPrevious()"
+        class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
+    >
+      <span class="text-black text-base font-medium">
+          Précédent
+      </span>
+    </button>
+
     <!-- While waiting for the UiButton import from common-ui -->
     <!-- <UiButton
+            v-if="simulationStore.currentStep == 1"
+            @click="clickButtonCancel()"
             class="ui-btn-regular-size ui-btn-secondary"
             :disabled="false"
             >
-            {{ simulationStore.currentStep == 1 ? 'Annuler' : 'Précédent' }}
-        </UiButton> -->
+            Annuler
+        </UiButton>
+        <UiButton
+            v-else="simulationStore.currentStep != 1"
+            @click="clickButtonPrevious()"
+            class="ui-btn-regular-size ui-btn-secondary"
+            :disabled="false"
+            >
+            Précédent
+        </UiButton>
+      -->
     <button
       @click="clickButtonNext()"
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
@@ -42,7 +68,7 @@ function clickButtonNext() {
         alt=""
       />
       <span class="text-white text-base font-medium">
-        {{ simulationStore.currentStep == 1 ? 'Suivant' : 'Valider' }}</span
+        {{ simulationStore.currentStep == 1 ? 'Suivant' : (simulationStore.currentStep == 3) ? 'Continuer' : 'Valider' }}</span
       >
     </button>
     <!-- While waiting for the UiButton import from common-ui -->
@@ -51,7 +77,7 @@ function clickButtonNext() {
             :disabled="false"
             >
             <img class="" src="../../assets/icons/interface-arrows-button-right--arrow-right-keyboard.svg" alt="" />
-            {{ simulationStore.currentStep == 1 ? 'Suivant' : 'Valider' }} 
+            {{ simulationStore.currentStep == 1 ? 'Suivant' : (simulationStore.currentStep == 3) ? 'Continuer' : 'Valider' }} 
         </UiButton> -->
   </div>
 </template>
