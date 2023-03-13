@@ -2,17 +2,10 @@
 import step2 from '@/assets/illustrations/Steps.jpg'
 import validation from '@/assets/icons/interface-validation.svg'
 import deleted from '@/assets/icons/interface-delete.svg'
-
-const props = defineProps({
-  step: {
-    type: Number,
-    required: true,
-  },
-})
 </script>
 
 <template>
-  <div v-if="props.step === 2">
+  <div>
     <img class="w-full" :src="step2" alt="" />
     <div class="mt-8">
       <div class="flex flex-row items-center mb-2">

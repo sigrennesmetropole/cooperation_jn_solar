@@ -7,7 +7,7 @@ import { useSimulationStore } from '@/stores/simulations'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
-import CustomContent from '@/components/simulation/CustomContent.vue'
+import ExplanationSelectionObstacles from '@/components/simulation/ExplanationSelectionObstacles.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
 
@@ -31,7 +31,10 @@ onBeforeMount(() => {
     :step="simulationStore.currentStep"
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
-  <CustomContent :step="simulationStore.currentStep"></CustomContent>
+  <ExplanationSelectionObstacles
+    v-if="simulationStore.currentStep === 2"
+    :step="simulationStore.currentStep"
+  ></ExplanationSelectionObstacles>
   <div class="h-full border-b border-neutral-200 -mx-6"></div>
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
