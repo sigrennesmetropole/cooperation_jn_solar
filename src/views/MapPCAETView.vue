@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FooterArea } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import FooterAreaLink from '@/components/home/FooterAreaLink.vue'
 import TextDidYouKnow from '@/components/pcaet/TextDidYouKnow.vue'
 import FigureEnergy from '@/components/pcaet/FigureEnergy.vue'
 import { useViewsStore } from '@/stores/views'
@@ -19,5 +19,5 @@ onBeforeMount(async () => {
 <template>
   <TextDidYouKnow class="mt-9"></TextDidYouKnow>
   <FigureEnergy></FigureEnergy>
-  <FooterArea class="mt-auto"></FooterArea>
+  <FooterAreaLink></FooterAreaLink>
 </template>

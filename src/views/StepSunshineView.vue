@@ -32,9 +32,9 @@ onBeforeMount(() => {
     :substep="simulationStore.currentSubStep"
   ></StepDescription>
   <CustomContent :step="simulationStore.currentStep"></CustomContent>
+  <div class="h-full border-b border-neutral-200 -mx-6"></div>
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
-  <div class="h-full border-b border-neutral-200 -mx-6"></div>
   <FooterButtons></FooterButtons>
 </template>
