@@ -10,6 +10,7 @@ const state = reactive({
 
 onMounted(async () => {
   state.roofSurfaces = await apiClientService.fetchRoofSurfaceFixtures()
+  state.roofSurfaces.sort((a, b) => (a.favorable < b.favorable ? 1 : -1))
 })
 </script>
 
