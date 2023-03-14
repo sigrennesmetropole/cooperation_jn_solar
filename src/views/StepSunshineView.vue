@@ -40,10 +40,15 @@ onBeforeMount(() => {
   <ExplanationSelectionObstacles
     v-else-if="simulationStore.currentStep === 2"
     :step="simulationStore.currentStep"
+    :subStep="simulationStore.currentSubStep"
   ></ExplanationSelectionObstacles>
   <InformationsEnergySaving
     v-else-if="simulationStore.currentStep === 3"
   ></InformationsEnergySaving>
   <div class="h-full border-b border-neutral-200 -mx-6"></div>
-  <FooterButtons></FooterButtons>
+  <FooterButtons
+    v-if="
+      simulationStore.currentSubStep != 2 && simulationStore.currentSubStep != 2
+    "
+  ></FooterButtons>
 </template>

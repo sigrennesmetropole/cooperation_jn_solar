@@ -2,10 +2,21 @@
 import step2 from '@/assets/illustrations/Steps.jpg'
 import validation from '@/assets/icons/interface-validation.svg'
 import deleted from '@/assets/icons/interface-delete.svg'
+import BoxStep3 from '@/components/simulation/BoxStep3.vue'
+const props = defineProps({
+  step: {
+    type: Number,
+    required: true,
+  },
+  subStep: {
+    type: Number,
+    required: true,
+  },
+})
 </script>
 
 <template>
-  <div>
+  <div v-if="props.step === 2 && props.subStep === 1">
     <img class="w-full" :src="step2" alt="" />
     <div class="mt-8">
       <div class="flex flex-row items-center mb-2">
@@ -29,5 +40,9 @@ import deleted from '@/assets/icons/interface-delete.svg'
         </p>
       </div>
     </div>
+  </div>
+  <div v-if="props.step === 2 && props.subStep === 2">
+    <div></div>
+    <BoxStep3></BoxStep3>
   </div>
 </template>
