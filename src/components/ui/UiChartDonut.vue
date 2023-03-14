@@ -56,10 +56,28 @@ const labelFormatted = computed(() => {
   }
   return part1 + '<br>' + part2
 })
+
+const styleInsideGraph = computed(() => {
+  const total = parseInt(props.dataGraph.labelTotalValue)
+  const areaToFill = 100 - total
+  const areaToFillInDeg = areaToFill * 3.6
+  let style = ` 
+    border-radius: 50%;
+    background: conic-gradient( 
+      #F1F5F9 0deg ${areaToFillInDeg}deg,
+      white ${areaToFillInDeg}deg 360deg
+    );`
+  return style
+})
 </script>
 
 <template>
   <div class="relative">
+    <div
+      class="absolute z-5 top-[30px] left-[67px] w-[100px] h-[110px]"
+      :style="styleInsideGraph"
+    ></div>
+
     <div class="absolute top-10 left-20">
       <div class="text-center">
         <span class="font-dm-sans font-bold text-3xl">
@@ -75,6 +93,7 @@ const labelFormatted = computed(() => {
         </span>
       </div>
     </div>
+
     <apexchart
       type="donut"
       width="228"
