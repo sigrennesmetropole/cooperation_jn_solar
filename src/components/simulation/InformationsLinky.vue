@@ -1,0 +1,41 @@
+<script setup lang="ts">
+import enedisSignature from '@/assets/illustrations/enedis-signature.png'
+import enedisSpace from '@/assets/illustrations/enedis-personal-space.png'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goToEnedisLogin() {
+  router.push('/')
+}
+</script>
+
+<template>
+  <div
+    class="flex flex-col gap-6 border border-slate-200 rounded-lg bg-slate-50 h-[451px] w-full px-4 py-6 font-dm-sans text-sm font-normal"
+  >
+    <p class="text-base font-medium">Comment connecter mon compteur Linky ?</p>
+    <div class="flex flex-row gap-4">
+      <img :src="enedisSignature" class="w-[110px] h-[34.43px] my-auto" />
+      <p>Enedis gère le réseau d'électricité jusqu'au compteur.</p>
+    </div>
+    <p>
+      Pour calculer vos économies d'énergie, nous devons accéder à vos données
+      Linky gérées par Enedis.
+    </p>
+    <p>
+      En cliquant sur le bouton, vous accéderez à votre espace client Enedis où
+      vous pourrez autoriser Enedis à nous transmettre votre consommation
+      annuelle.
+    </p>
+    <img
+      :src="enedisSpace"
+      class="mx-auto cursor-pointer"
+      @click="goToEnedisLogin()"
+    />
+    <p class="text-center">
+      Vous pourrez changer d'avis et révoquer <br />votre autorisation à tout
+      moment.
+    </p>
+  </div>
+</template>

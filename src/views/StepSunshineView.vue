@@ -12,6 +12,7 @@ import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
 import LeaveButton from '@/components/simulation/LeaveButton.vue'
 import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
+import InformationsLinky from '@/components/simulation/InformationsLinky.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -44,6 +45,7 @@ onBeforeMount(() => {
   <InformationsEnergySaving
     v-else-if="simulationStore.currentStep === 3"
   ></InformationsEnergySaving>
+  <InformationsLinky></InformationsLinky>
   <div class="h-full border-b border-neutral-200 -mx-6"></div>
   <FooterButtons></FooterButtons>
 </template>
