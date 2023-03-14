@@ -10,6 +10,7 @@ import StepDescription from '@/components/simulation/StepDescription.vue'
 import ExplanationSelectionObstacles from '@/components/simulation/ExplanationSelectionObstacles.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
+import LeaveButton from '@/components/simulation/LeaveButton.vue'
 import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
 
 const panelsStore = usePanelsStore()
@@ -23,6 +24,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
+  <LeaveButton></LeaveButton>
   <SimulationSteps
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
