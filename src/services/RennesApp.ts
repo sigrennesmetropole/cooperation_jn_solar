@@ -1,4 +1,10 @@
-import { VcsApp, Context, CesiumMap, Viewpoint } from '@vcmap/core'
+import {
+  VcsApp,
+  Context,
+  CesiumMap,
+  Viewpoint,
+  OpenlayersMap,
+} from '@vcmap/core'
 import { useMapStore } from '@/stores/map'
 
 export class RennesApp extends VcsApp {
@@ -26,5 +32,9 @@ export class RennesApp extends VcsApp {
 
   get3DMap(): CesiumMap {
     return this.maps.getByKey('cesium') as CesiumMap
+  }
+
+  get2DMap(): OpenlayersMap {
+    return this.maps.getByKey('ol') as OpenlayersMap
   }
 }
