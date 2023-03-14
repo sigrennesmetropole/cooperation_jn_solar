@@ -71,7 +71,10 @@ const heightClass = computed(() => {
     <CompassComponent />
   </div>
 
-  <div class="absolute right-[130px] bottom-12">
+  <div
+    class="absolute right-[130px] bottom-12"
+    v-if="!panelStore.isRightPanel()"
+  >
     <UiDescribeButtonCompass></UiDescribeButtonCompass>
   </div>
 </template>
