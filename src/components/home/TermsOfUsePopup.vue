@@ -20,7 +20,7 @@
           </button>
         </div>
         <div
-          class="relative flex flex-col mx-auto mt-13 pr-8 rounded-lg gap-8 overflow-auto scrollbar-thin scrollbar-thumb-red-600 scrollbar-track-neutral-400"
+          class="relative flex flex-col mx-auto mt-13 pr-8 rounded-lg gap-8 overflow-auto scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-red-600 scrollbar-track-neutral-400"
           style="background-color: rgba(255, 255, 255, 1)"
         >
           <p>
