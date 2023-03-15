@@ -18,13 +18,13 @@ export const useSimulationStore = defineStore('simulation', () => {
     inclinaison: 47.9,
   })
   const availableSteps = [
-    { step: 1, subStep: 1 },
-    { step: 2, subStep: 1 },
-    { step: 2, subStep: 2 },
-    { step: 3, subStep: 1 },
-    { step: 3, subStep: 2 },
-    { step: 3, subStep: 3 },
-    { step: 3, subStep: 4 },
+    { step: 1, subStep: 1 }, // Choose roof side
+    { step: 2, subStep: 1 }, // Select obstacle
+    { step: 2, subStep: 2 }, // Select the number of solar panel
+    { step: 3, subStep: 1 }, // Energy saving information
+    { step: 3, subStep: 2 }, // Select input invoice or connect to Linky
+    { step: 3, subStep: 3 }, // Input tarif/invoice
+    { step: 3, subStep: 4 }, // Connect to Linky meter
   ]
 
   function setCurrentStep(step: number) {

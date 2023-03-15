@@ -54,9 +54,17 @@ onBeforeMount(() => {
     :roof-surface="simulationStore.roofSurface"
   >
   </SimulationResult>
-  <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
+  <SavingsStep
+    v-else-if="
+      simulationStore.currentStep === 3 && simulationStore.currentSubStep === 1
+    "
+  ></SavingsStep>
 
-  <InformationsLinky></InformationsLinky>
+  <InformationsLinky
+    v-else-if="
+      simulationStore.currentStep === 3 && simulationStore.currentSubStep === 4
+    "
+  ></InformationsLinky>
 
   <div class="h-full border-b border-neutral-200 -mx-6"></div>
   <FooterButtons
