@@ -4,14 +4,14 @@ import { usePanelsStore } from '@/stores/panels'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
+import LeaveButton from '@/components/simulation/LeaveButton.vue'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
-import ExplanationSelectionObstacles from '@/components/simulation/ExplanationSelectionObstacles.vue'
-import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
-import LeaveButton from '@/components/simulation/LeaveButton.vue'
-import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
+import SetUpStep from '@/components/simulation/SetUpStep.vue'
+import SavingsStep from '@/components/simulation/SavingsStep.vue'
+import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import InformationsLinky from '@/components/simulation/InformationsLinky.vue'
 
 const panelsStore = usePanelsStore()
@@ -38,14 +38,13 @@ onBeforeMount(() => {
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
-  <ExplanationSelectionObstacles
-    v-else-if="simulationStore.currentStep === 2"
-    :step="simulationStore.currentStep"
-  ></ExplanationSelectionObstacles>
-  <InformationsEnergySaving
-    v-else-if="simulationStore.currentStep === 3"
-  ></InformationsEnergySaving>
+  <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
+  <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
   <InformationsLinky></InformationsLinky>
   <div class="h-full border-b border-neutral-200 -mx-6"></div>
-  <FooterButtons></FooterButtons>
+  <FooterButtons
+    v-if="
+      simulationStore.currentSubStep != 2 && simulationStore.currentSubStep != 2
+    "
+  ></FooterButtons>
 </template>
