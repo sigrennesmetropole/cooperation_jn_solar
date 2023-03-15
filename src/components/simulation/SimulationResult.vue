@@ -127,7 +127,7 @@ const currentPower = computed(() =>
       <div class="flex flex-col p-0 gap-2 items-center grow">
         <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
         <p class="font-dm-sans text-base font-bold">
-          {{ props.roofSurface ? props.roofSurface.incliniasion : 'N/A' }}°
+          {{ props.roofSurface ? props.roofSurface.inclinaison : 'N/A' }}°
         </p>
       </div>
       <div class="flex flex-col p-0 gap-2 items-end grow">

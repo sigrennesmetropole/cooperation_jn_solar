@@ -3,5 +3,5 @@ export type RoofSurfaceModel = {
   favorable: number
   total: number
   orientation: string
-  incliniasion: number
+  inclinaison: number
 }
