@@ -14,10 +14,12 @@ import { useViewsStore } from '@/stores/views'
 import { viewList } from '@/model/views.model'
 import type { RennesApp } from '@/services/RennesApp'
 import { useRouter } from 'vue-router'
+import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const viewStore = useViewsStore()
 const router = useRouter()
+const panelStore = usePanelsStore()
 
 async function zoom(out = false, zoomFactor = 2): Promise<void> {
   const activeMap = rennesApp.maps.activeMap
@@ -50,6 +52,7 @@ const heightClass = computed(() => {
   <div
     :class="heightClass"
     class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center overflow-hidden w-32 select-none"
+    :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
   >
     <UiIconButton
       class="rounded-lg"
@@ -68,7 +71,10 @@ const heightClass = computed(() => {
     <CompassComponent />
   </div>
 
-  <div class="absolute right-[130px] bottom-12">
+  <div
+    class="absolute right-[130px] bottom-12"
+    v-if="!panelStore.isRightPanel()"
+  >
     <UiDescribeButtonCompass></UiDescribeButtonCompass>
   </div>
 </template>

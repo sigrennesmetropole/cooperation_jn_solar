@@ -7,8 +7,13 @@ import { useSimulationStore } from '@/stores/simulations'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
+import ExplanationSelectionObstacles from '@/components/simulation/ExplanationSelectionObstacles.vue'
+import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
+
 import SimulationResult from '@/components/simulation/SimulationResult.vue'
+import LeaveButton from '@/components/simulation/LeaveButton.vue'
+import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -21,7 +26,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-start p-0 gap-2.5 h-9"></div>
+  <LeaveButton></LeaveButton>
   <SimulationSteps
     class="h-[76px]"
     :selected-step="simulationStore.currentStep"
@@ -34,10 +39,24 @@ onBeforeMount(() => {
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
+
+  <ExplanationSelectionObstacles
+    v-else-if="
+      simulationStore.currentStep === 2 && simulationStore.currentSubStep === 1
+    "
+    :step="simulationStore.currentStep"
+  ></ExplanationSelectionObstacles>
   <SimulationResult
-    v-if="simulationStore.currentStep === 3"
+    v-if="
+      simulationStore.currentStep === 2 && simulationStore.currentSubStep === 2
+    "
     :max-num-solar-panel="simulationStore.maxNumberSolarPanel"
     :roof-surface="simulationStore.roofSurface"
   >
   </SimulationResult>
+  <InformationsEnergySaving
+    v-else-if="simulationStore.currentStep === 3"
+  ></InformationsEnergySaving>
+  <div class="h-full border-b border-neutral-200 -mx-6"></div>
+  <FooterButtons></FooterButtons>
 </template>
