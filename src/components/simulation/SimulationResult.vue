@@ -34,7 +34,7 @@ const currentPower = computed(() =>
 
 <template>
   <div
-    class="box-border flex flex-col p-5 border-[1px] border-slate-200 rounded-lg"
+    class="box-border flex flex-col p-5 border-[1px] border-slate-200 rounded-lg gap-4"
   >
     <div class="flex flex-row justify-center items-center pt-4 px-0 pb-6">
       <UiIconButton
