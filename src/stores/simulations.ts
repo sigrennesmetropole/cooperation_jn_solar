@@ -27,45 +27,34 @@ export const useSimulationStore = defineStore('simulation', () => {
   }
 
   function setCurrentSubStep(subStep: number) {
-    if (subStep < 0) {
-      currentSubStep.value = 0
-    } else if (subStep > 2) {
-      currentSubStep.value = 2
-    } else {
-      currentSubStep.value = subStep
-    }
+    currentSubStep.value = subStep
+  }
+
+  function indexOfCurrentStepAndSubStep() {
+    return availableSteps.findIndex((availableStep) => {
+      return (
+        availableStep.step == currentStep.value &&
+        availableStep.subStep == currentSubStep.value
+      )
+    })
   }
 
   function goToPreviousStep() {
-    for (const index in availableSteps) {
-      const availableStep = availableSteps[index]
-      if (
-        currentStep.value == availableStep.step &&
-        currentSubStep.value == availableStep.subStep
-      ) {
-        const previousIndex: number = parseInt(index) - 1
-        const previousStep = availableSteps[previousIndex]
-        setCurrentStep(previousStep.step)
-        setCurrentSubStep(previousStep.subStep)
-        break
-      }
+    const currentIndex = indexOfCurrentStepAndSubStep()
+    if (currentIndex - 1 < 0) {
+      return
     }
+    setCurrentStep(availableSteps[currentIndex - 1].step)
+    setCurrentSubStep(availableSteps[currentIndex - 1].subStep)
   }
 
   function goToNextStep() {
-    for (const index in availableSteps) {
-      const availableStep = availableSteps[index]
-      if (
-        currentStep.value == availableStep.step &&
-        currentSubStep.value == availableStep.subStep
-      ) {
-        const nextIndex: number = parseInt(index) + 1
-        const nextStep = availableSteps[nextIndex]
-        setCurrentStep(nextStep.step)
-        setCurrentSubStep(nextStep.subStep)
-        break
-      }
+    const currentIndex = indexOfCurrentStepAndSubStep()
+    if (currentIndex + 1 >= availableSteps.length) {
+      return
     }
+    setCurrentStep(availableSteps[currentIndex + 1].step)
+    setCurrentSubStep(availableSteps[currentIndex + 1].subStep)
   }
 
   return {
