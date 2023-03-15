@@ -6,6 +6,16 @@ export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
   const currentSubStep: Ref<number> = ref(1)
 
+  const availableSteps = [
+    { step: 1, subStep: 1 },
+    { step: 2, subStep: 1 },
+    { step: 2, subStep: 2 },
+    { step: 3, subStep: 1 },
+    { step: 3, subStep: 2 },
+    { step: 3, subStep: 3 },
+    { step: 3, subStep: 4 },
+  ]
+
   function setCurrentStep(step: number) {
     if (step < 0) {
       currentStep.value = 0
@@ -27,11 +37,35 @@ export const useSimulationStore = defineStore('simulation', () => {
   }
 
   function goToPreviousStep() {
-    setCurrentStep(currentStep.value - 1)
+    for (const index in availableSteps) {
+      const availableStep = availableSteps[index]
+      if (
+        currentStep.value == availableStep.step &&
+        currentSubStep.value == availableStep.subStep
+      ) {
+        const previousIndex: number = parseInt(index) - 1
+        const previousStep = availableSteps[previousIndex]
+        setCurrentStep(previousStep.step)
+        setCurrentSubStep(previousStep.subStep)
+        break
+      }
+    }
   }
 
   function goToNextStep() {
-    setCurrentStep(currentStep.value + 1)
+    for (const index in availableSteps) {
+      const availableStep = availableSteps[index]
+      if (
+        currentStep.value == availableStep.step &&
+        currentSubStep.value == availableStep.subStep
+      ) {
+        const nextIndex: number = parseInt(index) + 1
+        const nextStep = availableSteps[nextIndex]
+        setCurrentStep(nextStep.step)
+        setCurrentSubStep(nextStep.subStep)
+        break
+      }
+    }
   }
 
   return {

@@ -3,41 +3,15 @@ import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const simulationStore = useSimulationStore()
+
 function clickButtonCancel() {
   router.push('/roof-selection')
 }
 function clickButtonPrevious() {
-  if (simulationStore.currentStep == 3) {
-    simulationStore.setCurrentSubStep(2)
-    simulationStore.goToPreviousStep()
-  } else if (
-    simulationStore.currentStep == 2 &&
-    simulationStore.currentSubStep == 2
-  ) {
-    simulationStore.setCurrentSubStep(1)
-  } else if (
-    simulationStore.currentStep == 2 &&
-    simulationStore.currentSubStep == 1
-  ) {
-    simulationStore.goToPreviousStep()
-  }
+  simulationStore.goToPreviousStep()
 }
 function clickButtonNext() {
-  if (simulationStore.currentStep == 1) {
-    simulationStore.setCurrentSubStep(1)
-    simulationStore.goToNextStep()
-  } else if (
-    simulationStore.currentStep == 2 &&
-    simulationStore.currentSubStep == 1
-  ) {
-    simulationStore.setCurrentSubStep(2)
-  } else if (
-    simulationStore.currentStep == 2 &&
-    simulationStore.currentSubStep == 2
-  ) {
-    simulationStore.setCurrentSubStep(1)
-    simulationStore.goToNextStep()
-  }
+  simulationStore.goToNextStep()
 }
 </script>
 
