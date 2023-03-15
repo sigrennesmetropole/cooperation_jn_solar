@@ -24,7 +24,7 @@ function goToEnedisLogin() {
       Linky gérées par Enedis.
     </p>
     <p>
-      En cliquant sur le bouton, vous accéderez à votre espace client Enedis où
+      En cliquant sur ce bouton, vous accéderez à votre espace client Enedis où
       vous pourrez autoriser Enedis à nous transmettre votre consommation
       annuelle.
     </p>
