@@ -1,18 +1,15 @@
 <script lang="ts" setup>
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
   router.push('/roof-selection')
 }
-
 function clickButtonPrevious() {
   simulationStore.goToPreviousStep()
 }
-
 function clickButtonNext() {
   simulationStore.goToNextStep()
 }
