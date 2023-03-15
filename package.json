@@ -31,7 +31,7 @@
     "@sigrennesmetropole/cooperation_jn_common_ui": "0.0.12",
     "@tailwindcss/forms": "^0.5.3",
     "@turf/turf": "^6.5.0",
-    "@vcmap/core": "^5.0.0-rc.25",
+    "@vcmap/core": "5.0.0-rc.25",
     "apexcharts": "^3.37.0",
     "node-fetch": "^3.3.0",
     "ol": "^7.1.0",

@@ -9,17 +9,17 @@ import {
 } from '@/stores/layers'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
-import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useSimulationStore } from '@/stores/simulations'
 import { useAddressStore } from '@/stores/address'
-import { buffer, point, squareGrid, bbox, FeatureCollection } from '@turf/turf'
-import { GeoJSONLayer } from '@vcmap/core'
-import { GeoJSON } from 'ol/format'
-import type { Coordinate } from 'ol/coordinate'
+import {
+  addRoofInteractionOn2dMap,
+  displayGridOnMap,
+  generateSquareGrid,
+  removeRoofInteractionOn2dMap,
+} from '@/services/roofInteraction'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
-const panelStore = usePanelsStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
 
@@ -52,30 +52,21 @@ async function setLayerVisible(layerName: string, visible: boolean) {
   }
 }
 
-async function displayGridOnMap(geojson: FeatureCollection) {
-  const gridLayer: GeoJSONLayer = rennesApp.layers.getByKey(
-    RENNES_LAYER.roofSquaresArea
-  ) as GeoJSONLayer
-  const format = new GeoJSON()
-  const marker = format.readFeatures(geojson)
-  gridLayer.addFeatures(marker)
-}
-async function generateSquareGrid(geoloc: Coordinate) {
-  console.log('Generate Square grid', point(geoloc))
-  let buffered = buffer(point(geoloc), 500, { units: 'centimeters' })
-  let bboxOnRoof = bbox(buffered)
-  let grid = squareGrid(bboxOnRoof, 90, { units: 'centimeters' })
-  await displayGridOnMap(grid)
-}
-
 simulationStore.$subscribe(async () => {
-  if (simulationStore.currentStep === 2) {
+  if (
+    simulationStore.currentStep === 2 &&
+    simulationStore.currentSubStep == 1
+  ) {
     await rennesApp.maps.setActiveMap('ol')
     if (addressStore.geolocAddress !== null) {
-      await generateSquareGrid(addressStore.geolocAddress)
+      let grid = await generateSquareGrid(rennesApp, addressStore.geolocAddress)
+      await displayGridOnMap(rennesApp, grid)
+      await addRoofInteractionOn2dMap(rennesApp)
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
     }
   } else {
+    await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    await removeRoofInteractionOn2dMap(rennesApp)
     await rennesApp.maps.setActiveMap('cesium')
   }
 })

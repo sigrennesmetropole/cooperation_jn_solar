@@ -4,8 +4,13 @@ import {
   CesiumMap,
   Viewpoint,
   OpenlayersMap,
+  SelectMultiFeatureInteraction,
+  GeoJSONLayer,
+  EventType,
 } from '@vcmap/core'
+import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
+import { RENNES_LAYER } from '@/stores/layers'
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -28,6 +33,12 @@ export class RennesApp extends VcsApp {
         homeViewPoint.distance
       mapStore.isInitializeMap = true
     }
+    this.maps.eventHandler.featureInteraction.setActive(EventType.CLICKMOVE)
+    this.maps.eventHandler.addPersistentInteraction(
+      new SelectMultiFeatureInteraction(
+        this.layers.getByKey(RENNES_LAYER.roofSquaresArea) as GeoJSONLayer
+      )
+    )
   }
 
   get3DMap(): CesiumMap {
@@ -36,5 +47,9 @@ export class RennesApp extends VcsApp {
 
   get2DMap(): OpenlayersMap {
     return this.maps.getByKey('ol') as OpenlayersMap
+  }
+
+  getOpenlayerMap(): Map {
+    return this.get2DMap().olMap as Map
   }
 }
