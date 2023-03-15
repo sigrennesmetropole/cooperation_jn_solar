@@ -17,13 +17,7 @@ export const useSimulationStore = defineStore('simulation', () => {
   ]
 
   function setCurrentStep(step: number) {
-    if (step < 0) {
-      currentStep.value = 0
-    } else if (step > 3) {
-      currentStep.value = 3
-    } else {
-      currentStep.value = step
-    }
+    currentStep.value = step
   }
 
   function setCurrentSubStep(subStep: number) {
