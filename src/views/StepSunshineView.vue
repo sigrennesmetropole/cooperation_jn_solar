@@ -12,11 +12,28 @@ import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.v
 import SetUpStep from '@/components/simulation/SetUpStep.vue'
 import SavingsStep from '@/components/simulation/SavingsStep.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
-import InformationsLinky from '@/components/simulation/InformationsLinky.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
+
+function displayFooter() {
+  if (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 2) {
+    return false
+  } else if (
+    simulationStore.currentStep == 3 &&
+    simulationStore.currentSubStep == 2
+  ) {
+    return false
+  } else if (
+    simulationStore.currentStep == 3 &&
+    simulationStore.currentSubStep == 4
+  ) {
+    return false
+  } else {
+    return true
+  }
+}
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['step-sunshine'])
@@ -40,11 +57,5 @@ onBeforeMount(() => {
   ></RoofAccordionOptions>
   <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
   <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
-  <InformationsLinky></InformationsLinky>
-  <div class="h-full border-b border-neutral-200 -mx-6"></div>
-  <FooterButtons
-    v-if="
-      simulationStore.currentSubStep != 2 && simulationStore.currentSubStep != 2
-    "
-  ></FooterButtons>
+  <FooterButtons v-if="displayFooter()"></FooterButtons>
 </template>
