@@ -7,6 +7,7 @@ export const RENNES_LAYER = {
   rennesBase: 'rennesBase',
   customLayerSearchAddress: 'customLayerSearchAddress',
   roofSquaresArea: 'roofSquaresArea',
+  roofShape: 'roofShape',
 }
 
 export const RENNES_LAYERNAMES = [
@@ -14,6 +15,7 @@ export const RENNES_LAYERNAMES = [
   RENNES_LAYER.rennesBase,
   RENNES_LAYER.customLayerSearchAddress,
   RENNES_LAYER.roofSquaresArea,
+  RENNES_LAYER.roofShape,
 ] as const
 
 export type RennesLayer = (typeof RENNES_LAYERNAMES)[number]
@@ -23,6 +25,7 @@ export const useLayersStore = defineStore('layers', () => {
   const visibilities: Ref<LayersVisibility> = ref({
     rennesOrtho: true,
     rennesBase: false,
+    roofSquaresArea: false,
   })
 
   function enableLayer(name: RennesLayer) {
@@ -35,7 +38,7 @@ export const useLayersStore = defineStore('layers', () => {
   function disableLayer(name: RennesLayer) {
     visibilities.value = {
       ...visibilities.value,
-      [name]: true,
+      [name]: false,
     }
   }
 

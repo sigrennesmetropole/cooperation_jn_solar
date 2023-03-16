@@ -14,7 +14,11 @@ import { useAddressStore } from '@/stores/address'
 import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
+  displayRoofShape,
+  generateRandomRoofShape,
   generateSquareGrid,
+  removeRoof2dShape,
+  removeRoofGrid,
   removeRoofInteractionOn2dMap,
 } from '@/services/roofInteraction'
 
@@ -59,14 +63,19 @@ simulationStore.$subscribe(async () => {
   ) {
     await rennesApp.maps.setActiveMap('ol')
     if (addressStore.geolocAddress !== null) {
-      let grid = await generateSquareGrid(rennesApp, addressStore.geolocAddress)
-      await displayGridOnMap(rennesApp, grid)
-      await addRoofInteractionOn2dMap(rennesApp)
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
+      await layerStore.enableLayer(RENNES_LAYER.roofShape)
+      let roofShape = generateRandomRoofShape(addressStore.geolocAddress)
+      displayRoofShape(rennesApp, roofShape)
+      let grid = await generateSquareGrid(rennesApp, roofShape)
+      displayGridOnMap(rennesApp, grid)
+      addRoofInteractionOn2dMap(rennesApp)
     }
   } else {
     await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
-    await removeRoofInteractionOn2dMap(rennesApp)
+    removeRoofInteractionOn2dMap(rennesApp)
+    removeRoofGrid(rennesApp)
+    removeRoof2dShape(rennesApp)
     await rennesApp.maps.setActiveMap('cesium')
   }
 })

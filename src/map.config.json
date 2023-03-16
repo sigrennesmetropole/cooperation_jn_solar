@@ -88,6 +88,22 @@
       "name": "roofSquaresArea",
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
+      "zIndex": 10,
+      "style": {
+        "type": "VectorStyleItem",
+        "fill": {
+          "color": "#fff"
+        },
+        "stroke": {
+          "color": "#FF00FF",
+          "width": 2
+        }
+      }
+    },
+    {
+      "name": "roofShape",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
       "zIndex": 1
     }
   ],
