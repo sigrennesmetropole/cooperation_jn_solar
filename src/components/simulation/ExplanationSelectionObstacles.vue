@@ -7,7 +7,7 @@ import deleted from '@/assets/icons/interface-delete.svg'
 <template>
   <div>
     <img class="w-full" :src="step2" alt="" />
-    <div class="mt-8">
+    <div class="mt-6">
       <div class="flex flex-row items-center mb-2">
         <div
           class="flex flex-row justify-center items-center bg-lime-200 rounded-full w-2.5 h-2.5 mr-2"

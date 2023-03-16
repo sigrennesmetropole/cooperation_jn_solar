@@ -25,26 +25,29 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <LeaveButton></LeaveButton>
-  <SimulationSteps
-    class="h-[76px]"
-    :selected-step="simulationStore.currentStep"
-  ></SimulationSteps>
-  <StepTitle :step="simulationStore.currentStep"></StepTitle>
-  <StepDescription
-    :step="simulationStore.currentStep"
-    :substep="simulationStore.currentSubStep"
-  ></StepDescription>
-  <RoofAccordionOptions
-    v-if="simulationStore.currentStep === 1"
-  ></RoofAccordionOptions>
-  <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
-  <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
-  <InformationsLinky></InformationsLinky>
-  <div class="h-full border-b border-neutral-200 -mx-6"></div>
-  <FooterButtons
-    v-if="
-      simulationStore.currentSubStep != 2 && simulationStore.currentSubStep != 2
-    "
-  ></FooterButtons>
+  <div class="flex flex-col gap-6">
+    <LeaveButton></LeaveButton>
+    <SimulationSteps
+      class="h-[76px]"
+      :selected-step="simulationStore.currentStep"
+    ></SimulationSteps>
+    <StepTitle :step="simulationStore.currentStep"></StepTitle>
+    <StepDescription
+      :step="simulationStore.currentStep"
+      :substep="simulationStore.currentSubStep"
+    ></StepDescription>
+    <RoofAccordionOptions
+      v-if="simulationStore.currentStep === 1"
+    ></RoofAccordionOptions>
+    <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
+    <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
+    <InformationsLinky></InformationsLinky>
+    <div class="h-full border-b border-neutral-200 -mx-6"></div>
+    <FooterButtons
+      v-if="
+        simulationStore.currentSubStep != 2 &&
+        simulationStore.currentSubStep != 2
+      "
+    ></FooterButtons>
+  </div>
 </template>
