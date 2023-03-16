@@ -35,6 +35,11 @@ const routes = [
     name: 'legal-notice',
     component: () => import('../views/LegalNoticeView.vue'),
   },
+  {
+    path: '/simulation',
+    name: 'simulation',
+    component: () => import('../views/SimulationAutocalsolView.vue'),
+  },
   // TODO: Create 404 route?
 ]
 
