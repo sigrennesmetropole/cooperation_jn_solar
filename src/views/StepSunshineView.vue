@@ -59,5 +59,6 @@ onBeforeMount(() => {
   <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
   <!-- SavingsStep contain all the substep for step 3 -->
   <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
+  <div class="h-full"></div>
   <FooterButtons v-if="displayFooter()"></FooterButtons>
 </template>
