@@ -7,7 +7,7 @@ const simulationStore = useSimulationStore()
 </script>
 
 <template>
-  <div class="flex flex-col gap-[10px] py-6 font-dm-sans">
+  <div class="flex flex-col gap-2.5 py-6 font-dm-sans">
     <button
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
       @click="simulationStore.currentSubStep = 3"
