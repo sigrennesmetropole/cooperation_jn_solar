@@ -6,10 +6,19 @@ const storeConsumption = () => {
   console.log('personalConsumption', consumption.value)
   return consumption.value
 }
+
+function inputIsCompleted() {
+  const inputLength = consumption.value.length
+  if (inputLength == 0) {
+    return false
+  } else {
+    return true
+  }
+}
 </script>
 
 <template>
-  <div class="flex flex-col gap-[6px]">
+  <div class="flex flex-col gap-1.5 mt-10">
     <p class="font-dm-sans text-sm">Votre consommation annuelle</p>
     <div class="flex flex-row">
       <input
@@ -20,9 +29,19 @@ const storeConsumption = () => {
         @keyup="storeConsumption"
       />
       <div
+        v-if="inputIsCompleted()"
         append-unit="kWh"
         class="text-base font-dm-sans text-medium relative after:content-[attr(append-unit)] after:absolute after:right-2 after:top-2"
       ></div>
     </div>
   </div>
 </template>
+
+<style scoped>
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>
