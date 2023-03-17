@@ -18,6 +18,10 @@
       "fogDensityMobile": 0.0004,
       "fogScreenSpaceError": 2,
       "fogScreenSpaceErrorMobile": 4
+    },
+    {
+      "type": "OpenlayersMap",
+      "name": "ol"
     }
   ],
   "layers": [
@@ -79,6 +83,28 @@
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
       "zIndex": 4
+    },
+    {
+      "name": "roofSquaresArea",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 10,
+      "style": {
+        "type": "VectorStyleItem",
+        "fill": {
+          "color": "#fff"
+        },
+        "stroke": {
+          "color": "#FF00FF",
+          "width": 2
+        }
+      }
+    },
+    {
+      "name": "roofShape",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 1
     }
   ],
   "viewpoints": [

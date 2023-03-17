@@ -8,13 +8,13 @@ const simulationStore = useSimulationStore()
 </script>
 
 <template>
-  <InformationsEnergySaving
-    v-if="simulationStore.currentSubStep == 1"
-  ></InformationsEnergySaving>
-  <ElectricityConsumptionButton
-    v-if="simulationStore.currentSubStep == 2"
-  ></ElectricityConsumptionButton>
-  <InformationsLinky
-    v-if="simulationStore.currentSubStep == 4"
-  ></InformationsLinky>
+  <template v-if="simulationStore.currentSubStep == 1">
+    <InformationsEnergySaving></InformationsEnergySaving>
+  </template>
+  <template v-else-if="simulationStore.currentSubStep == 2">
+    <ElectricityConsumptionButton></ElectricityConsumptionButton>
+  </template>
+  <template v-else-if="simulationStore.currentSubStep === 4">
+    <InformationsLinky></InformationsLinky>
+  </template>
 </template>

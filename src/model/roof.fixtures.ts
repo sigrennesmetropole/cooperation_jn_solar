@@ -6,13 +6,13 @@ export const roofSurfaceFixtures = (): RoofSurfaceModel[] => [
     favorable: 44,
     total: 90,
     orientation: 'Sud',
-    incliniasion: 47.9,
+    inclinaison: 47.9,
   },
   {
     values: [40, 30, 20, 10],
     favorable: 30,
     total: 87,
     orientation: 'Nord',
-    incliniasion: 49,
+    inclinaison: 49,
   },
 ]
