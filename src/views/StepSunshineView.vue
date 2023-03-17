@@ -42,24 +42,22 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
-    <LeaveButton></LeaveButton>
-    <SimulationSteps
-      class="h-[76px]"
-      :selected-step="simulationStore.currentStep"
-    ></SimulationSteps>
-    <StepTitle :step="simulationStore.currentStep"></StepTitle>
-    <StepDescription
-      :step="simulationStore.currentStep"
-      :substep="simulationStore.currentSubStep"
-    ></StepDescription>
-    <RoofAccordionOptions
-      v-if="simulationStore.currentStep === 1"
-    ></RoofAccordionOptions>
-    <!-- SetUpStep contain all the substep for step 2 -->
-    <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
-    <!-- SavingsStep contain all the substep for step 3 -->
-    <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
-    <FooterButtons v-if="displayFooter()"></FooterButtons>
-  </div>
+  <LeaveButton></LeaveButton>
+  <SimulationSteps
+    class="h-[76px]"
+    :selected-step="simulationStore.currentStep"
+  ></SimulationSteps>
+  <StepTitle :step="simulationStore.currentStep"></StepTitle>
+  <StepDescription
+    :step="simulationStore.currentStep"
+    :substep="simulationStore.currentSubStep"
+  ></StepDescription>
+  <RoofAccordionOptions
+    v-if="simulationStore.currentStep === 1"
+  ></RoofAccordionOptions>
+  <!-- SetUpStep contain all the substep for step 2 -->
+  <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
+  <!-- SavingsStep contain all the substep for step 3 -->
+  <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
+  <FooterButtons v-if="displayFooter()"></FooterButtons>
 </template>
