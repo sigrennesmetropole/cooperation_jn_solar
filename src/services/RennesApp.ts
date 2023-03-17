@@ -1,5 +1,13 @@
-import { VcsApp, Context, CesiumMap, Viewpoint } from '@vcmap/core'
+import {
+  VcsApp,
+  Context,
+  CesiumMap,
+  Viewpoint,
+  OpenlayersMap,
+} from '@vcmap/core'
+import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
+import type { Layer } from 'ol/layer'
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -26,5 +34,20 @@ export class RennesApp extends VcsApp {
 
   get3DMap(): CesiumMap {
     return this.maps.getByKey('cesium') as CesiumMap
+  }
+
+  get2DMap(): OpenlayersMap {
+    return this.maps.getByKey('ol') as OpenlayersMap
+  }
+
+  getOpenlayerMap(): Map {
+    return this.get2DMap().olMap as Map
+  }
+
+  getRoofSquaresAreaLayer(): Layer {
+    console.log('Aller layers', this.getOpenlayerMap().getAllLayers())
+    return this.getOpenlayerMap()
+      .getAllLayers()
+      .find((l) => l.getProperties().name === 'roofSquaresArea')!
   }
 }
