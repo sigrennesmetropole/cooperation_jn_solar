@@ -2,12 +2,30 @@
 import { onMounted, inject } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
-import { RENNES_LAYERNAMES, useLayersStore } from '@/stores/layers'
+import {
+  RENNES_LAYER,
+  RENNES_LAYERNAMES,
+  useLayersStore,
+} from '@/stores/layers'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
+import { useSimulationStore } from '@/stores/simulations'
+import { useAddressStore } from '@/stores/address'
+import {
+  addRoofInteractionOn2dMap,
+  displayGridOnMap,
+  displayRoofShape,
+  generateRandomRoofShape,
+  generateSquareGrid,
+  removeRoof2dShape,
+  removeRoofGrid,
+  removeRoofInteractionOn2dMap,
+} from '@/services/roofInteraction'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
+const simulationStore = useSimulationStore()
+const addressStore = useAddressStore()
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -37,6 +55,34 @@ async function setLayerVisible(layerName: string, visible: boolean) {
     layer?.deactivate()
   }
 }
+
+simulationStore.$subscribe(async () => {
+  if (
+    simulationStore.currentStep === 2 &&
+    simulationStore.currentSubStep == 1
+  ) {
+    await rennesApp.maps.setActiveMap('ol')
+    if (addressStore.geolocAddress !== null) {
+      await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
+      await layerStore.enableLayer(RENNES_LAYER.roofShape)
+      let roofShape = generateRandomRoofShape(addressStore.geolocAddress)
+      displayRoofShape(rennesApp, roofShape)
+      let grid = await generateSquareGrid(rennesApp, roofShape)
+      displayGridOnMap(rennesApp, grid)
+      addRoofInteractionOn2dMap(rennesApp)
+    }
+  } else {
+    await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    removeRoofInteractionOn2dMap(rennesApp)
+    removeRoofGrid(rennesApp)
+    removeRoof2dShape(rennesApp)
+    await rennesApp.maps.setActiveMap('cesium')
+  }
+})
+
+layerStore.$subscribe(async () => {
+  await updateLayersVisibility()
+})
 </script>
 
 <template>

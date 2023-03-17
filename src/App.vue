@@ -41,6 +41,16 @@ function fakeNextStep() {
   panelStore.isCompletelyHidden = false
   router.push({ name: 'roof-selected-information' })
 }
+
+const isDisplayAsideAndMap = computed(() => {
+  return [
+    viewList['home'],
+    viewList['map-pcaet'],
+    viewList['roof-selected-information'],
+    viewList['roof-selection'],
+    viewList['step-sunshine'],
+  ].includes(viewStore.currentView)
+})
 </script>
 
 <template>
@@ -48,7 +58,7 @@ function fakeNextStep() {
     <aside
       class="z-10 absolute"
       :class="panelStore.isRightPanel() ? 'right-0' : 'left-0'"
-      v-if="viewStore.currentView != viewList['legal-notice']"
+      v-if="isDisplayAsideAndMap"
     >
       <SidePanel :is-retractable="isLeftPanelRetractable()">
         <RouterView :key="$route.fullPath" />
@@ -63,12 +73,17 @@ function fakeNextStep() {
     </div>
 
     <div
+      class="flex flex-row bg-slate-100"
+      v-else-if="viewStore.currentView == viewList['simulation']"
+    >
+      <RouterView :key="$route.fullPath" />
+    </div>
+
+    <div
       class="grow"
       :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
     >
-      <MapComponent
-        v-if="viewStore.currentView != viewList['legal-notice']"
-      ></MapComponent>
+      <MapComponent v-if="isDisplayAsideAndMap"></MapComponent>
     </div>
 
     <UiSearchBar
