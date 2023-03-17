@@ -12,7 +12,6 @@ import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.v
 import SetUpStep from '@/components/simulation/SetUpStep.vue'
 import SavingsStep from '@/components/simulation/SavingsStep.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
-import InformationsLinky from '@/components/simulation/InformationsLinky.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
@@ -39,9 +38,10 @@ onBeforeMount(() => {
     <RoofAccordionOptions
       v-if="simulationStore.currentStep === 1"
     ></RoofAccordionOptions>
+    <!-- SetUpStep contain all the substep for step 2 -->
     <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
+    <!-- SavingsStep contain all the substep for step 3 -->
     <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
-    <InformationsLinky></InformationsLinky>
     <div class="h-full border-b border-neutral-200 -mx-6"></div>
     <FooterButtons
       v-if="
