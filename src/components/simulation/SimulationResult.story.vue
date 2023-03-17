@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import RoofAccordion from './RoofAccordion.vue'
 import type { RoofSurfaceModel } from '@/model/roof.model'
+import SimulationResult from './SimulationResult.vue'
 
 const roofSurface: RoofSurfaceModel = {
   values: [10, 20, 30, 40],
@@ -12,16 +12,13 @@ const roofSurface: RoofSurfaceModel = {
 </script>
 
 <template>
-  <Story title="Roof Accordion" group="simulation-step">
+  <Story title="Simulation Result" group="simulation-step">
     <template #default>
-      <RoofAccordion
+      <SimulationResult
+        class="w-[402px]"
         :roof-surface="roofSurface"
-        class="w-[468px]"
-        :label="'Pan de toit n°1'"
-        :selected="true"
-        :is-open="true"
-        :is-recommended="true"
-      ></RoofAccordion>
+        :max-num-solar-panel="6"
+      ></SimulationResult>
     </template>
   </Story>
 </template>

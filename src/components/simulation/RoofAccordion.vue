@@ -96,7 +96,7 @@ const displayContents = ref(props.isOpen)
           >
             <p class="font-dm-sans text-sm font-normal">Inclinaison</p>
             <p class="font-dm-sans font-bold text-base">
-              {{ props.roofSurface.incliniasion }}°
+              {{ props.roofSurface.inclinaison }}°
             </p>
           </div>
         </div>

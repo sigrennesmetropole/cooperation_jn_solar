@@ -26,7 +26,7 @@ const roofSurface: RoofSurfaceModel = {
   favorable: 44,
   total: 90,
   orientation: 'sud',
-  incliniasion: 47,
+  inclinaison: 47,
 }
 </script>
 
