@@ -10,9 +10,10 @@ const props = defineProps<{
 }>()
 
 const currentNumSolarPanel = ref(props.maxNumSolarPanel)
+const minNumSolarPanel = 1
 
 function decreaseCurrenNumSolarPanel() {
-  if (currentNumSolarPanel.value > 0) {
+  if (currentNumSolarPanel.value > minNumSolarPanel) {
     currentNumSolarPanel.value = currentNumSolarPanel.value - 1
   }
 }
@@ -40,9 +41,11 @@ const currentPower = computed(() =>
       <UiIconButton
         class="rounded-3xl border-[1px]"
         @click="decreaseCurrenNumSolarPanel"
-        :disabled="currentNumSolarPanel == 0"
+        :disabled="currentNumSolarPanel == minNumSolarPanel"
         :class="
-          currentNumSolarPanel == 0 ? 'border-neutral-300' : 'border-black'
+          currentNumSolarPanel == minNumSolarPanel
+            ? 'border-neutral-300'
+            : 'border-black'
         "
       >
         <svg
@@ -54,7 +57,9 @@ const currentPower = computed(() =>
         >
           <path
             d="M0.714355 1H19.2858"
-            :stroke="currentNumSolarPanel == 0 ? '#D4D4D4' : 'black'"
+            :stroke="
+              currentNumSolarPanel == minNumSolarPanel ? '#D4D4D4' : 'black'
+            "
             stroke-linecap="round"
             stroke-linejoin="round"
           />
