@@ -64,7 +64,7 @@
       "name": "rennesOrtho",
       "type": "WMTSLayer",
       "url": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
-      "layer": "raster:ortho2020",
+      "layer": "raster:ortho2021",
       "format": "image/jpeg",
       "tileMatrixSetID": "EPSG:3857",
       "tileMatrixPrefix": "EPSG:3857:",
