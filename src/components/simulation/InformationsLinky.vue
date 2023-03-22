@@ -2,7 +2,9 @@
 import enedisSignature from '@/assets/illustrations/enedis-signature.png'
 import enedisSpace from '@/assets/illustrations/enedis-personal-space.png'
 import { apiEnedisService } from '@/services/api-enedis'
+import { apiAutocalsolService } from '@/services/api-autocalsol'
 import { getEnv, getEnedisSandboxPrm } from '@/services/env'
+import { ref } from 'vue'
 
 async function goToEnedisWebSite() {
   const url = await apiEnedisService.getUrlUserAuthorization()
@@ -23,6 +25,14 @@ async function goToEnedisLogin() {
     const consumption = await apiEnedisService.getAnnualConsumption()
     window.alert(JSON.stringify(consumption))
   }
+}
+
+const isLoadingAutocalsol = ref(false)
+async function callApiAutocalsol() {
+  isLoadingAutocalsol.value = true
+  const computeData = await apiAutocalsolService.getComputeData()
+  isLoadingAutocalsol.value = false
+  window.alert(JSON.stringify(computeData))
 }
 </script>
 
@@ -54,4 +64,9 @@ async function goToEnedisLogin() {
       moment.
     </p>
   </div>
+
+  <button @click="callApiAutocalsol()" class="border">
+    <template v-if="isLoadingAutocalsol"> Loading </template>
+    <template v-else> CALL API AUTOCALSOL </template>
+  </button>
 </template>
