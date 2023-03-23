@@ -71,6 +71,18 @@ simulationStore.$subscribe(async () => {
       displayGridOnMap(rennesApp, grid)
       addRoofInteractionOn2dMap(rennesApp)
     }
+  } else if (
+    simulationStore.currentStep === 2 &&
+    simulationStore.currentSubStep == 2
+  ) {
+    // Create point geojson
+    // - coordinate
+    // - pitch
+    // - role
+    // - heading
+    // Add geojson to layer
+    await layerStore.enableLayer(RENNES_LAYER.solarPanel)
+    await rennesApp.maps.setActiveMap('cesium')
   } else {
     await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
     removeRoofInteractionOn2dMap(rennesApp)

@@ -8,6 +8,7 @@ export const RENNES_LAYER = {
   customLayerSearchAddress: 'customLayerSearchAddress',
   roofSquaresArea: 'roofSquaresArea',
   roofShape: 'roofShape',
+  solarPanel: 'solarPanel',
 }
 
 export const RENNES_LAYERNAMES = [
@@ -16,6 +17,7 @@ export const RENNES_LAYERNAMES = [
   RENNES_LAYER.customLayerSearchAddress,
   RENNES_LAYER.roofSquaresArea,
   RENNES_LAYER.roofShape,
+  RENNES_LAYER.solarPanel,
 ] as const
 
 export type RennesLayer = (typeof RENNES_LAYERNAMES)[number]
@@ -26,6 +28,7 @@ export const useLayersStore = defineStore('layers', () => {
     rennesOrtho: true,
     rennesBase: false,
     roofSquaresArea: false,
+    solarPanel: false,
   })
 
   function enableLayer(name: RennesLayer) {
