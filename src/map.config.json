@@ -110,8 +110,7 @@
       "name": "solarPanel",
       "type": "GeoJSONLayer",
       "activeOnStartup": false,
-      "zIndex": 1,
-      "url": "https://gist.githubusercontent.com/ismailsunni/aa7716ed6793c1f14e16e366e9a17028/raw/eeff3c5067d971ba9acd7ba96d235442d21cd442/solarpanel.geojson"
+      "zIndex": 1
     }
   ],
   "viewpoints": [

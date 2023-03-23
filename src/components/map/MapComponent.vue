@@ -21,6 +21,7 @@ import {
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
 } from '@/services/roofInteraction'
+import { displaySolarPanel, removeSolarPanel } from '@/services/solarPanel'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -75,16 +76,12 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
   ) {
-    // Create point geojson
-    // - coordinate
-    // - pitch
-    // - role
-    // - heading
-    // Add geojson to layer
+    await displaySolarPanel(rennesApp)
     await layerStore.enableLayer(RENNES_LAYER.solarPanel)
     await rennesApp.maps.setActiveMap('cesium')
   } else {
     await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    removeSolarPanel(rennesApp)
     removeRoofInteractionOn2dMap(rennesApp)
     removeRoofGrid(rennesApp)
     removeRoof2dShape(rennesApp)
