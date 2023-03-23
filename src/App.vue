@@ -136,6 +136,8 @@ const isDisplayAsideAndMap = computed(() => {
       heightButton="12"
       widthBoxText="w-[600px]"
     />
+
+    <notifications position="top left" />
   </main>
 </template>
 

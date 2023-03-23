@@ -1,15 +1,6 @@
-import { getUrlBackOffice } from '@/services/env'
+import { apiService } from '@/services/api'
 
 class ApiAutocalsolService {
-  async callApiGet(url: string) {
-    const response = await fetch(getUrlBackOffice() + url, {
-      method: 'GET',
-      credentials: 'include',
-    })
-    const data = await response.json()
-    return data
-  }
-
   async getComputeData() {
     const fakeData = {
       latitude: 48.110694413833,
@@ -33,7 +24,7 @@ class ApiAutocalsolService {
       `annual_consumption=${fakeData.annual_consumption}` +
       '&' +
       `peak_power=${fakeData.peak_power}`
-    const data = await this.callApiGet(url)
+    const data = await apiService.callApiGet(url)
     return data.compute
   }
 }
