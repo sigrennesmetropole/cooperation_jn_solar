@@ -22,6 +22,7 @@ import {
   removeRoofInteractionOn2dMap,
 } from '@/services/roofInteraction'
 import { displaySolarPanel, removeSolarPanel } from '@/services/solarPanel'
+import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -76,7 +77,8 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
   ) {
-    await displaySolarPanel(rennesApp)
+    const sampleSolarPanels = solarPanelFixtures()
+    await displaySolarPanel(rennesApp, sampleSolarPanels)
     await layerStore.enableLayer(RENNES_LAYER.solarPanel)
     await rennesApp.maps.setActiveMap('cesium')
   } else {
