@@ -14,7 +14,7 @@ export const RENNES_LAYERNAMES = [
   RENNES_LAYER.customLayerSearchAddress,
 ] as const
 
-export type RennesLayer = typeof RENNES_LAYERNAMES[number]
+export type RennesLayer = (typeof RENNES_LAYERNAMES)[number]
 export type LayersVisibility = Record<RennesLayer, boolean>
 
 export const useLayersStore = defineStore('layers', () => {
