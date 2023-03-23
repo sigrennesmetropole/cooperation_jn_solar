@@ -4,6 +4,8 @@ import type { GeoJSONLayer } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 
 export function generateSolarPanel() {
+  //   const solarPanelCoordinates = []
+
   const solarPanelDict = {
     type: 'FeatureCollection',
     vcsMeta: {
@@ -18,7 +20,24 @@ export function generateSolarPanel() {
         type: 'Feature',
         geometry: {
           type: 'Point',
-          coordinates: [-1.7219, 48.09, 55.41289708089893],
+          coordinates: [-1.72199905, 48.09093365, 55.41289708089893],
+        },
+        properties: {
+          olcs_modelUrl:
+            'https://service.virtualcityplanner.de/object-library/Vis-All/Solarmodul/Solarmodul__LOW_Solarmodul_Dachmontage.glb',
+          olcs_modelPitch: -8,
+          olcs_modelRoll: 26,
+          olcs_modelHeading: 300,
+        },
+        vcsMeta: {},
+      },
+      {
+        state: 'dynamic',
+        featureType: 'simple',
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [-1.72197905, 48.09093365, 55.41289708089893],
         },
         properties: {
           olcs_modelUrl:
