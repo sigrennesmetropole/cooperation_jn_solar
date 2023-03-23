@@ -110,26 +110,7 @@
   "viewpoints": [
     {
       "name": "rennes",
-      "cameraPosition": [-1.7219, 48.09, 30000],
-      "groundPosition": [-1.7219, 48.09, 30000],
-      "distance": 20,
-      "pitch": -90,
-      "roll": 0,
-      "heading": 0,
-      "animate": true,
-      "type": "Viewpoint",
-      "duration": 0.5,
-      "properties": {
-        "title": {
-          "en": "Rennes",
-          "fr": "Rennes"
-        }
-      }
-    },
-    {
-      "name": "home",
-      "cameraPosition": [-1.7219, 48.09, 30000],
-      "groundPosition": [-1.7219, 48.09, 30000],
+      "groundPosition": [-1.7219, 48.09],
       "distance": 37039,
       "pitch": -90,
       "roll": 0,

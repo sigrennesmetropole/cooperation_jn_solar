@@ -25,7 +25,7 @@ export class RennesApp extends VcsApp {
     await cesiumMap?.initialize()
     if (cesiumMap) {
       cesiumMap.getScene().globe.maximumScreenSpaceError = 1
-      const homeViewPoint = this.viewpoints.getByKey('home') as Viewpoint
+      const homeViewPoint = this.viewpoints.getByKey('rennes') as Viewpoint
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
       mapStore.isInitializeMap = true
