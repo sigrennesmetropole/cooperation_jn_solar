@@ -8,11 +8,7 @@ import iconHome from '@/assets/icons/icon-home.svg'
   <UiHeaderFullScreen :urlBack="'/step-sunshine'">
     <template v-slot:title-img>
       <div class="flex items-center p-0 gap-2.5 ml-5">
-        <component
-          :is="UiSolarPanelLogo"
-          role="img"
-          class="h-10 w-10"
-        ></component>
+        <UiSolarPanelLogo class="h-10 w-10"></UiSolarPanelLogo>
         <h1 class="font-bold text-2xl text-center">Cadastre Solaire</h1>
       </div>
     </template>
