@@ -9,7 +9,7 @@ const storeConsumption = () => {
 
 function inputIsCompleted() {
   const inputLength = consumption.value.length
-  if (inputLength == 0) {
+  if (inputLength <= 0) {
     return false
   } else {
     return true
