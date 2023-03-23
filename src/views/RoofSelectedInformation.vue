@@ -4,13 +4,16 @@ import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
-import BoxStep2 from '@/components/roof_selection/BoxStep2.vue'
+import BoxStep from '@/components/simulation/BoxStep.vue'
 import { usePanelsStore } from '@/stores/panels'
 import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
 import type { RoofSurfaceModel } from '@/model/roof.model'
+import iconInstallation from '@/assets/icons/installation.svg'
+import { useRouter } from 'vue-router'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
+const router = useRouter()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
@@ -23,7 +26,7 @@ const roofSurface: RoofSurfaceModel = {
   favorable: 44,
   total: 90,
   orientation: 'sud',
-  incliniasion: 47,
+  inclinaison: 47,
 }
 </script>
 
@@ -54,5 +57,25 @@ const roofSurface: RoofSurfaceModel = {
     </template>
   </UiDisclosure>
 
-  <BoxStep2></BoxStep2>
+  <BoxStep @buttonBoxAction="router.push('/step-sunshine')">
+    <template v-slot:nameOfStep>
+      <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
+        Étape 2
+      </span>
+    </template>
+    <template v-slot:image>
+      <img class="w-15 h-15 mt-2" :src="iconInstallation" alt="" />
+    </template>
+    <template v-slot:text>
+      <span class="font-dm-sans font-bold text-lg text-center">
+        Quelle production d’électricité <br />
+        est envisageable ici ?
+      </span>
+    </template>
+    <template v-slot:buttonContent>
+      <span class="text-white text-base font-medium">
+        Simuler une installation photovoltaïque
+      </span>
+    </template>
+  </BoxStep>
 </template>

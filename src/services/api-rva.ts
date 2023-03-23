@@ -5,7 +5,7 @@ class ApiRvaService {
     const api_key = 'b44535986cf3abf2428d'
     const url =
       baseUrl +
-      `?key=${api_key}&version=1.0&format=json&epsg=4326&cmd=getfulladdresses&insee=35051&query=${search}`
+      `?key=${api_key}&version=1.0&format=json&epsg=4326&cmd=getfulladdresses&query=${search}`
     const response = await fetch(url)
     const data = await response.json()
     return data

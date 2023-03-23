@@ -1,24 +1,22 @@
 <script lang="ts" setup>
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
   router.push('/roof-selection')
 }
-
 function clickButtonPrevious() {
   simulationStore.goToPreviousStep()
 }
-
 function clickButtonNext() {
   simulationStore.goToNextStep()
 }
 </script>
 
 <template>
+  <div class="border-b border-neutral-200 -mx-6"></div>
   <div class="flex flex-row justify-between mb-4">
     <button
       v-if="simulationStore.currentStep == 1"

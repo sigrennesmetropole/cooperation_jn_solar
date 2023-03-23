@@ -15,7 +15,7 @@ import { useRouter } from 'vue-router'
 import { usePanelsStore } from '@/stores/panels'
 
 const search = ref('')
-const adressStore = useAddressStore()
+const addressStore = useAddressStore()
 const router = useRouter()
 const addressSelected: Ref<AddressRva | AddressOrganization | null> = ref(null)
 const autocompletion: Ref<{
@@ -31,8 +31,8 @@ const panelsStore = usePanelsStore()
 const SIZE_BEGIN_SEARCH = 4
 
 onMounted(() => {
-  if (adressStore.address !== '') {
-    search.value = adressStore.address
+  if (addressStore.address !== '') {
+    search.value = addressStore.address
   }
 })
 
@@ -75,29 +75,29 @@ const goToAddress = async (
   item: AddressRva | AddressOrganization,
   type: string
 ) => {
-  adressStore.setAddress(search.value)
+  addressStore.setAddress(search.value)
   router.push('/roof-selection')
   if (type === 'rva') {
     item = item as AddressRva
     search.value = item.addr3
     resetAutocompletion()
-    let x: number = item.x as unknown as number
-    let y: number = item.y as unknown as number
-    createNewViewpointFromAddress(rennesApp, [x, y])
+    addressStore.setAddressGeoloc([+item.x, +item.y])
+    createNewViewpointFromAddress(rennesApp, [+item.x, +item.y])
   } else if (type === 'organization') {
     item = item as AddressOrganization
     search.value = item.addr
     resetAutocompletion()
-    const data_organiztion = await apiSitesorgService.fetchOrganizationById(
+    const data_organization = await apiSitesorgService.fetchOrganizationById(
       item.id
     )
-    const id_site = data_organiztion.sites[0].idSite.idSite
+    const id_site = data_organization.sites[0].idSite.idSite
     const data_site = await apiSitesorgService.fetchSiteById(id_site)
     const feature_site = data_site.features[0]
     let point = feature_site.geometry.coordinates
     let x = point[0]
     let y = point[1]
-    createNewViewpointFromAddress(rennesApp, [x, y])
+    addressStore.setAddressGeoloc([+x, +y])
+    createNewViewpointFromAddress(rennesApp, [+x, +y])
   }
 }
 
@@ -111,7 +111,7 @@ function clickSearch() {
 
 function emptySearch() {
   search.value = ''
-  adressStore.setAddress('')
+  addressStore.setAddress('')
   resetAutocompletion()
   panelsStore.isCompletelyHidden = false
   router.push('/map-pcaet')
@@ -120,7 +120,7 @@ function emptySearch() {
 const isEmptySearch = computed(() => {
   if (
     search.value.length >= SIZE_BEGIN_SEARCH &&
-    adressStore.address === '' &&
+    addressStore.address === '' &&
     autocompletion.value.addressRva.length === 0 &&
     autocompletion.value.addressOrganization.length === 0
   ) {

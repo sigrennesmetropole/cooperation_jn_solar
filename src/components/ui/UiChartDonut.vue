@@ -20,6 +20,9 @@ const chartOptions = ref({
     show: false,
   },
   labels: props.dataGraph.labels,
+  tooltip: {
+    enabled: false, // Disable tooltip on hover
+  },
   colors: props.dataGraph.colors,
   plotOptions: {
     pie: {

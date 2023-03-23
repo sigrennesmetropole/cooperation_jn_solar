@@ -18,13 +18,17 @@
       "fogDensityMobile": 0.0004,
       "fogScreenSpaceError": 2,
       "fogScreenSpaceErrorMobile": 4
+    },
+    {
+      "type": "OpenlayersMap",
+      "name": "ol"
     }
   ],
   "layers": [
     {
       "name": "terrain",
       "type": "TerrainLayer",
-      "url": "https://demo.virtualcitymap.de/rennes/datasource-data/b3ef17bf-fdde-4979-8f05-8b4db5811c43",
+      "url": "https://rennes3d-dev-tiles.s3.fr-par.scw.cloud/b3ef17bf-fdde-4979-8f05-8b4db5811c43/",
       "activeOnStartup": true,
       "requestVertexNormals": true,
       "zIndex": 1
@@ -32,7 +36,7 @@
     {
       "type": "CesiumTilesetLayer",
       "name": "building",
-      "url": "https://demo.virtualcitymap.de/rennes/datasource-data/f8a215a9-d0cc-4804-b284-0eac8a58924d",
+      "url": "https://rennes3d-dev-tiles.s3.fr-par.scw.cloud/f8a215a9-d0cc-4804-b284-0eac8a58924d/",
       "activeOnStartup": true,
       "screenSpaceError": 16,
       "screenSpaceErrorMobile": 32,
@@ -79,6 +83,28 @@
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
       "zIndex": 4
+    },
+    {
+      "name": "roofSquaresArea",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 10,
+      "style": {
+        "type": "VectorStyleItem",
+        "fill": {
+          "color": "#fff"
+        },
+        "stroke": {
+          "color": "#FF00FF",
+          "width": 2
+        }
+      }
+    },
+    {
+      "name": "roofShape",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 1
     }
   ],
   "viewpoints": [

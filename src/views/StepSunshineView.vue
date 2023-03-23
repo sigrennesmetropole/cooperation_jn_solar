@@ -4,19 +4,36 @@ import { usePanelsStore } from '@/stores/panels'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
+import LeaveButton from '@/components/simulation/LeaveButton.vue'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
 import StepDescription from '@/components/simulation/StepDescription.vue'
-import ExplanationSelectionObstacles from '@/components/simulation/ExplanationSelectionObstacles.vue'
-import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.vue'
-import LeaveButton from '@/components/simulation/LeaveButton.vue'
-import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
-import InformationsLinky from '@/components/simulation/InformationsLinky.vue'
+import SetUpStep from '@/components/simulation/SetUpStep.vue'
+import SavingsStep from '@/components/simulation/SavingsStep.vue'
+import FooterButtons from '@/components/simulation/FooterButtons.vue'
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
+
+function displayFooter() {
+  if (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 2) {
+    return false
+  } else if (
+    simulationStore.currentStep == 3 &&
+    simulationStore.currentSubStep == 2
+  ) {
+    return false
+  } else if (
+    simulationStore.currentStep == 3 &&
+    simulationStore.currentSubStep == 4
+  ) {
+    return false
+  } else {
+    return true
+  }
+}
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['step-sunshine'])
@@ -38,14 +55,10 @@ onBeforeMount(() => {
   <RoofAccordionOptions
     v-if="simulationStore.currentStep === 1"
   ></RoofAccordionOptions>
-  <ExplanationSelectionObstacles
-    v-else-if="simulationStore.currentStep === 2"
-    :step="simulationStore.currentStep"
-  ></ExplanationSelectionObstacles>
-  <InformationsEnergySaving
-    v-else-if="simulationStore.currentStep === 3"
-  ></InformationsEnergySaving>
-  <InformationsLinky></InformationsLinky>
-  <div class="h-full border-b border-neutral-200 -mx-6"></div>
-  <FooterButtons></FooterButtons>
+  <!-- SetUpStep contain all the substep for step 2 -->
+  <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
+  <!-- SavingsStep contain all the substep for step 3 -->
+  <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
+  <div class="h-full"></div>
+  <FooterButtons v-if="displayFooter()"></FooterButtons>
 </template>

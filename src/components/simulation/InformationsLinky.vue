@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import enedisSignature from '@/assets/illustrations/enedis-signature.svg'
 import enedisSpace from '@/assets/illustrations/enedis-personal-space.svg'
-import { useRouter } from 'vue-router'
+import { apiEnedisService } from '@/services/api-enedis'
+import { getEnv, getEnedisSandboxPrm } from '@/services/env'
 
-const router = useRouter()
+async function goToEnedisWebSite() {
+  const url = await apiEnedisService.getUrlUserAuthorization()
+  window.location.href = url
+}
 
-function goToEnedisLogin() {
-  router.push('/')
+async function goToEnedisLogin() {
+  if (getEnv() == 'dev') {
+    await apiEnedisService.setPRMUser(getEnedisSandboxPrm())
+    const consumption = await apiEnedisService.getAnnualConsumption()
+    window.alert(JSON.stringify(consumption))
+  } else if (getEnv() == 'prod') {
+    const prm = await apiEnedisService.getPRMUser()
+    if (prm === undefined) {
+      await goToEnedisWebSite()
+      return
+    }
+    const consumption = await apiEnedisService.getAnnualConsumption()
+    window.alert(JSON.stringify(consumption))
+  }
 }
 </script>
 
