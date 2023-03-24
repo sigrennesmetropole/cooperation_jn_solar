@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import enedisSignature from '@/assets/illustrations/enedis-signature.png'
-import enedisSpace from '@/assets/illustrations/enedis-personal-space.png'
+import enedisSignature from '@/assets/illustrations/enedis-signature.svg'
+import enedisSpace from '@/assets/illustrations/enedis-personal-space.svg'
 import { apiEnedisService } from '@/services/api-enedis'
 import { getEnv, getEnedisSandboxPrm } from '@/services/env'
 
