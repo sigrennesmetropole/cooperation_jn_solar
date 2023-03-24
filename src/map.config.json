@@ -43,22 +43,13 @@
       "zIndex": 1
     },
     {
-      "name": "rennesBase",
-      "type": "WMTSLayer",
-      "url": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
-      "layer": "ref_fonds:pvci_simple_gris",
-      "format": "image/png",
-      "tileMatrixSetID": "EPSG:3857",
-      "tileMatrixPrefix": "EPSG:3857:",
-      "extent": {
-        "coordinates": [
-          -2.1170142251181825, 47.78117827367612, -1.170835369910388,
-          48.39479586736775
-        ],
-        "epsg": "EPSG:4326",
-        "zIndex": 1
-      },
-      "activeOnStartup": true
+      "type": "CesiumTilesetLayer",
+      "name": "roof3d",
+      "url": "https://demo.virtualcitymap.de/rennes/datasource-data/fe157549-1c80-47f1-828a-f1a97bf92d80/",
+      "activeOnStartup": false,
+      "screenSpaceError": 16,
+      "screenSpaceErrorMobile": 32,
+      "zIndex": 1
     },
     {
       "name": "rennesOrtho",
@@ -75,7 +66,7 @@
         ],
         "epsg": "EPSG:4326"
       },
-      "activeOnStartup": false,
+      "activeOnStartup": true,
       "zIndex": 1
     },
     {

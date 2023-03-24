@@ -7,6 +7,7 @@ import {
   RENNES_LAYERNAMES,
   useLayersStore,
 } from '@/stores/layers'
+import { viewList } from '@/model/views.model'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
@@ -21,12 +22,16 @@ import {
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
 } from '@/services/roofInteraction'
+import { useViewsStore } from '@/stores/views'
+import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
+const viewStore = useViewsStore()
+const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
 
 onMounted(async () => {
@@ -82,12 +87,24 @@ simulationStore.$subscribe(async () => {
   }
 })
 
+viewStore.$subscribe(async () => {
+  if (viewStore.currentView === viewList['roof-selection']) {
+    await layerStore.enableLayer(RENNES_LAYER.building)
+    await layerStore.disableLayer(RENNES_LAYER.roof3d)
+  } else {
+    await layerStore.enableLayer(RENNES_LAYER.building)
+    await layerStore.disableLayer(RENNES_LAYER.roof3d)
+  }
+})
+
 layerStore.$subscribe(async () => {
   await updateLayersVisibility()
 })
 mapStore.$subscribe(async () => {
   await rennesApp.maps.setActiveMap(mapStore.activeMap)
 })
+
+roofsStore.$subscribe(async () => {})
 </script>
 
 <template>
