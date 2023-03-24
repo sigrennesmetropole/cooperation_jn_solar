@@ -12,9 +12,7 @@ const emit = defineEmits<{
 const checked = ref(false)
 
 function statusChange() {
-  console.log('avant', checked.value)
   checked.value = !checked.value
-  console.log('apres', checked.value)
 
   emit('checkBoxChange', checked.value)
 }
@@ -31,9 +29,9 @@ const borderCheckbox = computed(() => {
 </script>
 
 <template>
-  <div class="flex p-0 gap-3 items-center">
+  <div class="flex p-0 gap-3 items-top">
     <div
-      class="shadow-sm w-5 h-5 rounded border flex justify-center items-center"
+      class="shadow-sm w-5 h-5 rounded border flex justify-center items-center mt-[3px]"
       :class="borderCheckbox"
       @click="statusChange()"
     >

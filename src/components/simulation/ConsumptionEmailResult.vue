@@ -28,7 +28,6 @@ const errorPicto = computed(() => {
 
 function checkboxChange(event: boolean) {
   isCheckboxChecked.value = event
-  console.log('la boite est cochée', isCheckboxChecked.value)
   changeError()
 }
 
@@ -45,7 +44,7 @@ function sendEmail() {
   changeError()
 
   if (validEmail.value && !isCheckBoxOnError.value) {
-    console.log('send the consumption report by email')
+    console.log('send consumption by email')
   }
 }
 
