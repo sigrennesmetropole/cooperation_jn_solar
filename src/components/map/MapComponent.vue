@@ -21,7 +21,11 @@ import {
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
 } from '@/services/roofInteraction'
-import { displaySolarPanel, removeSolarPanel } from '@/services/solarPanel'
+import {
+  displaySolarPanel,
+  removeSolarPanel,
+  zoomToSolarPanel,
+} from '@/services/solarPanel'
 import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -80,7 +84,9 @@ simulationStore.$subscribe(async () => {
     const sampleSolarPanels = solarPanelFixtures()
     await displaySolarPanel(rennesApp, sampleSolarPanels)
     await layerStore.enableLayer(RENNES_LAYER.solarPanel)
+    // Zoom to solar panel
     await rennesApp.maps.setActiveMap('cesium')
+    zoomToSolarPanel(rennesApp)
   } else {
     await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
     removeSolarPanel(rennesApp)

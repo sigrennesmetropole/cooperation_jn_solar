@@ -1,8 +1,9 @@
 import { GeoJSON } from 'ol/format'
 import type { RennesApp } from '@/services/RennesApp'
-import type { GeoJSONLayer } from '@vcmap/core'
+import { GeoJSONLayer, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
+import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -63,4 +64,17 @@ export function removeSolarPanel(rennesApp: RennesApp) {
     RENNES_LAYER.solarPanel
   ) as GeoJSONLayer
   solarPanel.removeAllFeatures()
+}
+
+export function zoomToSolarPanel(rennesApp: RennesApp) {
+  const solarPanel: GeoJSONLayer = rennesApp.layers.getByKey(
+    RENNES_LAYER.solarPanel
+  ) as GeoJSONLayer
+  const extent = solarPanel.getZoomToExtent()
+  if (extent) {
+    const viewpoint = Viewpoint.createViewpointFromExtent(extent!)
+    const newExtent = cloneViewPointAndResetCameraPosition(viewpoint, 100)
+    newExtent.pitch = -45
+    rennesApp.maps.activeMap.gotoViewpoint(newExtent)
+  }
 }
