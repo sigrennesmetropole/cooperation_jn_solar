@@ -102,13 +102,13 @@ class SelectInteraction extends AbstractInteraction {
     const scene = cesiumMap.getScene()
     const object = scene.drillPick(event.windowPosition, 100, 50, 50)
 
-    const nearestBuildingClick = this._getClickedBuilding(object)
+    //const nearestBuildingClick = this._getClickedBuilding(object)
     console.log('Selected building:', selectedBuilding)
     console.log('Click on area:', object)
 
-    if (nearestBuildingClick) {
+    if (selectedBuilding) {
       const buildingRoofs: GeoJSONFeatureCollection =
-        await roofWfsService.fetchRoofs(nearestBuildingClick.getProperty('id'))
+        await roofWfsService.fetchRoofs(selectedBuilding.getProperty('id'))
       console.log('Roof of the building:', buildingRoofs)
       this._highglightRoofsOfTheBuilding(buildingRoofs)
       if (event.type & EventType.MOVE) {
@@ -116,7 +116,7 @@ class SelectInteraction extends AbstractInteraction {
       }
       if (event.type & EventType.CLICK) {
         this._featureClicked.raiseEvent(event.feature)
-        this._hasFeature = event.feature.getId()
+        this._hasFeature = selectedBuilding.getId()
         this._select()
       }
     } else if (event.type & EventType.CLICK) {
