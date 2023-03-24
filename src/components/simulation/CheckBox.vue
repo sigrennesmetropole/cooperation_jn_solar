@@ -12,7 +12,10 @@ const emit = defineEmits<{
 const checked = ref(false)
 
 function statusChange() {
+  console.log('avant', checked.value)
   checked.value = !checked.value
+  console.log('apres', checked.value)
+
   emit('checkBoxChange', checked.value)
 }
 
@@ -46,6 +49,8 @@ const borderCheckbox = computed(() => {
         />
       </svg>
     </div>
-    <slot name="text"></slot>
+    <div class="flex w-fit">
+      <slot name="text"></slot>
+    </div>
   </div>
 </template>

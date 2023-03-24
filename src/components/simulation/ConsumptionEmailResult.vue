@@ -9,7 +9,6 @@ const isCheckBoxOnError = ref(false)
 
 const userEmail = ref('')
 const isCheckboxChecked = ref(false)
-const newStatus = ref(false)
 
 const errorEmail = computed(() => {
   if (validEmail.value) {
@@ -27,8 +26,9 @@ const errorPicto = computed(() => {
   }
 })
 
-function checkboxChange(newStatus: boolean) {
-  isCheckboxChecked.value = newStatus
+function checkboxChange(event: boolean) {
+  isCheckboxChecked.value = event
+  console.log('la boite est cochée', isCheckboxChecked.value)
   changeError()
 }
 
@@ -81,13 +81,13 @@ const openPrivacy = () => {
 
       <CheckBox
         :isOnError="isCheckBoxOnError"
-        @checkBoxChange="checkboxChange(newStatus)"
+        @checkBoxChange="checkboxChange($event)"
       >
         <template v-slot:text>
-          <div class="flex w-fit font-normal text-base">
+          <p class="font-normal text-base">
             J'autorise la transmission de mon adresse mail pour l'envoi de ma
             simulation. Celle-ci ne sera pas conservée.
-          </div>
+          </p>
         </template>
       </CheckBox>
 

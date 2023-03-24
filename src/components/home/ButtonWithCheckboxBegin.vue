@@ -1,15 +1,25 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { useRouter } from 'vue-router'
+import CheckBox from '@/components/simulation/CheckBox.vue'
 
 const checked = ref(false)
 const displayError = ref(false)
 const showPopTermOfUse = ref(false)
 const router = useRouter()
 
+const isCheckBoxOnError = ref(false)
+
+const isCheckboxChecked = ref(false)
+
 function clickButtonBegin() {
-  if (!checked.value) {
+  console.log('isCheckboxChecked.value', isCheckboxChecked.value)
+  console.log('displayError.value', displayError.value)
+
+  changeError()
+
+  if (!isCheckboxChecked.value) {
     displayError.value = true
     return
   }
@@ -17,20 +27,30 @@ function clickButtonBegin() {
   router.push('/map-pcaet')
 }
 
-const borderCheckbox = computed(() => {
-  if (displayError.value && !checked.value) {
-    return 'border-red-600'
-  }
-  if (checked.value) {
-    return 'border-slate-900'
-  }
-  return 'border-slate-400'
-})
+// const borderCheckbox = computed(() => {
+//   if (displayError.value && !checked.value) {
+//     return 'border-red-600'
+//   }
+//   if (checked.value) {
+//     return 'border-slate-900'
+//   }
+//   return 'border-slate-400'
+// })
+
+function checkboxChange(event: boolean) {
+  console.log('la boite est cochée', event)
+  isCheckboxChecked.value = event
+  changeError()
+}
+
+function changeError() {
+  isCheckBoxOnError.value = !isCheckboxChecked.value
+}
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex p-0 gap-3 items-center">
+    <!-- <div class="flex p-0 gap-3 items-center">
       <div
         class="shadow-sm w-5 h-5 rounded border flex justify-center items-center"
         :class="borderCheckbox"
@@ -57,7 +77,24 @@ const borderCheckbox = computed(() => {
           conditions d'utilisation.
         </span>
       </span>
-    </div>
+    </div> -->
+
+    <CheckBox
+      :isOnError="isCheckBoxOnError"
+      @checkBoxChange="checkboxChange($event)"
+    >
+      <template v-slot:text>
+        <span class="font-normal text-base leading-6 color-black"
+          >J'ai lu et j'accepte les
+          <span
+            class="underline decoration-1 cursor-pointer"
+            @click="showPopTermOfUse = true"
+          >
+            conditions d'utilisation.
+          </span>
+        </span>
+      </template>
+    </CheckBox>
 
     <div class="flex p-0 gap-3">
       <button
