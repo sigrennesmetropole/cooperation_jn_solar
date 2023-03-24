@@ -11,8 +11,10 @@ import {
 import type { InteractionEvent } from '@vcmap/core'
 import { Cesium3DTileFeature } from '@vcmap/cesium'
 import { roofWfsService } from '@/services/roofWfsService'
+import { calculateAllRoofData } from '@/services/roofData'
 import { RENNES_LAYER } from '@/stores/layers'
 import { RennesApp } from './RennesApp'
+import { useRoofsStore } from '@/stores/roof'
 
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 const selectStyle = new VectorStyleItem({
@@ -109,6 +111,8 @@ class SelectInteraction extends AbstractInteraction {
     if (selectedBuilding) {
       const buildingRoofs: GeoJSONFeatureCollection =
         await roofWfsService.fetchRoofs(selectedBuilding.getProperty('id'))
+      const roofsStore = useRoofsStore()
+      roofsStore.setBuildingRoofsFeatures(buildingRoofs)
       console.log('Roof of the building:', buildingRoofs)
       this._highglightRoofsOfTheBuilding(buildingRoofs)
       if (event.type & EventType.MOVE) {
@@ -118,6 +122,7 @@ class SelectInteraction extends AbstractInteraction {
         this._featureClicked.raiseEvent(event.feature)
         this._hasFeature = selectedBuilding.getId()
         this._select()
+        calculateAllRoofData()
       }
     } else if (event.type & EventType.CLICK) {
       this._featureClicked.raiseEvent()
