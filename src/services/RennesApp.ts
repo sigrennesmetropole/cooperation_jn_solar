@@ -4,13 +4,10 @@ import {
   CesiumMap,
   Viewpoint,
   OpenlayersMap,
-  EventType,
 } from '@vcmap/core'
 import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
 import type { Layer } from 'ol/layer'
-import SelectInteraction from '@/services/roofCesiumInteraction'
-import { RENNES_LAYER } from '@/stores/layers'
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -32,14 +29,8 @@ export class RennesApp extends VcsApp {
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
       mapStore.isInitializeMap = true
+      mapStore.viewPoint = homeViewPoint
     }
-    this.maps.eventHandler.featureInteraction.setActive(EventType.CLICKMOVE)
-
-    const selectInteraction = new SelectInteraction(
-      [this.maps.layerCollection.getByKey(RENNES_LAYER.building)],
-      this
-    )
-    this.maps.eventHandler.addPersistentInteraction(selectInteraction)
   }
 
   get3DMap(): CesiumMap {

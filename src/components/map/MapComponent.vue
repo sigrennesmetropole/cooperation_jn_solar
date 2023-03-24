@@ -16,7 +16,6 @@ import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
   displayRoofShape,
-  generateRandomRoofShape,
   generateSquareGrid,
   removeRoof2dShape,
   removeRoofGrid,
@@ -24,6 +23,9 @@ import {
 } from '@/services/roofInteraction'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
+import { EventType } from '@vcmap/core'
+import { useMapStore } from '@/stores/map'
+import SelectInteraction from '@/services/roofCesiumInteraction'
 import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -72,9 +74,9 @@ simulationStore.$subscribe(async () => {
     if (addressStore.geolocAddress !== null) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
       await layerStore.enableLayer(RENNES_LAYER.roofShape)
-      let roofShape = generateRandomRoofShape(addressStore.geolocAddress)
+      let roofShape = roofsStore.selectRoofFeature!
       displayRoofShape(rennesApp, roofShape)
-      let grid = await generateSquareGrid(rennesApp, roofShape)
+      let grid = generateSquareGrid(rennesApp, roofShape)
       displayGridOnMap(rennesApp, grid)
       addRoofInteractionOn2dMap(rennesApp)
     }
@@ -89,11 +91,19 @@ simulationStore.$subscribe(async () => {
 
 viewStore.$subscribe(async () => {
   if (viewStore.currentView === viewList['roof-selection']) {
-    await layerStore.enableLayer(RENNES_LAYER.building)
-    await layerStore.disableLayer(RENNES_LAYER.roof3d)
+    rennesApp.maps.eventHandler.featureInteraction.setActive(
+      EventType.CLICKMOVE
+    )
+    const selectInteraction = new SelectInteraction(
+      rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
+      rennesApp
+    )
+    rennesApp.maps.eventHandler.addExclusiveInteraction(
+      selectInteraction,
+      () => {}
+    )
   } else {
-    await layerStore.enableLayer(RENNES_LAYER.building)
-    await layerStore.disableLayer(RENNES_LAYER.roof3d)
+    rennesApp.maps.eventHandler.removeExclusive()
   }
 })
 
@@ -102,9 +112,12 @@ layerStore.$subscribe(async () => {
 })
 mapStore.$subscribe(async () => {
   await rennesApp.maps.setActiveMap(mapStore.activeMap)
+  await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
 })
 
 roofsStore.$subscribe(async () => {})
+
+
 </script>
 
 <template>

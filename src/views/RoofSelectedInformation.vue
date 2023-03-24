@@ -10,14 +10,26 @@ import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import iconInstallation from '@/assets/icons/installation.svg'
 import { useRouter } from 'vue-router'
+import { useRoofsStore } from '@/stores/roof'
+import { useMapStore } from '@/stores/map'
+import { createCustomViewpointFromExtent } from '@/services/viewpointHelper'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
+const roofStore = useRoofsStore()
+const mapStore = useMapStore()
+
 const router = useRouter()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
+  panelsStore.isCompletelyHidden = false
+  if (roofStore.buildingRoofsFeatures && roofStore.buildingRoofsFeatures.bbox) {
+    mapStore.viewPoint = await createCustomViewpointFromExtent(
+      roofStore.buildingRoofsFeatures.bbox
+    )
+  }
 })
 
 // TODO: obtain this RoofSurface from the current selected

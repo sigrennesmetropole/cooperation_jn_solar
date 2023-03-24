@@ -30,6 +30,7 @@ export const useLayersStore = defineStore('layers', () => {
     rennesOrtho: true,
     rennesBase: false,
     roofSquaresArea: false,
+    roof3d: true,
   })
 
   function enableLayer(name: RennesLayer) {
