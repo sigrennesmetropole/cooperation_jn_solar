@@ -1,4 +1,5 @@
 export type SolarPanelModel = {
+  index: number
   x: number
   y: number
   z: number

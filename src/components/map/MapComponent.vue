@@ -11,6 +11,7 @@ import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import { useAddressStore } from '@/stores/address'
+import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
@@ -32,6 +33,7 @@ const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
+const solarPanelStore = useSolarPanelStore()
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -82,8 +84,11 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentSubStep == 2
   ) {
     const sampleSolarPanels = solarPanelFixtures()
+    solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
+    solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
     await displaySolarPanel(rennesApp, sampleSolarPanels)
     await layerStore.enableLayer(RENNES_LAYER.solarPanel)
+    // Hide the solar panel
     // Zoom to solar panel
     await rennesApp.maps.setActiveMap('cesium')
     zoomToSolarPanel(rennesApp)

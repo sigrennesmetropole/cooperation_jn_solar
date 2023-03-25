@@ -31,7 +31,6 @@ export function generateSolarPanel(solarPanels: SolarPanelModel[]) {
     vcsMeta: {
       altitudeMode: 'absolute',
       version: '2.0',
-      baseUrl: 'https://service.virtualcityplanner.de/',
     },
     features: [] as {}[],
     featureType: 'simple',
