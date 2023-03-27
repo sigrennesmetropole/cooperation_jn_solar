@@ -20,13 +20,12 @@ import {
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
-} from '@/services/roofInteraction'
+} from '@/services/roofInteractionHelper'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
+import { useMapStore } from '@/stores/map'
 import { EventType } from '@vcmap/core'
-import { useMapStore } from '@/stores/map'
-import SelectInteraction from '@/services/roofCesiumInteraction'
-import { useMapStore } from '@/stores/map'
+import SelectRoofInteraction from '@/services/selectRoofInteraction'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -94,7 +93,7 @@ viewStore.$subscribe(async () => {
     rennesApp.maps.eventHandler.featureInteraction.setActive(
       EventType.CLICKMOVE
     )
-    const selectInteraction = new SelectInteraction(
+    const selectInteraction = new SelectRoofInteraction(
       rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
       rennesApp
     )
@@ -116,8 +115,6 @@ mapStore.$subscribe(async () => {
 })
 
 roofsStore.$subscribe(async () => {})
-
-
 </script>
 
 <template>

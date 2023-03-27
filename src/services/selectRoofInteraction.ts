@@ -22,7 +22,7 @@ const highlightStyle = new VectorStyleItem({
   },
 })
 
-class SelectInteraction extends AbstractInteraction {
+class SelectRoofInteraction extends AbstractInteraction {
   _featureClicked: VcsEvent<any> // eslint-disable-line
   _selectableLayer: CesiumTilesetLayer
   _highlighted: boolean
@@ -97,4 +97,4 @@ class SelectInteraction extends AbstractInteraction {
   }
 }
 
-export default SelectInteraction
+export default SelectRoofInteraction

@@ -10,7 +10,7 @@ export const useRoofsStore = defineStore('roofs', () => {
   const selectedBuildingId: Ref<string | null> = ref(null)
 
   const buildingRoofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
-  const selectRoofFeature: Ref<GeoJSONFeature | null> = ref(null)
+  const selectedRoofFeature: Ref<GeoJSONFeature | null> = ref(null)
 
   function setBuildingRoofsFeatures(
     features: GeoJSONFeatureCollection,
@@ -21,12 +21,12 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
 
   function setSelectRoofFeature(feature: GeoJSONFeature) {
-    selectRoofFeature.value = feature
+    selectedRoofFeature.value = feature
   }
 
   return {
     buildingRoofsFeatures,
-    selectRoofFeature,
+    selectRoofFeature: selectedRoofFeature,
     setBuildingRoofsFeatures,
     setSelectRoofFeature,
   }

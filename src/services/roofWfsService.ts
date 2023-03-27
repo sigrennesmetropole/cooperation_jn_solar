@@ -1,7 +1,6 @@
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 
 class RoofWfsService {
-  //Documention of API : https://api-rva.sig.rennesmetropole.fr/documentation.php
   async fetchRoofs(buildingId: string): Promise<GeoJSONFeatureCollection> {
     const baseUrl = 'https://public.sig.rennesmetropole.fr/geoserver/ows?'
     const baseParameters =
