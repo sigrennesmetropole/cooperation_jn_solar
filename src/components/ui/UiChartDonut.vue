@@ -70,7 +70,7 @@ const styleInsideGraph = computed(() => {
 <template>
   <div class="relative">
     <div
-      class="absolute z-5 top-[30px] left-[67px] w-[100px] h-[110px]"
+      class="absolute z-5 top-[30px] left-[62px] w-[110px] h-[110px]"
       :style="styleInsideGraph"
     ></div>
 

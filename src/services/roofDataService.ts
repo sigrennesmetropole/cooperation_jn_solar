@@ -57,11 +57,14 @@ function getDataBuilding(dataRoofs: RoofSurfaceModel[]) {
   dataRoofs.forEach((dataRoof) => {
     all_area += dataRoof.total
     all_area_favorable += dataRoof.favorable
-    all_values[0] += dataRoof.values[0]
-    all_values[1] += dataRoof.values[1]
-    all_values[2] += dataRoof.values[2]
-    all_values[3] += dataRoof.values[3]
+
+    for (let i = 0; i < 4; i++) {
+      all_values[i] += (dataRoof.values[i] * dataRoof.total) / 100
+    }
   })
+  for (let i = 0; i < 4; i++) {
+    all_values[i] = (all_values[i] * 100) / all_area
+  }
   const dataBuilding = {
     total: roundResult(all_area),
     favorable: roundResult(all_area_favorable),
