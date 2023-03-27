@@ -92,7 +92,7 @@ simulationStore.$subscribe(async () => {
     // Hide the solar panel
     // Zoom to solar panel
     await rennesApp.maps.setActiveMap('cesium')
-    zoomToSolarPanel(rennesApp)
+    await zoomToSolarPanel(rennesApp)
   } else {
     await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
     removeSolarPanel(rennesApp)

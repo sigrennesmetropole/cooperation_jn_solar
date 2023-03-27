@@ -48,15 +48,15 @@ export function generateSolarPanel(solarPanels: SolarPanelModel[]) {
   return geojson
 }
 
-export function displaySolarPanel(
+export async function displaySolarPanel(
   rennesApp: RennesApp,
   solarPanels: SolarPanelModel[]
 ) {
-  const solarPanelLayer: GeoJSONLayer = rennesApp.layers.getByKey(
+  const solarPanel: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.solarPanel
-  ) as GeoJSONLayer
+  )
 
-  solarPanelLayer.addFeatures(generateSolarPanel(solarPanels))
+  solarPanel.addFeatures(generateSolarPanel(solarPanels))
 }
 
 export function removeSolarPanel(rennesApp: RennesApp) {
@@ -66,10 +66,10 @@ export function removeSolarPanel(rennesApp: RennesApp) {
   solarPanel.removeAllFeatures()
 }
 
-export function zoomToSolarPanel(rennesApp: RennesApp) {
-  const solarPanel: GeoJSONLayer = rennesApp.layers.getByKey(
+export async function zoomToSolarPanel(rennesApp: RennesApp) {
+  const solarPanel: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.solarPanel
-  ) as GeoJSONLayer
+  )
   const extent = solarPanel.getZoomToExtent()
   if (extent) {
     const viewpoint = Viewpoint.createViewpointFromExtent(extent!)
@@ -83,9 +83,9 @@ export async function filterSolarPanelByMaxSolarPanel(
   rennesApp: RennesApp,
   maxSolarPanel: number
 ) {
-  const solarPanel: GeoJSONLayer = rennesApp.layers.getByKey(
+  const solarPanel: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.solarPanel
-  ) as GeoJSONLayer
+  )
   solarPanel.setGlobalHider(new GlobalHider())
   const featuresToHide = solarPanel
     .getFeatures()
