@@ -4,132 +4,94 @@ import {
   VcsEvent,
   VectorStyleItem,
   ModificationKeyType,
-  CesiumMap,
-  vcsLayerName,
   CesiumTilesetLayer,
 } from '@vcmap/core'
 import type { InteractionEvent } from '@vcmap/core'
-import { Cesium3DTileFeature } from '@vcmap/cesium'
 import { roofWfsService } from '@/services/roofWfsService'
+import type { RennesApp } from './RennesApp'
 import { calculateAllRoofData } from '@/services/roofData'
-import { RENNES_LAYER } from '@/stores/layers'
-import { RennesApp } from './RennesApp'
+import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
 
-import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
-const selectStyle = new VectorStyleItem({
-  fill: { color: '#409D76' },
-  stroke: {
-    color: '#343434',
-    width: 1,
-  },
-})
-
 const highlightStyle = new VectorStyleItem({
-  fill: { color: '#707070' },
+  fill: { color: 'rgb(63,185,30)' },
   stroke: {
-    color: '#343434',
-    width: 1,
+    color: '#ffffff',
+    width: 2,
   },
 })
 
 class SelectInteraction extends AbstractInteraction {
   _featureClicked: VcsEvent<any> // eslint-disable-line
-  _selectableLayers: CesiumTilesetLayer[]
+  _selectableLayer: CesiumTilesetLayer
   _highlighted: boolean
-  _hasFeature: boolean
+  _hasFeature: boolean | string
 
   _rennesApp: RennesApp
 
-  constructor(layers: CesiumTilesetLayer[], rennesApp: RennesApp) {
+  constructor(layer: CesiumTilesetLayer, rennesApp: RennesApp) {
     super(EventType.CLICK, ModificationKeyType.NONE)
 
     this._featureClicked = new VcsEvent()
-    this._selectableLayers = layers
+    this._selectableLayer = layer
     this._highlighted = false
     this._hasFeature = false
     this._rennesApp = rennesApp
     this.setActive()
   }
 
-  _highlight(feature) {
+  _highlight(featureId: string) {
     this._highlighted = true
-    this._selectableLayers.forEach((l) => {
-      l.featureVisibility.clearHighlighting()
-      const toHighlight = this._hasFeature
-        ? { [this._hasFeature]: selectStyle }
-        : {}
-      toHighlight[feature.getId()] = highlightStyle
-      l.featureVisibility.highlight(toHighlight)
+    this._selectableLayer.featureVisibility.highlight({
+      [featureId]: highlightStyle,
     })
   }
 
   _unhighlight() {
     this._highlighted = false
-    this._selectableLayers.forEach((l) => {
-      l.featureVisibility.clearHighlighting()
-      const toHighlight = this._hasFeature
-        ? { [this._hasFeature]: selectStyle }
-        : {}
-      l.featureVisibility.highlight(toHighlight)
-    })
-  }
-
-  _select() {
-    this._selectableLayers.forEach((l) => {
-      l.featureVisibility.clearHighlighting()
-      l.featureVisibility.highlight({ [this._hasFeature]: selectStyle })
-    })
+    this._selectableLayer.featureVisibility.clearHighlighting()
   }
 
   _highglightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
-    //todo
-    console.log('Buildingroofs', buildingRoofs)
-  }
-
-  _getClickedBuilding(
-    pickedObjects: Cesium3DTileFeature[]
-  ): Cesium3DTileFeature {
-    let res
-    pickedObjects.forEach((obj: Cesium3DTileFeature) => {
-      if (obj[vcsLayerName] === RENNES_LAYER.building) {
-        res = obj
-      }
+    this._selectableLayer.featureVisibility.clearHighlighting()
+    buildingRoofs.features.forEach((f) => {
+      this._highlight(f.properties?.surface_id)
     })
-    return res
   }
-  async pipe(event: InteractionEvent) {
-    const cesiumMap = event.map as CesiumMap
-    const selectedBuilding = event.feature
-    const scene = cesiumMap.getScene()
-    const object = scene.drillPick(event.windowPosition, 100, 50, 50)
 
-    //const nearestBuildingClick = this._getClickedBuilding(object)
-    console.log('Selected building:', selectedBuilding)
-    console.log('Click on area:', object)
+  _goToNextStep(
+    buildingRoofs: GeoJSONFeatureCollection,
+    selectedBuildingId: string
+  ) {
+    const roofStore = useRoofsStore()
+    roofStore.setBuildingRoofsFeatures(buildingRoofs, selectedBuildingId)
+    roofStore.setSelectRoofFeature(buildingRoofs.features[0])
+    calculateAllRoofData()
+    router.push({ name: 'roof-selected-information' })
+  }
+
+  async pipe(event: InteractionEvent) {
+    const selectedBuilding = event.feature
+    const selectedBuildingId =
+      selectedBuilding?.getProperty('attributes')['BUILDINGID']
 
     if (selectedBuilding) {
       const buildingRoofs: GeoJSONFeatureCollection =
-        await roofWfsService.fetchRoofs(selectedBuilding.getProperty('id'))
-      const roofsStore = useRoofsStore()
-      roofsStore.setBuildingRoofsFeatures(buildingRoofs)
-      console.log('Roof of the building:', buildingRoofs)
+        await roofWfsService.fetchRoofs(selectedBuildingId)
       this._highglightRoofsOfTheBuilding(buildingRoofs)
       if (event.type & EventType.MOVE) {
-        this._highlight(event.feature)
+        this._highlight(selectedBuilding.getId()?.toString()!)
       }
       if (event.type & EventType.CLICK) {
         this._featureClicked.raiseEvent(event.feature)
-        this._hasFeature = selectedBuilding.getId()
-        this._select()
-        calculateAllRoofData()
+        this._hasFeature = selectedBuilding.getId()?.toString()!
       }
+      this._goToNextStep(buildingRoofs, selectedBuildingId)
     } else if (event.type & EventType.CLICK) {
       this._featureClicked.raiseEvent()
       this._hasFeature = false
-      this._selectableLayers.forEach((l) => {
-        l.featureVisibility.clearHighlighting()
-      })
+      this._unhighlight()
     } else if (this._highlighted) {
       this._unhighlight()
     }

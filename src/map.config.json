@@ -37,7 +37,7 @@
       "type": "CesiumTilesetLayer",
       "name": "building",
       "url": "https://rennes3d-dev-tiles.s3.fr-par.scw.cloud/f8a215a9-d0cc-4804-b284-0eac8a58924d/",
-      "activeOnStartup": true,
+      "activeOnStartup": false,
       "allowPicking": false,
       "screenSpaceError": 16,
       "screenSpaceErrorMobile": 32,
@@ -48,7 +48,7 @@
       "name": "roof3d",
       "url": "https://demo.virtualcitymap.de/rennes/datasource-data/fe157549-1c80-47f1-828a-f1a97bf92d80/",
       "activeOnStartup": true,
-      "allowPicking": false,
+      "allowPicking": true,
       "screenSpaceError": 16,
       "screenSpaceErrorMobile": 32,
       "zIndex": 1

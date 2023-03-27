@@ -32,6 +32,7 @@ export class RennesApp extends VcsApp {
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
       mapStore.isInitializeMap = true
+      mapStore.viewPoint = homeViewPoint
     }
     this.maps.eventHandler.featureInteraction.setActive(EventType.CLICKMOVE)
 
@@ -55,7 +56,6 @@ export class RennesApp extends VcsApp {
   }
 
   getRoofSquaresAreaLayer(): Layer {
-    console.log('Aller layers', this.getOpenlayerMap().getAllLayers())
     return this.getOpenlayerMap()
       .getAllLayers()
       .find((l) => l.getProperties().name === 'roofSquaresArea')!

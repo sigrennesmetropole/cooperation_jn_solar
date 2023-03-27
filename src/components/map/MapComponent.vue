@@ -16,7 +16,6 @@ import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
   displayRoofShape,
-  generateRandomRoofShape,
   generateSquareGrid,
   removeRoof2dShape,
   removeRoofGrid,
@@ -24,6 +23,9 @@ import {
 } from '@/services/roofInteraction'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
+import { EventType } from '@vcmap/core'
+import SelectInteraction from '@/services/roofCesiumInteraction'
+import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -31,6 +33,7 @@ const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
+const mapStore = useMapStore()
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -66,13 +69,13 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
-    await rennesApp.maps.setActiveMap('ol')
+    await mapStore.activate2d()
     if (addressStore.geolocAddress !== null) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
       await layerStore.enableLayer(RENNES_LAYER.roofShape)
-      let roofShape = generateRandomRoofShape(addressStore.geolocAddress)
+      let roofShape = roofsStore.selectRoofFeature!
       displayRoofShape(rennesApp, roofShape)
-      let grid = await generateSquareGrid(rennesApp, roofShape)
+      let grid = generateSquareGrid(rennesApp, roofShape)
       displayGridOnMap(rennesApp, grid)
       addRoofInteractionOn2dMap(rennesApp)
     }
@@ -81,7 +84,25 @@ simulationStore.$subscribe(async () => {
     removeRoofInteractionOn2dMap(rennesApp)
     removeRoofGrid(rennesApp)
     removeRoof2dShape(rennesApp)
-    await rennesApp.maps.setActiveMap('cesium')
+    await mapStore.activate3d()
+  }
+})
+
+viewStore.$subscribe(async () => {
+  if (viewStore.currentView === viewList['roof-selection']) {
+    rennesApp.maps.eventHandler.featureInteraction.setActive(
+      EventType.CLICKMOVE
+    )
+    const selectInteraction = new SelectInteraction(
+      rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
+      rennesApp
+    )
+    rennesApp.maps.eventHandler.addExclusiveInteraction(
+      selectInteraction,
+      () => {}
+    )
+  } else {
+    rennesApp.maps.eventHandler.removeExclusive()
   }
 })
 
@@ -97,6 +118,11 @@ viewStore.$subscribe(async () => {
 
 layerStore.$subscribe(async () => {
   await updateLayersVisibility()
+})
+
+mapStore.$subscribe(async () => {
+  await rennesApp.maps.setActiveMap(mapStore.activeMap)
+  await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
 })
 
 roofsStore.$subscribe(async () => {})

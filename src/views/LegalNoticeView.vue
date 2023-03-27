@@ -4,7 +4,7 @@ import { onBeforeMount, ref } from 'vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 
-import headerLegalNotice from '@/components/legal/HeaderLegalNotice.vue'
+import HeaderLegalNotice from '@/components/legal/HeaderLegalNotice.vue'
 import LegalNotice from '@/components/legal/LegalNotice.vue'
 import Privacy from '@/components/legal/PrivacyLegal.vue'
 import SiteMap from '@/components/legal/SiteMap.vue'
@@ -25,7 +25,7 @@ onBeforeMount(async () => {
   <div
     class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll"
   >
-    <headerLegalNotice></headerLegalNotice>
+    <HeaderLegalNotice></HeaderLegalNotice>
     <LegalNotice v-if="legalLink == 'mentions-legales'"></LegalNotice>
     <Privacy v-else-if="legalLink == 'confidentialite'"></Privacy>
     <SiteMap v-else-if="legalLink == 'plan-du-site'"></SiteMap>

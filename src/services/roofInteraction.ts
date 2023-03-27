@@ -10,13 +10,14 @@ import {
   squareGrid,
   transformRotate,
 } from '@turf/turf'
-import type { Feature, FeatureCollection } from '@turf/helpers'
+import type { FeatureCollection } from '@turf/helpers'
 import type { GeoJSONLayer } from '@vcmap/core'
 import type { LayerOpenlayersImpl } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { GeoJSON } from 'ol/format'
 import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
+import type { GeoJSONFeature } from 'ol/format/GeoJSON'
 
 const selected = new Style({
   fill: new Fill({
@@ -48,11 +49,14 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
  * create grid on all the bbox of the roof, then rotate
  * exclude squares which are not entirely inside the roof shape
  */
-export function generateSquareGrid(rennesApp: RennesApp, roofShape: Feature) {
-  const roofAzimut = 20
-  const bboxOnRoof = bbox(roofShape)
+export function generateSquareGrid(
+  rennesApp: RennesApp,
+  roofShape: GeoJSONFeature
+) {
+  const roofAzimut = roofShape.properties?.azimuth
+  const bboxOnRoof = roofShape.bbox!
   const grid = squareGrid(bboxOnRoof, 45, { units: 'centimeters' })
-  const rotatedPoly = transformRotate(grid, roofAzimut)
+  const rotatedPoly = transformRotate(grid, 90 - roofAzimut)
 
   rotatedPoly.features = rotatedPoly.features.filter((f) =>
     booleanContains(roofShape, f)
@@ -71,7 +75,10 @@ export function displayGridOnMap(
   gridLayer.addFeatures(marker)
 }
 
-export function displayRoofShape(rennesApp: RennesApp, geojson: Feature) {
+export function displayRoofShape(
+  rennesApp: RennesApp,
+  geojson: GeoJSONFeature
+) {
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.roofShape
   ) as GeoJSONLayer
