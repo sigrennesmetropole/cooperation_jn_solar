@@ -29,12 +29,14 @@ import {
   zoomToSolarPanel,
 } from '@/services/solarPanel'
 import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
+import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
 const solarPanelStore = useSolarPanelStore()
+const mapStore = useMapStore()
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -70,7 +72,7 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
-    await rennesApp.maps.setActiveMap('ol')
+    await mapStore.activate2d()
     if (addressStore.geolocAddress !== null) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
       await layerStore.enableLayer(RENNES_LAYER.roofShape)
@@ -99,7 +101,7 @@ simulationStore.$subscribe(async () => {
     removeRoofInteractionOn2dMap(rennesApp)
     removeRoofGrid(rennesApp)
     removeRoof2dShape(rennesApp)
-    await rennesApp.maps.setActiveMap('cesium')
+    await mapStore.activate3d()
   }
 })
 
@@ -112,6 +114,9 @@ solarPanelStore.$subscribe(async () => {
 
 layerStore.$subscribe(async () => {
   await updateLayersVisibility()
+})
+mapStore.$subscribe(async () => {
+  await rennesApp.maps.setActiveMap(mapStore.activeMap)
 })
 </script>
 

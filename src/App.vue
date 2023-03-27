@@ -110,7 +110,6 @@ const isDisplayAsideAndMap = computed(() => {
         simulationStore.currentStep === 2
       "
       :text="'Cliquez sur les zones qui ne peuvent pas accueillir de panneaux\n photovoltaïques (présence de fenêtre de toit, cheminée...)'"
-      :timer="5000"
       class="absolute z-20 bottom-5 left-[20%]"
     />
     <button

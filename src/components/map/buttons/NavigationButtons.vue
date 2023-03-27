@@ -15,11 +15,13 @@ import { viewList } from '@/model/views.model'
 import type { RennesApp } from '@/services/RennesApp'
 import { useRouter } from 'vue-router'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
+import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const viewStore = useViewsStore()
 const router = useRouter()
 const panelStore = usePanelsStore()
+const mapStore = useMapStore()
 
 async function zoom(out = false, zoomFactor = 2): Promise<void> {
   const activeMap = rennesApp.maps.activeMap
@@ -39,6 +41,7 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
 const shouldDisplayHomeButton = () => {
   return [viewList.home, viewList['map-pcaet']].includes(viewStore.currentView)
 }
+
 const heightClass = computed(() => {
   if (!shouldDisplayHomeButton()) {
     return ['h-[14rem]']
@@ -68,7 +71,7 @@ const heightClass = computed(() => {
         <IconMinus />
       </UiIconButton>
     </div>
-    <CompassComponent />
+    <CompassComponent v-if="mapStore.is3D()" />
   </div>
 
   <div
