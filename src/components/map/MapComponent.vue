@@ -24,6 +24,7 @@ import {
 } from '@/services/roofInteraction'
 import {
   displaySolarPanel,
+  filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
 } from '@/services/solarPanel'
@@ -100,6 +101,16 @@ simulationStore.$subscribe(async () => {
     removeRoof2dShape(rennesApp)
     await rennesApp.maps.setActiveMap('cesium')
   }
+})
+
+solarPanelStore.$subscribe(async () => {
+  console.log(
+    `solarPanelStore.currentNumberSolarPanel: ${solarPanelStore.currentNumberSolarPanel}`
+  )
+  await filterSolarPanelByMaxSolarPanel(
+    rennesApp,
+    solarPanelStore.currentNumberSolarPanel
+  )
 })
 
 layerStore.$subscribe(async () => {

@@ -1,6 +1,6 @@
 import { GeoJSON } from 'ol/format'
 import type { RennesApp } from '@/services/RennesApp'
-import { GeoJSONLayer, Viewpoint } from '@vcmap/core'
+import { GeoJSONLayer, GlobalHider, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
@@ -15,6 +15,7 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
       coordinates: [solarPanel.x, solarPanel.y, solarPanel.z],
     },
     properties: {
+      index: solarPanel.index,
       olcs_modelUrl:
         'https://service.virtualcityplanner.de/object-library/Vis-All/Solarmodul/Solarmodul__LOW_Solarmodul_Dachmontage.glb',
       olcs_modelPitch: solarPanel.pitch,
@@ -76,4 +77,28 @@ export function zoomToSolarPanel(rennesApp: RennesApp) {
     newExtent.pitch = -45
     rennesApp.maps.activeMap.gotoViewpoint(newExtent)
   }
+}
+
+export async function filterSolarPanelByMaxSolarPanel(
+  rennesApp: RennesApp,
+  maxSolarPanel: number
+) {
+  const solarPanel: GeoJSONLayer = rennesApp.layers.getByKey(
+    RENNES_LAYER.solarPanel
+  ) as GeoJSONLayer
+  solarPanel.setGlobalHider(new GlobalHider())
+  const featuresToHide = solarPanel
+    .getFeatures()
+    .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
+    .map((f) => f.getId()!)
+  console.log(`maxSolarPanel: ${maxSolarPanel}`)
+  console.log(`features ids: ${solarPanel.getFeatures().map((f) => f.getId())}`)
+  console.log(
+    `features index: ${solarPanel
+      .getFeatures()
+      .map((f) => f.getProperties()['index'])}`
+  )
+  console.log(`featuresToHide: ${featuresToHide}`)
+
+  solarPanel.featureVisibility.hideObjects(featuresToHide)
 }
