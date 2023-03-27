@@ -87,18 +87,12 @@ export async function filterSolarPanelByMaxSolarPanel(
     RENNES_LAYER.solarPanel
   )
   solarPanel.setGlobalHider(new GlobalHider())
+  solarPanel.featureVisibility.clearHiddenObjects()
+  // Note(IS): We use 0-th index for the solar panel
   const featuresToHide = solarPanel
     .getFeatures()
     .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
     .map((f) => f.getId()!)
-  console.log(`maxSolarPanel: ${maxSolarPanel}`)
-  console.log(`features ids: ${solarPanel.getFeatures().map((f) => f.getId())}`)
-  console.log(
-    `features index: ${solarPanel
-      .getFeatures()
-      .map((f) => f.getProperties()['index'])}`
-  )
-  console.log(`featuresToHide: ${featuresToHide}`)
 
   solarPanel.featureVisibility.hideObjects(featuresToHide)
 }
