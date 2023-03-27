@@ -14,8 +14,8 @@ export const useRoofsStore = defineStore('roofs', () => {
     buildingRoofsFeatures.value = features
   }
 
-  function setSelectRoofFeature(features: GeoJSONFeatureCollection) {
-    buildingRoofsFeatures.value = features
+  function setSelectRoofFeature(features: GeoJSONFeature) {
+    selectRoofFeature.value = features
   }
 
   return {

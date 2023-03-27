@@ -3,15 +3,13 @@ import { ref, computed } from 'vue'
 
 const props = defineProps<{
   dataGraph: {
-    series: number[]
-    labels: string[]
     colors: string[]
     labelTotal: string
-    labelTotalValue: string
   }
+  labelTotalValue: number
+  series: number[]
 }>()
 
-const series = ref(props.dataGraph.series)
 const chartOptions = ref({
   dataLabels: {
     enabled: false,
@@ -19,7 +17,6 @@ const chartOptions = ref({
   legend: {
     show: false,
   },
-  labels: props.dataGraph.labels,
   tooltip: {
     enabled: false, // Disable tooltip on hover
   },
@@ -61,7 +58,7 @@ const labelFormatted = computed(() => {
 })
 
 const styleInsideGraph = computed(() => {
-  const total = parseInt(props.dataGraph.labelTotalValue)
+  const total = props.labelTotalValue
   const areaToFill = 100 - total
   const areaToFillInDeg = areaToFill * 3.6
   let style = ` 
@@ -84,7 +81,7 @@ const styleInsideGraph = computed(() => {
     <div class="absolute top-10 left-20">
       <div class="text-center">
         <span class="font-dm-sans font-bold text-3xl">
-          {{ props.dataGraph.labelTotalValue }}
+          {{ props.labelTotalValue }}
         </span>
         <span class="font-dm-sans font-bold text-xl"> % </span>
       </div>
@@ -101,7 +98,7 @@ const styleInsideGraph = computed(() => {
       type="donut"
       width="228"
       :options="chartOptions"
-      :series="series"
+      :series="props.series"
     ></apexchart>
   </div>
 </template>

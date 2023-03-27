@@ -64,6 +64,23 @@ function getDataBuilding(dataRoofs: RoofSurfaceModel[]) {
   return dataBuilding
 }
 
+function getDataSelectedRoof(dataRoofs: RoofSurfaceModel[]) {
+  const roofsStore = useRoofsStore()
+  const selectedRoofFeature = roofsStore.selectRoofFeature
+  console.log('get data selected roof', selectedRoofFeature)
+  if (selectedRoofFeature === null) return null
+
+  const surface_id = selectedRoofFeature.getProperty('surface_id')
+  const dataSelectedRoof = dataRoofs[surface_id]
+  return dataSelectedRoof
+}
+
+function fakeSelectedRoof(features: Feature<Geometry>[]) {
+  const roofsStore = useRoofsStore()
+  const selectedRoofFeature = features[0]
+  roofsStore.setSelectRoofFeature(selectedRoofFeature)
+}
+
 export async function calculateAllRoofData() {
   const features = getRoofsFeatures()
   if (features === null) return
@@ -71,7 +88,11 @@ export async function calculateAllRoofData() {
   const dataRoofs = getDataRoofs(features)
   const dataBuilding = getDataBuilding(dataRoofs)
 
+  fakeSelectedRoof(features)
+  const dataSelectedRoof = getDataSelectedRoof(dataRoofs)
+
   const roofDataStore = useRoofDataStore()
   roofDataStore.setBuildingData(dataBuilding)
   roofDataStore.setRoofsData(dataRoofs)
+  roofDataStore.setSelectedRoofData(dataSelectedRoof)
 }
