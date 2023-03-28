@@ -17,7 +17,7 @@ import { usePanelsStore } from '@/stores/panels'
 const search = ref('')
 const addressStore = useAddressStore()
 const router = useRouter()
-const addressSelected: Ref<AddressRva | AddressOrganization | null> = ref(null)
+const addressSelected: Ref<number | string | null> = ref(null)
 const autocompletion: Ref<{
   addressRva: AddressRva[]
   addressOrganization: AddressOrganization[]
