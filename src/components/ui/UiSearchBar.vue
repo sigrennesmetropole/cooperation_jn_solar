@@ -29,6 +29,8 @@ const autocompletion: Ref<{
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
 const SIZE_BEGIN_SEARCH = 4
+const NB_ADDRESSES_RVA = 5
+const NB_ADDRESSES_ORGANIZATION = 3
 
 onMounted(() => {
   if (addressStore.address !== '') {
@@ -42,7 +44,7 @@ const searchAddresses = async () => {
   if (answer.status.code != 1 || answer.status.message != 'ok') {
     return
   }
-  autocompletion.value.addressRva = answer.addresses.splice(0, 5)
+  autocompletion.value.addressRva = answer.addresses.splice(0, NB_ADDRESSES_RVA)
 }
 
 const resetAutocompletion = () => {
@@ -53,12 +55,13 @@ const resetAutocompletion = () => {
 const searchOrganizations = async () => {
   let data = await apiSitesorgService.fetchOrganizations(search.value)
   let organizations = []
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length && i < NB_ADDRESSES_ORGANIZATION; i++) {
     organizations.push({
       id: data[i].id,
       addr: data[i].nom,
     })
   }
+  console.log(organizations)
   autocompletion.value.addressOrganization = organizations
 }
 
@@ -71,6 +74,10 @@ const searchAddressesOrOrganizations = async () => {
   searchOrganizations()
 }
 
+const stripHTMLTags = (str: string) => {
+  return str.replace(/<\/?[^>]+(>|$)/g, '')
+}
+
 const goToAddress = async (
   item: AddressRva | AddressOrganization,
   type: string
@@ -79,13 +86,13 @@ const goToAddress = async (
   router.push('/roof-selection')
   if (type === 'rva') {
     item = item as AddressRva
-    search.value = item.addr3
+    search.value = stripHTMLTags(item.addr3)
     resetAutocompletion()
     addressStore.setAddressGeoloc([+item.x, +item.y])
     createNewViewpointFromAddress(rennesApp, [+item.x, +item.y])
   } else if (type === 'organization') {
     item = item as AddressOrganization
-    search.value = item.addr
+    search.value = stripHTMLTags(item.addr)
     resetAutocompletion()
     const data_organization = await apiSitesorgService.fetchOrganizationById(
       item.id
@@ -209,84 +216,58 @@ const highlightedAutocompletion = computed(() => {
     </div>
 
     <div
-      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
+      class="flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px]"
       v-if="
         highlightedAutocompletion.addressRva.length > 0 ||
         highlightedAutocompletion.addressOrganization.length > 0
       "
     >
-      <ul>
+      <ul v-if="highlightedAutocompletion.addressRva.length > 0">
+        <li class="border-b border-neutral-200 py-1">
+          <span class="font-dm-sans font-light text-sm text-neutral-800 px-3">
+            <template v-if="highlightedAutocompletion.addressRva.length > 1">
+              Adresses
+            </template>
+            <template v-else> Adresse </template>
+          </span>
+        </li>
         <li
           v-for="item in highlightedAutocompletion.addressRva"
           :key="item.idaddress"
           @click="goToAddress(item, 'rva')"
-          @mouseover="addressSelected = item"
-          class="cursor-pointer border-b border-neutral-200"
-          :class="addressSelected === item ? 'bg-neutral-100' : ''"
+          @mouseover="addressSelected = item.idaddress"
+          class="cursor-pointer border-b border-neutral-200 py-1"
+          :class="addressSelected === item.idaddress ? 'bg-neutral-100' : ''"
         >
-          <span v-html="item.addr3"></span>
+          <div v-html="item.addr3" class="px-3"></div>
         </li>
       </ul>
-      <ul>
+
+      <ul v-if="highlightedAutocompletion.addressOrganization.length > 0">
+        <li class="border-b border-neutral-200 py-1">
+          <span class="font-dm-sans font-light text-sm text-neutral-800 px-3">
+            <template
+              v-if="highlightedAutocompletion.addressOrganization.length > 1"
+            >
+              Organismes
+            </template>
+            <template v-else> Organisme </template>
+          </span>
+        </li>
         <li
           v-for="item in highlightedAutocompletion.addressOrganization"
-          :key="item.addr"
+          :key="item.id"
           @click="goToAddress(item, 'organization')"
-          class="cursor-pointer border-b border-neutral-200"
-          @mouseover="addressSelected = item"
+          class="cursor-pointer border-b border-neutral-200 py-1"
+          @mouseover="addressSelected = item.id"
           :class="{
-            'border-none':
-              item ===
-              highlightedAutocompletion.addressOrganization[
-                highlightedAutocompletion.addressOrganization.length - 1
-              ],
-            'bg-neutral-100': addressSelected === item,
+            'bg-neutral-100': addressSelected === item.id,
           }"
         >
-          <span v-html="item.addr"></span>
+          <div v-html="item.addr" class="px-3"></div>
         </li>
       </ul>
     </div>
-
-    <!-- <div
-      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
-      v-if="
-        autocompletion.addressRva.length > 0 ||
-        autocompletion.addressOrganization.length > 0
-      "
-    >
-      <ul>
-        <li
-          v-for="item in autocompletion.addressRva"
-          :key="item.idaddress"
-          @click="goToAddress(item, 'rva')"
-          @mouseover="addressSelected = item"
-          class="cursor-pointer border-b border-neutral-200"
-          :class="addressSelected === item ? 'bg-neutral-100' : ''"
-        >
-          {{ item.addr3 }}
-        </li>
-      </ul>
-      <ul>
-        <li
-          v-for="item in autocompletion.addressOrganization"
-          :key="item.addr"
-          @click="goToAddress(item, 'organization')"
-          class="cursor-pointer border-b border-neutral-200"
-          @mouseover="addressSelected = item"
-          :class="{
-            'border-none':
-              item ===
-              autocompletion.addressOrganization[
-                autocompletion.addressOrganization.length - 1
-              ],
-            'bg-neutral-100': addressSelected === item,
-          }"
-        >
-          {{ item.addr }}
-        </li>
-      </ul>
-    </div> -->
     <div
       v-else-if="isEmptySearch"
       class="flex flex-row items-center rounded px-3 py-4 mt-0 shadow-lg bg-white"
