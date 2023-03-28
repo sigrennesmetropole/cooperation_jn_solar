@@ -117,6 +117,23 @@ function emptySearch() {
   router.push('/map-pcaet')
 }
 
+function getPositionOfUser() {
+  if (window.navigator.geolocation) {
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude
+        const lon = position.coords.longitude
+        addressStore.setAddressGeoloc([lon, lat])
+        createNewViewpointFromAddress(rennesApp, [lon, lat])
+        console.log(position)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+}
+
 const isEmptySearch = computed(() => {
   if (
     search.value.length >= SIZE_BEGIN_SEARCH &&
@@ -135,7 +152,10 @@ const isEmptySearch = computed(() => {
     <div
       class="flex flex-row items-center h-11 shadow-lg rounded p-0 mb-0 bg-white w-[402px]"
     >
-      <div class="flex flex-row items-center justify-center w-10 h-full ml-2">
+      <div
+        class="flex flex-row items-center justify-center w-10 h-full ml-2"
+        @click="getPositionOfUser()"
+      >
         <img :src="iconTarget" class="w-4 h-4" />
       </div>
       <input
