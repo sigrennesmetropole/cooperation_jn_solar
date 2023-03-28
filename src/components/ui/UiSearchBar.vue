@@ -145,6 +145,33 @@ const isEmptySearch = computed(() => {
   }
   return false
 })
+
+const highlightedAutocompletion = computed(() => {
+  const boldSearchTerm = (text: string) => {
+    const words = search.value
+      .split(/\s+/)
+      .filter((word) => word.trim().length > 0)
+    const regex = new RegExp(`(${words.join('|')})`, 'gi')
+    return text.replace(regex, '<strong>$1</strong>')
+  }
+
+  const addressRva = autocompletion.value.addressRva.map((address) => ({
+    ...address,
+    addr3: boldSearchTerm(address.addr3),
+  }))
+
+  const addressOrganization = autocompletion.value.addressOrganization.map(
+    (organization) => ({
+      ...organization,
+      addr: boldSearchTerm(organization.addr),
+    })
+  )
+
+  return {
+    addressRva,
+    addressOrganization,
+  }
+})
 </script>
 
 <template>
@@ -184,6 +211,46 @@ const isEmptySearch = computed(() => {
     <div
       class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
       v-if="
+        highlightedAutocompletion.addressRva.length > 0 ||
+        highlightedAutocompletion.addressOrganization.length > 0
+      "
+    >
+      <ul>
+        <li
+          v-for="item in highlightedAutocompletion.addressRva"
+          :key="item.idaddress"
+          @click="goToAddress(item, 'rva')"
+          @mouseover="addressSelected = item"
+          class="cursor-pointer border-b border-neutral-200"
+          :class="addressSelected === item ? 'bg-neutral-100' : ''"
+        >
+          <span v-html="item.addr3"></span>
+        </li>
+      </ul>
+      <ul>
+        <li
+          v-for="item in highlightedAutocompletion.addressOrganization"
+          :key="item.addr"
+          @click="goToAddress(item, 'organization')"
+          class="cursor-pointer border-b border-neutral-200"
+          @mouseover="addressSelected = item"
+          :class="{
+            'border-none':
+              item ===
+              highlightedAutocompletion.addressOrganization[
+                highlightedAutocompletion.addressOrganization.length - 1
+              ],
+            'bg-neutral-100': addressSelected === item,
+          }"
+        >
+          <span v-html="item.addr"></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- <div
+      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
+      v-if="
         autocompletion.addressRva.length > 0 ||
         autocompletion.addressOrganization.length > 0
       "
@@ -219,7 +286,7 @@ const isEmptySearch = computed(() => {
           {{ item.addr }}
         </li>
       </ul>
-    </div>
+    </div> -->
     <div
       v-else-if="isEmptySearch"
       class="flex flex-row items-center rounded px-3 py-4 mt-0 shadow-lg bg-white"
