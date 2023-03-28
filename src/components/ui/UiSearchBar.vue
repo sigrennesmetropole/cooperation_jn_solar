@@ -159,7 +159,7 @@ const isEmptySearch = computed(() => {
         <img :src="iconTarget" class="w-4 h-4" />
       </div>
       <input
-        class="w-full h-full border-none p-2 text-base font-medium font-dm-sans placeholder-black"
+        class="w-full h-full border-none p-2 text-base font-medium font-dm-sans placeholder-black focus:ring-0 !border-black"
         type="text"
         placeholder="Entrez votre adresse ici"
         v-model="search"
@@ -231,3 +231,21 @@ const isEmptySearch = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+input[type='text']::-webkit-input-placeholder:focus {
+  color: transparent;
+}
+
+/* Override the default focus style for Firefox */
+input[type='text']::-moz-placeholder:focus {
+  color: transparent;
+}
+
+input[type='text']::-webkit-search-decoration,
+input[type='text']::-webkit-search-cancel-button,
+input[type='text']::-webkit-search-results-button,
+input[type='text']::-webkit-search-results-decoration {
+  display: none;
+}
+</style>
