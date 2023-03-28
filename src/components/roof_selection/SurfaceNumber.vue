@@ -6,12 +6,7 @@ const roofDataStore = useRoofDataStore()
 </script>
 
 <template>
-  <template
-    v-if="
-      roofDataStore.selectedRoofData !== null &&
-      roofDataStore.buildingData !== null
-    "
-  >
+  <template v-if="roofDataStore.buildingData !== null">
     <div class="flex flex-row items-center justify-center">
       <SurfaceChartDonut></SurfaceChartDonut>
     </div>

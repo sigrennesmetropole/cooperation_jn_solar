@@ -64,11 +64,22 @@ async function setLayerVisible(layerName: string, visible: boolean) {
   }
 }
 
+async function disableOlInteraction() {
+  if (mapStore.activeMap === 'ol') {
+    await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    removeRoofInteractionOn2dMap(rennesApp)
+    removeRoofGrid(rennesApp)
+    removeRoof2dShape(rennesApp)
+  }
+}
+
 simulationStore.$subscribe(async () => {
   if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
+    //force synchrone switch for adding openlayer interaction, update the store
+    await rennesApp.maps.setActiveMap('ol')
     await mapStore.activate2d()
     if (addressStore.geolocAddress !== null) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
@@ -80,10 +91,7 @@ simulationStore.$subscribe(async () => {
       addRoofInteractionOn2dMap(rennesApp)
     }
   } else {
-    await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
-    removeRoofInteractionOn2dMap(rennesApp)
-    removeRoofGrid(rennesApp)
-    removeRoof2dShape(rennesApp)
+    await disableOlInteraction()
     await mapStore.activate3d()
   }
 })
@@ -101,7 +109,7 @@ viewStore.$subscribe(async () => {
       selectInteraction,
       () => {}
     )
-  } else {
+  } else if (viewStore.currentView !== viewList['roof-selected-information']) {
     rennesApp.maps.eventHandler.removeExclusive()
   }
 })
@@ -110,8 +118,12 @@ layerStore.$subscribe(async () => {
   await updateLayersVisibility()
 })
 mapStore.$subscribe(async () => {
-  await rennesApp.maps.setActiveMap(mapStore.activeMap)
-  await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
+  if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
+    await rennesApp.maps.setActiveMap(mapStore.activeMap)
+  }
+  if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
+    await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
+  }
 })
 
 roofsStore.$subscribe(async () => {})

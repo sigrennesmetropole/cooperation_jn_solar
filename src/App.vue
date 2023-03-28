@@ -99,7 +99,8 @@ const isDisplayAsideAndMap = computed(() => {
     <UiPopUpBottomInformation
       v-else-if="
         viewStore.currentView === viewList['step-sunshine'] &&
-        simulationStore.currentStep === 2
+        simulationStore.currentStep === 2 &&
+        simulationStore.currentSubStep === 1
       "
       :text="'Cliquez sur les zones qui ne peuvent pas accueillir de panneaux\n photovoltaïques (présence de fenêtre de toit, cheminée...)'"
       class="absolute z-20 bottom-5 left-[20%]"

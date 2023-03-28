@@ -19,7 +19,8 @@ function getRoofsFeatures() {
   if (buildingRoofsFeatures === null) return null
 
   const geoJSONFormat = new GeoJSON()
-  const features = geoJSONFormat.readFeatures(buildingRoofsFeatures, {})
+
+  const features = geoJSONFormat.readFeatures(buildingRoofsFeatures)
   return features
 }
 
@@ -27,14 +28,15 @@ function roundResult(num: number) {
   return parseInt(num.toFixed(2))
 }
 
-function getDataRoofs(features: Feature<Geometry>[]) {
+function getDataRoofs(features: Feature[]) {
   const dataRoofs: RoofSurfaceModel[] = []
-  features.forEach((feature) => {
+  features.forEach((feature, idx) => {
     const surface_id = feature.getProperty('surface_id')
     const total_surface = feature.getProperty('pan_area')
     const surface_favorable = calculateSurfaceFavorableOfRoofFeature(feature)
 
-    dataRoofs[surface_id] = {
+    dataRoofs[idx] = {
+      surface_id: surface_id,
       values: [
         feature.getProperty('rang_1'),
         feature.getProperty('rang_2'),
@@ -81,6 +83,5 @@ export async function calculateAllRoofData() {
   const dataBuilding = getDataBuilding(dataRoofs)
 
   const roofDataStore = useRoofDataStore()
-  roofDataStore.setBuildingData(dataBuilding)
-  roofDataStore.setRoofsData(dataRoofs)
+  await roofDataStore.setBuildingData(dataBuilding)
 }

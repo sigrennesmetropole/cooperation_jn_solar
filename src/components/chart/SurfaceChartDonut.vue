@@ -5,7 +5,8 @@ import { useRoofDataStore } from '@/stores/roofData'
 const roofDataStore = useRoofDataStore()
 function favorablePercentage() {
   const favorablePercentage =
-    (roofDataStore.buildingData.favorable / roofDataStore.buildingData.total) *
+    (roofDataStore.buildingData?.favorable! /
+      roofDataStore.buildingData?.total!) *
     100
   return Math.round(favorablePercentage)
 }
@@ -20,7 +21,7 @@ const dataGraph = reactive({
     <UiChartDonut
       :dataGraph="dataGraph"
       :labelTotalValue="favorablePercentage()"
-      :series="roofDataStore.buildingData.values"
+      :series="roofDataStore.buildingData?.values ?? []"
     ></UiChartDonut>
   </div>
 </template>

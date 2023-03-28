@@ -7,7 +7,6 @@ import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep from '@/components/simulation/BoxStep.vue'
 import { usePanelsStore } from '@/stores/panels'
 import SurfaceNumber from '@/components/roof_selection/SurfaceNumber.vue'
-import type { RoofSurfaceModel } from '@/model/roof.model'
 import iconInstallation from '@/assets/icons/installation.svg'
 import { useRouter } from 'vue-router'
 import { useRoofsStore } from '@/stores/roof'
@@ -32,14 +31,13 @@ onBeforeMount(async () => {
   }
 })
 
-// TODO: obtain this RoofSurface from the current selected
-const roofSurface: RoofSurfaceModel = {
-  values: [45, 5, 15, 35],
-  favorable: 44,
-  total: 90,
-  orientation: 'sud',
-  inclinaison: 47,
-}
+roofStore.$subscribe(async () => {
+  if (roofStore.buildingRoofsFeatures && roofStore.buildingRoofsFeatures.bbox) {
+    mapStore.viewPoint = await createCustomViewpointFromExtent(
+      roofStore.buildingRoofsFeatures.bbox
+    )
+  }
+})
 </script>
 
 <template>
@@ -50,7 +48,7 @@ const roofSurface: RoofSurfaceModel = {
       text="La surface favorable correspond à un potentiel supérieur à 1200 kWh/m2/an."
       widthBoxText="w-[300px]"
     ></UiButtonWithTooltip>
-    <SurfaceNumber :roofSurface="roofSurface"></SurfaceNumber>
+    <SurfaceNumber></SurfaceNumber>
   </div>
 
   <UiDisclosure>

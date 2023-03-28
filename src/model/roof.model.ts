@@ -1,4 +1,5 @@
 export type RoofSurfaceModel = {
+  surface_id: string
   values: number[]
   favorable: number
   total: number
