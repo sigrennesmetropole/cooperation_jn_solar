@@ -75,7 +75,6 @@ function getDataBuilding(dataRoofs: RoofSurfaceModel[]) {
 
 export async function calculateAllRoofData() {
   const features = getRoofsFeatures()
-  console.log(features)
   if (features === null) return
 
   const dataRoofs = getDataRoofs(features)
