@@ -11,6 +11,7 @@ export const useSimulationStore = defineStore('simulation', () => {
   // TODO(IS): remove the example below to null or 0
   const maxNumberSolarPanel: Ref<number> = ref(6)
   const roofSurface: Ref<RoofSurfaceModel | null> = ref({
+    surface_id: '1',
     values: [10, 20, 30, 40],
     favorable: 44,
     total: 90,

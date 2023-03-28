@@ -6,13 +6,14 @@ import iconMagnifyingGlass from '@/assets/icons/magnifying-glass.svg'
 import iconSearchEmpty from '@/assets/icons/search-empty.svg'
 import { apiRvaService } from '@/services/api-rva'
 import { apiSitesorgService } from '@/services/api-sitesorg'
-import { createNewViewpointFromAddress } from '@/services/address'
+import { createNewViewpointFromAddress } from '@/services/viewpointHelper'
 import type { RennesApp } from '@/services/RennesApp'
 import type { AddressRva, AddressOrganization } from '@/model/address.model'
 import iconMultiply from '@/assets/icons/icon-multiply.svg'
 import { useAddressStore } from '@/stores/address'
 import { useRouter } from 'vue-router'
 import { usePanelsStore } from '@/stores/panels'
+import { useMapStore } from '@/stores/map'
 
 const search = ref('')
 const addressStore = useAddressStore()
@@ -28,6 +29,8 @@ const autocompletion: Ref<{
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
+const mapStore = useMapStore()
+
 const SIZE_BEGIN_SEARCH = 4
 
 onMounted(() => {
@@ -77,12 +80,14 @@ const goToAddress = async (
 ) => {
   addressStore.setAddress(search.value)
   router.push('/roof-selection')
+  let currentVp = await rennesApp.maps?.activeMap.getViewpoint()
+  let newVp
   if (type === 'rva') {
     item = item as AddressRva
     search.value = item.addr3
     resetAutocompletion()
     addressStore.setAddressGeoloc([+item.x, +item.y])
-    createNewViewpointFromAddress(rennesApp, [+item.x, +item.y])
+    newVp = createNewViewpointFromAddress(currentVp!, [+item.x, +item.y])
   } else if (type === 'organization') {
     item = item as AddressOrganization
     search.value = item.addr
@@ -97,7 +102,10 @@ const goToAddress = async (
     let x = point[0]
     let y = point[1]
     addressStore.setAddressGeoloc([+x, +y])
-    createNewViewpointFromAddress(rennesApp, [+x, +y])
+    newVp = createNewViewpointFromAddress(currentVp!, [+x, +y])
+  }
+  if (newVp) {
+    mapStore.viewPoint = newVp
   }
 }
 
