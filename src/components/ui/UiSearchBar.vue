@@ -170,7 +170,7 @@ const isEmptySearch = computed(() => {
     </div>
 
     <div
-      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
+      class="font-dm-sans flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
       v-if="
         autocompletion.addressRva.length > 0 ||
         autocompletion.addressOrganization.length > 0

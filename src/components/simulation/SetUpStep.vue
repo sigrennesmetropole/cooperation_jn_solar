@@ -42,7 +42,7 @@ function goToThirdStep() {
         </span>
       </template>
       <template v-slot:buttonContent>
-        <span class="text-white text-base font-medium">
+        <span class="font-dm-sans text-white text-base font-medium">
           Calculer mes économies d'énergie
         </span>
       </template>

@@ -35,13 +35,13 @@ function changeError() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-2">
     <CheckBox
       :isOnError="isCheckBoxOnError"
       @checkBoxChange="checkboxChange($event)"
     >
       <template v-slot:text>
-        <span class="font-normal text-base leading-6 color-black"
+        <span class="font-dm-sans font-normal text-base leading-6 color-black"
           >J'ai lu et j'accepte les
           <span
             class="underline decoration-1 cursor-pointer"
@@ -58,7 +58,9 @@ function changeError() {
         @click="clickButtonBegin()"
         class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
       >
-        <span class="text-white text-base font-bold"> Commencer </span>
+        <span class="font-dm-sans text-white text-base font-bold">
+          Commencer
+        </span>
       </button>
 
       <span v-if="displayError && !checked" class="text-sm font-normal">
