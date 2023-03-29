@@ -13,9 +13,11 @@ class RoofWfsService {
       []
     const surfaceIds: string[] = []
     jsonResponse.features.forEach((f) => {
-      if (!surfaceIds.includes(f.properties['surface_id'])) {
-        removeDuplicateJsonResponse.push(f)
-        surfaceIds.push(f.properties['surface_id'])
+      if (f.properties) {
+        if (!surfaceIds.includes(f.properties['surface_id'])) {
+          removeDuplicateJsonResponse.push(f)
+          surfaceIds.push(f.properties['surface_id'])
+        }
       }
     })
     jsonResponse.features = removeDuplicateJsonResponse

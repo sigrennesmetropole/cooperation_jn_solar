@@ -21,7 +21,7 @@ const mapAndSortedRoofs = computed(() => {
   buildingRoofsFeatures?.features.forEach((feature) => {
     res.push(mapRoofSurfaceModel(feature))
   })
-  return res
+  return res.sort((a, b) => b.favorable - a.favorable)
 })
 </script>
 
