@@ -7,7 +7,7 @@ import messageWarning from '../../assets/icons/chat-message-warning.svg'
 
 <template>
   <div
-    class="flex flex-col gap-[30px] w-[640px] h-fit bg-white rounded-xl p-8 mx-auto mt-[104px] mb-[91px]"
+    class="flex flex-col gap-[30px] w-[640px] h-fit bg-white rounded-xl p-8 mx-auto mb-[91px] shadow-md"
   >
     <div class="flex flex-col gap-4">
       <h2 class="text-2xl font-bold">Faire appel à un installateur agréé</h2>

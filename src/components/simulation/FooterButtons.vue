@@ -16,7 +16,7 @@ function clickButtonNext() {
 </script>
 
 <template>
-  <div class="h-full border-b border-neutral-200 -mx-6"></div>
+  <div class="border-b border-neutral-200 -mx-6"></div>
   <div class="flex flex-row justify-between mb-4">
     <button
       v-if="simulationStore.currentStep == 1"

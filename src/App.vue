@@ -10,14 +10,11 @@ import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
-import { useRouter } from 'vue-router'
 import { useSimulationStore } from '@/stores/simulations'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const simulationStore = useSimulationStore()
-
-const router = useRouter()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -36,11 +33,6 @@ const isDisplaySearchBar = computed(() => {
     viewList['roof-selected-information'],
   ].includes(viewStore.currentView)
 })
-
-function fakeNextStep() {
-  panelStore.isCompletelyHidden = false
-  router.push({ name: 'roof-selected-information' })
-}
 
 const isDisplayAsideAndMap = computed(() => {
   return [
@@ -107,24 +99,12 @@ const isDisplayAsideAndMap = computed(() => {
     <UiPopUpBottomInformation
       v-else-if="
         viewStore.currentView === viewList['step-sunshine'] &&
-        simulationStore.currentStep === 2
+        simulationStore.currentStep === 2 &&
+        simulationStore.currentSubStep === 1
       "
       :text="'Cliquez sur les zones qui ne peuvent pas accueillir de panneaux\n photovoltaïques (présence de fenêtre de toit, cheminée...)'"
-      :timer="5000"
       class="absolute z-20 bottom-5 left-[20%]"
     />
-    <button
-      class="absolute z-20 bottom-5 left-[10%] bg-white text-black"
-      @click="fakeNextStep()"
-      v-if="viewStore.currentView === viewList['roof-selection']"
-    >
-      Fake select roof button
-      <br />
-      <span class="text-sm font-light">
-        (While waiting the roof selection,<br />
-        click here to display the next step)
-      </span>
-    </button>
 
     <UiButtonWithTooltip
       v-if="isDisplaySearchBar"
