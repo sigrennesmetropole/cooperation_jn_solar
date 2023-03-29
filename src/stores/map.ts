@@ -1,9 +1,11 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
+import type { Viewpoint } from '@vcmap/core'
 
 export const useMapStore = defineStore('map', () => {
   const isInitializeMap: Ref<boolean> = ref(false)
+  const viewPoint: Ref<Viewpoint | null> = ref(null)
   // Map state
   const activeMap: Ref<string> = ref('cesium') // Map: 'ol', 'cesium'
 
@@ -21,6 +23,7 @@ export const useMapStore = defineStore('map', () => {
 
   return {
     isInitializeMap,
+    viewPoint,
     activeMap,
     is3D,
     activate2d,

@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-
 const props = defineProps<{
   dataGraph: {
-    series: number[]
-    labels: string[]
     colors: string[]
     labelTotal: string
-    labelTotalValue: string
   }
+  labelTotalValue: number
+  series: number[]
 }>()
-
-const series = ref(props.dataGraph.series)
 const chartOptions = ref({
   dataLabels: {
     enabled: false,
@@ -19,7 +15,6 @@ const chartOptions = ref({
   legend: {
     show: false,
   },
-  labels: props.dataGraph.labels,
   tooltip: {
     enabled: false, // Disable tooltip on hover
   },
@@ -44,7 +39,6 @@ const chartOptions = ref({
     },
   },
 })
-
 const labelFormatted = computed(() => {
   /*
    Examples: 
@@ -59,9 +53,8 @@ const labelFormatted = computed(() => {
   }
   return part1 + '<br>' + part2
 })
-
 const styleInsideGraph = computed(() => {
-  const total = parseInt(props.dataGraph.labelTotalValue)
+  const total = props.labelTotalValue
   const areaToFill = 100 - total
   const areaToFillInDeg = areaToFill * 3.6
   let style = ` 
@@ -77,14 +70,14 @@ const styleInsideGraph = computed(() => {
 <template>
   <div class="relative">
     <div
-      class="absolute z-5 top-[30px] left-[67px] w-[100px] h-[110px]"
+      class="absolute z-5 top-[30px] left-[62px] w-[110px] h-[110px]"
       :style="styleInsideGraph"
     ></div>
 
     <div class="absolute top-10 left-20">
       <div class="text-center">
         <span class="font-dm-sans font-bold text-3xl">
-          {{ props.dataGraph.labelTotalValue }}
+          {{ props.labelTotalValue }}
         </span>
         <span class="font-dm-sans font-bold text-xl"> % </span>
       </div>
@@ -101,7 +94,7 @@ const styleInsideGraph = computed(() => {
       type="donut"
       width="228"
       :options="chartOptions"
-      :series="series"
+      :series="props.series"
     ></apexchart>
   </div>
 </template>
