@@ -8,7 +8,7 @@ import { useViewsStore } from '@/stores/views'
 const viewStore = useViewsStore()
 
 onBeforeMount(() => {
-  viewStore.setCurrentView(viewList['simulation'])
+  viewStore.setCurrentView(viewList['end-simulation'])
 })
 </script>
 
