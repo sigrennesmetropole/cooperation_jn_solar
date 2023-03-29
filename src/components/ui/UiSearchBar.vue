@@ -234,7 +234,7 @@ const highlightedAutocompletion = computed(() => {
     </div>
 
     <div
-      class="flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px]"
+      class="font-dm-sans flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px]"
       v-if="
         highlightedAutocompletion.addressRva.length > 0 ||
         highlightedAutocompletion.addressOrganization.length > 0
