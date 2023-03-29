@@ -1,5 +1,5 @@
+import { RennesNotification } from '@/services/notification'
 import { getUrlBackOffice } from '@/services/env'
-import { useNotification } from '@kyvg/vue3-notification'
 
 class ApiService {
   async callApiPost(url: string, dataPost: {}, headers: {}) {
@@ -18,11 +18,11 @@ class ApiService {
       const data = await response.json()
       return data
     } catch (error) {
-      const { notify } = useNotification()
-      notify({
-        type: 'error',
-        text: 'Une erreur est survenue, veuillez réessayer.',
-      })
+      const notif = new RennesNotification(
+        'error',
+        'Une erreur est survenue, veuillez réessayer.'
+      )
+      notif.displayNotification()
       throw error
     }
   }
@@ -41,11 +41,11 @@ class ApiService {
       const data = await response.json()
       return data
     } catch (error) {
-      const { notify } = useNotification()
-      notify({
-        type: 'error',
-        text: 'Une erreur est survenue, veuillez réessayer.',
-      })
+      const notif = new RennesNotification(
+        'error',
+        'Une erreur est survenue, veuillez réessayer.'
+      )
+      notif.displayNotification()
       throw error
     }
   }
