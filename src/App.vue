@@ -31,6 +31,7 @@ const isDisplaySearchBar = computed(() => {
     viewList['roof-selection'],
     viewList['map-pcaet'],
     viewList['roof-selected-information'],
+    viewList.home,
   ].includes(viewStore.currentView)
 })
 
@@ -80,7 +81,11 @@ const isDisplayAsideAndMap = computed(() => {
 
     <UiSearchBar
       v-if="isDisplaySearchBar"
-      class="absolute z-20 top-5 left-5"
+      class="absolute z-20 top-5"
+      :style="
+        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 20px;'
+      "
+      :isRedirectOnSearch="viewStore.currentView !== viewList.home"
     ></UiSearchBar>
 
     <UiPopUpBottomInformation

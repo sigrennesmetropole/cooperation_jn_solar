@@ -15,6 +15,13 @@ import { useRouter } from 'vue-router'
 import { usePanelsStore } from '@/stores/panels'
 import { useMapStore } from '@/stores/map'
 
+const props = defineProps({
+  isRedirectOnSearch: {
+    type: Boolean,
+    default: true,
+  },
+})
+
 const search = ref('')
 const addressStore = useAddressStore()
 const router = useRouter()
@@ -64,7 +71,6 @@ const searchOrganizations = async () => {
       addr: data[i].nom,
     })
   }
-  console.log(organizations)
   autocompletion.value.addressOrganization = organizations
 }
 
@@ -86,7 +92,9 @@ const goToAddress = async (
   type: string
 ) => {
   addressStore.setAddress(search.value)
-  router.push('/roof-selection')
+  if (props.isRedirectOnSearch) {
+    router.push('/roof-selection')
+  }
   let currentVp = await rennesApp.maps?.activeMap.getViewpoint()
   let newVp
   if (type === 'rva') {
@@ -129,7 +137,9 @@ function emptySearch() {
   addressStore.setAddress('')
   resetAutocompletion()
   panelsStore.isCompletelyHidden = false
-  router.push('/map-pcaet')
+  if (props.isRedirectOnSearch) {
+    router.push('/map-pcaet')
+  }
 }
 
 function getPositionOfUser() {
