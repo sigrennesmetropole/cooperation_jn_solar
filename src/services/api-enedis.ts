@@ -1,21 +1,23 @@
 import { apiService } from '@/services/api'
 
 class ApiEnedisService {
+  baseUrlApi = '/api/enedis/user'
+
   async getUrlUserAuthorization() {
     const data = await apiService.callApiGet(
-      '/api/enedis/user/url-authorization'
+      `${this.baseUrlApi}/url-authorization`
     )
     return data.url
   }
 
   async getPRMUser() {
-    const data = await apiService.callApiGet('/api/enedis/user/prm')
+    const data = await apiService.callApiGet(`${this.baseUrlApi}/prm`)
     return data.prm
   }
 
   async setPRMUser(prm: string) {
     const data = await apiService.callApiPost(
-      '/api/enedis/user/prm',
+      `${this.baseUrlApi}/prm`,
       { prm: prm },
       {
         Accept: 'application/json, text/plain, */*',
@@ -27,7 +29,7 @@ class ApiEnedisService {
 
   async getAnnualConsumption() {
     const data = await apiService.callApiGet(
-      '/api/enedis/user/annual-consumption'
+      `${this.baseUrlApi}/annual-consumption`
     )
     return data.consumption
   }
