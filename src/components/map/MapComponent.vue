@@ -26,6 +26,7 @@ import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { EventType } from '@vcmap/core'
 import SelectRoofInteraction from '@/services/selectRoofInteraction'
+import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -130,6 +131,7 @@ roofsStore.$subscribe(async () => {})
 </script>
 
 <template>
+  <DistrictDataTooltip></DistrictDataTooltip>
   <UiMap></UiMap>
   <NavigationButtons />
 </template>
