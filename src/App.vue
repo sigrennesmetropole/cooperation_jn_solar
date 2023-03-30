@@ -66,7 +66,7 @@ const isDisplayAsideAndMap = computed(() => {
 
     <div
       class="flex flex-row bg-slate-100"
-      v-else-if="viewStore.currentView == viewList['simulation']"
+      v-else-if="viewStore.currentView == viewList['end-simulation']"
     >
       <RouterView :key="$route.fullPath" />
     </div>
@@ -116,6 +116,8 @@ const isDisplayAsideAndMap = computed(() => {
       heightButton="12"
       widthBoxText="w-[600px]"
     />
+
+    <notifications position="top left" />
   </main>
 </template>
 

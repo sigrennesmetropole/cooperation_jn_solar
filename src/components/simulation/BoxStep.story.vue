@@ -22,7 +22,7 @@ import iconInstallation from '@/assets/icons/installation.svg'
           </span>
         </template>
         <template v-slot:buttonContent>
-          <span class="text-white text-base font-medium">
+          <span class="font-dm-sans text-white text-base font-medium">
             Simuler une installation photovoltaïque
           </span>
         </template>
