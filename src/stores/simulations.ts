@@ -7,9 +7,6 @@ export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
   const currentSubStep: Ref<number> = ref(1)
 
-  // Solar panel selection
-  // TODO(IS): remove the example below to null or 0
-  const maxNumberSolarPanel: Ref<number> = ref(6)
   const roofSurface: Ref<RoofSurfaceModel | null> = ref({
     surface_id: '1',
     values: [10, 20, 30, 40],
@@ -70,7 +67,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     setCurrentSubStep,
     goToPreviousStep,
     goToNextStep,
-    maxNumberSolarPanel,
     roofSurface,
   }
 })
