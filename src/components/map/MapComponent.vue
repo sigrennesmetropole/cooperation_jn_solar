@@ -77,7 +77,7 @@ simulationStore.$subscribe(async () => {
     //force synchrone switch for adding openlayer interaction, update the store
     await rennesApp.maps.setActiveMap('ol')
     await mapStore.activate2d()
-    if (addressStore.geolocAddress !== null) {
+    if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
       await layerStore.enableLayer(RENNES_LAYER.roofShape)
       let roofShape = roofsStore.selectRoofFeature!
