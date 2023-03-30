@@ -4,6 +4,7 @@ import { GeoJSONLayer, GlobalHider, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
+import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -16,8 +17,7 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
     },
     properties: {
       index: solarPanel.index,
-      olcs_modelUrl:
-        'https://service.virtualcityplanner.de/object-library/Vis-All/Solarmodul/Solarmodul__LOW_Solarmodul_Dachmontage.glb',
+      olcs_modelUrl: solarPanel3D,
       olcs_modelPitch: solarPanel.pitch,
       olcs_modelRoll: solarPanel.roll,
       olcs_modelHeading: solarPanel.heading,

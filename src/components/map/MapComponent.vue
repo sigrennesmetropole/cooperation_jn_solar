@@ -51,7 +51,7 @@ onMounted(async () => {
 })
 
 async function updateActiveMap() {
-  await rennesApp.maps.setActiveMap('cesium')
+  await mapStore.activate3d()
 }
 
 async function updateLayersVisibility() {
@@ -105,9 +105,8 @@ simulationStore.$subscribe(async () => {
     solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
     await displaySolarPanel(rennesApp, sampleSolarPanels)
     await layerStore.enableLayer(RENNES_LAYER.solarPanel)
-    // Hide the solar panel
     // Zoom to solar panel
-    await rennesApp.maps.setActiveMap('cesium')
+    await mapStore.activate3d()
     await zoomToSolarPanel(rennesApp)
   } else {
     await disableOlInteraction()

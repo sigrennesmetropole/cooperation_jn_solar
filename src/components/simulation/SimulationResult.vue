@@ -3,6 +3,10 @@ import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import solarPanel from '@/assets/icons/solar-panel.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { computed } from 'vue'
+import {
+  SOLAR_PANEL_SURFACE,
+  SOLAR_PANEL_POWER,
+} from '@/model/solarPanel.model'
 
 const props = defineProps<{
   roofSurface: RoofSurfaceModel | null
@@ -14,7 +18,7 @@ const minNumSolarPanel = 1
 
 const emit = defineEmits(['solarPanelChanges'])
 
-const updateCurrenNumSolarPanel = (solarPanelChanges: number) => {
+const updateCurrentNumSolarPanel = (solarPanelChanges: number) => {
   if (
     props.currentNumSolarPanel + solarPanelChanges >= minNumSolarPanel &&
     props.currentNumSolarPanel + solarPanelChanges <= props.maxNumSolarPanel
@@ -24,11 +28,13 @@ const updateCurrenNumSolarPanel = (solarPanelChanges: number) => {
 }
 
 // 1.5 m2 per solar panel
-const currentSurface = computed(() => props.currentNumSolarPanel * 1.5)
+const currentSurface = computed(
+  () => props.currentNumSolarPanel * SOLAR_PANEL_SURFACE
+)
 
 // 0.35 KwP per solar panel
 const currentPower = computed(() =>
-  (props.currentNumSolarPanel * 0.35).toFixed(2)
+  (props.currentNumSolarPanel * SOLAR_PANEL_POWER).toFixed(2)
 )
 </script>
 
@@ -39,7 +45,7 @@ const currentPower = computed(() =>
     <div class="flex flex-row justify-center items-center pt-4 px-0 pb-6">
       <UiIconButton
         class="rounded-3xl border-[1px]"
-        @click="updateCurrenNumSolarPanel(-1)"
+        @click="updateCurrentNumSolarPanel(-1)"
         :disabled="currentNumSolarPanel == minNumSolarPanel"
         :class="
           currentNumSolarPanel == minNumSolarPanel
@@ -82,7 +88,7 @@ const currentPower = computed(() =>
       </div>
       <UiIconButton
         class="rounded-3xl border-[1px]"
-        @click="updateCurrenNumSolarPanel(1)"
+        @click="updateCurrentNumSolarPanel(1)"
         :disabled="currentNumSolarPanel == props.maxNumSolarPanel"
         :class="
           currentNumSolarPanel == props.maxNumSolarPanel

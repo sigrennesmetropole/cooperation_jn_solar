@@ -13,7 +13,7 @@ function goToThirdStep() {
   simulationStore.goToNextStep()
 }
 
-const updateCurrenNumSolarPanel = (changes: number) => {
+const updateCurrentNumSolarPanel = (changes: number) => {
   solarPanelStore.currentNumberSolarPanel =
     solarPanelStore.currentNumberSolarPanel + changes
 }
@@ -28,7 +28,7 @@ const updateCurrenNumSolarPanel = (changes: number) => {
       :max-num-solar-panel="solarPanelStore.maxNumberSolarPanel"
       :roof-surface="simulationStore.roofSurface"
       :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
-      @solarPanelChanges="updateCurrenNumSolarPanel"
+      @solarPanelChanges="updateCurrentNumSolarPanel"
     >
     </SimulationResult>
 
