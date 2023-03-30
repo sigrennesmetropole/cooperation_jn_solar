@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import RoofAccordion from './RoofAccordion.vue'
 import type { RoofSurfaceModel } from '@/model/roof.model'
-import { computed, onMounted, reactive } from 'vue'
-import { apiClientService } from '@/services/roof'
+import { computed } from 'vue'
 import { useRoofsStore } from '@/stores/roof'
 import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 const roofsStore = useRoofsStore()
 
-const state = reactive({
-  roofSurfaces: null as null | RoofSurfaceModel[],
-})
-
-onMounted(async () => {
-  state.roofSurfaces = await apiClientService.fetchRoofSurfaceFixtures()
-})
 const mapAndSortedRoofs = computed(() => {
   const buildingRoofsFeatures = roofsStore.buildingRoofsFeatures
   const res: RoofSurfaceModel[] = []

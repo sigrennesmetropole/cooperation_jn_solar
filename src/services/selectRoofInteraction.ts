@@ -9,7 +9,6 @@ import {
 import type { InteractionEvent } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
 import type { RennesApp } from './RennesApp'
-import { calculateAllRoofData } from '@/services/roofDataService'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
@@ -67,7 +66,6 @@ class SelectRoofInteraction extends AbstractInteraction {
     const roofStore = useRoofsStore()
     roofStore.setBuildingRoofsFeatures(buildingRoofs, selectedBuildingId)
     roofStore.setSelectRoofFeature(buildingRoofs.features[0])
-    calculateAllRoofData()
     router.push({ name: 'roof-selected-information' })
   }
 

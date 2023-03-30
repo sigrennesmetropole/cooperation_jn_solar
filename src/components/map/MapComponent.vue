@@ -41,10 +41,6 @@ onMounted(async () => {
   await updateLayersVisibility()
 })
 
-// onUnmounted(() => {
-//   rennesApp.destroy()
-// })
-
 async function updateActiveMap() {
   await rennesApp.maps.setActiveMap('cesium')
 }
