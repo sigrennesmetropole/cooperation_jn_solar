@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import SurfaceChartDonut from '@/components/chart/SurfaceChartDonut.vue'
 import UiSurfaceNumber from '@/components/roof_selection/UiSurfaceNumber.vue'
-import type { RoofSurfaceModel } from '@/model/roof.model'
+import { ref } from 'vue'
+import { getDataBuilding } from '@/model/roof.model'
+import { useRoofsStore } from '@/stores/roof'
 
-const props = defineProps<{
-  roofSurface: RoofSurfaceModel
-}>()
+const roofsStore = useRoofsStore()
+const buildingData = ref(getDataBuilding())
+
+roofsStore.$subscribe(async () => {
+  buildingData.value = getDataBuilding()
+})
 </script>
 
 <template>
   <div class="flex flex-row items-center justify-center">
-    <SurfaceChartDonut :roofSurface="props.roofSurface"></SurfaceChartDonut>
+    <SurfaceChartDonut :buildingData="buildingData"></SurfaceChartDonut>
   </div>
   <UiSurfaceNumber
-    :totalArea="props.roofSurface.total"
-    :favorableArea="props.roofSurface.favorable"
+    :totalArea="buildingData.total"
+    :favorableArea="buildingData.favorable"
   ></UiSurfaceNumber>
 </template>

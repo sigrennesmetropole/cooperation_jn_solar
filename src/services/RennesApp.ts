@@ -31,6 +31,7 @@ export class RennesApp extends VcsApp {
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
       mapStore.isInitializeMap = true
+      mapStore.viewPoint = homeViewPoint
     }
   }
 

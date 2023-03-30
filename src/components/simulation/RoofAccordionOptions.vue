@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import RoofAccordion from './RoofAccordion.vue'
 import type { RoofSurfaceModel } from '@/model/roof.model'
-import { onMounted, reactive } from 'vue'
-import { apiClientService } from '@/services/roof'
+import { computed } from 'vue'
+import { useRoofsStore } from '@/stores/roof'
+import { mapRoofSurfaceModel } from '@/model/roof.model'
 
-const state = reactive({
-  roofSurfaces: null as null | RoofSurfaceModel[],
-})
+const roofsStore = useRoofsStore()
 
-onMounted(async () => {
-  state.roofSurfaces = await apiClientService.fetchRoofSurfaceFixtures()
+const mapAndSortedRoofs = computed(() => {
+  const buildingRoofsFeatures = roofsStore.buildingRoofsFeatures
+  const res: RoofSurfaceModel[] = []
+  buildingRoofsFeatures?.features.forEach((feature) => {
+    res.push(mapRoofSurfaceModel(feature))
+  })
+  return res.sort((a, b) => b.favorable - a.favorable)
 })
 </script>
 
 <template>
   <div class="flex flex-col p-0 gap-6" role="radiogroup">
-    <template v-for="(roofSurface, index) in state.roofSurfaces" :key="index">
+    <template v-for="(roofSurface, index) in mapAndSortedRoofs" :key="index">
       <RoofAccordion
         :roof-surface="roofSurface"
         :label="'Pan de toit n°' + (index + 1)"

@@ -23,14 +23,18 @@ function clickButtonNext() {
       @click="clickButtonCancel()"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="text-black text-base font-medium"> Annuler </span>
+      <span class="font-dm-sans text-black text-base font-medium">
+        Annuler
+      </span>
     </button>
     <button
       v-else-if="simulationStore.currentStep != 1"
       @click="clickButtonPrevious()"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="text-black text-base font-medium"> Précédent </span>
+      <span class="font-dm-sans text-black text-base font-medium">
+        Précédent
+      </span>
     </button>
     <button
       @click="clickButtonNext()"
@@ -41,7 +45,7 @@ function clickButtonNext() {
         src="../../assets/icons/interface-arrows-button-right--arrow-right-keyboard.svg"
         alt=""
       />
-      <span class="text-white text-base font-medium">
+      <span class="font-dm-sans text-white text-base font-medium">
         {{
           simulationStore.currentStep == 1
             ? 'Suivant'
