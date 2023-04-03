@@ -7,13 +7,13 @@ export const useSimulationStore = defineStore('simulation', () => {
   const currentSubStep: Ref<number> = ref(1)
 
   const availableSteps = [
-    { step: 1, subStep: 1 }, // Choose roof side
-    { step: 2, subStep: 1 }, // Select obstacle
-    { step: 2, subStep: 2 }, // Select the number of solar panel
-    { step: 3, subStep: 1 }, // Energy saving information
-    { step: 3, subStep: 2 }, // Select input invoice or connect to Linky
-    { step: 3, subStep: 3 }, // Input tarif/invoice
-    { step: 3, subStep: 4 }, // Connect to Linky meter
+    { step: 1, subStep: 1, isFinal: false }, // Choose roof side
+    { step: 2, subStep: 1, isFinal: false }, // Select obstacle
+    { step: 2, subStep: 2, isFinal: false }, // Select the number of solar panel
+    { step: 3, subStep: 1, isFinal: false }, // Energy saving information
+    { step: 3, subStep: 2, isFinal: false }, // Select input invoice or connect to Linky
+    { step: 3, subStep: 3, isFinal: true }, // Input tarif/invoice
+    { step: 3, subStep: 4, isFinal: true }, // Connect to Linky meter
   ]
 
   function setCurrentStep(step: number) {
@@ -33,18 +33,33 @@ export const useSimulationStore = defineStore('simulation', () => {
     })
   }
 
+  function getIndexPreviousStepNotFinal(currentIndex: number) {
+    for (let index = currentIndex - 1; index >= 0; index--) {
+      if (!availableSteps[index].isFinal) {
+        return index
+      }
+    }
+    return null
+  }
+
   function goToPreviousStep() {
     const currentIndex = indexOfCurrentStepAndSubStep()
     if (currentIndex - 1 < 0) {
       return
     }
-    setCurrentStep(availableSteps[currentIndex - 1].step)
-    setCurrentSubStep(availableSteps[currentIndex - 1].subStep)
+    const indexPreviousStepNotFinal = getIndexPreviousStepNotFinal(currentIndex)
+    if (indexPreviousStepNotFinal !== null) {
+      setCurrentStep(availableSteps[indexPreviousStepNotFinal].step)
+      setCurrentSubStep(availableSteps[indexPreviousStepNotFinal].subStep)
+    }
   }
 
   function goToNextStep() {
     const currentIndex = indexOfCurrentStepAndSubStep()
-    if (currentIndex + 1 >= availableSteps.length) {
+    if (
+      availableSteps[currentIndex].isFinal ||
+      currentIndex + 1 >= availableSteps.length
+    ) {
       return
     }
     setCurrentStep(availableSteps[currentIndex + 1].step)
