@@ -5,6 +5,7 @@ import type {
   GeoJSONFeature,
   GeoJSONFeatureCollection,
 } from 'ol/format/GeoJSON'
+import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 export const useRoofsStore = defineStore('roofs', () => {
   const selectedBuildingId: Ref<string | null> = ref(null)
@@ -24,10 +25,20 @@ export const useRoofsStore = defineStore('roofs', () => {
     selectedRoofFeature.value = feature
   }
 
+  function setSelectRoofFeatureFromSurfaceId(surface_id: string) {
+    buildingRoofsFeatures.value?.features.forEach((feature) => {
+      const featureFormatted = mapRoofSurfaceModel(feature)
+      if (featureFormatted.surface_id === surface_id) {
+        setSelectRoofFeature(feature)
+      }
+    })
+  }
+
   return {
     buildingRoofsFeatures,
-    selectRoofFeature: selectedRoofFeature,
+    selectedRoofFeature,
     setBuildingRoofsFeatures,
     setSelectRoofFeature,
+    setSelectRoofFeatureFromSurfaceId,
   }
 })
