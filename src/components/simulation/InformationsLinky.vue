@@ -5,6 +5,9 @@ import { apiEnedisService } from '@/services/api-enedis'
 import { apiAutocalsolService } from '@/services/api-autocalsol'
 import { getEnv, getEnedisSandboxPrm } from '@/services/env'
 import { ref } from 'vue'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 async function goToEnedisWebSite() {
   const url = await apiEnedisService.getUrlUserAuthorization()
@@ -15,6 +18,11 @@ async function goToEnedisLogin() {
   if (getEnv() == 'dev') {
     await apiEnedisService.setPRMUser(getEnedisSandboxPrm())
     const consumption = await apiEnedisService.getAnnualConsumption()
+    if (consumption.annual_consumption !== undefined) {
+      consumptionAndProductionStore.setAnnualConsumption(
+        consumption.annual_consumption
+      )
+    }
     window.alert(JSON.stringify(consumption))
   } else if (getEnv() == 'prod') {
     const prm = await apiEnedisService.getPRMUser()

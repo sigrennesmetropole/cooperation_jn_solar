@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+
 const consumption = ref('')
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 const storeConsumption = () => {
-  return consumption.value
+  consumptionAndProductionStore.setAnnualConsumption(
+    parseInt(consumption.value)
+  )
 }
 
 function inputIsCompleted() {
