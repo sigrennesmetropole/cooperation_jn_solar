@@ -5,6 +5,8 @@ import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
+import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
+import { useSolarPanelStore } from '@/stores/solarPanels'
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -95,4 +97,10 @@ export async function filterSolarPanelByMaxSolarPanel(
     .map((f) => f.getId()!)
 
   solarPanel.featureVisibility.hideObjects(featuresToHide)
+}
+
+export function getPeakPower() {
+  const solarPanelStore = useSolarPanelStore()
+  const peakPower = solarPanelStore.currentNumberSolarPanel * SOLAR_PANEL_POWER
+  return Math.round(peakPower * 100) / 100
 }

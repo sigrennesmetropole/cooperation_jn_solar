@@ -1,29 +1,22 @@
 import { apiService } from '@/services/api'
+import type { AutocalsolData } from '@/model/autocalsol.model'
 
 class ApiAutocalsolService {
-  async getComputeData() {
-    const fakeData = {
-      latitude: 48.110694413833,
-      longitude: -1.6713621480316,
-      slope: 30,
-      azimuth: 0,
-      annual_consumption: 6000,
-      peak_power: 3,
-    }
+  async getComputeData(dataAutocalsol: AutocalsolData) {
     const url =
       '/api/autocalsol/data-compute' +
       '?' +
-      `latitude=${fakeData.latitude}` +
+      `latitude=${dataAutocalsol.latitude}` +
       '&' +
-      `longitude=${fakeData.longitude}` +
+      `longitude=${dataAutocalsol.longitude}` +
       '&' +
-      `slope=${fakeData.slope}` +
+      `slope=${dataAutocalsol.slope}` +
       '&' +
-      `azimuth=${fakeData.azimuth}` +
+      `azimuth=${dataAutocalsol.azimuth}` +
       '&' +
-      `annual_consumption=${fakeData.annual_consumption}` +
+      `annual_consumption=${dataAutocalsol.annual_consumption}` +
       '&' +
-      `peak_power=${fakeData.peak_power}`
+      `peak_power=${dataAutocalsol.peak_power}`
     const data = await apiService.callApiGet(url)
     return data.compute
   }
