@@ -25,7 +25,6 @@ async function gettingDistrictDatas(codeIris: number) {
 }
 
 onMounted(() => {
-  console.log('chargement page')
   gettingDistrictDatas(350650000)
 })
 

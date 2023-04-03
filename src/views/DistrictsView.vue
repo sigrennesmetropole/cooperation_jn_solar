@@ -12,7 +12,6 @@ onMounted(() => {
   panelsStore.setTypePanelDisplay('left')
   panelsStore.isCompletelyHidden = true
 })
-console.log(viewStore.currentView)
 </script>
 
 <template>
