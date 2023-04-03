@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
+import router from '@/router'
 
 export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
@@ -33,6 +34,11 @@ export const useSimulationStore = defineStore('simulation', () => {
     })
   }
 
+  function isCurrentStepFinal() {
+    const currentIndex = indexOfCurrentStepAndSubStep()
+    return availableSteps[currentIndex].isFinal
+  }
+
   function getIndexPreviousStepNotFinal(currentIndex: number) {
     for (let index = currentIndex - 1; index >= 0; index--) {
       if (!availableSteps[index].isFinal) {
@@ -40,6 +46,10 @@ export const useSimulationStore = defineStore('simulation', () => {
       }
     }
     return null
+  }
+
+  function goToFinalView() {
+    router.push('end-simulation')
   }
 
   function goToPreviousStep() {
@@ -56,12 +66,14 @@ export const useSimulationStore = defineStore('simulation', () => {
 
   function goToNextStep() {
     const currentIndex = indexOfCurrentStepAndSubStep()
-    if (
-      availableSteps[currentIndex].isFinal ||
-      currentIndex + 1 >= availableSteps.length
-    ) {
+    if (availableSteps[currentIndex].isFinal) {
+      goToFinalView()
       return
     }
+    if (currentIndex + 1 >= availableSteps.length) {
+      return
+    }
+
     setCurrentStep(availableSteps[currentIndex + 1].step)
     setCurrentSubStep(availableSteps[currentIndex + 1].subStep)
   }
@@ -73,5 +85,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     setCurrentSubStep,
     goToPreviousStep,
     goToNextStep,
+    isCurrentStepFinal,
   }
 })

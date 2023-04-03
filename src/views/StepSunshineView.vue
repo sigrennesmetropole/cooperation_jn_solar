@@ -21,6 +21,13 @@ onBeforeMount(() => {
   viewStore.setCurrentView(viewList['step-sunshine'])
   panelsStore.setTypePanelDisplay('right')
 })
+
+function isDisplayNextButton() {
+  if (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2) {
+    return false
+  }
+  return true
+}
 </script>
 
 <template>
@@ -42,5 +49,5 @@ onBeforeMount(() => {
   <!-- SavingsStep contain all the substep for step 3 -->
   <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
   <div class="h-full"></div>
-  <FooterButtons></FooterButtons>
+  <FooterButtons :isDisplayNextButton="isDisplayNextButton()"></FooterButtons>
 </template>
