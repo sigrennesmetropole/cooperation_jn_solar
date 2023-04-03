@@ -5,9 +5,12 @@ import { useSimulationStore } from '@/stores/simulations'
 import economies from '@/assets/icons/economies.svg'
 import SimulationResult from '@/components/simulation/SimulationResult.vue'
 import { useSolarPanelStore } from '@/stores/solarPanels'
+import { useRoofsStore } from '@/stores/roof'
+import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 const simulationStore = useSimulationStore()
 const solarPanelStore = useSolarPanelStore()
+const roofsStore = useRoofsStore()
 
 function goToThirdStep() {
   simulationStore.goToNextStep()
@@ -23,10 +26,15 @@ const updateCurrentNumSolarPanel = (changes: number) => {
   <template v-if="simulationStore.currentSubStep == 1">
     <ExplanationSelectionObstacles></ExplanationSelectionObstacles>
   </template>
-  <template v-else-if="simulationStore.currentSubStep == 2">
+  <template
+    v-else-if="
+      simulationStore.currentSubStep == 2 &&
+      roofsStore.selectedRoofFeature !== null
+    "
+  >
     <SimulationResult
       :max-num-solar-panel="solarPanelStore.maxNumberSolarPanel"
-      :roof-surface="simulationStore.roofSurface"
+      :roof-surface="mapRoofSurfaceModel(roofsStore.selectedRoofFeature)"
       :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
       @solarPanelChanges="updateCurrentNumSolarPanel"
     >

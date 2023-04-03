@@ -3,7 +3,6 @@ import { ref } from 'vue'
 const consumption = ref('')
 
 const storeConsumption = () => {
-  console.log('personalConsumption', consumption.value)
   return consumption.value
 }
 

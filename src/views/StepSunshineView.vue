@@ -18,17 +18,7 @@ const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
 
 function displayFooter() {
-  if (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 2) {
-    return false
-  } else if (
-    simulationStore.currentStep == 3 &&
-    simulationStore.currentSubStep == 2
-  ) {
-    return false
-  } else if (
-    simulationStore.currentStep == 3 &&
-    simulationStore.currentSubStep == 4
-  ) {
+  if (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 4) {
     return false
   } else {
     return true

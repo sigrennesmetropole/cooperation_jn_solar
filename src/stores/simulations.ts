@@ -1,20 +1,11 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { RoofSurfaceModel } from '@/model/roof.model'
 
 export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
   const currentSubStep: Ref<number> = ref(1)
 
-  const roofSurface: Ref<RoofSurfaceModel | null> = ref({
-    surface_id: '1',
-    values: [10, 20, 30, 40],
-    favorable: 44,
-    total: 90,
-    orientation: 'Sud',
-    inclinaison: 47.9,
-  })
   const availableSteps = [
     { step: 1, subStep: 1 }, // Choose roof side
     { step: 2, subStep: 1 }, // Select obstacle
@@ -67,6 +58,5 @@ export const useSimulationStore = defineStore('simulation', () => {
     setCurrentSubStep,
     goToPreviousStep,
     goToNextStep,
-    roofSurface,
   }
 })

@@ -22,8 +22,22 @@ function changeSelectedRoof(index: number) {
   roofsStore.setSelectRoofFeatureFromSurfaceId(selectedRoof.surface_id)
 }
 
+function getIndexCurrentRoof() {
+  if (roofsStore.selectedRoofFeature === null) {
+    indexSelectedRoof.value = 0
+    return
+  }
+  const selectedRoof = mapRoofSurfaceModel(roofsStore.selectedRoofFeature)
+  roofsSorted.forEach((roof, index) => {
+    if (roof.surface_id === selectedRoof.surface_id) {
+      indexSelectedRoof.value = index
+    }
+  })
+}
+
 const roofsSorted = mapAndSortedRoofs()
 const indexSelectedRoof = ref(0)
+getIndexCurrentRoof()
 </script>
 
 <template>
