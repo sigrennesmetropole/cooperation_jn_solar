@@ -1,33 +1,12 @@
 <script setup lang="ts">
 import iconDelete from '../../assets/icons/icon-delete.svg'
-import { onMounted, reactive } from 'vue'
-import { apiEnedisDistrictService } from '@/services/api-enedis-district'
+import { useDistrictStore } from '@/stores/districtInformations'
+
+const districtStore = useDistrictStore()
 
 function closeTooltip() {
   console.log('close the tooltip')
 }
-
-const state = reactive({
-  irisName: '' as string,
-  totalConsumption: 0 as number,
-  totalProduction: 0 as number,
-  nbPhotovoltaicInstallation: 0 as number,
-})
-
-async function gettingDistrictDatas(codeIris: number) {
-  const districtDatas = await apiEnedisDistrictService.getDistrictDatas(
-    codeIris
-  )
-  state.irisName = districtDatas.irisName
-  state.totalConsumption = districtDatas.totalConsumption
-  state.totalProduction = districtDatas.totalProduction
-  state.nbPhotovoltaicInstallation = districtDatas.totalPhotovoltaicSites
-}
-
-onMounted(() => {
-  console.log('chargement page')
-  gettingDistrictDatas(350650000)
-})
 
 function removePartOfIrisName(irisName: string) {
   const toRemove = '(commune non irisée)'
@@ -54,7 +33,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
   >
     <div class="flex flex-row justify-between">
       <h2 class="font-dm-sans font-bold text-2xl max-w-[420px]">
-        {{ removePartOfIrisName(state.irisName) }}
+        {{ removePartOfIrisName(districtStore.districtName) }}
       </h2>
       <img
         :src="iconDelete"
@@ -68,7 +47,9 @@ function keepDecimals(float: number, numberOfDecimals: number) {
     >
       <div>
         <p class="font-medium text-xs">Nombre<br />d'installation</p>
-        <p class="font-bold text-3xl">{{ state.nbPhotovoltaicInstallation }}</p>
+        <p class="font-bold text-3xl">
+          {{ districtStore.districtNumberInstallations }}
+        </p>
       </div>
       <div class="border border-neutral-300"></div>
       <div>
@@ -76,9 +57,9 @@ function keepDecimals(float: number, numberOfDecimals: number) {
         <div class="flex flex-row items-baseline font-bold">
           <p class="text-lg leading-6">
             <span class="text-3xl">{{
-              decomposeNumber(state.totalProduction, 1)[0]
+              decomposeNumber(districtStore.districtProduction, 1)[0]
             }}</span
-            >.{{ decomposeNumber(state.totalProduction, 1)[1] }} MWh
+            >.{{ decomposeNumber(districtStore.districtProduction, 1)[1] }} MWh
           </p>
         </div>
       </div>
@@ -88,7 +69,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
         <div class="flex flex-row items-baseline font-bold">
           <p>
             <span class="text-3xl">{{
-              decomposeNumber(state.totalConsumption, 2)[0]
+              decomposeNumber(districtStore.districtConsumption, 2)[0]
             }}</span>
             MWh
           </p>

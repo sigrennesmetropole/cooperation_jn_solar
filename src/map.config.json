@@ -34,6 +34,13 @@
       "zIndex": 1
     },
     {
+      "name": "iris",
+      "url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=dem_stats:iris&outputFormat=application/json&srsName=EPSG:4326",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 4
+    },
+    {
       "type": "CesiumTilesetLayer",
       "name": "roof3d",
       "url": "https://demo.virtualcitymap.de/rennes/datasource-data/fe157549-1c80-47f1-828a-f1a97bf92d80/",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, inject } from 'vue'
+import { onMounted, inject, computed } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import {
@@ -26,6 +26,7 @@ import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { EventType } from '@vcmap/core'
 import SelectRoofInteraction from '@/services/selectRoofInteraction'
+import SelectDistrictInteraction from '@/services/selectDistrictInteractions'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -44,6 +45,14 @@ onMounted(async () => {
 // onUnmounted(() => {
 //   rennesApp.destroy()
 // })
+
+const isRemoveExclusivelistView = computed(() => {
+  return [
+    viewList['roof-selected-information'],
+    viewList['roof-selection'],
+    viewList['districts'],
+  ].includes(viewStore.currentView)
+})
 
 async function updateActiveMap() {
   await rennesApp.maps.setActiveMap('cesium')
@@ -109,7 +118,17 @@ viewStore.$subscribe(async () => {
       selectInteraction,
       () => {}
     )
-  } else if (viewStore.currentView !== viewList['roof-selected-information']) {
+  } else if (viewStore.currentView == viewList['districts']) {
+    await layerStore.enableLayer(RENNES_LAYER.iris)
+
+    rennesApp.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
+    const selectInteraction = new SelectDistrictInteraction(rennesApp)
+    rennesApp.maps.eventHandler.addExclusiveInteraction(
+      selectInteraction,
+      () => {}
+    )
+  }
+  if (!isRemoveExclusivelistView.value) {
     rennesApp.maps.eventHandler.removeExclusive()
   }
 })
