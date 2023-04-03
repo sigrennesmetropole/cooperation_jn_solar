@@ -7,6 +7,7 @@ import type { InteractionEvent } from '@vcmap/core'
 import type { RennesApp } from './RennesApp'
 import { apiEnedisDistrictService } from '@/services/api-enedis-district'
 import { useDistrictStore } from '@/stores/districtInformations'
+import { updateDistrictStyle } from './viewStyles'
 
 class SelectDistrictInteraction extends AbstractInteraction {
   _rennesApp: RennesApp
@@ -23,6 +24,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
       codeIris
     )
     districtStore.setDistrictInformations(
+      codeIris,
       districtDatas.irisName,
       districtDatas.totalConsumption,
       districtDatas.totalProduction,
@@ -32,9 +34,11 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
   async pipe(event: InteractionEvent) {
     const selectedDistrict = event.feature
-
-    await this.gettingDistrictDatas(selectedDistrict?.getProperty('code_iris'))
-
+    const irisCode = selectedDistrict?.getProperty('code_iris')
+    if (irisCode) {
+      updateDistrictStyle(this._rennesApp, irisCode)
+      await this.gettingDistrictDatas(irisCode)
+    }
     return event
   }
 }

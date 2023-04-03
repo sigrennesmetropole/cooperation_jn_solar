@@ -38,7 +38,17 @@
       "url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=dem_stats:iris&outputFormat=application/json&srsName=EPSG:4326",
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
-      "zIndex": 4
+      "zIndex": 4,
+      "style": {
+        "type": "VectorStyleItem",
+        "fill": {
+          "color": "rgba(0,0,0,0.2)"
+        },
+        "stroke": {
+          "color": "#FFFFFF",
+          "width": 1
+        }
+      }
     },
     {
       "type": "CesiumTilesetLayer",

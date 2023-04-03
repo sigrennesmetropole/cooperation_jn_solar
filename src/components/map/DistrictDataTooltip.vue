@@ -5,7 +5,7 @@ import { useDistrictStore } from '@/stores/districtInformations'
 const districtStore = useDistrictStore()
 
 function closeTooltip() {
-  console.log('close the tooltip')
+  districtStore.resetDistrictStore()
 }
 
 function removePartOfIrisName(irisName: string) {
@@ -30,6 +30,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
 <template>
   <div
     class="min-w-[440px] transition-[height] absolute right-40 top-1/4 bg-white flex flex-col p-5 gap-3 rounded-lg"
+    v-if="districtStore.districtName !== ''"
   >
     <div class="flex flex-row justify-between">
       <h2 class="font-dm-sans font-bold text-2xl max-w-[420px]">
@@ -38,7 +39,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
       <img
         :src="iconDelete"
         alt=""
-        class="w-4 self-start ml-2"
+        class="w-4 self-start ml-2 cursor-pointer"
         @click="closeTooltip()"
       />
     </div>
