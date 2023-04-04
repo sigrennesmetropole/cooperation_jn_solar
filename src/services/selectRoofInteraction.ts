@@ -12,6 +12,9 @@ import type { RennesApp } from './RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
+import { useViewsStore } from '@/stores/views'
+import { viewList } from '@/model/views.model'
+import { useHomeStore } from '@/stores/home'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(63,185,30)' },
@@ -69,11 +72,24 @@ class SelectRoofInteraction extends AbstractInteraction {
     router.push({ name: 'roof-selected-information' })
   }
 
+  _isClickOnHomePageValid() {
+    const viewStore = useViewsStore()
+    if (viewStore.currentView !== viewList.home) {
+      return true
+    }
+    const homeRouter = useHomeStore()
+    if (homeRouter.isTermOfUseAccepted) {
+      return true
+    }
+    homeRouter.setDisplayError(true)
+    return false
+  }
+
   async pipe(event: InteractionEvent) {
     const selectedBuilding = event.feature
     const selectedBuildingId =
       selectedBuilding?.getProperty('attributes')['BUILDINGID']
-    if (selectedBuilding) {
+    if (selectedBuilding && this._isClickOnHomePageValid()) {
       const buildingRoofs: GeoJSONFeatureCollection =
         await roofWfsService.fetchRoofs(selectedBuildingId)
       this._highglightRoofsOfTheBuilding(buildingRoofs)
