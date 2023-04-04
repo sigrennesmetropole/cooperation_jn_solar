@@ -73,7 +73,6 @@ class SelectRoofInteraction extends AbstractInteraction {
     const selectedBuilding = event.feature
     const selectedBuildingId =
       selectedBuilding?.getProperty('attributes')['BUILDINGID']
-
     if (selectedBuilding) {
       const buildingRoofs: GeoJSONFeatureCollection =
         await roofWfsService.fetchRoofs(selectedBuildingId)
