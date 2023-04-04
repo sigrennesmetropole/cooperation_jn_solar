@@ -154,9 +154,7 @@ async function getPositionOfUser() {
       (position) => {
         const lat = position.coords.latitude
         const lon = position.coords.longitude
-        addressStore.setAddressGeoloc([lon, lat])
         goToAddressFromLatAndLon(lat, lon)
-        console.log(position)
       },
       (error) => {
         console.log(error)
