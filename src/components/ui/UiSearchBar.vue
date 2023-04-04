@@ -142,14 +142,22 @@ function emptySearch() {
   }
 }
 
-function getPositionOfUser() {
+const goToAddressFromLatAndLon = async (lat: number, lon: number) => {
+  let currentVp = await rennesApp.maps?.activeMap.getViewpoint()
+  const newVp = createNewViewpointFromAddress(currentVp!, [lon, lat])
+  if (newVp) {
+    mapStore.viewPoint = newVp
+  }
+}
+
+async function getPositionOfUser() {
   if (window.navigator.geolocation) {
     window.navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude
         const lon = position.coords.longitude
         addressStore.setAddressGeoloc([lon, lat])
-        createNewViewpointFromAddress(rennesApp, [lon, lat])
+        goToAddressFromLatAndLon(lat, lon)
         console.log(position)
       },
       (error) => {
@@ -197,12 +205,22 @@ const highlightedAutocompletion = computed(() => {
     addressOrganization,
   }
 })
+
+const isDisplayAutocompletion = computed(() => {
+  return (
+    highlightedAutocompletion.value.addressRva.length > 0 ||
+    highlightedAutocompletion.value.addressOrganization.length > 0
+  )
+})
 </script>
 
 <template>
   <div class="flex flex-col gap-0 p-0 m-0">
     <div
-      class="flex flex-row items-center h-11 shadow-lg rounded p-0 mb-0 bg-white w-[402px]"
+      class="flex flex-row items-center h-11 shadow-lg rounded-lg p-0 mb-0 bg-white w-[402px]"
+      :class="
+        isDisplayAutocompletion || isEmptySearch ? 'border border-black' : ''
+      "
     >
       <div
         class="flex flex-row items-center justify-center w-10 h-full ml-2"
@@ -234,15 +252,12 @@ const highlightedAutocompletion = computed(() => {
     </div>
 
     <div
-      class="font-dm-sans flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px]"
-      v-if="
-        highlightedAutocompletion.addressRva.length > 0 ||
-        highlightedAutocompletion.addressOrganization.length > 0
-      "
+      class="font-dm-sans flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px] scrollbar scrollbar-thumb-black scrollbar-track-inerth scrollbar-thumb-rounded-full scrollbar-w-1"
+      v-if="isDisplayAutocompletion"
     >
       <ul v-if="highlightedAutocompletion.addressRva.length > 0">
         <li class="border-b border-neutral-200 py-1">
-          <span class="font-dm-sans font-light text-sm text-neutral-800 px-3">
+          <span class="font-dm-sans font-normal text-xs text-neutral-600 px-3">
             <template v-if="highlightedAutocompletion.addressRva.length > 1">
               Adresses
             </template>
@@ -257,13 +272,16 @@ const highlightedAutocompletion = computed(() => {
           class="cursor-pointer border-b border-neutral-200 py-1"
           :class="addressSelected === item.idaddress ? 'bg-neutral-100' : ''"
         >
-          <div v-html="item.addr3" class="px-3"></div>
+          <div
+            v-html="item.addr3"
+            class="px-3 font-dm-sans font-normal text-sm"
+          ></div>
         </li>
       </ul>
 
       <ul v-if="highlightedAutocompletion.addressOrganization.length > 0">
         <li class="border-b border-neutral-200 py-1">
-          <span class="font-dm-sans font-light text-sm text-neutral-800 px-3">
+          <span class="font-dm-sans font-normal text-xs text-neutral-600 px-3">
             <template
               v-if="highlightedAutocompletion.addressOrganization.length > 1"
             >
@@ -282,7 +300,10 @@ const highlightedAutocompletion = computed(() => {
             'bg-neutral-100': addressSelected === item.id,
           }"
         >
-          <div v-html="item.addr" class="px-3"></div>
+          <div
+            v-html="item.addr"
+            class="px-3 font-dm-sans font-normal text-sm"
+          ></div>
         </li>
       </ul>
     </div>
@@ -297,21 +318,3 @@ const highlightedAutocompletion = computed(() => {
     </div>
   </div>
 </template>
-
-<style scoped>
-input[type='text']::-webkit-input-placeholder:focus {
-  color: transparent;
-}
-
-/* Override the default focus style for Firefox */
-input[type='text']::-moz-placeholder:focus {
-  color: transparent;
-}
-
-input[type='text']::-webkit-search-decoration,
-input[type='text']::-webkit-search-cancel-button,
-input[type='text']::-webkit-search-results-button,
-input[type='text']::-webkit-search-results-decoration {
-  display: none;
-}
-</style>
