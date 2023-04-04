@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import enedisSignature from '@/assets/illustrations/enedis-signature.svg'
 import enedisSpace from '@/assets/illustrations/enedis-personal-space.svg'
-import { apiEnedisService } from '@/services/api-enedis'
+import { apiEnedisService } from '@/services/api-enedis-dataconnect'
 import { getEnv, getEnedisSandboxPrm } from '@/services/env'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 
