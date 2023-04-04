@@ -8,7 +8,7 @@ import HousePlant from '@/assets/illustrations/house-plant.svg'
 <template>
   <div class="flex flex-col p-0 gap-4">
     <div
-      class="flex flex-col p-6 gap-6 bg-slate-50 border-slate-100 border-[1px] rounded-lg"
+      class="flex flex-col p-6 gap-6 bg-white border-slate-100 border-[1px] rounded-lg"
     >
       <FigureKeyNumber>
         <template v-slot:image>
