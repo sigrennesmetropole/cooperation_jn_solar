@@ -8,9 +8,9 @@ import { mapRoofSurfaceModel } from '@/model/roof.model'
 const roofsStore = useRoofsStore()
 
 function mapAndSortedRoofs() {
-  const buildingRoofsFeatures = roofsStore.buildingRoofsFeatures
+  const roofsFeaturesGroupBySurfaceId = roofsStore.roofsFeaturesGroupBySurfaceId
   const res: RoofSurfaceModel[] = []
-  buildingRoofsFeatures?.features.forEach((feature) => {
+  roofsFeaturesGroupBySurfaceId?.features.forEach((feature) => {
     res.push(mapRoofSurfaceModel(feature))
   })
   return res.sort((a, b) => b.favorable - a.favorable)

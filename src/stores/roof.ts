@@ -10,15 +10,23 @@ import { mapRoofSurfaceModel } from '@/model/roof.model'
 export const useRoofsStore = defineStore('roofs', () => {
   const selectedBuildingId: Ref<string | null> = ref(null)
 
-  const buildingRoofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
+  const roofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
+  const roofsFeaturesGroupBySurfaceId: Ref<GeoJSONFeatureCollection | null> =
+    ref(null)
   const selectedRoofFeature: Ref<GeoJSONFeature | null> = ref(null)
 
-  function setBuildingRoofsFeatures(
-    features: GeoJSONFeatureCollection,
-    buildingId: string
-  ) {
-    buildingRoofsFeatures.value = features
+  function setSelectedBuildingId(buildingId: string) {
     selectedBuildingId.value = buildingId
+  }
+
+  function setRoofsFeatures(features: GeoJSONFeatureCollection) {
+    roofsFeatures.value = features
+  }
+
+  function setRoofsFeaturesGroupBySurfaceId(
+    features: GeoJSONFeatureCollection
+  ) {
+    roofsFeaturesGroupBySurfaceId.value = features
   }
 
   function setSelectRoofFeature(feature: GeoJSONFeature) {
@@ -26,7 +34,7 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
 
   function setSelectRoofFeatureFromSurfaceId(surface_id: string) {
-    buildingRoofsFeatures.value?.features.forEach((feature) => {
+    roofsFeatures.value?.features.forEach((feature) => {
       const featureFormatted = mapRoofSurfaceModel(feature)
       if (featureFormatted.surface_id === surface_id) {
         setSelectRoofFeature(feature)
@@ -35,10 +43,13 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
 
   return {
-    buildingRoofsFeatures,
+    roofsFeatures,
     selectedRoofFeature,
-    setBuildingRoofsFeatures,
+    roofsFeaturesGroupBySurfaceId,
+    setRoofsFeatures,
     setSelectRoofFeature,
     setSelectRoofFeatureFromSurfaceId,
+    setSelectedBuildingId,
+    setRoofsFeaturesGroupBySurfaceId,
   }
 })

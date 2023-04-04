@@ -75,10 +75,9 @@ export function getDataBuilding() {
   let all_area_favorable = 0
   const all_values = [0, 0, 0, 0]
   const roofsStore = useRoofsStore()
-  const buildingRoofsFeatures = roofsStore.buildingRoofsFeatures
-  buildingRoofsFeatures?.features.forEach((feature) => {
+  const roofsFeaturesGroupBySurfaceId = roofsStore.roofsFeaturesGroupBySurfaceId
+  roofsFeaturesGroupBySurfaceId?.features.forEach((feature) => {
     const dataRoof: RoofSurfaceModel = mapRoofSurfaceModel(feature)
-
     all_area += dataRoof.total
     all_area_favorable += dataRoof.favorable
 

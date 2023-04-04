@@ -66,7 +66,7 @@ class SelectRoofInteraction extends AbstractInteraction {
     selectedBuildingId: string
   ) {
     const roofStore = useRoofsStore()
-    roofStore.setBuildingRoofsFeatures(buildingRoofs, selectedBuildingId)
+    roofStore.setSelectedBuildingId(selectedBuildingId)
     roofStore.setSelectRoofFeature(buildingRoofs.features[0])
     router.push({ name: 'roof-selected-information' })
   }
