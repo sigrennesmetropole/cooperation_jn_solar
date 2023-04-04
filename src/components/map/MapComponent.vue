@@ -90,7 +90,7 @@ simulationStore.$subscribe(async () => {
     if (addressStore.geolocAddress !== null) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
       await layerStore.enableLayer(RENNES_LAYER.roofShape)
-      let roofShape = roofsStore.selectRoofFeature!
+      let roofShape = roofsStore.selectedRoofFeature!
       displayRoofShape(rennesApp, roofShape)
       let grid = generateSquareGrid(rennesApp, roofShape)
       displayGridOnMap(rennesApp, grid)

@@ -20,14 +20,14 @@ export const useRoofsStore = defineStore('roofs', () => {
     selectedBuildingId.value = buildingId
   }
 
-  function setSelectRoofFeature(feature: GeoJSONFeature) {
+  function setSelectedRoofFeature(feature: GeoJSONFeature) {
     selectedRoofFeature.value = feature
   }
 
   return {
     buildingRoofsFeatures,
-    selectRoofFeature: selectedRoofFeature,
+    selectedRoofFeature,
     setBuildingRoofsFeatures,
-    setSelectRoofFeature,
+    setSelectedRoofFeature,
   }
 })
