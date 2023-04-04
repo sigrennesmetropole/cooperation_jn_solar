@@ -19,6 +19,7 @@ const roofSurface: RoofSurfaceModel = {
         class="w-[402px]"
         :roof-surface="roofSurface"
         :max-num-solar-panel="6"
+        :current-num-solar-panel="4"
       ></SimulationResult>
     </template>
   </Story>

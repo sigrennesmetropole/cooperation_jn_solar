@@ -11,6 +11,7 @@ import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useSimulationStore } from '@/stores/simulations'
+import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
@@ -22,7 +23,11 @@ onBeforeMount(() => {
 })
 
 function isLeftPanelRetractable() {
-  const retractableList = [viewList['map-pcaet'], viewList['roof-selection']]
+  const retractableList = [
+    viewList['map-pcaet'],
+    viewList['roof-selection'],
+    viewList['districts'],
+  ]
   return retractableList.includes(viewStore.currentView)
 }
 
@@ -32,6 +37,7 @@ const isDisplaySearchBar = computed(() => {
     viewList['map-pcaet'],
     viewList['roof-selected-information'],
     viewList.home,
+    viewList['districts'],
   ].includes(viewStore.currentView)
 })
 
@@ -42,6 +48,7 @@ const isDisplayAsideAndMap = computed(() => {
     viewList['roof-selected-information'],
     viewList['roof-selection'],
     viewList['step-sunshine'],
+    viewList['districts'],
   ].includes(viewStore.currentView)
 })
 </script>
@@ -110,7 +117,8 @@ const isDisplayAsideAndMap = computed(() => {
       :text="'Cliquez sur les zones qui ne peuvent pas accueillir de panneaux\n photovoltaïques (présence de fenêtre de toit, cheminée...)'"
       class="absolute z-20 bottom-5 left-[20%]"
     />
-
+    <DistrictDataTooltip v-if="viewStore.currentView === viewList['districts']">
+    </DistrictDataTooltip>
     <UiButtonWithTooltip
       v-if="isDisplaySearchBar"
       text="Les niveaux de potentiel solaire sont estimés sur la base de calculs

@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import UiChartDonut from '@/components/ui/UiChartDonut.vue'
 import { reactive } from 'vue'
-import { useRoofDataStore } from '@/stores/roofData'
-const roofDataStore = useRoofDataStore()
+import type { BuildingSurfaceModel } from '@/model/roof.model'
+
+const props = defineProps<{
+  buildingData: BuildingSurfaceModel
+}>()
+
 function favorablePercentage() {
   const favorablePercentage =
-    (roofDataStore.buildingData?.favorable! /
-      roofDataStore.buildingData?.total!) *
-    100
+    (props.buildingData?.favorable! / props.buildingData?.total!) * 100
   return Math.round(favorablePercentage)
 }
+
 const dataGraph = reactive({
   colors: ['#334155', '#CBD5E1', '#FEF9C3', '#FEF08A'],
   labelTotal: 'de surface favorable',
@@ -21,7 +24,7 @@ const dataGraph = reactive({
     <UiChartDonut
       :dataGraph="dataGraph"
       :labelTotalValue="favorablePercentage()"
-      :series="roofDataStore.buildingData?.values ?? []"
+      :series="props.buildingData?.values ?? []"
     ></UiChartDonut>
   </div>
 </template>
