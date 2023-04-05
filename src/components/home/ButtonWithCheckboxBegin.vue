@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import CheckBox from '@/components/simulation/CheckBox.vue'
+import { useHomeStore } from '@/stores/home'
 import { usePopUpStore } from '@/stores/popUpStore'
 
 const checked = ref(false)
 const displayError = ref(false)
 const router = useRouter()
+const homeRouter = useHomeStore()
 const popUpStore = usePopUpStore()
 
 const isCheckBoxOnError = ref(false)
@@ -25,13 +27,21 @@ function clickButtonBegin() {
 
 function checkboxChange(event: boolean) {
   isCheckboxChecked.value = event
+  homeRouter.setIsTermOfUseAccepted(event)
   changeError()
 }
 
 function changeError() {
   isCheckBoxOnError.value = !isCheckboxChecked.value
   displayError.value = !isCheckboxChecked.value
+  homeRouter.setDisplayError(isCheckBoxOnError.value)
 }
+
+homeRouter.$subscribe(async () => {
+  if (homeRouter.displayError) {
+    clickButtonBegin()
+  }
+})
 </script>
 
 <template>
@@ -53,7 +63,7 @@ function changeError() {
       </template>
     </CheckBox>
 
-    <div class="flex p-0 gap-3">
+    <div class="flex p-0 gap-3 mt-4">
       <button
         @click="clickButtonBegin()"
         class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"

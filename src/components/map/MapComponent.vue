@@ -7,7 +7,7 @@ import {
   RENNES_LAYERNAMES,
   useLayersStore,
 } from '@/stores/layers'
-import { viewList } from '@/model/views.model'
+import { viewStoreSubscribe } from '@/services/viewsService'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
@@ -32,8 +32,6 @@ import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { EventType } from '@vcmap/core'
-import SelectRoofInteraction from '@/services/selectRoofInteraction'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -122,21 +120,7 @@ solarPanelStore.$subscribe(async () => {
 })
 
 viewStore.$subscribe(async () => {
-  if (viewStore.currentView === viewList['roof-selection']) {
-    rennesApp.maps.eventHandler.featureInteraction.setActive(
-      EventType.CLICKMOVE
-    )
-    const selectInteraction = new SelectRoofInteraction(
-      rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
-      rennesApp
-    )
-    rennesApp.maps.eventHandler.addExclusiveInteraction(
-      selectInteraction,
-      () => {}
-    )
-  } else if (viewStore.currentView !== viewList['roof-selected-information']) {
-    rennesApp.maps.eventHandler.removeExclusive()
-  }
+  viewStoreSubscribe(rennesApp)
 })
 
 layerStore.$subscribe(async () => {
