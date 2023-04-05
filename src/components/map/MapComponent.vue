@@ -7,7 +7,7 @@ import {
   RENNES_LAYERNAMES,
   useLayersStore,
 } from '@/stores/layers'
-import { viewStoreSubscribe } from '@/services/viewsService'
+import { createMapInteractions } from '@/services/interactionUtils'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
@@ -46,6 +46,7 @@ onMounted(async () => {
   await rennesApp.initializeMap()
   await updateActiveMap()
   await updateLayersVisibility()
+  createMapInteractions(rennesApp)
 })
 
 async function updateActiveMap() {
@@ -120,12 +121,13 @@ solarPanelStore.$subscribe(async () => {
 })
 
 viewStore.$subscribe(async () => {
-  viewStoreSubscribe(rennesApp)
+  createMapInteractions(rennesApp)
 })
 
 layerStore.$subscribe(async () => {
   await updateLayersVisibility()
 })
+
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)

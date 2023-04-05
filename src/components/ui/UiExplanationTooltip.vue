@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-const props = defineProps<{
-  title: string
-  content: string
-  displayCloseButton: Boolean
-  contentCloseButton: string
-}>()
+const props = defineProps({
+  title: String,
+  content: String,
+  displayCloseButton: Boolean,
+  contentCloseButton: String,
+})
 const height = computed(() => {
   if (props.displayCloseButton) {
     return 'h-[196px]'
   } else {
-    return 'h-[102px]'
+    return 'h-[104px]'
   }
 })
 </script>

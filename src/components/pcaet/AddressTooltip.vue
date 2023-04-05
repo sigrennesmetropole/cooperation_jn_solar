@@ -10,7 +10,7 @@ let isOpen = ref(true)
 <template>
   <UiExplanationTooltip
     v-if="isOpen"
-    @close="isOpen = false"
+    @close="$emit('closeAddress')"
     :title="title"
     :content="content"
     :display-close-button="true"
