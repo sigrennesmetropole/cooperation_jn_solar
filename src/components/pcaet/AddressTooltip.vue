@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UiTooltip from '@/components/ui/UiTooltip.vue'
+import UiExplanationTooltip from '@/components/ui/UiExplanationTooltip.vue'
 import { ref } from 'vue'
 const title = "Localisez votre lieux d'habitation"
 const content =
@@ -8,12 +8,12 @@ const contentCloseButton = "J'ai compris"
 let isOpen = ref(true)
 </script>
 <template>
-  <UiTooltip
+  <UiExplanationTooltip
     v-if="isOpen"
     @close="isOpen = false"
     :title="title"
     :content="content"
     :display-close-button="true"
     :content-close-button="contentCloseButton"
-  ></UiTooltip>
+  ></UiExplanationTooltip>
 </template>

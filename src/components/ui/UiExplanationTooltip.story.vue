@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import UiTooltip from '@/components/ui/UiTooltip.vue'
+import UiExplanationTooltip from '@/components/ui/UiExplanationTooltip.vue'
 
 function tooltipWithButton() {
   return {
@@ -22,27 +22,30 @@ function tooltipWithoutButton() {
 
 <template>
   <Story>
-    <Variant title="UiTooltip with button" :init-state="tooltipWithButton">
+    <Variant
+      title="UiExplanationTooltip with button"
+      :init-state="tooltipWithButton"
+    >
       <template #default="{ state }">
-        <UiTooltip
+        <UiExplanationTooltip
           :title="state.titre"
           :content="state.content"
           :display-close-button="state.displayCloseButton"
           :content-close-button="state.contentCloseButton"
-        ></UiTooltip>
+        ></UiExplanationTooltip>
       </template>
     </Variant>
     <Variant
-      title="UiTooltip without button"
+      title="UiExplanationTooltip without button"
       :init-state="tooltipWithoutButton"
     >
       <template #default="{ state }">
-        <UiTooltip
+        <UiExplanationTooltip
           :title="state.titre"
           :content="state.content"
           :display-close-button="state.displayCloseButton"
           :content-close-button="state.contentCloseButton"
-        ></UiTooltip>
+        ></UiExplanationTooltip>
       </template>
     </Variant>
   </Story>
