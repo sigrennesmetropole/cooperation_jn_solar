@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+
+const props = defineProps<{
+  isDisplayNextButton: Boolean
+}>()
+
 const router = useRouter()
 const simulationStore = useSimulationStore()
 
@@ -13,6 +19,16 @@ function clickButtonPrevious() {
 function clickButtonNext() {
   simulationStore.goToNextStep()
 }
+
+const textNextButton = computed(() => {
+  if (simulationStore.isCurrentStepFinal()) {
+    return 'Terminer'
+  }
+  if (simulationStore.currentStep == 2) {
+    return 'Valider'
+  }
+  return 'Suivant'
+})
 </script>
 
 <template>
@@ -37,6 +53,7 @@ function clickButtonNext() {
       </span>
     </button>
     <button
+      v-if="props.isDisplayNextButton"
       @click="clickButtonNext()"
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
@@ -46,13 +63,7 @@ function clickButtonNext() {
         alt=""
       />
       <span class="font-dm-sans text-white text-base font-medium">
-        {{
-          simulationStore.currentStep == 1
-            ? 'Suivant'
-            : simulationStore.currentStep == 3
-            ? 'Continuer'
-            : 'Valider'
-        }}</span
+        {{ textNextButton }}</span
       >
     </button>
   </div>

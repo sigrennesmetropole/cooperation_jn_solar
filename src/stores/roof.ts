@@ -5,29 +5,56 @@ import type {
   GeoJSONFeature,
   GeoJSONFeatureCollection,
 } from 'ol/format/GeoJSON'
+import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 export const useRoofsStore = defineStore('roofs', () => {
   const selectedBuildingId: Ref<string | null> = ref(null)
 
-  const buildingRoofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
+  const roofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
+  /*
+   * Certain roofsFeatures has the same surface_id .
+   * For reasons of simplicity for the calculations, we must store a clone of roofsFeatures but removing duplicates with the same surface_id.
+   *
+   */
+  const roofsFeaturesGroupBySurfaceId: Ref<GeoJSONFeatureCollection | null> =
+    ref(null)
   const selectedRoofFeature: Ref<GeoJSONFeature | null> = ref(null)
 
-  function setBuildingRoofsFeatures(
-    features: GeoJSONFeatureCollection,
-    buildingId: string
-  ) {
-    buildingRoofsFeatures.value = features
+  function setSelectedBuildingId(buildingId: string) {
     selectedBuildingId.value = buildingId
+  }
+
+  function setRoofsFeatures(features: GeoJSONFeatureCollection) {
+    roofsFeatures.value = features
+  }
+
+  function setRoofsFeaturesGroupBySurfaceId(
+    features: GeoJSONFeatureCollection
+  ) {
+    roofsFeaturesGroupBySurfaceId.value = features
   }
 
   function setSelectRoofFeature(feature: GeoJSONFeature) {
     selectedRoofFeature.value = feature
   }
 
+  function setSelectRoofFeatureFromSurfaceId(surface_id: string) {
+    roofsFeatures.value?.features.forEach((feature) => {
+      const featureFormatted = mapRoofSurfaceModel(feature)
+      if (featureFormatted.surface_id === surface_id) {
+        setSelectRoofFeature(feature)
+      }
+    })
+  }
+
   return {
-    buildingRoofsFeatures,
-    selectRoofFeature: selectedRoofFeature,
-    setBuildingRoofsFeatures,
+    roofsFeatures,
+    selectedRoofFeature,
+    roofsFeaturesGroupBySurfaceId,
+    setRoofsFeatures,
     setSelectRoofFeature,
+    setSelectRoofFeatureFromSurfaceId,
+    setSelectedBuildingId,
+    setRoofsFeaturesGroupBySurfaceId,
   }
 })

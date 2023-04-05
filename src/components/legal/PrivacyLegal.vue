@@ -20,7 +20,7 @@
         Freville CS 93111 35031 Rennes cedex
         <a
           class="test-base underline decoration-1 font-medium"
-          href=""
+          href="https://e-demarches.rennes.fr/Rennes/workflow_url?ECITIZ_ACTIVITY_PATH=Demandeur&amp;USAGER_PROCESS=CONTACT"
           target="_blank"
           >Nous contacter</a
         >
@@ -44,11 +44,17 @@
           dans les formulaires. Nous nous engageons à ce que la collecte et le
           traitement de vos données soient effectués de manière licite, loyale
           et transparente, conformément au
-          <a class="underline decoration-1 font-medium" href="" target="_blank"
+          <a
+            class="underline decoration-1 font-medium"
+            href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees"
+            target="_blank"
             >Règlement européen général sur la protection des données</a
           >
           (« RGPD ») et à la
-          <a class="underline decoration-1 font-medium" href="" target="_blank"
+          <a
+            class="underline decoration-1 font-medium"
+            href="https://www.cnil.fr/fr/la-loi-informatique-et-libertes"
+            target="_blank"
             >Loi informatiques et Libertés de 1978 modifiée</a
           >
           (« LIL »).
@@ -56,7 +62,10 @@
         <p class="mb-6">
           Cette collecte d'information se limite au nécessaire, conformément au
           principe de minimisation des données. Les définitions fournies à
-          <a class="underline decoration-1 font-medium" href="" target="_blank"
+          <a
+            class="underline decoration-1 font-medium"
+            href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees/chapitre1"
+            target="_blank"
             >l'article 4 du RGPD</a
           >
           sont applicables aux présentes. En cas de mise à jour, nous
@@ -74,7 +83,10 @@
         </p>
         <p>
           Pour toute précision ou réclamation, n'hésitez pas à
-          <a class="underline decoration-1 font-medium" href="" target="_blank"
+          <a
+            class="underline decoration-1 font-medium"
+            href="https://e-demarches.rennes.fr/Rennes/workflow_url?ECITIZ_ACTIVITY_PATH=Demandeur&amp;USAGER_PROCESS=CONTACT"
+            target="_blank"
             >nous contacter.</a
           >
         </p>
@@ -175,7 +187,10 @@
       <p>4 avenue Henri Freville</p>
       <p>CS 93111 35031 Rennes Cedex</p>
       <p class="mb-6">
-        <a class="underline decoration-1 font-medium" href="" target="_blank"
+        <a
+          class="underline decoration-1 font-medium"
+          href="https://e-demarches.rennes.fr/Rennes/workflow_url?ECITIZ_ACTIVITY_PATH=Demandeur&amp;USAGER_PROCESS=CONTACT"
+          target="_blank"
           >Nous contacter</a
         >
       </p>

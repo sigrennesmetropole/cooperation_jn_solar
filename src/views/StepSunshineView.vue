@@ -17,28 +17,17 @@ const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
 
-function displayFooter() {
-  if (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 2) {
-    return false
-  } else if (
-    simulationStore.currentStep == 3 &&
-    simulationStore.currentSubStep == 2
-  ) {
-    return false
-  } else if (
-    simulationStore.currentStep == 3 &&
-    simulationStore.currentSubStep == 4
-  ) {
-    return false
-  } else {
-    return true
-  }
-}
-
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['step-sunshine'])
   panelsStore.setTypePanelDisplay('right')
 })
+
+function isDisplayNextButton() {
+  if (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2) {
+    return false
+  }
+  return true
+}
 </script>
 
 <template>
@@ -60,5 +49,5 @@ onBeforeMount(() => {
   <!-- SavingsStep contain all the substep for step 3 -->
   <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
   <div class="h-full"></div>
-  <FooterButtons v-if="displayFooter()"></FooterButtons>
+  <FooterButtons :isDisplayNextButton="isDisplayNextButton()"></FooterButtons>
 </template>

@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { useRouter } from 'vue-router'
 import CheckBox from '@/components/simulation/CheckBox.vue'
 import { useHomeStore } from '@/stores/home'
+import { usePopUpStore } from '@/stores/popUpStore'
 
 const checked = ref(false)
 const displayError = ref(false)
-const showPopTermOfUse = ref(false)
 const router = useRouter()
 const homeRouter = useHomeStore()
+const popUpStore = usePopUpStore()
 
 const isCheckBoxOnError = ref(false)
 const isCheckboxChecked = ref(false)
@@ -55,7 +55,7 @@ homeRouter.$subscribe(async () => {
           >J'ai lu et j'accepte les
           <span
             class="underline decoration-1 cursor-pointer"
-            @click="showPopTermOfUse = true"
+            @click="popUpStore.displayTermsOfUse()"
           >
             conditions d'utilisation.
           </span>
@@ -63,7 +63,7 @@ homeRouter.$subscribe(async () => {
       </template>
     </CheckBox>
 
-    <div class="flex p-0 gap-3">
+    <div class="flex p-0 gap-3 mt-4">
       <button
         @click="clickButtonBegin()"
         class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
@@ -77,11 +77,6 @@ homeRouter.$subscribe(async () => {
         Veuillez cocher la case ci-dessus pour accepter les conditions
       </span>
     </div>
-
-    <TermsOfUsePopup
-      v-if="showPopTermOfUse"
-      @close="showPopTermOfUse = false"
-    />
   </div>
 </template>
 <style>

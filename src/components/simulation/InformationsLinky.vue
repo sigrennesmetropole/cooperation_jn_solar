@@ -2,9 +2,10 @@
 import enedisSignature from '@/assets/illustrations/enedis-signature.svg'
 import enedisSpace from '@/assets/illustrations/enedis-personal-space.svg'
 import { apiEnedisService } from '@/services/api-enedis-dataconnect'
-import { apiAutocalsolService } from '@/services/api-autocalsol'
 import { getEnv, getEnedisSandboxPrm } from '@/services/env'
-import { ref } from 'vue'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 async function goToEnedisWebSite() {
   const url = await apiEnedisService.getUrlUserAuthorization()
@@ -15,6 +16,11 @@ async function goToEnedisLogin() {
   if (getEnv() == 'dev') {
     await apiEnedisService.setPRMUser(getEnedisSandboxPrm())
     const consumption = await apiEnedisService.getAnnualConsumption()
+    if (consumption.annual_consumption !== undefined) {
+      consumptionAndProductionStore.setAnnualConsumption(
+        consumption.annual_consumption
+      )
+    }
     window.alert(JSON.stringify(consumption))
   } else if (getEnv() == 'prod') {
     const prm = await apiEnedisService.getPRMUser()
@@ -25,14 +31,6 @@ async function goToEnedisLogin() {
     const consumption = await apiEnedisService.getAnnualConsumption()
     window.alert(JSON.stringify(consumption))
   }
-}
-
-const isLoadingAutocalsol = ref(false)
-async function callApiAutocalsol() {
-  isLoadingAutocalsol.value = true
-  const computeData = await apiAutocalsolService.getComputeData()
-  isLoadingAutocalsol.value = false
-  window.alert(JSON.stringify(computeData))
 }
 </script>
 
@@ -64,9 +62,4 @@ async function callApiAutocalsol() {
       moment.
     </p>
   </div>
-
-  <button @click="callApiAutocalsol()" class="border">
-    <template v-if="isLoadingAutocalsol"> Loading </template>
-    <template v-else> CALL API AUTOCALSOL </template>
-  </button>
 </template>
