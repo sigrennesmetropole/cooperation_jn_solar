@@ -136,7 +136,7 @@ function emptySearch() {
   resetAutocompletion()
   panelsStore.isCompletelyHidden = false
   if (props.isRedirectOnSearch) {
-    router.push('/map-pcaet')
+    router.push('/roof-selection')
   }
 }
 

@@ -33,7 +33,6 @@ function isLeftPanelRetractable() {
 const isDisplaySearchBar = computed(() => {
   return [
     viewList['roof-selection'],
-    viewList['map-pcaet'],
     viewList['roof-selected-information'],
     viewList.home,
     viewList['districts'],
@@ -44,14 +43,13 @@ const isDisplayAsideAndMap = computed(() => {
   return [
     viewList['home'],
     viewList['roof-selected-information'],
-    viewList['roof-selection'],
     viewList['step-sunshine'],
     viewList['districts'],
   ].includes(viewStore.currentView)
 })
 
 const isDisplayFloatAndMap = computed(() => {
-  return [viewList['map-pcaet']].includes(viewStore.currentView)
+  return [viewList['roof-selection']].includes(viewStore.currentView)
 })
 
 const panelAlignment = computed(() => {
