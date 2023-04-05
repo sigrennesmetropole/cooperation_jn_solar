@@ -25,11 +25,20 @@ function keepDecimals(float: number, numberOfDecimals: number) {
   const roundFloat = float.toFixed(numberOfDecimals)
   return roundFloat
 }
+
+function toNumberOfPixels(number: number) {
+  const numberOfPixels = number.toString() + 'px'
+  return numberOfPixels
+}
 </script>
 
 <template>
   <div
-    class="min-w-[440px] transition-[height] absolute right-40 top-1/4 bg-white flex flex-col p-5 gap-3 rounded-lg"
+    class="min-w-[440px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
+    :style="{
+      left: toNumberOfPixels(districtStore.newPointAbscissa),
+      top: toNumberOfPixels(districtStore.newPointOrdinate),
+    }"
     v-if="districtStore.districtName !== ''"
   >
     <div class="flex flex-row justify-between">
