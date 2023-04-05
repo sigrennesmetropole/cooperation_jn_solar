@@ -3,7 +3,7 @@ import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { useRoofsStore } from '@/stores/roof'
 
 class RoofWfsService {
-  removeDuplicateRoofFeatures(jsonResponse: GeoJSONFeatureCollection) {
+  storeRoofsFeaturesGroupBySurfaceId(jsonResponse: GeoJSONFeatureCollection) {
     const roofStore = useRoofsStore()
     const removeDuplicateJsonResponse: Feature<Geometry, GeoJsonProperties>[] =
       []
@@ -31,7 +31,7 @@ class RoofWfsService {
 
     const roofStore = useRoofsStore()
     roofStore.setRoofsFeatures(jsonResponse)
-    this.removeDuplicateRoofFeatures(jsonResponse)
+    this.storeRoofsFeaturesGroupBySurfaceId(jsonResponse)
 
     return jsonResponse
   }

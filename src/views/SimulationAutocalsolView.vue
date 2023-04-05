@@ -40,8 +40,8 @@ onMounted(async () => {
     return
   }
 
-  const slope = selectedRoof.inclinaison ? selectedRoof.inclinaison : 30
-  const azimuth = selectedRoof.azimuth ? selectedRoof.azimuth : 0
+  const slope = selectedRoof.inclinaison
+  const azimuth = selectedRoof.azimuth
   state.dataAutocalsol = {
     latitude: addressStore.latitude,
     longitude: addressStore.longitude,

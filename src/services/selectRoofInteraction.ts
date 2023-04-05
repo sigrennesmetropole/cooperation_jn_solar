@@ -80,7 +80,6 @@ class SelectRoofInteraction extends AbstractInteraction {
       if (latitude !== undefined && longitude !== undefined) {
         const addressStore = useAddressStore()
         addressStore.setLatitudeAndLongitude(latitude, longitude)
-        console.log(addressStore.latitude, addressStore.longitude)
       }
     }
   }
