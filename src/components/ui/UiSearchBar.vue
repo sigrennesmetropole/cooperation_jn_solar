@@ -101,7 +101,6 @@ const goToAddress = async (
     item = item as AddressRva
     search.value = stripHTMLTags(item.addr3)
     resetAutocompletion()
-    addressStore.setAddressGeoloc([+item.x, +item.y])
     newVp = createNewViewpointFromAddress(currentVp!, [+item.x, +item.y])
   } else if (type === 'organization') {
     item = item as AddressOrganization
@@ -116,7 +115,6 @@ const goToAddress = async (
     let point = feature_site.geometry.coordinates
     let x = point[0]
     let y = point[1]
-    addressStore.setAddressGeoloc([+x, +y])
     newVp = createNewViewpointFromAddress(currentVp!, [+x, +y])
   }
   if (newVp) {
@@ -156,9 +154,7 @@ async function getPositionOfUser() {
       (position) => {
         const lat = position.coords.latitude
         const lon = position.coords.longitude
-        addressStore.setAddressGeoloc([lon, lat])
         goToAddressFromLatAndLon(lat, lon)
-        console.log(position)
       },
       (error) => {
         console.log(error)

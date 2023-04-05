@@ -32,14 +32,22 @@ function calculateSurfaceFavorableOfRoofFeature(feature: Feature<Geometry>) {
 }
 
 function azimuthToOrientation(azimuth: number) {
-  if (azimuth > 315 || azimuth <= 45) {
+  if (azimuth > 337.5 || azimuth <= 22.5) {
     return 'NORD'
-  } else if (azimuth > 45 && azimuth <= 135) {
+  } else if (azimuth > 22.5 && azimuth <= 67.5) {
+    return 'NORD-EST'
+  } else if (azimuth > 67.5 && azimuth <= 112.5) {
     return 'EST'
-  } else if (azimuth > 135 && azimuth <= 225) {
+  } else if (azimuth > 112.5 && azimuth <= 157.5) {
+    return 'SUD-EST'
+  } else if (azimuth > 157.5 && azimuth <= 202.5) {
     return 'SUD'
-  } else if (azimuth > 225 && azimuth <= 315) {
+  } else if (azimuth > 202.5 && azimuth <= 247.5) {
+    return 'SUD-OUEST'
+  } else if (azimuth > 247.5 && azimuth <= 292.5) {
     return 'OUEST'
+  } else if (azimuth > 292.5 && azimuth <= 337.5) {
+    return 'NORD-OUEST'
   }
 }
 
@@ -67,10 +75,9 @@ export function getDataBuilding() {
   let all_area_favorable = 0
   const all_values = [0, 0, 0, 0]
   const roofsStore = useRoofsStore()
-  const buildingRoofsFeatures = roofsStore.buildingRoofsFeatures
-  buildingRoofsFeatures?.features.forEach((feature) => {
+  const roofsFeaturesGroupBySurfaceId = roofsStore.roofsFeaturesGroupBySurfaceId
+  roofsFeaturesGroupBySurfaceId?.features.forEach((feature) => {
     const dataRoof: RoofSurfaceModel = mapRoofSurfaceModel(feature)
-
     all_area += dataRoof.total
     all_area_favorable += dataRoof.favorable
 

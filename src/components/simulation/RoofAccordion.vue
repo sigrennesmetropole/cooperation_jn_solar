@@ -13,6 +13,7 @@ const props = defineProps<{
   selected: Boolean
   isOpen: Boolean
   isRecommended: Boolean
+  index: number
 }>()
 
 const displayContents = ref(props.isOpen)
@@ -38,6 +39,7 @@ const displayContents = ref(props.isOpen)
             :checked="props.selected == true"
             :aria-checked="props.selected == true"
             :aria-label="props.label"
+            @click="$emit('clickRoofAccordion', props.index)"
           />
           <span class="font-dm-sans text-base font-medium grow text-left">{{
             label

@@ -24,17 +24,17 @@ onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
   panelsStore.isCompletelyHidden = false
-  if (roofStore.buildingRoofsFeatures && roofStore.buildingRoofsFeatures.bbox) {
+  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
     mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.buildingRoofsFeatures.bbox
+      roofStore.roofsFeatures.bbox
     )
   }
 })
 
 roofStore.$subscribe(async () => {
-  if (roofStore.buildingRoofsFeatures && roofStore.buildingRoofsFeatures.bbox) {
+  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
     mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.buildingRoofsFeatures.bbox
+      roofStore.roofsFeatures.bbox
     )
   }
 })

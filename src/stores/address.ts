@@ -1,23 +1,29 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Coordinate } from 'ol/coordinate'
 
 export const useAddressStore = defineStore('address', () => {
+  const latitude: Ref<number> = ref(0)
+  const longitude: Ref<number> = ref(0)
   const address: Ref<string> = ref('')
-  const geolocAddress: Ref<Coordinate | null> = ref(null)
-  function setAddress(newAddress: string) {
-    address.value = newAddress
+
+  function setLatitudeAndLongitude(
+    new_latitude: number,
+    new_longitude: number
+  ) {
+    latitude.value = new_latitude
+    longitude.value = new_longitude
   }
 
-  function setAddressGeoloc(point: Coordinate) {
-    geolocAddress.value = point
+  function setAddress(new_address: string) {
+    address.value = new_address
   }
 
   return {
+    latitude,
+    longitude,
+    setLatitudeAndLongitude,
     address,
-    geolocAddress,
     setAddress,
-    setAddressGeoloc,
   }
 })

@@ -22,6 +22,7 @@ const roofSurface: RoofSurfaceModel = {
         :selected="true"
         :is-open="true"
         :is-recommended="true"
+        :index="0"
       ></RoofAccordion>
     </template>
   </Story>
