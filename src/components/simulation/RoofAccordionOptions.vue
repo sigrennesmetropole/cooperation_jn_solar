@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import RoofAccordion from './RoofAccordion.vue'
 import type { RoofSurfaceModel } from '@/model/roof.model'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoofsStore } from '@/stores/roof'
 import { mapRoofSurfaceModel } from '@/model/roof.model'
 
@@ -14,6 +14,12 @@ const mapAndSortedRoofs = computed(() => {
     res.push(mapRoofSurfaceModel(feature))
   })
   return res.sort((a, b) => b.favorable - a.favorable)
+})
+
+onMounted(() => {
+  roofsStore.setSelectedRoofFeatureBySurfaceId(
+    mapAndSortedRoofs.value.at(0)!.surface_id
+  )
 })
 </script>
 

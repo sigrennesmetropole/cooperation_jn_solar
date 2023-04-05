@@ -24,10 +24,20 @@ export const useRoofsStore = defineStore('roofs', () => {
     selectedRoofFeature.value = feature
   }
 
+  function setSelectedRoofFeatureBySurfaceId(surface_id: string) {
+    for (const f of buildingRoofsFeatures.value!.features!) {
+      if (f.properties!['surface_id'] == surface_id) {
+        setSelectedRoofFeature(f)
+        break
+      }
+    }
+  }
+
   return {
     buildingRoofsFeatures,
     selectedRoofFeature,
     setBuildingRoofsFeatures,
     setSelectedRoofFeature,
+    setSelectedRoofFeatureBySurfaceId,
   }
 })
