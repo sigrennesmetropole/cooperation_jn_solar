@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FigureKeyNumber from '@/components/pcaet/FigureKeyNumber.vue'
+import FigureKeyNumber from '@/components/roof_selection/FigureKeyNumber.vue'
 import HourGlass from '@/assets/illustrations/hour-glass.svg'
 import SolarPanel from '@/assets/illustrations/solar-panel.svg'
 import HousePlant from '@/assets/illustrations/house-plant.svg'

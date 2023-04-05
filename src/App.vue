@@ -110,19 +110,6 @@ const panelAlignment = computed(() => {
     ></UiSearchBar>
 
     <UiPopUpBottomInformation
-      v-if="viewStore.currentView === viewList['roof-selection']"
-      :text="'Cliquez sur le bâtiment que vous souhaitez sélectionner.'"
-      class="absolute z-20 bottom-5 left-[35%]"
-    />
-    <UiPopUpBottomInformation
-      v-else-if="
-        viewStore.currentView === viewList['step-sunshine'] &&
-        simulationStore.currentStep === 1
-      "
-      :text="'Cliquez sur le pan de toit que vous souhaitez sélectionner.'"
-      class="absolute z-20 bottom-5 left-[20%]"
-    />
-    <UiPopUpBottomInformation
       v-else-if="
         viewStore.currentView === viewList['step-sunshine'] &&
         simulationStore.currentStep === 2 &&
