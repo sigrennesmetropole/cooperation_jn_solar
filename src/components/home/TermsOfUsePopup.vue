@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="fixed top-0 left-0 w-full h-full z-20"
+      class="fixed top-0 left-0 w-full h-full z-[60]"
       style="background-color: rgba(0, 0, 0, 0.75)"
     >
       >

@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { useRouter } from 'vue-router'
 import CheckBox from '@/components/simulation/CheckBox.vue'
+import { usePopUpStore } from '@/stores/popUpStore'
 
 const checked = ref(false)
 const displayError = ref(false)
-const showPopTermOfUse = ref(false)
 const router = useRouter()
+const popUpStore = usePopUpStore()
 
 const isCheckBoxOnError = ref(false)
 const isCheckboxChecked = ref(false)
@@ -45,7 +45,7 @@ function changeError() {
           >J'ai lu et j'accepte les
           <span
             class="underline decoration-1 cursor-pointer"
-            @click="showPopTermOfUse = true"
+            @click="popUpStore.displayTermsOfUse()"
           >
             conditions d'utilisation.
           </span>
@@ -67,11 +67,6 @@ function changeError() {
         Veuillez cocher la case ci-dessus pour accepter les conditions
       </span>
     </div>
-
-    <TermsOfUsePopup
-      v-if="showPopTermOfUse"
-      @close="showPopTermOfUse = false"
-    />
   </div>
 </template>
 <style>
