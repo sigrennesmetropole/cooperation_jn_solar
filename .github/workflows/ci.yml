@@ -68,6 +68,8 @@ jobs:
         run: echo "HISTOIRE_BASE=$(echo /cooperation_jn_solar/${BRANCH_NAME}/)" >> $GITHUB_ENV
 
       - run: npm run story:build
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
       - name: deploy to gh pages
         run: |
