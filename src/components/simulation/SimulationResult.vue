@@ -27,12 +27,10 @@ const updateCurrentNumSolarPanel = (solarPanelChanges: number) => {
   }
 }
 
-// 1.5 m2 per solar panel
 const currentSurface = computed(
   () => props.currentNumSolarPanel * SOLAR_PANEL_SURFACE
 )
 
-// 0.35 KwP per solar panel
 const currentPower = computed(() =>
   (props.currentNumSolarPanel * SOLAR_PANEL_POWER).toFixed(2)
 )
