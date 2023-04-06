@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`solar panel placement > snapshot 1`] = `
+{
+  "foo": "bar",
+}
+`;
