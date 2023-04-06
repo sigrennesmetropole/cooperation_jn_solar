@@ -51,12 +51,6 @@
       }
     },
     {
-      "name": "customLayerDistrict",
-      "type": "GeoJSONLayer",
-      "activeOnStartup": true,
-      "zIndex": 5
-    },
-    {
       "type": "CesiumTilesetLayer",
       "name": "roof3d",
       "url": "https://demo.virtualcitymap.de/rennes/datasource-data/fe157549-1c80-47f1-828a-f1a97bf92d80/",
