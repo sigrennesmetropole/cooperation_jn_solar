@@ -2,12 +2,19 @@
 import { computed, ref } from 'vue'
 import iconSearchEmpty from '@/assets/icons/search-empty.svg'
 import type { Ref } from 'vue'
+import type {
+  AutoCompletion,
+  AddressRva,
+  AddressOrganization,
+  AddressCommune,
+  AddressStreet,
+} from '@/model/address.model'
 
 const props = defineProps<{
   isDisplayAutocompletion: boolean
   isDisplayFilters: boolean
   isEmptySearch: boolean
-  highlightedAutocompletion
+  highlightedAutocompletion: AutoCompletion
 }>()
 
 const addressSelected: Ref<number | string | null> = ref(null)
@@ -48,6 +55,22 @@ const autocompletionFormatted = computed(() => {
     },
   ]
 })
+
+const getAddressValue = (
+  item2: AddressRva | AddressOrganization | AddressCommune | AddressStreet,
+  key: string
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (item2 as any)[key]
+}
+
+const getIdValue = (
+  item2: AddressRva | AddressOrganization | AddressCommune | AddressStreet,
+  key: string
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (item2 as any)[key]
+}
 </script>
 
 <template>
@@ -67,22 +90,23 @@ const autocompletionFormatted = computed(() => {
         </li>
         <li
           v-for="item2 in item.data"
-          :key="item2[item.name_key_id]"
+          :key="getIdValue(item2, item.name_key_id)"
           @click="
             $emit('goToAddress', {
               item: item2,
               type: item.type,
-              addr: item2[item.name_key_address],
+              addr: getAddressValue(item2, item.name_key_address),
             })
           "
           class="cursor-pointer border-b border-neutral-200 py-1"
-          @mouseover="addressSelected = item2[item.name_key_id]"
+          @mouseover="addressSelected = getIdValue(item2, item.name_key_id)"
           :class="{
-            'bg-neutral-100': addressSelected === item2[item.name_key_id],
+            'bg-neutral-100':
+              addressSelected === getIdValue(item2, item.name_key_id),
           }"
         >
           <div
-            v-html="item2[item.name_key_address]"
+            v-html="getAddressValue(item2, item.name_key_address)"
             class="px-3 font-dm-sans font-normal text-sm"
           ></div>
         </li>

@@ -40,7 +40,7 @@ addressStore.$subscribe(() => {
     "
   >
     <button
-      class="flex flex-row items-center justify-center w-8 h-full ml-2 cursor-pointer"
+      class="flex flex-row items-center justify-center w-8 h-full ml-2"
       :disabled="props.isEmptySearch || search.length < props.sizeBeginSearch"
       @click="$emit('clickSearch')"
     >

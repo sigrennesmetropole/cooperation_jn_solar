@@ -42,3 +42,10 @@ export type AddressStreet = {
   type: string
   upperCorner: string
 }
+
+export type AutoCompletion = {
+  addressRva: AddressRva[]
+  addressOrganization: AddressOrganization[]
+  communes: AddressCommune[]
+  streets: AddressStreet[]
+}

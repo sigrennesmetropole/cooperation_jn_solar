@@ -1,3 +1,14 @@
+type ApiData = {
+  rva: {
+    answer: {
+      status: {
+        code: number
+        message: string
+      }
+    }
+  }
+}
+
 class ApiRvaService {
   //Documention of API : https://api-rva.sig.rennesmetropole.fr/documentation.php
 
@@ -19,7 +30,7 @@ class ApiRvaService {
     return data
   }
 
-  isDataValid(data) {
+  isDataValid(data: ApiData) {
     const answer = data.rva.answer
     return answer.status.code == 1 && answer.status.message == 'ok'
   }

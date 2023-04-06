@@ -9,6 +9,7 @@ import type {
   AddressOrganization,
   AddressCommune,
   AddressStreet,
+  AutoCompletion,
 } from '@/model/address.model'
 import { useAddressStore } from '@/stores/address'
 import { useRouter } from 'vue-router'
@@ -30,12 +31,7 @@ const search = ref('')
 const addressStore = useAddressStore()
 const router = useRouter()
 
-const autocompletion: Ref<{
-  addressRva: AddressRva[]
-  addressOrganization: AddressOrganization[]
-  communes: AddressCommune[]
-  streets: AddressStreet[]
-}> = ref({
+const autocompletion: Ref<AutoCompletion> = ref({
   addressRva: [],
   addressOrganization: [],
   communes: [],
@@ -111,7 +107,7 @@ const resetAutocompletion = () => {
   autocompletion.value.streets = []
 }
 
-const inputKeyUp = async (newSearch) => {
+const inputKeyUp = async (newSearch: string) => {
   search.value = newSearch
   if (search.value.length < SIZE_BEGIN_SEARCH) {
     resetAutocompletion()
@@ -153,14 +149,6 @@ const goToAddress = async (event: {
   if (newVp) {
     resetAutocompletion()
     mapStore.viewPoint = newVp
-  }
-}
-
-function clickSearch() {
-  if (autocompletion.value.addressRva.length > 0) {
-    goToAddress(autocompletion.value.addressRva[0], 'rva')
-  } else if (autocompletion.value.addressOrganization.length > 0) {
-    goToAddress(autocompletion.value.addressOrganization[0], 'organization')
   }
 }
 
@@ -283,7 +271,6 @@ function filterChange(event: {
       :isDisplayAutocompletion="isDisplayAutocompletion"
       :isEmptySearch="isEmptySearch"
       :sizeBeginSearch="SIZE_BEGIN_SEARCH"
-      @clickSearch="clickSearch"
       @inputKeyUp="inputKeyUp($event)"
       @emptySearch="emptySearch()"
       @toggleFilters="isDisplayFilters = !isDisplayFilters"
