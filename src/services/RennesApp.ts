@@ -10,7 +10,6 @@ import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
 import type { Layer } from 'ol/layer'
 import type { RennesLayer } from '@/stores/layers'
-
 export class RennesApp extends VcsApp {
   readonly mapConfig
   constructor(mapConfig: object) {
@@ -45,6 +44,10 @@ export class RennesApp extends VcsApp {
 
   getOpenlayerMap(): Map {
     return this.get2DMap().olMap as Map
+  }
+
+  getCurrentDistance() {
+    return this.get3DMap().getViewpointSync()?.distance
   }
 
   getRoofSquaresAreaLayer(): Layer {

@@ -7,7 +7,7 @@ import {
   RENNES_LAYERNAMES,
   useLayersStore,
 } from '@/stores/layers'
-import { viewStoreSubscribe } from '@/services/viewsService'
+import { createMapInteractions } from '@/services/interactionUtils'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
@@ -33,7 +33,6 @@ import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { EventType } from '@vcmap/core'
-import SelectRoofInteraction from '@/services/selectRoofInteraction'
 import SelectDistrictInteraction from '@/services/selectDistrictInteractions'
 import { viewList } from '@/model/views.model'
 
@@ -50,6 +49,7 @@ onMounted(async () => {
   await rennesApp.initializeMap()
   await updateActiveMap()
   await updateLayersVisibility()
+  createMapInteractions(rennesApp)
 })
 
 // onUnmounted(() => {
@@ -136,20 +136,8 @@ solarPanelStore.$subscribe(async () => {
 })
 
 viewStore.$subscribe(async () => {
-  viewStoreSubscribe(rennesApp)
-  if (viewStore.currentView === viewList['roof-selection']) {
-    rennesApp.maps.eventHandler.featureInteraction.setActive(
-      EventType.CLICKMOVE
-    )
-    const selectInteraction = new SelectRoofInteraction(
-      rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
-      rennesApp
-    )
-    rennesApp.maps.eventHandler.addExclusiveInteraction(
-      selectInteraction,
-      () => {}
-    )
-  } else if (viewStore.currentView == viewList['districts']) {
+  createMapInteractions(rennesApp)
+  if (viewStore.currentView == viewList['districts']) {
     await layerStore.enableLayer(RENNES_LAYER.iris)
 
     rennesApp.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
@@ -167,6 +155,7 @@ viewStore.$subscribe(async () => {
 layerStore.$subscribe(async () => {
   await updateLayersVisibility()
 })
+
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
