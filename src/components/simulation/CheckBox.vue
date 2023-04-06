@@ -3,13 +3,14 @@ import { computed, ref, defineEmits } from 'vue'
 
 const props = defineProps<{
   isOnError: boolean
+  isChecked: boolean
 }>()
 
 const emit = defineEmits<{
   (e: 'checkBoxChange', status: boolean): void
 }>()
 
-const checked = ref(false)
+const checked = ref(props.isChecked)
 
 function statusChange() {
   checked.value = !checked.value

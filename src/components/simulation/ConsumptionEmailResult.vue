@@ -80,6 +80,7 @@ const openPrivacy = () => {
 
       <CheckBox
         :isOnError="isCheckBoxOnError"
+        :isChecked="false"
         @checkBoxChange="checkboxChange($event)"
       >
         <template v-slot:text>

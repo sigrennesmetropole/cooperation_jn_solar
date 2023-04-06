@@ -5,7 +5,7 @@ import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
 import mapConfig from './map.config.json'
 import { useViewsStore } from './stores/views'
-import UiSearchBar from '@/components/ui/UiSearchBar.vue'
+import SearchBar from '@/components/search_bar/SearchBar.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
@@ -89,14 +89,14 @@ const isDisplayAsideAndMap = computed(() => {
       <MapComponent v-if="isDisplayAsideAndMap"></MapComponent>
     </div>
 
-    <UiSearchBar
+    <SearchBar
       v-if="isDisplaySearchBar"
       class="absolute z-20 top-5"
       :style="
         viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 20px;'
       "
       :isRedirectOnSearch="viewStore.currentView !== viewList.home"
-    ></UiSearchBar>
+    ></SearchBar>
 
     <UiPopUpBottomInformation
       v-if="viewStore.currentView === viewList['roof-selection']"

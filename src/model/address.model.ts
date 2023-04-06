@@ -19,3 +19,26 @@ export type AddressOrganization = {
   y?: number
   addr: string
 }
+
+export type AddressCommune = {
+  insee: string
+  lowerCorner: string
+  name: string
+  name2: string
+  nameindex: string
+  upperCorner: string
+}
+
+export type AddressStreet = {
+  fantoir: string
+  idlane: string
+  insee: string
+  lowerCorner: string
+  name: string
+  name2: string
+  name3: string
+  name4: string
+  nameindex: string
+  type: string
+  upperCorner: string
+}
