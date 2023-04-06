@@ -47,7 +47,7 @@ export class RennesApp extends VcsApp {
   }
 
   getCurrentDistance() {
-    return this.get3DMap().getViewpointSync()?.cameraPosition[2]
+    return this.get3DMap().getViewpointSync()?.distance
   }
 
   getRoofSquaresAreaLayer(): Layer {

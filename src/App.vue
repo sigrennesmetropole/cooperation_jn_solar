@@ -59,6 +59,7 @@ const panelAlignment = computed(() => {
   if (panelStore.isLeftPanel()) {
     return 'left-0'
   }
+  // for floating-left, nothing to see
   return ''
 })
 </script>
