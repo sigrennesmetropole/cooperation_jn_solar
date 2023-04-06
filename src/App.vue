@@ -26,18 +26,13 @@ onBeforeMount(() => {
 })
 
 function isLeftPanelRetractable() {
-  const retractableList = [
-    viewList['map-pcaet'],
-    viewList['roof-selection'],
-    viewList['districts'],
-  ]
+  const retractableList = [viewList['roof-selection'], viewList['districts']]
   return retractableList.includes(viewStore.currentView)
 }
 
 const isDisplaySearchBar = computed(() => {
   return [
     viewList['roof-selection'],
-    viewList['map-pcaet'],
     viewList['roof-selected-information'],
     viewList.home,
     viewList['districts'],
@@ -47,12 +42,25 @@ const isDisplaySearchBar = computed(() => {
 const isDisplayAsideAndMap = computed(() => {
   return [
     viewList['home'],
-    viewList['map-pcaet'],
     viewList['roof-selected-information'],
-    viewList['roof-selection'],
     viewList['step-sunshine'],
     viewList['districts'],
   ].includes(viewStore.currentView)
+})
+
+const isDisplayFloatAndMap = computed(() => {
+  return [viewList['roof-selection']].includes(viewStore.currentView)
+})
+
+const panelAlignment = computed(() => {
+  if (panelStore.isRightPanel()) {
+    return 'right-0'
+  }
+  if (panelStore.isLeftPanel()) {
+    return 'left-0'
+  }
+  // for floating-left, nothing to see
+  return ''
 })
 </script>
 
@@ -60,14 +68,16 @@ const isDisplayAsideAndMap = computed(() => {
   <main class="h-screen flex">
     <aside
       class="z-10 absolute"
-      :class="panelStore.isRightPanel() ? 'right-0' : 'left-0'"
+      :class="panelAlignment"
       v-if="isDisplayAsideAndMap"
     >
       <SidePanel :is-retractable="isLeftPanelRetractable()">
         <RouterView :key="$route.fullPath" />
       </SidePanel>
     </aside>
-
+    <div v-if="isDisplayFloatAndMap">
+      <RouterView :key="$route.fullPath" />
+    </div>
     <div
       class="flex flex-row bg-neutral-100"
       v-else-if="viewStore.currentView == viewList['legal-notice']"
@@ -86,31 +96,20 @@ const isDisplayAsideAndMap = computed(() => {
       class="grow"
       :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
     >
-      <MapComponent v-if="isDisplayAsideAndMap"></MapComponent>
+      <MapComponent
+        v-if="isDisplayAsideAndMap || isDisplayFloatAndMap"
+      ></MapComponent>
     </div>
 
     <SearchBar
       v-if="isDisplaySearchBar"
-      class="absolute z-20 top-5"
+      class="absolute z-20 top-6 left-6"
       :style="
         viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 20px;'
       "
       :isRedirectOnSearch="viewStore.currentView !== viewList.home"
     ></SearchBar>
 
-    <UiPopUpBottomInformation
-      v-if="viewStore.currentView === viewList['roof-selection']"
-      :text="'Cliquez sur le bâtiment que vous souhaitez sélectionner.'"
-      class="absolute z-20 bottom-5 left-[35%]"
-    />
-    <UiPopUpBottomInformation
-      v-else-if="
-        viewStore.currentView === viewList['step-sunshine'] &&
-        simulationStore.currentStep === 1
-      "
-      :text="'Cliquez sur le pan de toit que vous souhaitez sélectionner.'"
-      class="absolute z-20 bottom-5 left-[20%]"
-    />
     <UiPopUpBottomInformation
       v-else-if="
         viewStore.currentView === viewList['step-sunshine'] &&

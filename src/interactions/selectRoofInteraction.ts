@@ -9,13 +9,10 @@ import {
 import type { InteractionEvent } from '@vcmap/core'
 import { Projection } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
-import type { RennesApp } from './RennesApp'
+import type { RennesApp } from '../services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
-import { useViewsStore } from '@/stores/views'
-import { viewList } from '@/model/views.model'
-import { useHomeStore } from '@/stores/home'
 import { useAddressStore } from '@/stores/address'
 
 const highlightStyle = new VectorStyleItem({
@@ -52,7 +49,7 @@ class SelectRoofInteraction extends AbstractInteraction {
     })
   }
 
-  _unhighlight() {
+  unhighlight() {
     this._highlighted = false
     this._selectableLayer.featureVisibility.clearHighlighting()
   }
@@ -74,19 +71,6 @@ class SelectRoofInteraction extends AbstractInteraction {
     router.push({ name: 'roof-selected-information' })
   }
 
-  _isClickOnHomePageValid() {
-    const viewStore = useViewsStore()
-    if (viewStore.currentView !== viewList.home) {
-      return true
-    }
-    const homeRouter = useHomeStore()
-    if (homeRouter.isTermOfUseAccepted) {
-      return true
-    }
-    homeRouter.setDisplayError(true)
-    return false
-  }
-
   _getLatitudeAndLongitude(event: InteractionEvent) {
     const position = event.position
     if (position !== undefined) {
@@ -104,26 +88,12 @@ class SelectRoofInteraction extends AbstractInteraction {
     const selectedBuilding = event.feature
     const selectedBuildingId =
       selectedBuilding?.getProperty('attributes')['BUILDINGID']
-    if (selectedBuilding && this._isClickOnHomePageValid()) {
+    if (selectedBuilding) {
       const buildingRoofs: GeoJSONFeatureCollection =
         await roofWfsService.fetchRoofs(selectedBuildingId)
-
       this._highglightRoofsOfTheBuilding(buildingRoofs)
-      if (event.type & EventType.MOVE) {
-        this._highlight(selectedBuilding.getId()?.toString()!)
-      }
-      if (event.type & EventType.CLICK) {
-        this._featureClicked.raiseEvent(event.feature)
-        this._hasFeature = selectedBuilding.getId()?.toString()!
-      }
       this._getLatitudeAndLongitude(event)
       this._goToNextStep(buildingRoofs, selectedBuildingId)
-    } else if (event.type & EventType.CLICK) {
-      this._featureClicked.raiseEvent()
-      this._hasFeature = false
-      this._unhighlight()
-    } else if (this._highlighted) {
-      this._unhighlight()
     }
     return event
   }

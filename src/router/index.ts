@@ -11,11 +11,6 @@ const routes = [
     component: () => import('../views/HomeView.vue'),
   },
   {
-    path: '/map-pcaet',
-    name: 'map-pcaet',
-    component: () => import('../views/MapPCAETView.vue'),
-  },
-  {
     path: '/roof-selected-information',
     name: 'roof-selected-information',
     component: () => import('../views/RoofSelectedInformation.vue'),

@@ -22,7 +22,7 @@ function clickButtonBegin() {
     return
   }
   displayError.value = false
-  router.push('/map-pcaet')
+  router.push('/roof-selection')
 }
 
 function checkboxChange(event: boolean) {
