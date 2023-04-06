@@ -3,7 +3,7 @@ import { destination, point } from '@turf/turf'
 import type { BBox, Feature, Point, Properties } from '@turf/turf'
 const cameraDistance = 150
 
-function computeViewPoint(
+export function computeViewPoint(
   turfPoint: Feature<Point, Properties>,
   vpJson: ViewpointOptions
 ) {

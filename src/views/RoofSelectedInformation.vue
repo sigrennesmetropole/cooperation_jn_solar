@@ -11,7 +11,7 @@ import iconInstallation from '@/assets/icons/installation.svg'
 import { useRouter } from 'vue-router'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { createCustomViewpointFromExtent } from '@/services/viewpointHelper'
+import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()

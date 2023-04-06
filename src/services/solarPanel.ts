@@ -95,7 +95,6 @@ export async function filterSolarPanelByMaxSolarPanel(
     .getFeatures()
     .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
     .map((f) => f.getId()!)
-
   solarPanel.featureVisibility.hideObjects(featuresToHide)
 }
 
