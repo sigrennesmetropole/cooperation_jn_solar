@@ -9,7 +9,9 @@ import iconHome from '@/assets/icons/icon-home.svg'
     <template v-slot:title-img>
       <div class="flex items-center p-0 gap-2.5 ml-5">
         <UiSolarPanelLogo class="h-10 w-10"></UiSolarPanelLogo>
-        <h1 class="font-bold text-2xl text-center">Cadastre Solaire</h1>
+        <h1 class="font-dm-sans font-bold text-2xl text-center">
+          Cadastre Solaire
+        </h1>
       </div>
     </template>
     <template v-slot:button-content>

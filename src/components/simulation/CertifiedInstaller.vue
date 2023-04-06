@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import qualitenr from '../../assets/illustrations/qualitEnR.png'
-import qualibat from '../../assets/illustrations/qualibat.png'
+import qualibat from '../../assets/illustrations/qualibat.avif'
 import qualifelec from '../../assets/illustrations/qualifelec.png'
 import messageWarning from '../../assets/icons/chat-message-warning.svg'
 </script>
@@ -18,7 +18,7 @@ import messageWarning from '../../assets/icons/chat-message-warning.svg'
       </p>
     </div>
     <div class="px-5 py-3 flex flex-row justify-center">
-      <div class="flex gap-11">
+      <div class="flex gap-11 h-[76px]">
         <img :src="qualitenr" alt="" />
         <img :src="qualibat" alt="" />
         <img :src="qualifelec" alt="" />

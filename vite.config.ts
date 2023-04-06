@@ -17,6 +17,7 @@ export default defineConfig(({ command }) => {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    assetsInclude: ['**/*.glb'],
   }
 
   if (command === 'build') {

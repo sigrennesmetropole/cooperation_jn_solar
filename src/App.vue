@@ -5,17 +5,20 @@ import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
 import mapConfig from './map.config.json'
 import { useViewsStore } from './stores/views'
-import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiSearchBar from '@/components/ui/UiSearchBar.vue'
 import { viewList } from './model/views.model'
 import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useSimulationStore } from '@/stores/simulations'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
+import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
+import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
+import { usePopUpStore } from '@/stores/popUpStore'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const simulationStore = useSimulationStore()
+const popUpStore = usePopUpStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -36,6 +39,7 @@ const isDisplaySearchBar = computed(() => {
     viewList['roof-selection'],
     viewList['map-pcaet'],
     viewList['roof-selected-information'],
+    viewList.home,
     viewList['districts'],
   ].includes(viewStore.currentView)
 })
@@ -87,7 +91,11 @@ const isDisplayAsideAndMap = computed(() => {
 
     <UiSearchBar
       v-if="isDisplaySearchBar"
-      class="absolute z-20 top-5 left-5"
+      class="absolute z-20 top-5"
+      :style="
+        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 20px;'
+      "
+      :isRedirectOnSearch="viewStore.currentView !== viewList.home"
     ></UiSearchBar>
 
     <UiPopUpBottomInformation
@@ -112,17 +120,15 @@ const isDisplayAsideAndMap = computed(() => {
       :text="'Cliquez sur les zones qui ne peuvent pas accueillir de panneaux\n photovoltaïques (présence de fenêtre de toit, cheminée...)'"
       class="absolute z-20 bottom-5 left-[20%]"
     />
-    <DistrictDataTooltip v-if="viewStore.currentView === viewList['districts']">
-    </DistrictDataTooltip>
-    <UiButtonWithTooltip
-      v-if="isDisplaySearchBar"
-      text="Les niveaux de potentiel solaire sont estimés sur la base de calculs
-        s'appuyant sur la maquette 3D métropolitaine et des données
-        météorologiques.
-      "
-      widthButton="12"
-      heightButton="12"
-      widthBoxText="w-[600px]"
+
+    <DistrictDataTooltip
+      v-if="viewStore.currentView === viewList['districts']"
+    ></DistrictDataTooltip>
+
+    <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
+    <TermsOfUsePopup
+      v-if="popUpStore.isDisplayTermsOfUse"
+      @close="popUpStore.closeTermsOfUse()"
     />
 
     <notifications position="top left" />

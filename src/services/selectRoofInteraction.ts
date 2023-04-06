@@ -7,12 +7,16 @@ import {
   CesiumTilesetLayer,
 } from '@vcmap/core'
 import type { InteractionEvent } from '@vcmap/core'
+import { Projection } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
 import type { RennesApp } from './RennesApp'
-import { calculateAllRoofData } from '@/services/roofDataService'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
+import { useViewsStore } from '@/stores/views'
+import { viewList } from '@/model/views.model'
+import { useHomeStore } from '@/stores/home'
+import { useAddressStore } from '@/stores/address'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(63,185,30)' },
@@ -65,20 +69,45 @@ class SelectRoofInteraction extends AbstractInteraction {
     selectedBuildingId: string
   ) {
     const roofStore = useRoofsStore()
-    roofStore.setBuildingRoofsFeatures(buildingRoofs, selectedBuildingId)
+    roofStore.setSelectedBuildingId(selectedBuildingId)
     roofStore.setSelectRoofFeature(buildingRoofs.features[0])
-    calculateAllRoofData()
     router.push({ name: 'roof-selected-information' })
+  }
+
+  _isClickOnHomePageValid() {
+    const viewStore = useViewsStore()
+    if (viewStore.currentView !== viewList.home) {
+      return true
+    }
+    const homeRouter = useHomeStore()
+    if (homeRouter.isTermOfUseAccepted) {
+      return true
+    }
+    homeRouter.setDisplayError(true)
+    return false
+  }
+
+  _getLatitudeAndLongitude(event: InteractionEvent) {
+    const position = event.position
+    if (position !== undefined) {
+      const wgs84Position = Projection.mercatorToWgs84(position)
+      const longitude = wgs84Position[0]
+      const latitude = wgs84Position[1]
+      if (latitude !== undefined && longitude !== undefined) {
+        const addressStore = useAddressStore()
+        addressStore.setLatitudeAndLongitude(latitude, longitude)
+      }
+    }
   }
 
   async pipe(event: InteractionEvent) {
     const selectedBuilding = event.feature
     const selectedBuildingId =
       selectedBuilding?.getProperty('attributes')['BUILDINGID']
-
-    if (selectedBuilding) {
+    if (selectedBuilding && this._isClickOnHomePageValid()) {
       const buildingRoofs: GeoJSONFeatureCollection =
         await roofWfsService.fetchRoofs(selectedBuildingId)
+
       this._highglightRoofsOfTheBuilding(buildingRoofs)
       if (event.type & EventType.MOVE) {
         this._highlight(selectedBuilding.getId()?.toString()!)
@@ -87,6 +116,7 @@ class SelectRoofInteraction extends AbstractInteraction {
         this._featureClicked.raiseEvent(event.feature)
         this._hasFeature = selectedBuilding.getId()?.toString()!
       }
+      this._getLatitudeAndLongitude(event)
       this._goToNextStep(buildingRoofs, selectedBuildingId)
     } else if (event.type & EventType.CLICK) {
       this._featureClicked.raiseEvent()

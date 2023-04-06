@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
+
+const props = defineProps<{
+  isDisplayNextButton: Boolean
+}>()
+
 const router = useRouter()
 const simulationStore = useSimulationStore()
 
@@ -13,6 +19,16 @@ function clickButtonPrevious() {
 function clickButtonNext() {
   simulationStore.goToNextStep()
 }
+
+const textNextButton = computed(() => {
+  if (simulationStore.isCurrentStepFinal()) {
+    return 'Terminer'
+  }
+  if (simulationStore.currentStep == 2) {
+    return 'Valider'
+  }
+  return 'Suivant'
+})
 </script>
 
 <template>
@@ -23,16 +39,21 @@ function clickButtonNext() {
       @click="clickButtonCancel()"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="text-black text-base font-medium"> Annuler </span>
+      <span class="font-dm-sans text-black text-base font-medium">
+        Annuler
+      </span>
     </button>
     <button
       v-else-if="simulationStore.currentStep != 1"
       @click="clickButtonPrevious()"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="text-black text-base font-medium"> Précédent </span>
+      <span class="font-dm-sans text-black text-base font-medium">
+        Précédent
+      </span>
     </button>
     <button
+      v-if="props.isDisplayNextButton"
       @click="clickButtonNext()"
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
@@ -41,14 +62,8 @@ function clickButtonNext() {
         src="../../assets/icons/interface-arrows-button-right--arrow-right-keyboard.svg"
         alt=""
       />
-      <span class="text-white text-base font-medium">
-        {{
-          simulationStore.currentStep == 1
-            ? 'Suivant'
-            : simulationStore.currentStep == 3
-            ? 'Continuer'
-            : 'Valider'
-        }}</span
+      <span class="font-dm-sans text-white text-base font-medium">
+        {{ textNextButton }}</span
       >
     </button>
   </div>

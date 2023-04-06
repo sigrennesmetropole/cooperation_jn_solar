@@ -15,10 +15,17 @@ import { useRouter } from 'vue-router'
 import { usePanelsStore } from '@/stores/panels'
 import { useMapStore } from '@/stores/map'
 
+const props = defineProps({
+  isRedirectOnSearch: {
+    type: Boolean,
+    default: true,
+  },
+})
+
 const search = ref('')
 const addressStore = useAddressStore()
 const router = useRouter()
-const addressSelected: Ref<AddressRva | AddressOrganization | null> = ref(null)
+const addressSelected: Ref<number | string | null> = ref(null)
 const autocompletion: Ref<{
   addressRva: AddressRva[]
   addressOrganization: AddressOrganization[]
@@ -32,6 +39,8 @@ const panelsStore = usePanelsStore()
 const mapStore = useMapStore()
 
 const SIZE_BEGIN_SEARCH = 4
+const NB_ADDRESSES_RVA = 5
+const NB_ADDRESSES_ORGANIZATION = 3
 
 onMounted(() => {
   if (addressStore.address !== '') {
@@ -45,7 +54,7 @@ const searchAddresses = async () => {
   if (answer.status.code != 1 || answer.status.message != 'ok') {
     return
   }
-  autocompletion.value.addressRva = answer.addresses.splice(0, 5)
+  autocompletion.value.addressRva = answer.addresses.splice(0, NB_ADDRESSES_RVA)
 }
 
 const resetAutocompletion = () => {
@@ -56,7 +65,7 @@ const resetAutocompletion = () => {
 const searchOrganizations = async () => {
   let data = await apiSitesorgService.fetchOrganizations(search.value)
   let organizations = []
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length && i < NB_ADDRESSES_ORGANIZATION; i++) {
     organizations.push({
       id: data[i].id,
       addr: data[i].nom,
@@ -74,23 +83,28 @@ const searchAddressesOrOrganizations = async () => {
   searchOrganizations()
 }
 
+const stripHTMLTags = (str: string) => {
+  return str.replace(/<\/?[^>]+(>|$)/g, '')
+}
+
 const goToAddress = async (
   item: AddressRva | AddressOrganization,
   type: string
 ) => {
   addressStore.setAddress(search.value)
-  router.push('/roof-selection')
+  if (props.isRedirectOnSearch) {
+    router.push('/roof-selection')
+  }
   let currentVp = await rennesApp.maps?.activeMap.getViewpoint()
   let newVp
   if (type === 'rva') {
     item = item as AddressRva
-    search.value = item.addr3
+    search.value = stripHTMLTags(item.addr3)
     resetAutocompletion()
-    addressStore.setAddressGeoloc([+item.x, +item.y])
     newVp = createNewViewpointFromAddress(currentVp!, [+item.x, +item.y])
   } else if (type === 'organization') {
     item = item as AddressOrganization
-    search.value = item.addr
+    search.value = stripHTMLTags(item.addr)
     resetAutocompletion()
     const data_organization = await apiSitesorgService.fetchOrganizationById(
       item.id
@@ -101,7 +115,6 @@ const goToAddress = async (
     let point = feature_site.geometry.coordinates
     let x = point[0]
     let y = point[1]
-    addressStore.setAddressGeoloc([+x, +y])
     newVp = createNewViewpointFromAddress(currentVp!, [+x, +y])
   }
   if (newVp) {
@@ -122,7 +135,32 @@ function emptySearch() {
   addressStore.setAddress('')
   resetAutocompletion()
   panelsStore.isCompletelyHidden = false
-  router.push('/map-pcaet')
+  if (props.isRedirectOnSearch) {
+    router.push('/map-pcaet')
+  }
+}
+
+const goToAddressFromLatAndLon = async (lat: number, lon: number) => {
+  let currentVp = await rennesApp.maps?.activeMap.getViewpoint()
+  const newVp = createNewViewpointFromAddress(currentVp!, [lon, lat])
+  if (newVp) {
+    mapStore.viewPoint = newVp
+  }
+}
+
+async function getPositionOfUser() {
+  if (window.navigator.geolocation) {
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude
+        const lon = position.coords.longitude
+        goToAddressFromLatAndLon(lat, lon)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
 }
 
 const isEmptySearch = computed(() => {
@@ -136,18 +174,58 @@ const isEmptySearch = computed(() => {
   }
   return false
 })
+
+const highlightedAutocompletion = computed(() => {
+  const boldSearchTerm = (text: string) => {
+    const words = search.value
+      .split(/\s+/)
+      .filter((word) => word.trim().length > 0)
+    const regex = new RegExp(`(${words.join('|')})`, 'gi')
+    return text.replace(regex, '<strong>$1</strong>')
+  }
+
+  const addressRva = autocompletion.value.addressRva.map((address) => ({
+    ...address,
+    addr3: boldSearchTerm(address.addr3),
+  }))
+
+  const addressOrganization = autocompletion.value.addressOrganization.map(
+    (organization) => ({
+      ...organization,
+      addr: boldSearchTerm(organization.addr),
+    })
+  )
+
+  return {
+    addressRva,
+    addressOrganization,
+  }
+})
+
+const isDisplayAutocompletion = computed(() => {
+  return (
+    highlightedAutocompletion.value.addressRva.length > 0 ||
+    highlightedAutocompletion.value.addressOrganization.length > 0
+  )
+})
 </script>
 
 <template>
   <div class="flex flex-col gap-0 p-0 m-0">
     <div
-      class="flex flex-row items-center h-11 shadow-lg rounded p-0 mb-0 bg-white w-[402px]"
+      class="flex flex-row items-center h-11 shadow-lg rounded-lg p-0 mb-0 bg-white w-[402px]"
+      :class="
+        isDisplayAutocompletion || isEmptySearch ? 'border border-black' : ''
+      "
     >
-      <div class="flex flex-row items-center justify-center w-10 h-full ml-2">
+      <div
+        class="flex flex-row items-center justify-center w-10 h-full ml-2"
+        @click="getPositionOfUser()"
+      >
         <img :src="iconTarget" class="w-4 h-4" />
       </div>
       <input
-        class="w-full h-full border-none p-2 text-base font-medium font-dm-sans placeholder-black"
+        class="w-full h-full border-none p-2 text-base font-medium font-dm-sans placeholder-black focus:ring-0 !border-black"
         type="text"
         placeholder="Entrez votre adresse ici"
         v-model="search"
@@ -170,41 +248,58 @@ const isEmptySearch = computed(() => {
     </div>
 
     <div
-      class="flex flex-col rounded px-3 py-4 mt-0 shadow-lg bg-white"
-      v-if="
-        autocompletion.addressRva.length > 0 ||
-        autocompletion.addressOrganization.length > 0
-      "
+      class="font-dm-sans flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px] scrollbar scrollbar-thumb-black scrollbar-track-inerth scrollbar-thumb-rounded-full scrollbar-w-1"
+      v-if="isDisplayAutocompletion"
     >
-      <ul>
+      <ul v-if="highlightedAutocompletion.addressRva.length > 0">
+        <li class="border-b border-neutral-200 py-1">
+          <span class="font-dm-sans font-normal text-xs text-neutral-600 px-3">
+            <template v-if="highlightedAutocompletion.addressRva.length > 1">
+              Adresses
+            </template>
+            <template v-else> Adresse </template>
+          </span>
+        </li>
         <li
-          v-for="item in autocompletion.addressRva"
+          v-for="item in highlightedAutocompletion.addressRva"
           :key="item.idaddress"
           @click="goToAddress(item, 'rva')"
-          @mouseover="addressSelected = item"
-          class="cursor-pointer border-b border-neutral-200"
-          :class="addressSelected === item ? 'bg-neutral-100' : ''"
+          @mouseover="addressSelected = item.idaddress"
+          class="cursor-pointer border-b border-neutral-200 py-1"
+          :class="addressSelected === item.idaddress ? 'bg-neutral-100' : ''"
         >
-          {{ item.addr3 }}
+          <div
+            v-html="item.addr3"
+            class="px-3 font-dm-sans font-normal text-sm"
+          ></div>
         </li>
       </ul>
-      <ul>
+
+      <ul v-if="highlightedAutocompletion.addressOrganization.length > 0">
+        <li class="border-b border-neutral-200 py-1">
+          <span class="font-dm-sans font-normal text-xs text-neutral-600 px-3">
+            <template
+              v-if="highlightedAutocompletion.addressOrganization.length > 1"
+            >
+              Organismes
+            </template>
+            <template v-else> Organisme </template>
+          </span>
+        </li>
         <li
-          v-for="item in autocompletion.addressOrganization"
-          :key="item.addr"
+          v-for="item in highlightedAutocompletion.addressOrganization"
+          :key="item.id"
           @click="goToAddress(item, 'organization')"
-          class="cursor-pointer border-b border-neutral-200"
-          @mouseover="addressSelected = item"
+          class="cursor-pointer border-b border-neutral-200 py-1"
+          @mouseover="addressSelected = item.id"
           :class="{
-            'border-none':
-              item ===
-              autocompletion.addressOrganization[
-                autocompletion.addressOrganization.length - 1
-              ],
-            'bg-neutral-100': addressSelected === item,
+            'bg-neutral-100': addressSelected === item.id,
           }"
         >
-          {{ item.addr }}
+          <div
+            v-html="item.addr"
+            class="px-3 font-dm-sans font-normal text-sm"
+          ></div>
         </li>
       </ul>
     </div>

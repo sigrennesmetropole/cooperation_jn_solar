@@ -4,11 +4,21 @@ import BoxStep from '@/components/simulation/BoxStep.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import economies from '@/assets/icons/economies.svg'
 import SimulationResult from '@/components/simulation/SimulationResult.vue'
+import { useSolarPanelStore } from '@/stores/solarPanels'
+import { useRoofsStore } from '@/stores/roof'
+import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 const simulationStore = useSimulationStore()
+const solarPanelStore = useSolarPanelStore()
+const roofsStore = useRoofsStore()
 
 function goToThirdStep() {
   simulationStore.goToNextStep()
+}
+
+const updateCurrentNumSolarPanel = (changes: number) => {
+  solarPanelStore.currentNumberSolarPanel =
+    solarPanelStore.currentNumberSolarPanel + changes
 }
 </script>
 
@@ -16,10 +26,17 @@ function goToThirdStep() {
   <template v-if="simulationStore.currentSubStep == 1">
     <ExplanationSelectionObstacles></ExplanationSelectionObstacles>
   </template>
-  <template v-else-if="simulationStore.currentSubStep == 2">
+  <template
+    v-else-if="
+      simulationStore.currentSubStep == 2 &&
+      roofsStore.selectedRoofFeature !== null
+    "
+  >
     <SimulationResult
-      :max-num-solar-panel="simulationStore.maxNumberSolarPanel"
-      :roof-surface="simulationStore.roofSurface"
+      :max-num-solar-panel="solarPanelStore.maxNumberSolarPanel"
+      :roof-surface="mapRoofSurfaceModel(roofsStore.selectedRoofFeature)"
+      :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
+      @solarPanelChanges="updateCurrentNumSolarPanel"
     >
     </SimulationResult>
 
@@ -42,7 +59,7 @@ function goToThirdStep() {
         </span>
       </template>
       <template v-slot:buttonContent>
-        <span class="text-white text-base font-medium">
+        <span class="font-dm-sans text-white text-base font-medium">
           Calculer mes économies d'énergie
         </span>
       </template>

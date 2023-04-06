@@ -4,10 +4,12 @@ import {
   CesiumMap,
   Viewpoint,
   OpenlayersMap,
+  GeoJSONLayer,
 } from '@vcmap/core'
 import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
 import type { Layer } from 'ol/layer'
+import type { RennesLayer } from '@/stores/layers'
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -25,7 +27,7 @@ export class RennesApp extends VcsApp {
     await cesiumMap?.initialize()
     if (cesiumMap) {
       cesiumMap.getScene().globe.maximumScreenSpaceError = 1
-      const homeViewPoint = this.viewpoints.getByKey('home') as Viewpoint
+      const homeViewPoint = this.viewpoints.getByKey('rennes') as Viewpoint
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
       mapStore.isInitializeMap = true
@@ -49,5 +51,11 @@ export class RennesApp extends VcsApp {
     return this.getOpenlayerMap()
       .getAllLayers()
       .find((l) => l.getProperties().name === 'roofSquaresArea')!
+  }
+
+  async getLayerByKey(key: RennesLayer) {
+    const layer: GeoJSONLayer = this.layers.getByKey(key) as GeoJSONLayer
+    await layer.fetchData()
+    return layer
   }
 }

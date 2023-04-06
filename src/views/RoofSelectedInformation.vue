@@ -24,17 +24,17 @@ onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
   panelsStore.isCompletelyHidden = false
-  if (roofStore.buildingRoofsFeatures && roofStore.buildingRoofsFeatures.bbox) {
+  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
     mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.buildingRoofsFeatures.bbox
+      roofStore.roofsFeatures.bbox
     )
   }
 })
 
 roofStore.$subscribe(async () => {
-  if (roofStore.buildingRoofsFeatures && roofStore.buildingRoofsFeatures.bbox) {
+  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
     mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.buildingRoofsFeatures.bbox
+      roofStore.roofsFeatures.bbox
     )
   }
 })
@@ -83,7 +83,7 @@ roofStore.$subscribe(async () => {
       </span>
     </template>
     <template v-slot:buttonContent>
-      <span class="text-white text-base font-medium">
+      <span class="font-dm-sans text-white text-base font-medium">
         Simuler une installation photovoltaïque
       </span>
     </template>

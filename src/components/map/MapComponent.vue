@@ -7,11 +7,12 @@ import {
   RENNES_LAYERNAMES,
   useLayersStore,
 } from '@/stores/layers'
-import { viewList } from '@/model/views.model'
+import { viewStoreSubscribe } from '@/services/viewsService'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import { useAddressStore } from '@/stores/address'
+import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
@@ -21,17 +22,26 @@ import {
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
 } from '@/services/roofInteractionHelper'
+import {
+  displaySolarPanel,
+  filterSolarPanelByMaxSolarPanel as filterSolarPanelBySolarPanelNumber,
+  removeSolarPanel,
+  zoomToSolarPanel,
+} from '@/services/solarPanel'
+import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { EventType } from '@vcmap/core'
 import SelectRoofInteraction from '@/services/selectRoofInteraction'
 import SelectDistrictInteraction from '@/services/selectDistrictInteractions'
+import { viewList } from '@/model/views.model'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
+const solarPanelStore = useSolarPanelStore()
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
@@ -55,7 +65,7 @@ const isRemoveExclusivelistView = computed(() => {
 })
 
 async function updateActiveMap() {
-  await rennesApp.maps.setActiveMap('cesium')
+  await mapStore.activate3d()
 }
 
 async function updateLayersVisibility() {
@@ -76,6 +86,7 @@ async function setLayerVisible(layerName: string, visible: boolean) {
 async function disableOlInteraction() {
   if (mapStore.activeMap === 'ol') {
     await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    removeSolarPanel(rennesApp)
     removeRoofInteractionOn2dMap(rennesApp)
     removeRoofGrid(rennesApp)
     removeRoof2dShape(rennesApp)
@@ -90,22 +101,42 @@ simulationStore.$subscribe(async () => {
     //force synchrone switch for adding openlayer interaction, update the store
     await rennesApp.maps.setActiveMap('ol')
     await mapStore.activate2d()
-    if (addressStore.geolocAddress !== null) {
+    if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
       await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
       await layerStore.enableLayer(RENNES_LAYER.roofShape)
-      let roofShape = roofsStore.selectRoofFeature!
+      let roofShape = roofsStore.selectedRoofFeature!
       displayRoofShape(rennesApp, roofShape)
       let grid = generateSquareGrid(rennesApp, roofShape)
       displayGridOnMap(rennesApp, grid)
       addRoofInteractionOn2dMap(rennesApp)
     }
+  } else if (
+    simulationStore.currentStep === 2 &&
+    simulationStore.currentSubStep == 2
+  ) {
+    const sampleSolarPanels = solarPanelFixtures()
+    solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
+    solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
+    await displaySolarPanel(rennesApp, sampleSolarPanels)
+    await layerStore.enableLayer(RENNES_LAYER.solarPanel)
+    // Zoom to solar panel
+    await mapStore.activate3d()
+    await zoomToSolarPanel(rennesApp)
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()
   }
 })
 
+solarPanelStore.$subscribe(async () => {
+  await filterSolarPanelBySolarPanelNumber(
+    rennesApp,
+    solarPanelStore.currentNumberSolarPanel
+  )
+})
+
 viewStore.$subscribe(async () => {
+  viewStoreSubscribe(rennesApp)
   if (viewStore.currentView === viewList['roof-selection']) {
     rennesApp.maps.eventHandler.featureInteraction.setActive(
       EventType.CLICKMOVE

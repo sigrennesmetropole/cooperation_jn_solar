@@ -1,14 +1,63 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, onMounted, reactive } from 'vue'
 import WaitingAnimation from '@/components/simulation/WaitingAnimation.vue'
 import CertifiedInstaller from '@/components/simulation/CertifiedInstaller.vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
+import { useAddressStore } from '@/stores/address'
+import { useRoofsStore } from '@/stores/roof'
+import { mapRoofSurfaceModel } from '@/model/roof.model'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import { getPeakPower } from '@/services/solarPanel'
+import { apiAutocalsolService } from '@/services/api-autocalsol'
+import type { AutocalsolData } from '@/model/autocalsol.model'
+import { azimuthForAutocalsol } from '@/model/autocalsol.model'
 
 const viewStore = useViewsStore()
+const addressStore = useAddressStore()
+const roofsStore = useRoofsStore()
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['end-simulation'])
+})
+
+const state = reactive({
+  dataAutocalsol: null as null | AutocalsolData,
+  autocalsolResult: null as null,
+})
+
+onMounted(async () => {
+  let selectedRoof = null
+  if (roofsStore.selectedRoofFeature !== null) {
+    selectedRoof = mapRoofSurfaceModel(roofsStore.selectedRoofFeature)
+  }
+  if (
+    selectedRoof === null ||
+    selectedRoof.inclinaison === undefined ||
+    selectedRoof.azimuth === undefined
+  ) {
+    return
+  }
+
+  const slope = selectedRoof.inclinaison
+  const azimuth = selectedRoof.azimuth
+  state.dataAutocalsol = {
+    latitude: addressStore.latitude,
+    longitude: addressStore.longitude,
+    slope: slope,
+    azimuth: azimuthForAutocalsol(azimuth),
+    annual_consumption: consumptionAndProductionStore.annualConsumption,
+    peak_power: getPeakPower(),
+  }
+
+  if (state.dataAutocalsol === null) {
+    return
+  }
+  state.autocalsolResult = await apiAutocalsolService.getComputeData(
+    state.dataAutocalsol
+  )
+  console.log(state.autocalsolResult)
 })
 </script>
 
@@ -16,6 +65,11 @@ onBeforeMount(() => {
   <div
     class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll gap-6"
   >
+    <div
+      class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
+    >
+      {{ state.dataAutocalsol }}
+    </div>
     <WaitingAnimation></WaitingAnimation>
     <CertifiedInstaller></CertifiedInstaller>
   </div>
