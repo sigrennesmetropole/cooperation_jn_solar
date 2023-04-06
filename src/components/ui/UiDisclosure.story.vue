@@ -9,7 +9,7 @@ import UiDisclosure from '@/components/ui/UiDisclosure.vue'
         <UiDisclosure>
           <template v-slot:title>
             <span class="font-dm-sans font-medium text-base color-black">
-              Comment est calculé l’ensolleillement ?
+              Comment est calculé l’ensoleillement ?
             </span>
           </template>
           <template v-slot:contents>

@@ -12,7 +12,7 @@ export const useRoofsStore = defineStore('roofs', () => {
 
   const roofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
   /*
-   * Certain roofsFeatures has the same surface_id .
+   * Some roofsFeatures has the same surface_id .
    * For reasons of simplicity for the calculations, we must store a clone of roofsFeatures but removing duplicates with the same surface_id.
    *
    */
