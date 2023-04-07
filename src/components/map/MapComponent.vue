@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, inject, computed } from 'vue'
+import { onMounted, inject } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import {
@@ -32,8 +32,6 @@ import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { EventType } from '@vcmap/core'
-import SelectDistrictInteraction from '@/services/selectDistrictInteractions'
 import { viewList } from '@/model/views.model'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -50,18 +48,6 @@ onMounted(async () => {
   await updateActiveMap()
   await updateLayersVisibility()
   createMapInteractions(rennesApp)
-})
-
-// onUnmounted(() => {
-//   rennesApp.destroy()
-// })
-
-const isRemoveExclusivelistView = computed(() => {
-  return [
-    viewList['roof-selected-information'],
-    viewList['roof-selection'],
-    viewList['districts'],
-  ].includes(viewStore.currentView)
 })
 
 async function updateActiveMap() {
@@ -136,20 +122,10 @@ solarPanelStore.$subscribe(async () => {
 })
 
 viewStore.$subscribe(async () => {
-  createMapInteractions(rennesApp)
   if (viewStore.currentView == viewList['districts']) {
     await layerStore.enableLayer(RENNES_LAYER.iris)
-
-    rennesApp.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
-    const selectInteraction = new SelectDistrictInteraction(rennesApp)
-    rennesApp.maps.eventHandler.addExclusiveInteraction(
-      selectInteraction,
-      () => {}
-    )
   }
-  if (!isRemoveExclusivelistView.value) {
-    rennesApp.maps.eventHandler.removeExclusive()
-  }
+  createMapInteractions(rennesApp)
 })
 
 layerStore.$subscribe(async () => {

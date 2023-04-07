@@ -8,11 +8,21 @@ import type { InteractionEvent } from '@vcmap/core'
 import type { RennesApp } from './RennesApp'
 import { apiEnedisDistrictService } from '@/services/api-enedis-district'
 import { useDistrictStore } from '@/stores/districtInformations'
-import { updateDistrictStyle } from './viewStyles'
 import { RENNES_LAYER } from '@/stores/layers'
 import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
 import { updateDistrictPointCoordinates } from './AboveMapService'
+import { Fill, Stroke, Style } from 'ol/style'
+
+const selectedDistrict = new Style({
+  fill: new Fill({
+    color: 'rgba(0,0,0,0.4)',
+  }),
+  stroke: new Stroke({
+    color: '#FFFFFF',
+    width: 2,
+  }),
+})
 
 class SelectDistrictInteraction extends AbstractInteraction {
   _rennesApp: RennesApp
@@ -37,6 +47,23 @@ class SelectDistrictInteraction extends AbstractInteraction {
     )
   }
 
+  _unhighlight() {
+    const irisLayer: GeoJSONLayer = this._rennesApp.layers.getByKey(
+      RENNES_LAYER.iris
+    ) as GeoJSONLayer
+    irisLayer.featureVisibility.clearHighlighting()
+  }
+
+  _highlight(featureId: string | number) {
+    const irisLayer: GeoJSONLayer = this._rennesApp.layers.getByKey(
+      RENNES_LAYER.iris
+    ) as GeoJSONLayer
+    this._unhighlight()
+    irisLayer.featureVisibility.highlight({
+      [featureId]: selectedDistrict,
+    })
+  }
+
   async _interactionDistrict(event: InteractionEvent) {
     const districtStore = useDistrictStore()
     document.body.style.cursor = 'pointer'
@@ -51,11 +78,8 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
       const new_feature = new Feature()
       const point = new Point(event.position)
-
       new_feature.setGeometry(point.transform('EPSG:3857', 'EPSG:4326'))
-
       customLayer.addFeatures([new_feature])
-
       districtStore.setNewPointFeatureOnSelectedDistrict(new_feature)
     }
   }
@@ -71,7 +95,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
     const irisCode = selectedDistrict?.getProperty('code_iris')
     if (irisCode) {
-      updateDistrictStyle(this._rennesApp, irisCode)
+      this._highlight(selectedDistrict.getId()!)
       await this._interactionDistrict(event)
       updateDistrictPointCoordinates(this._rennesApp)
       await this.gettingDistrictDatas(irisCode)
