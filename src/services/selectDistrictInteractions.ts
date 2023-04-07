@@ -24,6 +24,35 @@ const selectedDistrict = new Style({
   }),
 })
 
+///// The highlight function doesn't accept an array of styles /////
+
+// export function districtLineStyle() {
+//   const districtStyle: Style[] = []
+//   const firstLine = new Style({
+//     fill: new Fill({
+//       color: 'rgba(0,0,0,0.4)',
+//     }),
+//     stroke: new Stroke({
+//       color: '#FFFFFF',
+//       width: 4,
+
+//     }),
+//     zIndex: 0,
+//   })
+
+//   const secondLine = new Style({
+//     stroke: new Stroke({
+//       color: '#000000',
+//       width: 2,
+//     }),
+//     zIndex: 1,
+//   })
+
+//   districtStyle.push(firstLine)
+//   districtStyle.push(secondLine)
+//   return districtStyle
+// }
+
 class SelectDistrictInteraction extends AbstractInteraction {
   _rennesApp: RennesApp
 
@@ -61,6 +90,8 @@ class SelectDistrictInteraction extends AbstractInteraction {
     this._unhighlight()
     irisLayer.featureVisibility.highlight({
       [featureId]: selectedDistrict,
+      // [featureId]: districtLineStyle()[0],
+      // [featureId]: districtLineStyle()[1],
     })
   }
 
@@ -89,6 +120,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
     const selectedDistrict = event.feature
 
     if (selectedDistrict === undefined) {
+      districtStore.resetDistrictStore()
       return event
     }
     districtStore.setFeatureDistrict(selectedDistrict as Feature)
