@@ -22,22 +22,6 @@ const addressSelected: Ref<number | string | null> = ref(null)
 const autocompletionFormatted = computed(() => {
   return [
     {
-      type: 'communes',
-      name_key_id: 'nameindex',
-      name_key_address: 'name',
-      name_singular: 'Commune',
-      name_plural: 'Communes',
-      data: props.highlightedAutocompletion.communes,
-    },
-    {
-      type: 'streets',
-      name_key_id: 'idlane',
-      name_key_address: 'name4',
-      name_singular: 'Voie',
-      name_plural: 'Voies',
-      data: props.highlightedAutocompletion.streets,
-    },
-    {
       type: 'rva',
       name_key_id: 'idaddress',
       name_key_address: 'addr3',
@@ -52,6 +36,22 @@ const autocompletionFormatted = computed(() => {
       name_singular: 'Organisme',
       name_plural: 'Organismes',
       data: props.highlightedAutocompletion.addressOrganization,
+    },
+    {
+      type: 'streets',
+      name_key_id: 'idlane',
+      name_key_address: 'name4',
+      name_singular: 'Voie',
+      name_plural: 'Voies',
+      data: props.highlightedAutocompletion.streets,
+    },
+    {
+      type: 'communes',
+      name_key_id: 'nameindex',
+      name_key_address: 'name',
+      name_singular: 'Commune',
+      name_plural: 'Communes',
+      data: props.highlightedAutocompletion.communes,
     },
   ]
 })
