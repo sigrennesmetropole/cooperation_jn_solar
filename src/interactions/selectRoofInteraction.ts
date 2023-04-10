@@ -14,6 +14,7 @@ import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
 import { useAddressStore } from '@/stores/address'
+import { apiAdresseDataGouvService } from '@/services/api-adresse-data-gouv'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(63,185,30)' },
@@ -71,7 +72,7 @@ class SelectRoofInteraction extends AbstractInteraction {
     router.push({ name: 'roof-selected-information' })
   }
 
-  _getLatitudeAndLongitude(event: InteractionEvent) {
+  async _setLatitudeAndLongitude(event: InteractionEvent) {
     const position = event.position
     if (position !== undefined) {
       const wgs84Position = Projection.mercatorToWgs84(position)
@@ -80,6 +81,19 @@ class SelectRoofInteraction extends AbstractInteraction {
       if (latitude !== undefined && longitude !== undefined) {
         const addressStore = useAddressStore()
         addressStore.setLatitudeAndLongitude(latitude, longitude)
+
+        const addresses =
+          await apiAdresseDataGouvService.fetchAddressesFromLatLon(
+            latitude,
+            longitude
+          )
+        if (
+          addresses !== undefined &&
+          addresses.features !== undefined &&
+          addresses.features.length > 0
+        ) {
+          addressStore.setAddress(addresses.features[0].properties.label)
+        }
       }
     }
   }
@@ -92,7 +106,7 @@ class SelectRoofInteraction extends AbstractInteraction {
       const buildingRoofs: GeoJSONFeatureCollection =
         await roofWfsService.fetchRoofs(selectedBuildingId)
       this._highglightRoofsOfTheBuilding(buildingRoofs)
-      this._getLatitudeAndLongitude(event)
+      await this._setLatitudeAndLongitude(event)
       this._goToNextStep(buildingRoofs, selectedBuildingId)
     }
     return event
