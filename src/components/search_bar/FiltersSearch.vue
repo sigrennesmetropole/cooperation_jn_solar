@@ -20,12 +20,12 @@ const props = defineProps<{
       <span class="font-dm-sans font-bold text-2xl px-3">
         Paramètres de recherche
       </span>
-      <div
+      <button
         class="flex items-center justify-between border-2 border-black rounded p-1 cursor-pointer"
         @click="$emit('closeFilters')"
       >
         <img class="w-3 h-3" :src="iconMultiplyBlack2" />
-      </div>
+      </button>
     </div>
 
     <div class="flex flex-col gap-1 ml-5 mt-3">

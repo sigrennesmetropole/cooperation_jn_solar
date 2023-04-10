@@ -12,12 +12,7 @@ const props = defineProps<{
 }>()
 
 const search = ref('')
-const emit = defineEmits([
-  'emptySearch',
-  'clickSearch',
-  'toggleFilters',
-  'inputKeyUp',
-])
+const emit = defineEmits(['emptySearch', 'toggleFilters', 'inputKeyUp'])
 const addressStore = useAddressStore()
 
 function emptySearch() {
@@ -39,27 +34,24 @@ addressStore.$subscribe(() => {
         : ''
     "
   >
-    <button
-      class="flex flex-row items-center justify-center w-8 h-full ml-2"
-      :disabled="props.isEmptySearch || search.length < props.sizeBeginSearch"
-      @click="$emit('clickSearch')"
-    >
+    <div class="flex flex-row items-center justify-center w-8 h-full ml-2">
       <img :src="iconMagnifyingGlass" class="w-4 h-4" />
-    </button>
+    </div>
     <input
+      id="autocomplete-input"
       class="w-full h-full border-none text-base font-medium font-dm-sans placeholder-black focus:ring-0 !border-black"
       type="text"
       placeholder="Entrez votre adresse ici"
       v-model="addressStore.address"
       @keyup="$emit('inputKeyUp', search)"
     />
-    <div
+    <button
       class="flex flex-row items-center justify-center w-11 h-full cursor-pointer"
       @click="emptySearch()"
       v-if="search !== ''"
     >
       <img :src="iconMultiply" class="w-4 h-4" />
-    </div>
+    </button>
     <button
       class="flex flex-row items-center justify-center w-11 h-full cursor-pointer border-l border-neutral-200"
       @click="$emit('toggleFilters')"

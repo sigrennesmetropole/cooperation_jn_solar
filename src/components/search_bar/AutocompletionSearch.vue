@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import iconSearchEmpty from '@/assets/icons/search-empty.svg'
-import type { Ref } from 'vue'
 import type {
   AutoCompletion,
   AddressRva,
@@ -17,7 +16,8 @@ const props = defineProps<{
   highlightedAutocompletion: AutoCompletion
 }>()
 
-const addressSelected: Ref<number | string | null> = ref(null)
+const emit = defineEmits(['goToAddress'])
+const container = ref<HTMLDivElement | null>(null)
 
 const autocompletionFormatted = computed(() => {
   return [
@@ -71,10 +71,95 @@ const getIdValue = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (item2 as any)[key]
 }
+
+const selectedIndex = ref(-1)
+const scrollToSelectedItem = () => {
+  if (container.value && selectedIndex.value !== -1) {
+    const { categoryIndex, localIndex } = getCategoryAndLocalIndex(
+      selectedIndex.value
+    )
+    const selectedItem = container.value.querySelector(
+      `.autocompletion-item[data-category-index="${categoryIndex}"][data-item-index="${localIndex}"]`
+    ) as HTMLElement
+
+    if (selectedItem) {
+      container.value.scrollTop =
+        selectedItem.offsetTop - container.value.clientHeight / 2
+    }
+  }
+}
+
+const onKeyDown = (event: KeyboardEvent) => {
+  if (event.key === 'ArrowUp') {
+    event.preventDefault()
+    if (selectedIndex.value > 0) {
+      selectedIndex.value--
+    }
+    scrollToSelectedItem()
+  } else if (event.key === 'ArrowDown') {
+    event.preventDefault()
+    const totalItems = autocompletionFormatted.value.reduce(
+      (sum, item) => sum + item.data.length,
+      0
+    )
+    if (selectedIndex.value < totalItems - 1) {
+      selectedIndex.value++
+    }
+    scrollToSelectedItem()
+  } else if (event.key === 'Enter') {
+    event.preventDefault()
+    const { categoryIndex, localIndex } = getCategoryAndLocalIndex(
+      selectedIndex.value
+    )
+    const item = autocompletionFormatted.value[categoryIndex]
+    const selectedItem = item.data[localIndex]
+    emit('goToAddress', {
+      item: selectedItem,
+      type: item.type,
+      addr: getAddressValue(selectedItem, item.name_key_address),
+    })
+  }
+}
+
+watch(
+  () => props.isDisplayAutocompletion,
+  (value) => {
+    if (value) {
+      window.addEventListener('keydown', onKeyDown)
+    } else {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  },
+  { immediate: true }
+)
+
+const getGlobalIndex = (categoryIndex: number, itemIndex: number) => {
+  let globalIndex = 0
+  for (let i = 0; i < categoryIndex; i++) {
+    globalIndex += autocompletionFormatted.value[i].data.length
+  }
+  return globalIndex + itemIndex
+}
+
+const getCategoryAndLocalIndex = (globalIndex: number) => {
+  let categoryIndex = 0
+  let localIndex = globalIndex
+
+  while (
+    categoryIndex < autocompletionFormatted.value.length &&
+    localIndex >= autocompletionFormatted.value[categoryIndex].data.length
+  ) {
+    localIndex -= autocompletionFormatted.value[categoryIndex].data.length
+    categoryIndex++
+  }
+
+  return { categoryIndex, localIndex }
+}
 </script>
 
 <template>
   <div
+    ref="container"
     class="font-dm-sans flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px] scrollbar scrollbar-thumb-black scrollbar-track-inerth scrollbar-thumb-rounded-full scrollbar-w-1"
     v-if="isDisplayAutocompletion && !isDisplayFilters"
   >
@@ -89,7 +174,7 @@ const getIdValue = (
           </span>
         </li>
         <li
-          v-for="item2 in item.data"
+          v-for="(item2, index2) in item.data"
           :key="getIdValue(item2, item.name_key_id)"
           @click="
             $emit('goToAddress', {
@@ -98,12 +183,13 @@ const getIdValue = (
               addr: getAddressValue(item2, item.name_key_address),
             })
           "
-          class="cursor-pointer border-b border-neutral-200 py-1"
-          @mouseover="addressSelected = getIdValue(item2, item.name_key_id)"
+          class="cursor-pointer border-b border-neutral-200 py-1 autocompletion-item"
+          @mouseover="selectedIndex = getGlobalIndex(index, index2)"
           :class="{
-            'bg-neutral-100':
-              addressSelected === getIdValue(item2, item.name_key_id),
+            'bg-neutral-100': selectedIndex === getGlobalIndex(index, index2),
           }"
+          :data-category-index="index"
+          :data-item-index="index2"
         >
           <div
             v-html="getAddressValue(item2, item.name_key_address)"
