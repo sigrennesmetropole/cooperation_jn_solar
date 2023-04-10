@@ -104,10 +104,11 @@ const onKeyDown = (event: KeyboardEvent) => {
     )
     if (selectedIndex.value < totalItems - 1) {
       selectedIndex.value++
+    } else if (selectedIndex.value >= totalItems - 1) {
+      selectedIndex.value = 0
     }
     scrollToSelectedItem()
   } else if (event.key === 'Enter') {
-    event.preventDefault()
     const { categoryIndex, localIndex } = getCategoryAndLocalIndex(
       selectedIndex.value
     )

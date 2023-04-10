@@ -11,37 +11,6 @@ import { createCustomViewpointFromExtent } from '@/services/viewpointHelper'
 import { lineString, bbox, distance } from '@turf/turf'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
-function midpoint(lat1: number, lon1: number, lat2: number, lon2: number) {
-  // Convert input latitudes and longitudes to radians
-  const lat1Rad = toRadians(lat1)
-  const lon1Rad = toRadians(lon1)
-  const lat2Rad = toRadians(lat2)
-  const lon2Rad = toRadians(lon2)
-
-  // Calculate midpoint
-  const Bx = Math.cos(lat2Rad) * Math.cos(lon2Rad - lon1Rad)
-  const By = Math.cos(lat2Rad) * Math.sin(lon2Rad - lon1Rad)
-  const latMidRad = Math.atan2(
-    Math.sin(lat1Rad) + Math.sin(lat2Rad),
-    Math.sqrt((Math.cos(lat1Rad) + Bx) * (Math.cos(lat1Rad) + Bx) + By * By)
-  )
-  const lonMidRad = lon1Rad + Math.atan2(By, Math.cos(lat1Rad) + Bx)
-
-  // Convert midpoint latitudes and longitudes back to degrees
-  const latMid = toDegrees(latMidRad)
-  const lonMid = toDegrees(lonMidRad)
-
-  return { latitude: latMid, longitude: lonMid }
-}
-
-function toRadians(degrees: number) {
-  return degrees * (Math.PI / 180)
-}
-
-function toDegrees(radians: number) {
-  return radians * (180 / Math.PI)
-}
-
 function extractCoordinatesFromItem(item: AddressCommune | AddressStreet) {
   let coordinates = item.upperCorner.split(' ')
   const lonUpperCorner = coordinates[0]
@@ -54,22 +23,19 @@ function extractCoordinatesFromItem(item: AddressCommune | AddressStreet) {
     [+lonLowerCorner, +latLowerCorner],
   ]
 }
-
-function getCenterFromUpperAndLowerCorner(
-  item: AddressCommune | AddressStreet
-) {
+async function getViewPointFromBBOX(item: AddressCommune | AddressStreet) {
   const coordinates = extractCoordinatesFromItem(item)
-  const lonUpperCorner = coordinates[0][0]
-  const latUpperCorner = coordinates[0][1]
-  const lonLowerCorner = coordinates[1][0]
-  const latLowerCorner = coordinates[1][1]
-  const midPoint = midpoint(
-    +latUpperCorner,
-    +lonUpperCorner,
-    +latLowerCorner,
-    +lonLowerCorner
-  )
-  return [+midPoint.longitude, +midPoint.latitude]
+  const line = lineString(coordinates)
+  const boundingBox = bbox(line)
+  const viewpoint = await createCustomViewpointFromExtent(boundingBox)
+
+  // Calculate the diagonal distance of the bbox
+  const topLeft = [boundingBox[0], boundingBox[1]]
+  const bottomRight = [boundingBox[2], boundingBox[3]]
+  const bboxDiagonalDistance = distance(topLeft, bottomRight, {
+    units: 'meters',
+  })
+  return cloneViewPointAndResetCameraPosition(viewpoint, bboxDiagonalDistance)
 }
 
 export async function createVPForTypeAddress(
@@ -100,27 +66,10 @@ export async function createVPForTypeAddress(
     newVp = createNewViewpointFromAddress(currentVp!, [+x, +y])
   } else if (type === 'communes') {
     const itemFormatted = item as AddressCommune
-    const coordinates = extractCoordinatesFromItem(itemFormatted)
-    const line = lineString(coordinates)
-    const boundingBox = bbox(line)
-    const viewpoint = await createCustomViewpointFromExtent(boundingBox)
-
-    // Calculate the diagonal distance of the bbox
-    const topLeft = [boundingBox[0], boundingBox[1]]
-    const bottomRight = [boundingBox[2], boundingBox[3]]
-    const bboxDiagonalDistance = distance(topLeft, bottomRight, {
-      units: 'meters',
-    })
-    newVp = cloneViewPointAndResetCameraPosition(
-      viewpoint,
-      bboxDiagonalDistance
-    )
+    newVp = await getViewPointFromBBOX(itemFormatted)
   } else if (type === 'streets') {
     const itemFormatted = item as AddressStreet
-    newVp = createNewViewpointFromAddress(
-      currentVp!,
-      getCenterFromUpperAndLowerCorner(itemFormatted)
-    )
+    newVp = await getViewPointFromBBOX(itemFormatted)
   }
   return newVp
 }
