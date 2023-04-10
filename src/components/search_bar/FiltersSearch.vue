@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import CheckBox from '@/components/simulation/CheckBox.vue'
 import iconMultiplyBlack2 from '@/assets/icons/icon-multiply-black2.svg'
+import { ref } from 'vue'
+import type { Ref } from 'vue'
 
 const props = defineProps<{
   isDisplayFilters: boolean
@@ -9,6 +11,8 @@ const props = defineProps<{
     active: boolean
   }[]
 }>()
+
+const buttonIsFocus: Ref<boolean> = ref(false)
 </script>
 
 <template>
@@ -22,7 +26,13 @@ const props = defineProps<{
       </span>
       <button
         class="flex items-center justify-between border-2 border-black rounded p-1 cursor-pointer"
+        :class="{
+          'bg-neutral-600': buttonIsFocus,
+        }"
         @click="$emit('closeFilters')"
+        @keyup.enter="$emit('closeFilters')"
+        @focus="buttonIsFocus = true"
+        @blur="buttonIsFocus = false"
       >
         <img class="w-3 h-3" :src="iconMultiplyBlack2" />
       </button>
