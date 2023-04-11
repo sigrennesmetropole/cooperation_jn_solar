@@ -80,7 +80,10 @@ class SelectRoofInteraction extends AbstractInteraction {
         const addressStore = useAddressStore()
         addressStore.setLatitudeAndLongitude(latitude, longitude)
 
-        await apiAdresseDataGouvService.fetchAddressesFromLatLon(latitude, longitude)
+        await apiAdresseDataGouvService.fetchAddressesFromLatLon(
+          latitude,
+          longitude
+        )
       }
     }
   }

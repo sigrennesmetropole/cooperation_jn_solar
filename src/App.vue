@@ -103,7 +103,7 @@ const panelAlignment = computed(() => {
       v-if="isDisplaySearchBar"
       class="absolute z-20 top-6 left-6"
       :style="
-        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 20px;'
+        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 24px;'
       "
       :isRedirectOnSearch="viewStore.currentView !== viewList.home"
     ></SearchBar>
