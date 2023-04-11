@@ -1,12 +1,22 @@
+import { useAddressStore } from '@/stores/address'
+
 class ApiAdresseDataGouvService {
   //Documention of API : https://adresse.data.gouv.fr/api-doc/adresse
 
   async fetchAddressesFromLatLon(lat: number, lon: number) {
     const baseUrl = 'https://api-adresse.data.gouv.fr/reverse/'
     const url = baseUrl + `?lon=${lon}&lat=${lat}`
-    const response = await fetch(url)
-    const data = await response.json()
-    return data
+
+    fetch(url).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          if (json.features !== undefined && json.features.length > 0) {
+            const addressStore = useAddressStore()
+            addressStore.setAddress(json.features[0].properties.label)
+          }
+        })
+      }
+    })
   }
 }
 
