@@ -3,7 +3,7 @@ import { Select } from 'ol/interaction'
 import { always, click } from 'ol/events/condition'
 import {
   bbox,
-  booleanContains,
+  booleanIntersects,
   buffer,
   point,
   randomPolygon,
@@ -17,7 +17,7 @@ import { RENNES_LAYER } from '@/stores/layers'
 import { GeoJSON } from 'ol/format'
 import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
-import type { GeoJSONFeature } from 'ol/format/GeoJSON'
+import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 
 const selected = new Style({
   fill: new Fill({
@@ -51,15 +51,15 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
  */
 export function generateSquareGrid(
   rennesApp: RennesApp,
-  roofShape: GeoJSONFeature
+  roofShape: GeoJSONFeatureCollection
 ) {
-  const roofAzimut = roofShape.properties?.azimuth
-  const bboxOnRoof = roofShape.bbox!
+  const roofAzimut = roofShape.features[0].properties?.azimuth
+  const bboxOnRoof = bbox(roofShape)
   const grid = squareGrid(bboxOnRoof, 45, { units: 'centimeters' })
-  const rotatedPoly = transformRotate(grid, 90 - roofAzimut)
+  const rotatedPoly = transformRotate(grid, -(roofAzimut % 90))
 
   rotatedPoly.features = rotatedPoly.features.filter((f) =>
-    booleanContains(roofShape, f)
+    booleanIntersects(roofShape, f)
   )
   return rotatedPoly
 }
@@ -77,7 +77,7 @@ export function displayGridOnMap(
 
 export function displayRoofShape(
   rennesApp: RennesApp,
-  geojson: GeoJSONFeature
+  geojson: GeoJSONFeatureCollection
 ) {
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.roofShape

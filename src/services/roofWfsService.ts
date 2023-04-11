@@ -1,6 +1,7 @@
 import type { Feature, Geometry, GeoJsonProperties } from 'geojson'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { useRoofsStore } from '@/stores/roof'
+import { mapRoofSurfaceModel, type RoofSurfaceModel } from '@/model/roof.model'
 
 class RoofWfsService {
   storeRoofsFeaturesGroupBySurfaceId(jsonResponse: GeoJSONFeatureCollection) {
@@ -16,9 +17,11 @@ class RoofWfsService {
         }
       }
     })
-    const clone = JSON.parse(JSON.stringify(jsonResponse))
-    clone.features = removeDuplicateJsonResponse
-    roofStore.setRoofsFeaturesGroupBySurfaceId(clone)
+    const res: RoofSurfaceModel[] = []
+    removeDuplicateJsonResponse.forEach((feature) => {
+      res.push(mapRoofSurfaceModel(feature))
+    })
+    roofStore.setRoofSurfacesList(res)
   }
 
   async fetchRoofs(buildingId: string): Promise<GeoJSONFeatureCollection> {

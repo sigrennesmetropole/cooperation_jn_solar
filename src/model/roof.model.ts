@@ -75,23 +75,20 @@ export function getDataBuilding() {
   let all_area_favorable = 0
   const all_values = [0, 0, 0, 0]
   const roofsStore = useRoofsStore()
-  const roofsFeaturesGroupBySurfaceId = roofsStore.roofsFeaturesGroupBySurfaceId
-  roofsFeaturesGroupBySurfaceId?.features.forEach((feature) => {
-    const dataRoof: RoofSurfaceModel = mapRoofSurfaceModel(feature)
-    all_area += dataRoof.total
-    all_area_favorable += dataRoof.favorable
+  roofsStore.roofSurfacesList?.forEach((surface: RoofSurfaceModel) => {
+    all_area += surface.total
+    all_area_favorable += surface.favorable
 
     for (let i = 0; i < 4; i++) {
-      all_values[i] += (dataRoof.values[i] * dataRoof.total) / 100
+      all_values[i] += (surface.values[i] * surface.total) / 100
     }
   })
   for (let i = 0; i < 4; i++) {
     all_values[i] = (all_values[i] * 100) / all_area
   }
-  const dataBuilding = {
+  return {
     total: roundResult(all_area),
     favorable: roundResult(all_area_favorable),
     values: all_values,
   }
-  return dataBuilding
 }

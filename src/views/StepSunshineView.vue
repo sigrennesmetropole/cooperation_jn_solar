@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
+import { inject, onBeforeMount } from 'vue'
 import { usePanelsStore } from '@/stores/panels'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
@@ -12,15 +12,40 @@ import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.v
 import SetUpStep from '@/components/simulation/SetUpStep.vue'
 import SavingsStep from '@/components/simulation/SavingsStep.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
+import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
+import { RENNES_LAYER } from '@/stores/layers'
+import { useRoofsStore } from '@/stores/roof'
+import { RennesApp } from '@/services/RennesApp'
+
+const rennesApp = inject('rennesApp') as RennesApp
 
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
+const roofStore = useRoofsStore()
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['step-sunshine'])
   panelsStore.setTypePanelDisplay('right')
+  highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
 })
+
+const highlightStyle = new VectorStyleItem({
+  fill: { color: 'rgb(63,185,30)' },
+})
+
+roofStore.$subscribe(async () => {
+  await highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+})
+
+async function highlightSelectedRoofPan(surfaceId: string) {
+  rennesApp.clearRoofsHighlight()
+  let roofLayer: CesiumTilesetLayer =
+    await rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d)
+  roofLayer.featureVisibility.highlight({
+    [surfaceId]: highlightStyle,
+  })
+}
 
 function isDisplayNextButton() {
   if (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2) {

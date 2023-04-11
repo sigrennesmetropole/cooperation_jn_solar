@@ -9,7 +9,7 @@ import {
   VectorStyleItem,
 } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
-import type { RennesApp } from '../services/RennesApp'
+import type { RennesApp } from '@/services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
@@ -30,7 +30,6 @@ class SelectRoofInteraction extends AbstractInteraction {
 
   constructor(layer: CesiumTilesetLayer, rennesApp: RennesApp) {
     super(EventType.CLICK, ModificationKeyType.NONE)
-    console.log('Unhighlight creation')
 
     this._featureClicked = new VcsEvent()
     this._selectableLayer = layer
@@ -49,9 +48,8 @@ class SelectRoofInteraction extends AbstractInteraction {
 
   unhighlight() {
     if (this._highlighted) {
-      console.log('Unhighlight')
       this._highlighted = false
-      this._selectableLayer.featureVisibility.clearHighlighting()
+      this._rennesApp.clearRoofsHighlight()
     }
   }
 
@@ -89,7 +87,6 @@ class SelectRoofInteraction extends AbstractInteraction {
 
   async pipe(event: InteractionEvent) {
     if (event.type == EventType.CLICK) {
-      console.log('In pipe')
       const selectedBuilding = event.feature
       if (selectedBuilding) {
         const selectedBuildingId =

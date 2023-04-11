@@ -79,23 +79,28 @@ async function disableOlInteraction() {
   }
 }
 
+async function setupInstallation() {
+  //force synchrone switch for adding openlayer interaction, update the store
+  await rennesApp.maps.setActiveMap('ol')
+  await mapStore.activate2d()
+  if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
+    await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
+    await layerStore.enableLayer(RENNES_LAYER.roofShape)
+    let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
+    console.log('RoofShape', roofShape)
+    displayRoofShape(rennesApp, roofShape)
+    let grid = generateSquareGrid(rennesApp, roofShape)
+    displayGridOnMap(rennesApp, grid)
+    addRoofInteractionOn2dMap(rennesApp)
+  }
+}
+
 simulationStore.$subscribe(async () => {
   if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
-    //force synchrone switch for adding openlayer interaction, update the store
-    await rennesApp.maps.setActiveMap('ol')
-    await mapStore.activate2d()
-    if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
-      await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
-      await layerStore.enableLayer(RENNES_LAYER.roofShape)
-      let roofShape = roofsStore.selectedRoofFeature!
-      displayRoofShape(rennesApp, roofShape)
-      let grid = generateSquareGrid(rennesApp, roofShape)
-      displayGridOnMap(rennesApp, grid)
-      addRoofInteractionOn2dMap(rennesApp)
-    }
+    await setupInstallation()
   } else if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
@@ -140,8 +145,6 @@ mapStore.$subscribe(async () => {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
   }
 })
-
-roofsStore.$subscribe(async () => {})
 </script>
 
 <template>
