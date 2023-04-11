@@ -12,46 +12,7 @@ import { RENNES_LAYER } from '@/stores/layers'
 import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
 import { updateDistrictPointCoordinates } from './AboveMapService'
-import { Fill, Stroke, Style } from 'ol/style'
-
-const selectedDistrict = new Style({
-  fill: new Fill({
-    color: 'rgba(0,0,0,0.4)',
-  }),
-  stroke: new Stroke({
-    color: '#FFFFFF',
-    width: 2,
-  }),
-})
-
-///// The highlight function doesn't accept an array of styles /////
-
-// export function districtLineStyle() {
-//   const districtStyle: Style[] = []
-//   const firstLine = new Style({
-//     fill: new Fill({
-//       color: 'rgba(0,0,0,0.4)',
-//     }),
-//     stroke: new Stroke({
-//       color: '#FFFFFF',
-//       width: 4,
-
-//     }),
-//     zIndex: 0,
-//   })
-
-//   const secondLine = new Style({
-//     stroke: new Stroke({
-//       color: '#000000',
-//       width: 2,
-//     }),
-//     zIndex: 1,
-//   })
-
-//   districtStyle.push(firstLine)
-//   districtStyle.push(secondLine)
-//   return districtStyle
-// }
+import { selectedDistrict } from '@/services/viewStyles'
 
 class SelectDistrictInteraction extends AbstractInteraction {
   _rennesApp: RennesApp
@@ -90,8 +51,6 @@ class SelectDistrictInteraction extends AbstractInteraction {
     this._unhighlight()
     irisLayer.featureVisibility.highlight({
       [featureId]: selectedDistrict,
-      // [featureId]: districtLineStyle()[0],
-      // [featureId]: districtLineStyle()[1],
     })
   }
 
@@ -123,8 +82,6 @@ class SelectDistrictInteraction extends AbstractInteraction {
       districtStore.resetDistrictStore()
       return event
     }
-    districtStore.setFeatureDistrict(selectedDistrict as Feature)
-
     const irisCode = selectedDistrict?.getProperty('code_iris')
     if (irisCode) {
       this._highlight(selectedDistrict.getId()!)

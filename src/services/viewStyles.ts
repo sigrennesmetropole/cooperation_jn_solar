@@ -17,17 +17,17 @@ export function clearLayerAndApplyStyle(
   }
 }
 
-const selectedDistrict = new Style({
+export const selectedDistrict = new Style({
   fill: new Fill({
     color: 'rgba(0,0,0,0.4)',
   }),
   stroke: new Stroke({
-    color: '#FFFFFF',
-    width: 2,
+    color: '#000000',
+    width: 4,
   }),
 })
 
-const unSelectedDistrict = new Style({
+export const unSelectedDistrict = new Style({
   fill: new Fill({
     color: 'rgba(0,0,0,0.2)',
   }),

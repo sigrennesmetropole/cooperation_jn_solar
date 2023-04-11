@@ -1,8 +1,22 @@
 <script setup lang="ts">
 import iconDelete from '../../assets/icons/icon-delete.svg'
 import { useDistrictStore } from '@/stores/districtInformations'
-
+import { computed } from 'vue'
 const districtStore = useDistrictStore()
+
+const positionStyle = computed(() => {
+  let style: string = ''
+  if (
+    districtStore.newPointAbscissa + 440 > window.innerWidth ||
+    districtStore.newPointOrdinate + 70 > window.innerHeight
+  ) {
+    style = 'display: none;'
+  } else {
+    style += 'left: ' + districtStore.newPointAbscissa + 'px; '
+    style += 'top: ' + districtStore.newPointOrdinate + 'px; '
+  }
+  return style
+})
 
 function closeTooltip() {
   districtStore.resetDistrictStore()
@@ -25,20 +39,12 @@ function keepDecimals(float: number, numberOfDecimals: number) {
   const roundFloat = float.toFixed(numberOfDecimals)
   return roundFloat
 }
-
-function toNumberOfPixels(number: number) {
-  const numberOfPixels = number.toString() + 'px'
-  return numberOfPixels
-}
 </script>
 
 <template>
   <div
     class="min-w-[440px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
-    :style="{
-      left: toNumberOfPixels(districtStore.newPointAbscissa),
-      top: toNumberOfPixels(districtStore.newPointOrdinate),
-    }"
+    :style="positionStyle"
     v-if="districtStore.districtName !== ''"
   >
     <div class="flex flex-row justify-between">
