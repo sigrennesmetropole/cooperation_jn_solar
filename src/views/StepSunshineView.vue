@@ -15,7 +15,7 @@ import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { useRoofsStore } from '@/stores/roof'
-import { RennesApp } from '@/services/RennesApp'
+import type { RennesApp } from '@/services/RennesApp'
 
 const rennesApp = inject('rennesApp') as RennesApp
 

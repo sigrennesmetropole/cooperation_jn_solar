@@ -93,6 +93,9 @@
     {
       "name": "roofSquaresArea",
       "type": "GeoJSONLayer",
+      "projection": {
+        "epsg": "EPSG:4326"
+      },
       "activeOnStartup": true,
       "zIndex": 10,
       "style": {
@@ -110,7 +113,10 @@
       "name": "roofShape",
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
-      "zIndex": 1
+      "zIndex": 1,
+      "projection": {
+        "epsg": "EPSG:4326"
+      }
     },
     {
       "name": "solarPanel",

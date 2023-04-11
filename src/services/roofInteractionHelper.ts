@@ -3,14 +3,17 @@ import { Select } from 'ol/interaction'
 import { always, click } from 'ol/events/condition'
 import {
   bbox,
-  booleanIntersects,
   buffer,
+  difference,
   point,
+  polygon,
   randomPolygon,
   squareGrid,
   transformRotate,
+  union,
 } from '@turf/turf'
-import type { FeatureCollection } from '@turf/helpers'
+import type { Feature, FeatureCollection, Properties } from '@turf/helpers'
+import type olFeature from 'ol/Feature'
 import type { GeoJSONLayer } from '@vcmap/core'
 import type { LayerOpenlayersImpl } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
@@ -18,10 +21,13 @@ import { GeoJSON } from 'ol/format'
 import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import type { GeoJsonProperties, Geometry } from 'geojson'
+import booleanIntersects from '@turf/boolean-intersects'
+import type { MultiPolygon } from '@turf/helpers'
 
 const selected = new Style({
   fill: new Fill({
-    color: '#ff0000',
+    color: 'rgba(255,0,0,0.43)',
   }),
   stroke: new Stroke({
     color: 'rgba(0,0,0,0.7)',
@@ -29,6 +35,15 @@ const selected = new Style({
   }),
 })
 
+const gridStyle = new Style({
+  fill: new Fill({
+    color: 'rgba(255,255,255,0)',
+  }),
+  stroke: new Stroke({
+    color: 'rgba(0,0,0,0.7)',
+    width: 1,
+  }),
+})
 let selectClick: Select
 
 /**
@@ -55,14 +70,22 @@ export function generateSquareGrid(
 ) {
   const roofAzimut = roofShape.features[0].properties?.azimuth
   const bboxOnRoof = bbox(roofShape)
-  const grid = squareGrid(bboxOnRoof, 45, { units: 'centimeters' })
+  const grid = squareGrid(bboxOnRoof, 80, { units: 'centimeters' })
   const rotatedPoly = transformRotate(grid, -(roofAzimut % 90))
 
-  rotatedPoly.features = rotatedPoly.features.filter((f) =>
-    booleanIntersects(roofShape, f)
-  )
+  rotatedPoly.features = rotatedPoly.features.filter((f) => {
+    let intersect = false
+    for (const roofShapeFeature of roofShape.features) {
+      if (booleanIntersects(roofShapeFeature, f)) {
+        intersect = true
+        break
+      }
+    }
+    return intersect
+  })
   return rotatedPoly
 }
+
 export function displayGridOnMap(
   rennesApp: RennesApp,
   geojson: FeatureCollection
@@ -73,6 +96,7 @@ export function displayGridOnMap(
   const format = new GeoJSON()
   const marker = format.readFeatures(geojson)
   gridLayer.addFeatures(marker)
+  gridLayer.setStyle(gridStyle)
 }
 
 export function displayRoofShape(
@@ -106,6 +130,52 @@ export function removeRoofInteractionOn2dMap(rennesApp: RennesApp) {
   map.removeInteraction(selectClick)
 }
 
+export function getSquaresOfInteraction() {
+  const features: olFeature[] = []
+  selectClick.getFeatures().forEach((selectFeature) => {
+    const reprojFeature = selectFeature
+    reprojFeature.setGeometry(
+      selectFeature.getGeometry()?.transform('EPSG:3857', 'EPSG:4326')
+    )
+    features.push(reprojFeature)
+  })
+  return features
+}
+
+export function unionAllRoofPan(roofPans: GeoJSONFeatureCollection) {
+  let res: Feature<Geometry, Properties> | null = roofPans.features[0]!
+  roofPans.features.forEach((f, idx) => {
+    if (res && idx > 0) {
+      // @ts-ignore
+      res = union(res, f.geometry)
+    }
+  })
+  return res
+}
+
+export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
+  // @ts-ignore
+  let res: Feature<Polygon | MultiPolygon> | null = roofPans
+  const squares = getSquaresOfInteraction()
+  squares.forEach((square) => {
+    const r = square.getGeometry()?.getCoordinates()!
+    if (res) {
+      res = difference(res, polygon(r))
+    }
+  })
+  return res
+}
+
+export function getSubstractedRoofArea(
+  roofsPans: FeatureCollection<Geometry, GeoJsonProperties>
+) {
+  const union: Feature<Geometry, Properties> | null = unionAllRoofPan(roofsPans)
+  let res
+  if (union) {
+    res = substractSquareFromRoofPanUnion(union)
+  }
+  return res
+}
 export function removeRoofGrid(rennesApp: RennesApp) {
   const gridLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.roofSquaresArea

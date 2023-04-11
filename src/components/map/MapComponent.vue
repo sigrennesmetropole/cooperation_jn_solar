@@ -18,6 +18,7 @@ import {
   displayGridOnMap,
   displayRoofShape,
   generateSquareGrid,
+  getSubstractedRoofArea,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
@@ -87,7 +88,6 @@ async function setupInstallation() {
     await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
     let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
-    console.log('RoofShape', roofShape)
     displayRoofShape(rennesApp, roofShape)
     let grid = generateSquareGrid(rennesApp, roofShape)
     displayGridOnMap(rennesApp, grid)
@@ -105,6 +105,10 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
   ) {
+    let substractedRoofArea = getSubstractedRoofArea(
+      roofsStore.getFeaturesOfSelectedPanRoof()
+    )
+    console.log('SubstractedRoofArea', substractedRoofArea)
     const sampleSolarPanels = solarPanelFixtures()
     solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
     solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
