@@ -35,26 +35,38 @@ import {
   union,
   flatten,
   Coord,
+  centroid,
+  MultiPolygon,
+  Point,
+  booleanContains,
+  combine,
+  convex,
 } from '@turf/turf'
+
+type SolarPanel = {
+  solarPanel: Feature<Polygon | MultiPolygon, Properties>
+  originalGridCentroid: Feature<Point, Properties>
+  safe: boolean
+}
 
 function createSolarPanel(
   originalGrid: Feature<Polygon, Properties>,
   horizontal: boolean = true
 ) {
-  console.log('originalGrid')
-  console.log(originalGrid?.geometry.coordinates)
+  //   console.log('originalGrid')
+  //   console.log(originalGrid?.geometry.coordinates)
 
   const rotationAngle = horizontal ? -90 : 90
-  console.log(`Horizontal: ${horizontal}, rotation angle: ${rotationAngle}`)
+  //   console.log(`Horizontal: ${horizontal}, rotation angle: ${rotationAngle}`)
 
   const origin = originalGrid?.geometry.coordinates[0][0]
-  console.log(`Origin: ${origin}`)
+  //   console.log(`Origin: ${origin}`)
 
   const scaledGrid = transformScale(originalGrid as AllGeoJSON, 2, {
     origin: origin,
   })
-  console.log('scaledGrid')
-  console.log((scaledGrid as Feature<Polygon, Properties>).geometry.coordinates)
+  //   console.log('scaledGrid')
+  //   console.log((scaledGrid as Feature<Polygon, Properties>).geometry.coordinates)
 
   const otherHalfSolarPanel = transformRotate(
     scaledGrid as AllGeoJSON,
@@ -64,19 +76,19 @@ function createSolarPanel(
     }
   )
 
-  console.log('otherHalfSolarPanel')
-  console.log(
-    (otherHalfSolarPanel as Feature<Polygon, Properties>).geometry.coordinates
-  )
+  //   console.log('otherHalfSolarPanel')
+  //   console.log(
+  //     (otherHalfSolarPanel as Feature<Polygon, Properties>).geometry.coordinates
+  //   )
 
   const fullSolarPanel = union(
     scaledGrid as Feature<Polygon, Properties>,
     otherHalfSolarPanel as Feature<Polygon, Properties>
   )
 
-  console.log('full solar panel')
-  console.log(fullSolarPanel?.type)
-  console.log(fullSolarPanel?.geometry.coordinates)
+  //   console.log('full solar panel')
+  //   console.log(fullSolarPanel?.type)
+  //   console.log(fullSolarPanel?.geometry.coordinates)
 
   return fullSolarPanel
 }
@@ -88,16 +100,29 @@ export function solarPanelPlacement(
 
   //   const normalGrid = transformRotate(grid, 90 + roofAzimuth)
 
-  const allGrid = dissolve(grid)
-  console.log(`Total area of grid: ${area(allGrid)}`)
+  const allGrid = convex(grid)
+  //   console.log(`Total area of grid: ${area(allGrid)}`)
 
-  const solarPanels = []
+  const solarPanels: Record<number, SolarPanel> = {}
   featureEach(grid, (currentFeature, featureIndex) => {
-    // console.log(featureIndex)
-    // console.log(currentFeature)
-    // createSolarPanel(currentFeature)
+    console.log(featureIndex)
+    console.log(currentFeature)
+    // TODO(IS): Add parameter for horizontal / vertical placement here
+    const solarPanel = createSolarPanel(currentFeature)
+    const originalGridCentroid = centroid(grid)
+    solarPanels[featureIndex] = {
+      solarPanel: solarPanel!,
+      originalGridCentroid: originalGridCentroid,
+      safe: true,
+    }
   })
 
-  const originalGrid = grid.features.at(35)
-  createSolarPanel(originalGrid!, false)
+  let numFalse = 0
+  for (const key in solarPanels) {
+    if (booleanContains(allGrid!, solarPanels[key].solarPanel)) {
+      solarPanels[key].safe = false
+      numFalse = numFalse + 1
+    }
+  }
+  console.log(numFalse)
 }
