@@ -82,26 +82,22 @@ function createSolarPanel(
 }
 
 export function solarPanelPlacement(
-  grid: FeatureCollection<Polygon, Properties>,
-  roofAzimuth = 90
+  grid: FeatureCollection<Polygon, Properties>
 ) {
   console.log('solarPanelPlacement algorithm')
-  //   console.log(grid)featureToGeoJSON
 
-  // Normalize grid
+  //   const normalGrid = transformRotate(grid, 90 + roofAzimuth)
 
-  const normalGrid = transformRotate(grid, 90 + roofAzimuth)
-
-  const allGrid = dissolve(normalGrid)
+  const allGrid = dissolve(grid)
   console.log(`Total area of grid: ${area(allGrid)}`)
 
   const solarPanels = []
-  //   featureEach(normalGrid, (currentFeature, featureIndex) => {
-  //     console.log(featureIndex)
-  //     console.log(currentFeature)
-  //     createSolarPanel(currentFeature)
-  //   })
+  featureEach(grid, (currentFeature, featureIndex) => {
+    // console.log(featureIndex)
+    // console.log(currentFeature)
+    // createSolarPanel(currentFeature)
+  })
 
-  const originalGrid = normalGrid.features.at(35)
+  const originalGrid = grid.features.at(35)
   createSolarPanel(originalGrid!, false)
 }
