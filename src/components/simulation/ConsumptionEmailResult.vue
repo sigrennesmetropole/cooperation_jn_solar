@@ -51,7 +51,7 @@ function sendEmail() {
 
 const openPrivacy = () => {
   window.open(
-    new URL(legalList.find((elt) => elt.slug === 'confidentialite')!.link),
+    legalList.find((elt) => elt.slug === 'confidentialite')!.link,
     '_blank'
   )
 }
