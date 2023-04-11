@@ -27,14 +27,12 @@ import {
   transformScale,
   AllGeoJSON,
   MultiPolygon,
-  Point,
   midpoint,
   polygon,
   featureEach,
-  centroid,
   union,
-  area,
   booleanWithin,
+  featureCollection,
 } from '@turf/turf'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -51,15 +49,10 @@ function writeFeature(
   )
 }
 
-type SolarPanel = {
-  solarPanel: Feature<Polygon | MultiPolygon, Properties>
-  originalGridCentroid: Feature<Point, Properties>
-  safe: boolean
-}
-
 function createSolarPanel(
   originalGrid: Feature<Polygon, Properties>,
-  horizontal: boolean = true
+  horizontal: boolean = true,
+  index: number
 ) {
   //   console.log('originalGrid')
   //   console.log(originalGrid?.geometry.coordinates)
@@ -110,15 +103,18 @@ function createSolarPanel(
       scaledGridCoordinates[2]
     )
 
-    fullSolarPanel = polygon([
+    fullSolarPanel = polygon(
       [
-        scaledGridCoordinates[0],
-        scaledGridCoordinates[1],
-        midPoint2.geometry.coordinates,
-        midPoint1.geometry.coordinates,
-        scaledGridCoordinates[0],
+        [
+          scaledGridCoordinates[0],
+          scaledGridCoordinates[1],
+          midPoint2.geometry.coordinates,
+          midPoint1.geometry.coordinates,
+          scaledGridCoordinates[0],
+        ],
       ],
-    ])
+      { index: index, inside_valid_roof: true }
+    )
   }
 
   //   console.log('full solar panel')
@@ -133,39 +129,30 @@ export function solarPanelPlacement(
 ) {
   console.log('solarPanelPlacement algorithm')
 
-  //   const normalGrid = transformRotate(grid, 90 + roofAzimuth)
-
   let allGrid: Feature<Polygon | MultiPolygon, Properties> | null =
     grid.features[0]!
-  //   console.log('allGrid')
-  //   console.log(`Total area of grid: ${area(allGrid)}`)
 
-  const solarPanels: Record<number, SolarPanel> = {}
+  const horizontalSolarPanels: FeatureCollection<Polygon, Properties> =
+    featureCollection([])
   featureEach(grid, (currentFeature, featureIndex) => {
     // console.log(featureIndex)
     // console.log(currentFeature)
     // TODO(IS): Add parameter for horizontal / vertical placement here
-    const solarPanel = createSolarPanel(currentFeature)
-    const originalGridCentroid = centroid(grid)
-    solarPanels[featureIndex] = {
-      solarPanel: solarPanel!,
-      originalGridCentroid: originalGridCentroid,
-      safe: true,
-    }
+    const solarPanel = createSolarPanel(currentFeature, true, featureIndex)
+    horizontalSolarPanels.features.push(solarPanel)
+
     if (featureIndex > 0) {
       allGrid = union(allGrid!, currentFeature)
     }
   })
-  writeFeature('./all.geojson', allGrid)
 
-  let numFalse = 0
-  for (const key in solarPanels) {
-    if (booleanWithin(solarPanels[key].solarPanel, allGrid)) {
-      solarPanels[key].safe = false
-      numFalse = numFalse + 1
-    }
-  }
-  console.log(numFalse)
+  writeFeature('./allGrid.geojson', allGrid)
+  writeFeature('./solarPanelsFromGrid.geojson', horizontalSolarPanels)
+
+  featureEach(horizontalSolarPanels, (cf, _fi) => {
+    cf.properties!['inside_valid_roof'] = booleanWithin(cf, allGrid!)
+  })
+  writeFeature('./solarPanelsInsideRoof.geojson', horizontalSolarPanels)
 
   // Testing
   //   createSolarPanel(grid.features[35])
