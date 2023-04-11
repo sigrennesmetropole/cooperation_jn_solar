@@ -5,11 +5,13 @@ import {
   Viewpoint,
   OpenlayersMap,
   GeoJSONLayer,
+  CesiumTilesetLayer,
 } from '@vcmap/core'
 import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
 import type { Layer } from 'ol/layer'
 import type { RennesLayer } from '@/stores/layers'
+import { RENNES_LAYER } from '@/stores/layers'
 export class RennesApp extends VcsApp {
   readonly mapConfig
   constructor(mapConfig: object) {
@@ -54,6 +56,13 @@ export class RennesApp extends VcsApp {
     return this.getOpenlayerMap()
       .getAllLayers()
       .find((l) => l.getProperties().name === 'roofSquaresArea')!
+  }
+
+  clearRoofsHighlight() {
+    const roofLayer: CesiumTilesetLayer = this.maps.layerCollection.getByKey(
+      RENNES_LAYER.roof3d
+    )
+    roofLayer.featureVisibility.clearHighlighting()
   }
 
   async getLayerByKey(key: RennesLayer) {
