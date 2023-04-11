@@ -20,28 +20,36 @@
 // Update the number of intersection
 
 import {
-  dissolve,
-  area,
   FeatureCollection,
   Polygon,
   Properties,
-  featureEach,
   Feature,
-  transformRotate,
   transformScale,
   AllGeoJSON,
-  transformTranslate,
-  featureCollection,
-  union,
-  flatten,
-  Coord,
-  centroid,
   MultiPolygon,
   Point,
-  booleanContains,
-  combine,
-  convex,
+  midpoint,
+  polygon,
+  featureEach,
+  centroid,
+  union,
+  area,
+  booleanWithin,
 } from '@turf/turf'
+import * as fs from 'fs'
+import * as path from 'path'
+
+// Helper function
+
+function writeFeature(
+  outputFileName: string,
+  feature: FeatureCollection | Feature
+) {
+  fs.writeFileSync(
+    path.join(__dirname, outputFileName),
+    JSON.stringify(feature)
+  )
+}
 
 type SolarPanel = {
   solarPanel: Feature<Polygon | MultiPolygon, Properties>
@@ -56,35 +64,62 @@ function createSolarPanel(
   //   console.log('originalGrid')
   //   console.log(originalGrid?.geometry.coordinates)
 
-  const rotationAngle = horizontal ? -90 : 90
-  //   console.log(`Horizontal: ${horizontal}, rotation angle: ${rotationAngle}`)
+  //   console.log(`Horizontal: ${horizontal}`)
 
   const origin = originalGrid?.geometry.coordinates[0][0]
   //   console.log(`Origin: ${origin}`)
 
-  const scaledGrid = transformScale(originalGrid as AllGeoJSON, 2, {
+  const scaledGrid = transformScale(originalGrid as AllGeoJSON, 4, {
     origin: origin,
   })
+
   //   console.log('scaledGrid')
   //   console.log((scaledGrid as Feature<Polygon, Properties>).geometry.coordinates)
 
-  const otherHalfSolarPanel = transformRotate(
-    scaledGrid as AllGeoJSON,
-    rotationAngle,
-    {
-      pivot: origin,
-    }
-  )
+  // Divide the 4x4 into 2 parts
+  const scaledGridCoordinates = (scaledGrid as Feature<Polygon, Properties>)
+    .geometry.coordinates[0]
 
-  //   console.log('otherHalfSolarPanel')
-  //   console.log(
-  //     (otherHalfSolarPanel as Feature<Polygon, Properties>).geometry.coordinates
-  //   )
+  let fullSolarPanel
+  if (horizontal) {
+    const midPoint1 = midpoint(
+      scaledGridCoordinates[0],
+      scaledGridCoordinates[1]
+    )
+    const midPoint2 = midpoint(
+      scaledGridCoordinates[2],
+      scaledGridCoordinates[3]
+    )
 
-  const fullSolarPanel = union(
-    scaledGrid as Feature<Polygon, Properties>,
-    otherHalfSolarPanel as Feature<Polygon, Properties>
-  )
+    fullSolarPanel = polygon([
+      [
+        scaledGridCoordinates[0],
+        midPoint1.geometry.coordinates,
+        midPoint2.geometry.coordinates,
+        scaledGridCoordinates[3],
+        scaledGridCoordinates[0],
+      ],
+    ])
+  } else {
+    const midPoint1 = midpoint(
+      scaledGridCoordinates[0],
+      scaledGridCoordinates[3]
+    )
+    const midPoint2 = midpoint(
+      scaledGridCoordinates[1],
+      scaledGridCoordinates[2]
+    )
+
+    fullSolarPanel = polygon([
+      [
+        scaledGridCoordinates[0],
+        scaledGridCoordinates[1],
+        midPoint2.geometry.coordinates,
+        midPoint1.geometry.coordinates,
+        scaledGridCoordinates[0],
+      ],
+    ])
+  }
 
   //   console.log('full solar panel')
   //   console.log(fullSolarPanel?.type)
@@ -100,13 +135,15 @@ export function solarPanelPlacement(
 
   //   const normalGrid = transformRotate(grid, 90 + roofAzimuth)
 
-  const allGrid = convex(grid)
+  let allGrid: Feature<Polygon | MultiPolygon, Properties> | null =
+    grid.features[0]!
+  //   console.log('allGrid')
   //   console.log(`Total area of grid: ${area(allGrid)}`)
 
   const solarPanels: Record<number, SolarPanel> = {}
   featureEach(grid, (currentFeature, featureIndex) => {
-    console.log(featureIndex)
-    console.log(currentFeature)
+    // console.log(featureIndex)
+    // console.log(currentFeature)
     // TODO(IS): Add parameter for horizontal / vertical placement here
     const solarPanel = createSolarPanel(currentFeature)
     const originalGridCentroid = centroid(grid)
@@ -115,14 +152,21 @@ export function solarPanelPlacement(
       originalGridCentroid: originalGridCentroid,
       safe: true,
     }
+    if (featureIndex > 0) {
+      allGrid = union(allGrid!, currentFeature)
+    }
   })
+  writeFeature('./all.geojson', allGrid)
 
   let numFalse = 0
   for (const key in solarPanels) {
-    if (booleanContains(allGrid!, solarPanels[key].solarPanel)) {
+    if (booleanWithin(solarPanels[key].solarPanel, allGrid)) {
       solarPanels[key].safe = false
       numFalse = numFalse + 1
     }
   }
   console.log(numFalse)
+
+  // Testing
+  //   createSolarPanel(grid.features[35])
 }
