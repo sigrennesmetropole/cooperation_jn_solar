@@ -55,12 +55,16 @@ export function generateSquareGrid(
 ) {
   const roofAzimut = roofShape.properties?.azimuth
   const bboxOnRoof = roofShape.bbox!
-  const grid = squareGrid(bboxOnRoof, 45, { units: 'centimeters' })
+  const grid = squareGrid(bboxOnRoof, 47.5, { units: 'centimeters' })
+  console.log(roofAzimut)
+  console.log(grid)
   const rotatedPoly = transformRotate(grid, 90 - roofAzimut)
+  console.log(rotatedPoly)
 
   rotatedPoly.features = rotatedPoly.features.filter((f) =>
     booleanContains(roofShape, f)
   )
+  console.log(rotatedPoly)
   return rotatedPoly
 }
 export function displayGridOnMap(

@@ -25,14 +25,91 @@ import {
   FeatureCollection,
   Polygon,
   Properties,
+  featureEach,
+  Feature,
+  transformRotate,
+  transformScale,
+  AllGeoJSON,
+  transformTranslate,
+  featureCollection,
+  union,
+  flatten,
+  Coord,
 } from '@turf/turf'
 
+function createSolarPanel(
+  rectangle: Feature<Polygon, Properties>,
+  horizontal: boolean = true
+) {
+  console.log(rectangle.geometry.coordinates)
+  if (horizontal) {
+    console.log('horizontal')
+  } else {
+    console.log('vertical')
+  }
+  return ''
+}
+
 export function solarPanelPlacement(
-  grid: FeatureCollection<Polygon, Properties>
+  grid: FeatureCollection<Polygon, Properties>,
+  roofAzimuth = 90
 ) {
   console.log('solarPanelPlacement algorithm')
-  console.log(grid)
+  //   console.log(grid)featureToGeoJSON
 
-  const allGrids = dissolve(grid)
-  console.log(`Total area of grids: ${area(allGrids)}`)
+  // Normalize grid
+
+  const normalGrid = transformRotate(grid, 90 + roofAzimuth)
+
+  const allGrid = dissolve(normalGrid)
+  console.log(`Total area of grid: ${area(allGrid)}`)
+
+  const solarPanels = []
+  //   featureEach(normalGrid, (currentFeature, featureIndex) => {
+  //     console.log(featureIndex)
+  //     console.log(currentFeature)
+  //     createSolarPanel(currentFeature)
+  //   })
+
+  const grid185 = normalGrid.features.at(185)
+  console.log('grid185')
+  console.log(grid185?.geometry.coordinates)
+  const scaledGrid185 = transformScale(grid185 as AllGeoJSON, 2, {
+    origin: 'nw',
+  })
+  console.log('scaledGrid185')
+  console.log(
+    (scaledGrid185 as Feature<Polygon, Properties>).geometry.coordinates
+  )
+  //   const rightSolarPanel185 = transformTranslate(
+  //     scaledGrid185 as AllGeoJSON,
+  //     95,
+  //     90, // might be wrong direction
+  //     {
+  //       units: 'centimeters',
+  //     }
+  //   )
+  const pivot = (scaledGrid185 as Feature<Polygon, Properties>).geometry
+    .coordinates[0][2]
+  console.log(`pivot: ${pivot}`)
+  const rightSolarPanel185 = transformRotate(scaledGrid185 as AllGeoJSON, -90, {
+    pivot: pivot,
+  })
+  console.log('rightSolarPanel185')
+  console.log(
+    (rightSolarPanel185 as Feature<Polygon, Properties>).geometry.coordinates
+  )
+
+  const solarPanelCollection = featureCollection([
+    scaledGrid185 as Feature<Polygon, Properties>,
+    rightSolarPanel185 as Feature<Polygon, Properties>,
+  ])
+
+  const fullSolarPanel = union(
+    scaledGrid185 as Feature<Polygon, Properties>,
+    rightSolarPanel185 as Feature<Polygon, Properties>
+  )
+  console.log('full solar panel')
+  console.log(fullSolarPanel)
+  console.log(fullSolarPanel?.geometry.coordinates)
 }

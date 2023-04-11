@@ -16,7 +16,7 @@ describe('solar panel placement', () => {
 
     const grid: FeatureCollection<Polygon, Properties> =
       JSON.parse(fileContents)
-    solarPanelPlacement(grid)
+    solarPanelPlacement(grid, 179)
 
     assert.equal(Math.sqrt(4), 2)
   })
