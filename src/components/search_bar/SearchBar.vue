@@ -45,7 +45,7 @@ const isDisplayFilters: Ref<boolean> = ref(false)
 const filters = ref([
   {
     name: 'Communes',
-    active: true,
+    active: false,
   },
   {
     name: 'Adresses',
@@ -53,7 +53,7 @@ const filters = ref([
   },
   {
     name: 'Voies',
-    active: true,
+    active: false,
   },
   {
     name: 'Organismes',
@@ -73,23 +73,27 @@ onMounted(() => {
   }
 })
 
+function searchFiltered() {
+  return search.value.split(',')[0].trim()
+}
+
 const searchAddresses = async () => {
-  let addresses = await apiRvaService.fetchFullAddresses(search.value)
+  let addresses = await apiRvaService.fetchFullAddresses(searchFiltered())
   autocompletion.value.addressRva = addresses.splice(0, NB_ADDRESSES_RVA)
 }
 
 const searchCommunes = async () => {
-  let communes = await apiRvaService.fetchCommunes(search.value)
+  let communes = await apiRvaService.fetchCommunes(searchFiltered())
   autocompletion.value.communes = communes.splice(0, NB_ADDRESSES_COMMUNES)
 }
 
 const searchStreets = async () => {
-  let streets = await apiRvaService.fetchStreets(search.value)
+  let streets = await apiRvaService.fetchStreets(searchFiltered())
   autocompletion.value.streets = streets.splice(0, NB_ADDRESSES_STREETS)
 }
 
 const searchOrganizations = async () => {
-  let data = await apiSitesorgService.fetchOrganizations(search.value)
+  let data = await apiSitesorgService.fetchOrganizations(searchFiltered())
   let organizations = []
   for (let i = 0; i < data.length && i < NB_ADDRESSES_ORGANIZATION; i++) {
     organizations.push({
@@ -108,6 +112,9 @@ const resetAutocompletion = () => {
 }
 
 const inputKeyUp = async (newSearch: string) => {
+  if (search.value === newSearch) {
+    return
+  }
   search.value = newSearch
   if (search.value.length < SIZE_BEGIN_SEARCH) {
     resetAutocompletion()
@@ -237,6 +244,10 @@ function filterChange(event: {
     }
     return filter
   })
+  if (search.value.length < SIZE_BEGIN_SEARCH) {
+    resetAutocompletion()
+    return
+  }
   if (event.filter.name == 'Communes') {
     if (!event.filter.active) {
       autocompletion.value.communes = []
