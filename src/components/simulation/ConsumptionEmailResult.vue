@@ -3,6 +3,7 @@ import CheckBox from '@/components/simulation/CheckBox.vue'
 import expandIcon from '../../assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import deleteCircle from '../../assets/icons/interface-delete-circle.svg'
 import { computed, ref } from 'vue'
+import { legalList } from '@/constants/legalLinks'
 
 const validEmail = ref(true)
 const isCheckBoxOnError = ref(false)
@@ -49,7 +50,10 @@ function sendEmail() {
 }
 
 const openPrivacy = () => {
-  window.open('/legalnotice/confidentialite', '_blank')
+  window.open(
+    legalList.find((elt) => elt.slug === 'confidentialite')!.link,
+    '_blank'
+  )
 }
 </script>
 
