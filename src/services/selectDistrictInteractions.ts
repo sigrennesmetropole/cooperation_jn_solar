@@ -80,6 +80,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
     if (selectedDistrict === undefined) {
       districtStore.resetDistrictStore()
+      this._unhighlight()
       return event
     }
     const irisCode = selectedDistrict?.getProperty('code_iris')

@@ -125,7 +125,7 @@ const panelAlignment = computed(() => {
 
     <DistrictDisplayButton
       v-if="isDisplayDistrictCheckbox"
-      class="absolute z-20 top-200 left-200"
+      class="absolute z-20"
     ></DistrictDisplayButton>
 
     <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
