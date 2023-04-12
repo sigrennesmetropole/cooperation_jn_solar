@@ -116,8 +116,16 @@ class SelectRoofInteraction extends AbstractInteraction {
           return event
         }
         const idRoof = selectedBuilding.getProperty('id')
-
         if (!idRoof) {
+          return event
+        }
+        let isRoofFeature = false
+        roofStore.roofsFeatures?.features?.forEach((f) => {
+          if (f.properties?.surface_id == idRoof) {
+            isRoofFeature = true
+          }
+        })
+        if (!isRoofFeature) {
           return event
         }
         roofStore.setSelectRoofSurfaceId(idRoof)
