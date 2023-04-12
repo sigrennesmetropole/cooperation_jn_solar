@@ -85,28 +85,6 @@ function createSolarPanel(
   if (horizontal) {
     const midPoint1 = midpoint(
       scaledGridCoordinates[0],
-      scaledGridCoordinates[1]
-    )
-    const midPoint2 = midpoint(
-      scaledGridCoordinates[2],
-      scaledGridCoordinates[3]
-    )
-
-    fullSolarPanel = polygon(
-      [
-        [
-          scaledGridCoordinates[0],
-          midPoint1.geometry.coordinates,
-          midPoint2.geometry.coordinates,
-          scaledGridCoordinates[3],
-          scaledGridCoordinates[0],
-        ],
-      ],
-      properties
-    )
-  } else {
-    const midPoint1 = midpoint(
-      scaledGridCoordinates[0],
       scaledGridCoordinates[3]
     )
     const midPoint2 = midpoint(
@@ -121,6 +99,28 @@ function createSolarPanel(
           scaledGridCoordinates[1],
           midPoint2.geometry.coordinates,
           midPoint1.geometry.coordinates,
+          scaledGridCoordinates[0],
+        ],
+      ],
+      properties
+    )
+  } else {
+    const midPoint1 = midpoint(
+      scaledGridCoordinates[0],
+      scaledGridCoordinates[1]
+    )
+    const midPoint2 = midpoint(
+      scaledGridCoordinates[2],
+      scaledGridCoordinates[3]
+    )
+
+    fullSolarPanel = polygon(
+      [
+        [
+          scaledGridCoordinates[0],
+          midPoint1.geometry.coordinates,
+          midPoint2.geometry.coordinates,
+          scaledGridCoordinates[3],
           scaledGridCoordinates[0],
         ],
       ],
@@ -145,10 +145,10 @@ export function solarPanelPlacement(
 
   const horizontalSolarPanels: FeatureCollection<Polygon, Properties> =
     featureCollection([])
+  const verticalSolarPanels: FeatureCollection<Polygon, Properties> =
+    featureCollection([])
+
   featureEach(grid, (currentFeature, featureIndex) => {
-    // console.log(featureIndex)
-    // console.log(currentFeature)
-    // TODO(IS): Add parameter for horizontal / vertical placement here
     const solarPanel = createSolarPanel(currentFeature, true, featureIndex)
     horizontalSolarPanels.features.push(solarPanel)
 
