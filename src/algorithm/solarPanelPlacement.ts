@@ -42,6 +42,8 @@ import {
   booleanWithin,
   featureCollection,
   booleanIntersects,
+  centroid,
+  Point,
 } from '@turf/turf'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -217,4 +219,18 @@ export function solarPanelPlacement(
   } else {
     return { solarPanels: verticalSolarPanels, orientation: 'vertical' }
   }
+}
+
+export function extractCentroids(
+  solarPanels: FeatureCollection<Polygon, Properties>,
+  debug: boolean = false
+) {
+  const centroids: FeatureCollection<Point, Properties> = featureCollection([])
+
+  featureEach(solarPanels, (f) => {
+    const solarPanelCentroid = centroid(f)
+    centroids.features.push(solarPanelCentroid)
+  })
+  writeFeature(`./solarPanelCentroids.geojson`, centroids, debug)
+  return centroids
 }

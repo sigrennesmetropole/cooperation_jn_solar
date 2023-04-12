@@ -1,14 +1,15 @@
-import { assert, describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import * as fs from 'fs'
 import * as path from 'path'
 import {
   solarPanelPlacementAlgorithm,
   solarPanelPlacement,
+  extractCentroids as extractSolarPanelCentroid,
 } from '../solarPanelPlacement'
 import type { FeatureCollection, Polygon, Properties } from '@turf/turf'
 
 describe('solar panel placement', () => {
-  it('test', () => {
+  test('test solar panel algorithm', () => {
     // Read GeoJSON file
     const fileContents = fs.readFileSync(
       path.join(__dirname, 'grids.geojson'),
@@ -37,10 +38,10 @@ describe('solar panel placement', () => {
     )
     expect(solarPanelsPlacement.orientation).equal('horizontal')
 
-    assert.equal(Math.sqrt(4), 2)
-  })
-
-  it('bar', () => {
-    expect(1 + 1).eq(2)
+    const solarPanelCentroids = extractSolarPanelCentroid(
+      solarPanelsPlacement.solarPanels,
+      true
+    )
+    expect(solarPanelCentroids.features.length).equal(9)
   })
 })
