@@ -138,6 +138,8 @@ solarPanelStore.$subscribe(async () => {
 viewStore.$subscribe(async () => {
   if (viewStore.currentView == viewList['districts']) {
     await layerStore.enableLayer(RENNES_LAYER.iris)
+  } else {
+    await layerStore.disableLayer(RENNES_LAYER.iris)
   }
   createMapInteractions(rennesApp)
 })

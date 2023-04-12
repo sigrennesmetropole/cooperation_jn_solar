@@ -25,7 +25,6 @@ onBeforeMount(() => {
 })
 
 function isLeftPanelRetractable() {
-  console.log('isLeftPanelRetractable')
   const retractableList = [viewList['roof-selection'], viewList['districts']]
   return retractableList.includes(viewStore.currentView)
 }
@@ -53,7 +52,6 @@ const isDisplayFloatAndMap = computed(() => {
 })
 
 const isDisplayDistrictCheckbox = computed(() => {
-  console.log(viewStore.currentView)
   return [
     viewList['home'],
     viewList['roof-selection'],
