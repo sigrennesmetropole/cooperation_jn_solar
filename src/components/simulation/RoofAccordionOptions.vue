@@ -32,6 +32,11 @@ function getIndexCurrentRoof() {
 const roofsSorted = mapAndSortedRoofs()
 const indexSelectedRoof = ref(0)
 getIndexCurrentRoof()
+
+roofsStore.$subscribe(async () => {
+  getIndexCurrentRoof()
+  changeSelectedRoof(indexSelectedRoof.value)
+})
 </script>
 
 <template>

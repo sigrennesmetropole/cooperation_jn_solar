@@ -15,6 +15,10 @@ import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
 import { useAddressStore } from '@/stores/address'
 import { apiAdresseDataGouvService } from '@/services/api-adresse-data-gouv'
+import {
+  isInteractionBuilding,
+  isInteractionPanRoof,
+} from '@/services/interactionUtils'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(63,185,30)' },
@@ -93,14 +97,30 @@ class SelectRoofInteraction extends AbstractInteraction {
   async pipe(event: InteractionEvent) {
     if (event.type == EventType.CLICK) {
       const selectedBuilding = event.feature
-      if (selectedBuilding) {
-        const selectedBuildingId =
-          selectedBuilding?.getProperty('attributes')['BUILDINGID']
+      if (!selectedBuilding) {
+        return event
+      }
+
+      const selectedBuildingId =
+        selectedBuilding?.getProperty('attributes')['BUILDINGID']
+
+      if (isInteractionBuilding()) {
         const buildingRoofs: GeoJSONFeatureCollection =
           await roofWfsService.fetchRoofs(selectedBuildingId)
         this._highglightRoofsOfTheBuilding(buildingRoofs)
         await this._setLatitudeAndLongitude(event)
         this._goToNextStep(buildingRoofs, selectedBuildingId)
+      } else if (isInteractionPanRoof()) {
+        const roofStore = useRoofsStore()
+        if (selectedBuildingId !== roofStore.selectedBuildingId) {
+          return event
+        }
+        const idRoof = selectedBuilding.getProperty('id')
+
+        if (!idRoof) {
+          return event
+        }
+        roofStore.setSelectRoofSurfaceId(idRoof)
       }
     }
     return event
