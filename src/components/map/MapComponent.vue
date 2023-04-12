@@ -105,10 +105,12 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
   ) {
+    // substractedRoofArea: the result polygon on which compute solar panels
     let substractedRoofArea = getSubstractedRoofArea(
       roofsStore.getFeaturesOfSelectedPanRoof()
     )
     console.log('SubstractedRoofArea', substractedRoofArea)
+
     const sampleSolarPanels = solarPanelFixtures()
     solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
     solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
