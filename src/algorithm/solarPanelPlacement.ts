@@ -34,8 +34,6 @@ import {
   booleanWithin,
   featureCollection,
   booleanIntersects,
-  difference,
-  area,
 } from '@turf/turf'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -57,20 +55,11 @@ function createSolarPanel(
   horizontal: boolean = true,
   index: number
 ) {
-  //   console.log('originalGrid')
-  //   console.log(originalGrid?.geometry.coordinates)
-
-  //   console.log(`Horizontal: ${horizontal}`)
-
   const origin = originalGrid?.geometry.coordinates[0][0]
-  //   console.log(`Origin: ${origin}`)
 
   const scaledGrid = transformScale(originalGrid as AllGeoJSON, 4, {
     origin: origin,
   })
-
-  //   console.log('scaledGrid')
-  //   console.log((scaledGrid as Feature<Polygon, Properties>).geometry.coordinates)
 
   // Divide the 4x4 into 2 parts
   const scaledGridCoordinates = (scaledGrid as Feature<Polygon, Properties>)
@@ -128,52 +117,53 @@ function createSolarPanel(
     )
   }
 
-  //   console.log('full solar panel')
-  //   console.log(fullSolarPanel?.type)
-  //   console.log(fullSolarPanel?.geometry.coordinates)
-
   return fullSolarPanel
 }
 
 export function solarPanelPlacement(
-  grid: FeatureCollection<Polygon, Properties>
+  grid: FeatureCollection<Polygon, Properties>,
+  horizontal: boolean = true
 ) {
   console.log('solarPanelPlacement algorithm')
+  const prefix = horizontal ? 'h-' : 'v-'
 
   let allGrid: Feature<Polygon | MultiPolygon, Properties> | null =
     grid.features[0]!
 
-  const horizontalSolarPanels: FeatureCollection<Polygon, Properties> =
-    featureCollection([])
-  const verticalSolarPanels: FeatureCollection<Polygon, Properties> =
-    featureCollection([])
+  const solarPanels: FeatureCollection<Polygon, Properties> = featureCollection(
+    []
+  )
 
   featureEach(grid, (currentFeature, featureIndex) => {
-    const solarPanel = createSolarPanel(currentFeature, true, featureIndex)
-    horizontalSolarPanels.features.push(solarPanel)
+    const solarPanel = createSolarPanel(
+      currentFeature,
+      horizontal,
+      featureIndex
+    )
+    solarPanels.features.push(solarPanel)
 
     if (featureIndex > 0) {
       allGrid = union(allGrid!, currentFeature)
     }
   })
 
-  writeFeature('./allGrid.geojson', allGrid)
-  writeFeature('./solarPanelsFromGrid.geojson', horizontalSolarPanels)
+  writeFeature(`./${prefix}allGrid.geojson`, allGrid)
+  writeFeature(`./${prefix}solarPanelsFromGrid.geojson`, solarPanels)
 
   // Mark the solar panel that are not inside the selected roof / grid
-  featureEach(horizontalSolarPanels, (cf, _fi) => {
+  featureEach(solarPanels, (cf, _fi) => {
     cf.properties!['inside_valid_roof'] = booleanWithin(
       transformScale(cf, 0.9),
       allGrid!
     )
   })
-  writeFeature('./solarPanelsInsideRoof.geojson', horizontalSolarPanels)
+  writeFeature(`./${prefix}solarPanelsInsideRoof.geojson`, solarPanels)
 
   // Mark solar panel that is not covered by other solar panel
   // Starting from the first solar panel first (brute force)
-  featureEach(horizontalSolarPanels, (cf, fi) => {
+  featureEach(solarPanels, (cf, fi) => {
     if (cf.properties!['inside_valid_roof'] && cf.properties!['not_covered']) {
-      featureEach(horizontalSolarPanels, (cf2, fi2) => {
+      featureEach(solarPanels, (cf2, fi2) => {
         if (fi < fi2) {
           if (booleanIntersects(transformScale(cf, 0.9), cf2)) {
             cf2.properties!['not_covered'] = false
@@ -182,8 +172,5 @@ export function solarPanelPlacement(
       })
     }
   })
-  writeFeature('./solarPanelsCheckCoverage.geojson', horizontalSolarPanels)
-
-  // Testing
-  //   createSolarPanel(grid.features[35])
+  writeFeature(`./${prefix}solarPanelsCheckCoverage.geojson`, solarPanels)
 }
