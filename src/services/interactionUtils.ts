@@ -5,6 +5,7 @@ import { RENNES_LAYER } from '@/stores/layers'
 import SelectRoofInteraction from '@/interactions/selectRoofInteraction'
 import ForbidenClickInteraction from '@/interactions/forbidClickInteraction'
 import type { RennesApp } from '@/services/RennesApp'
+import SelectDistrictInteraction from './selectDistrictInteractions'
 
 function _getSelectRoofInteraction(
   rennesApp: RennesApp
@@ -64,8 +65,14 @@ export function createMapInteractions(rennesApp: RennesApp) {
       forbidClickInteraction,
       () => {}
     )
+  } else if (viewStore.currentView == viewList['districts']) {
+    rennesApp.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
+    const selectDistrictInteraction = new SelectDistrictInteraction(rennesApp)
+    rennesApp.maps.eventHandler.addExclusiveInteraction(
+      selectDistrictInteraction,
+      () => {}
+    )
   } else {
     rennesApp.maps.eventHandler.removeExclusive()
   }
-  return selectInteraction
 }

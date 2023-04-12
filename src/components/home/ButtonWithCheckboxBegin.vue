@@ -48,6 +48,7 @@ homeRouter.$subscribe(async () => {
   <div class="flex flex-col gap-2">
     <CheckBox
       :isOnError="isCheckBoxOnError"
+      :isChecked="false"
       @checkBoxChange="checkboxChange($event)"
     >
       <template v-slot:text>

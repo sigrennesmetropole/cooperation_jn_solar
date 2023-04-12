@@ -4,33 +4,11 @@ import { ref } from 'vue'
 import UiHeaderFullScreen from '@/components/ui/UiHeaderFullScreen.vue'
 import logoRennes from '@/assets/illustrations/logoRennes.png'
 import iconMultiplyBlack from '@/assets/icons/icon-multiply-black.svg'
+import { legalList } from '@/constants/legalLinks'
 
 const { params } = useRoute()
 const routeParams = ref(params)
 const legalLink = routeParams.value.legallink
-
-const legalList = [
-  {
-    link: '/legalnotice/mentions-legales',
-    slug: 'mentions-legales',
-    name: 'Mentions légales',
-  },
-  {
-    link: '/legalnotice/confidentialite',
-    slug: 'confidentialite',
-    name: 'Confidentialité',
-  },
-  {
-    link: '/legalnotice/plan-du-site',
-    slug: 'plan-du-site',
-    name: 'Plan du site',
-  },
-  {
-    link: '/legalnotice/accessibilite',
-    slug: 'accessibilite',
-    name: 'Accessibilité',
-  },
-]
 </script>
 
 <template>

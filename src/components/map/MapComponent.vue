@@ -32,6 +32,7 @@ import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
+import { viewList } from '@/model/views.model'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -121,6 +122,9 @@ solarPanelStore.$subscribe(async () => {
 })
 
 viewStore.$subscribe(async () => {
+  if (viewStore.currentView == viewList['districts']) {
+    await layerStore.enableLayer(RENNES_LAYER.iris)
+  }
   createMapInteractions(rennesApp)
 })
 

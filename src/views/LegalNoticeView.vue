@@ -9,6 +9,7 @@ import LegalNotice from '@/components/legal/LegalNotice.vue'
 import Privacy from '@/components/legal/PrivacyLegal.vue'
 import SiteMap from '@/components/legal/SiteMap.vue'
 import Accessibility from '@/components/legal/AccessibilityLegal.vue'
+import Cookies from '@/components/legal/CookiesLegal.vue'
 
 const viewStore = useViewsStore()
 
@@ -30,5 +31,6 @@ onBeforeMount(async () => {
     <Privacy v-else-if="legalLink == 'confidentialite'"></Privacy>
     <SiteMap v-else-if="legalLink == 'plan-du-site'"></SiteMap>
     <Accessibility v-else-if="legalLink == 'accessibilite'"></Accessibility>
+    <Cookies v-else-if="legalLink == 'cookies'"></Cookies>
   </div>
 </template>

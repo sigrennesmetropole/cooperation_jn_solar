@@ -74,7 +74,7 @@ const displayContents = ref(props.isOpen)
           </div>
           <div class="relative flex flex-col p-2 gap-2.5" @click.stop="">
             <UiButtonWithTooltip
-              text="À ce stade, la surface favorable est calculée uniquement à partir du potentiel solaire. Les obstacles éventuels de la toiture seront pris en compte dans l’étape suivante."
+              text="La surface favorable est celle recevant suffisamment d'ensoleillement pour accueillir des panneaux solaires soit, dans notre simulation, un ensoleillement supérieur à 1 000 kWh/m2/an. La surface affichée ici est calculée sur le pan de toit sélectionné."
               widthButton="5"
               heightButton="5"
               position-top="0px"

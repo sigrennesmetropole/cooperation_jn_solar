@@ -1,32 +1,26 @@
 <script setup lang="ts">
 import iconDelete from '../../assets/icons/icon-delete.svg'
-import { onMounted, reactive } from 'vue'
-import { apiEnedisDistrictService } from '@/services/api-enedis-district'
+import { useDistrictStore } from '@/stores/districtInformations'
+import { computed } from 'vue'
+const districtStore = useDistrictStore()
+
+const positionStyle = computed(() => {
+  let style: string = ''
+  if (
+    districtStore.newPointAbscissa + 440 > window.innerWidth ||
+    districtStore.newPointOrdinate + 70 > window.innerHeight
+  ) {
+    style = 'display: none;'
+  } else {
+    style += 'left: ' + districtStore.newPointAbscissa + 'px; '
+    style += 'top: ' + districtStore.newPointOrdinate + 'px; '
+  }
+  return style
+})
 
 function closeTooltip() {
-  console.log('close the tooltip')
+  districtStore.resetDistrictStore()
 }
-
-const state = reactive({
-  irisName: '' as string,
-  totalConsumption: 0 as number,
-  totalProduction: 0 as number,
-  nbPhotovoltaicInstallation: 0 as number,
-})
-
-async function gettingDistrictDatas(codeIris: number) {
-  const districtDatas = await apiEnedisDistrictService.getDistrictDatas(
-    codeIris
-  )
-  state.irisName = districtDatas.irisName
-  state.totalConsumption = districtDatas.totalConsumption
-  state.totalProduction = districtDatas.totalProduction
-  state.nbPhotovoltaicInstallation = districtDatas.totalPhotovoltaicSites
-}
-
-onMounted(() => {
-  gettingDistrictDatas(350650000)
-})
 
 function removePartOfIrisName(irisName: string) {
   const toRemove = '(commune non irisée)'
@@ -49,16 +43,18 @@ function keepDecimals(float: number, numberOfDecimals: number) {
 
 <template>
   <div
-    class="min-w-[440px] transition-[height] absolute right-40 top-1/4 bg-white flex flex-col p-5 gap-3 rounded-lg"
+    class="min-w-[440px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
+    :style="positionStyle"
+    v-if="districtStore.districtName !== ''"
   >
     <div class="flex flex-row justify-between">
       <h2 class="font-dm-sans font-bold text-2xl max-w-[420px]">
-        {{ removePartOfIrisName(state.irisName) }}
+        {{ removePartOfIrisName(districtStore.districtName) }}
       </h2>
       <img
         :src="iconDelete"
         alt=""
-        class="w-4 self-start ml-2"
+        class="w-4 self-start ml-2 cursor-pointer"
         @click="closeTooltip()"
       />
     </div>
@@ -67,7 +63,9 @@ function keepDecimals(float: number, numberOfDecimals: number) {
     >
       <div>
         <p class="font-medium text-xs">Nombre<br />d'installation</p>
-        <p class="font-bold text-3xl">{{ state.nbPhotovoltaicInstallation }}</p>
+        <p class="font-bold text-3xl">
+          {{ districtStore.districtNumberInstallations }}
+        </p>
       </div>
       <div class="border border-neutral-300"></div>
       <div>
@@ -75,9 +73,9 @@ function keepDecimals(float: number, numberOfDecimals: number) {
         <div class="flex flex-row items-baseline font-bold">
           <p class="text-lg leading-6">
             <span class="text-3xl">{{
-              decomposeNumber(state.totalProduction, 1)[0]
+              decomposeNumber(districtStore.districtProduction, 1)[0]
             }}</span
-            >.{{ decomposeNumber(state.totalProduction, 1)[1] }} MWh
+            >.{{ decomposeNumber(districtStore.districtProduction, 1)[1] }} MWh
           </p>
         </div>
       </div>
@@ -87,7 +85,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
         <div class="flex flex-row items-baseline font-bold">
           <p>
             <span class="text-3xl">{{
-              decomposeNumber(state.totalConsumption, 2)[0]
+              decomposeNumber(districtStore.districtConsumption, 2)[0]
             }}</span>
             MWh
           </p>
