@@ -33,6 +33,9 @@ import {
   union,
   booleanWithin,
   featureCollection,
+  booleanIntersects,
+  difference,
+  area,
 } from '@turf/turf'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -74,6 +77,11 @@ function createSolarPanel(
     .geometry.coordinates[0]
 
   let fullSolarPanel
+  const properties = {
+    index: index,
+    inside_valid_roof: true,
+    not_covered: true,
+  }
   if (horizontal) {
     const midPoint1 = midpoint(
       scaledGridCoordinates[0],
@@ -84,15 +92,18 @@ function createSolarPanel(
       scaledGridCoordinates[3]
     )
 
-    fullSolarPanel = polygon([
+    fullSolarPanel = polygon(
       [
-        scaledGridCoordinates[0],
-        midPoint1.geometry.coordinates,
-        midPoint2.geometry.coordinates,
-        scaledGridCoordinates[3],
-        scaledGridCoordinates[0],
+        [
+          scaledGridCoordinates[0],
+          midPoint1.geometry.coordinates,
+          midPoint2.geometry.coordinates,
+          scaledGridCoordinates[3],
+          scaledGridCoordinates[0],
+        ],
       ],
-    ])
+      properties
+    )
   } else {
     const midPoint1 = midpoint(
       scaledGridCoordinates[0],
@@ -113,7 +124,7 @@ function createSolarPanel(
           scaledGridCoordinates[0],
         ],
       ],
-      { index: index, inside_valid_roof: true }
+      properties
     )
   }
 
@@ -149,8 +160,12 @@ export function solarPanelPlacement(
   writeFeature('./allGrid.geojson', allGrid)
   writeFeature('./solarPanelsFromGrid.geojson', horizontalSolarPanels)
 
+  // Mark the solar panel that are not inside the selected roof / grid
   featureEach(horizontalSolarPanels, (cf, _fi) => {
-    cf.properties!['inside_valid_roof'] = booleanWithin(cf, allGrid!)
+    cf.properties!['inside_valid_roof'] = booleanWithin(
+      transformScale(cf, 0.9),
+      allGrid!
+    )
   })
   writeFeature('./solarPanelsInsideRoof.geojson', horizontalSolarPanels)
 
