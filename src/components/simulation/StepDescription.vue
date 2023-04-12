@@ -17,7 +17,7 @@ const descriptions: Record<number, Record<number, string>> = {
     1: 'Je sélectionne le meilleur pan de toit.',
   },
   2: {
-    1: 'J’identifie les obstacles sur ma toiture.',
+    1: "Je clique sur les éventuels obstacles empêchant l'installation de panneaux solaires sur ce pan de toit comme les vélux ou les cheminées.",
     2: 'Mon installation photovoltaique simulée :',
   },
   3: {
