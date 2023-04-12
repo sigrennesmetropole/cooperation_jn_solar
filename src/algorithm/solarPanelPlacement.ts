@@ -169,6 +169,21 @@ export function solarPanelPlacement(
   })
   writeFeature('./solarPanelsInsideRoof.geojson', horizontalSolarPanels)
 
+  // Mark solar panel that is not covered by other solar panel
+  // Starting from the first solar panel first (brute force)
+  featureEach(horizontalSolarPanels, (cf, fi) => {
+    if (cf.properties!['inside_valid_roof'] && cf.properties!['not_covered']) {
+      featureEach(horizontalSolarPanels, (cf2, fi2) => {
+        if (fi < fi2) {
+          if (booleanIntersects(transformScale(cf, 0.9), cf2)) {
+            cf2.properties!['not_covered'] = false
+          }
+        }
+      })
+    }
+  })
+  writeFeature('./solarPanelsCheckCoverage.geojson', horizontalSolarPanels)
+
   // Testing
   //   createSolarPanel(grid.features[35])
 }
