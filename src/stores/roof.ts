@@ -5,16 +5,20 @@ import type {
   GeoJSONFeature,
   GeoJSONFeatureCollection,
 } from 'ol/format/GeoJSON'
-import { mapRoofSurfaceModel } from '@/model/roof.model'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { featureCollection } from '@turf/turf'
 
 export const useRoofsStore = defineStore('roofs', () => {
+  // id of the selected building
   const selectedBuildingId: Ref<string | null> = ref(null)
 
+  // all the features from the roof: all the pans
   const roofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
+
+  // map model list of the roof for the accordions
   const roofSurfacesList: Ref<RoofSurfaceModel[] | null> = ref(null)
-  const selectedRoofFeature: Ref<GeoJSONFeature | null> = ref(null)
+
+  // surface_id of the select roof pan, only highlight method need to use it over the getter on the geom/surface model
   const selectedRoofSurfaceId: Ref<string | null> = ref(null)
 
   function setSelectedBuildingId(buildingId: string) {
@@ -29,19 +33,8 @@ export const useRoofsStore = defineStore('roofs', () => {
     roofSurfacesList.value = list
   }
 
-  function setSelectRoofFeature(feature: GeoJSONFeature) {
-    selectedRoofFeature.value = feature
-    selectedRoofSurfaceId.value = feature.properties?.surface_id
-  }
-
-  function setSelectRoofFeatureFromSurfaceId(surface_id: string) {
-    roofsFeatures.value?.features.forEach((feature) => {
-      const featureFormatted = mapRoofSurfaceModel(feature)
-      if (featureFormatted.surface_id === surface_id) {
-        selectedRoofSurfaceId.value = feature.properties?.surface_id
-        setSelectRoofFeature(feature)
-      }
-    })
+  function setSelectRoofSurfaceId(surfaceId: string) {
+    selectedRoofSurfaceId.value = surfaceId
   }
 
   function getFeaturesOfSelectedPanRoof(): GeoJSONFeatureCollection {
@@ -54,16 +47,23 @@ export const useRoofsStore = defineStore('roofs', () => {
     return featureCollection(features)
   }
 
+  function getRoofSurfaceModelOfSelectedPanRoof():
+    | RoofSurfaceModel
+    | undefined {
+    return roofSurfacesList.value?.find(
+      (roofSuface) => roofSuface.surface_id === selectedRoofSurfaceId.value
+    )
+  }
+
   return {
     roofsFeatures,
-    selectedRoofFeature,
     selectedRoofSurfaceId,
     roofSurfacesList,
     setRoofsFeatures,
-    setSelectRoofFeature,
-    setSelectRoofFeatureFromSurfaceId,
+    setSelectRoofSurfaceId,
     setSelectedBuildingId,
     setRoofSurfacesList,
     getFeaturesOfSelectedPanRoof,
+    getRoofSurfaceModelOfSelectedPanRoof,
   }
 })

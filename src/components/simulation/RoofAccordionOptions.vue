@@ -2,7 +2,6 @@
 import RoofAccordion from '@/components/simulation/RoofAccordion.vue'
 import { ref } from 'vue'
 import { useRoofsStore } from '@/stores/roof'
-import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 const roofsStore = useRoofsStore()
 
@@ -14,17 +13,17 @@ function mapAndSortedRoofs() {
 function changeSelectedRoof(index: number) {
   indexSelectedRoof.value = index
   const selectedRoof = roofsSorted[index]
-  roofsStore.setSelectRoofFeatureFromSurfaceId(selectedRoof.surface_id)
+  roofsStore.setSelectRoofSurfaceId(selectedRoof.surface_id)
 }
 
 function getIndexCurrentRoof() {
-  if (roofsStore.selectedRoofFeature === null) {
+  if (roofsStore.selectedRoofSurfaceId === null) {
     indexSelectedRoof.value = 0
     return
   }
-  const selectedRoof = mapRoofSurfaceModel(roofsStore.selectedRoofFeature)
+  const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
   roofsSorted.forEach((roof, index) => {
-    if (roof.surface_id === selectedRoof.surface_id) {
+    if (roof.surface_id === selectedRoof?.surface_id) {
       indexSelectedRoof.value = index
     }
   })
