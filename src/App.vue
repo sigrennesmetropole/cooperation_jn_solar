@@ -9,6 +9,7 @@ import SearchBar from '@/components/search_bar/SearchBar.vue'
 import { viewList } from '@/model/views.model'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
+import DistrictDisplayButton from '@/components/map/DistrictDisplayButton.vue'
 import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
@@ -24,6 +25,7 @@ onBeforeMount(() => {
 })
 
 function isLeftPanelRetractable() {
+  console.log('isLeftPanelRetractable')
   const retractableList = [viewList['roof-selection'], viewList['districts']]
   return retractableList.includes(viewStore.currentView)
 }
@@ -48,6 +50,15 @@ const isDisplayAsideAndMap = computed(() => {
 
 const isDisplayFloatAndMap = computed(() => {
   return [viewList['roof-selection']].includes(viewStore.currentView)
+})
+
+const isDisplayDistrictCheckbox = computed(() => {
+  console.log(viewStore.currentView)
+  return [
+    viewList['home'],
+    viewList['roof-selection'],
+    viewList['districts'],
+  ].includes(viewStore.currentView)
 })
 
 const panelAlignment = computed(() => {
@@ -113,6 +124,11 @@ const panelAlignment = computed(() => {
     <DistrictDataTooltip
       v-if="viewStore.currentView === viewList['districts']"
     ></DistrictDataTooltip>
+
+    <DistrictDisplayButton
+      v-if="isDisplayDistrictCheckbox"
+      class="absolute z-20 top-200 left-200"
+    ></DistrictDisplayButton>
 
     <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
     <TermsOfUsePopup
