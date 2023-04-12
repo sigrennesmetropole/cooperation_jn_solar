@@ -30,7 +30,7 @@ let isOpen = ref(true)
       isOpen
     "
     title="Définissez une zone d’obstacle"
-    content="Cliquez + Glissez avec votre souris pour sélectionner plusieurs cases en un clic."
+    content="Cliquez avec votre souris pour sélectionner plusieurs cases en un clic."
     :display-close-button="true"
     content-close-button="J'ai compris"
     class="absolute z-20 top-4 left-6"
