@@ -1,35 +1,26 @@
 <script lang="ts" setup>
 import CheckBox from '@/components/simulation/CheckBox.vue'
-import router from '@/router'
-import { onBeforeMount, ref } from 'vue'
+import { createMapInteractions } from '@/services/interactionUtils'
+import { useDistrictStore } from '@/stores/districtInformations'
+import { useLayersStore, RENNES_LAYER } from '@/stores/layers'
+import { ref, inject } from 'vue'
+import type { RennesApp } from '@/services/RennesApp'
 
+const layerStore = useLayersStore()
+const rennesApp = inject('rennesApp') as RennesApp
 const isCheckBoxOnError = ref(false)
 const isCheckboxChecked = ref(false)
+const districtStore = useDistrictStore()
 
-function isPathDistricts() {
-  const currentUrl = new URL(window.location.href)
-  const expectedPathname = '/districts'
-  const isDistricts = currentUrl.pathname === expectedPathname
-  return isDistricts
-}
-
-onBeforeMount(() => {
-  if (isPathDistricts()) {
-    isCheckboxChecked.value = true
-  } else {
-    isCheckboxChecked.value = false
-  }
-})
-
-function checkboxChange(event: boolean) {
+async function checkboxChange(event: boolean) {
   isCheckboxChecked.value = event
-  if (isCheckboxChecked.value === true) {
-    router.push('/districts')
-  } else if (window.history.state.back === null) {
-    router.push('/')
+  districtStore.setCheckboxChecked(event)
+  if (districtStore.checkboxChecked === true) {
+    await layerStore.enableLayer(RENNES_LAYER.iris)
   } else {
-    router.back()
+    await layerStore.disableLayer(RENNES_LAYER.iris)
   }
+  createMapInteractions(rennesApp)
 }
 </script>
 

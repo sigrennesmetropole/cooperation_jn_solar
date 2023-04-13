@@ -30,10 +30,8 @@ import {
   zoomToSolarPanel,
 } from '@/services/solarPanel'
 import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
-import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { viewList } from '@/model/views.model'
 import type { GeoJSONLayer } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -41,7 +39,6 @@ const layerStore = useLayersStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
 const solarPanelStore = useSolarPanelStore()
-const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
 
@@ -133,15 +130,6 @@ solarPanelStore.$subscribe(async () => {
     rennesApp,
     solarPanelStore.currentNumberSolarPanel
   )
-})
-
-viewStore.$subscribe(async () => {
-  if (viewStore.currentView == viewList['districts']) {
-    await layerStore.enableLayer(RENNES_LAYER.iris)
-  } else {
-    await layerStore.disableLayer(RENNES_LAYER.iris)
-  }
-  createMapInteractions(rennesApp)
 })
 
 layerStore.$subscribe(async () => {

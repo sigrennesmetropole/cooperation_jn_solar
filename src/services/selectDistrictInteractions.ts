@@ -11,7 +11,10 @@ import { useDistrictStore } from '@/stores/districtInformations'
 import { RENNES_LAYER } from '@/stores/layers'
 import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
-import { updateDistrictPointCoordinates } from './AboveMapService'
+import {
+  addGenericListenerForUpdatePositions,
+  updateDistrictPointCoordinates,
+} from './AboveMapService'
 import { selectedDistrict } from '@/services/viewStyles'
 
 class SelectDistrictInteraction extends AbstractInteraction {
@@ -89,6 +92,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
       await this._interactionDistrict(event)
       updateDistrictPointCoordinates(this._rennesApp)
       await this.gettingDistrictDatas(irisCode)
+      addGenericListenerForUpdatePositions(this._rennesApp)
     }
     return event
   }
