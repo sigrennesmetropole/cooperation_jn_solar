@@ -11,10 +11,9 @@ import iconInstallation from '@/assets/icons/installation.svg'
 import { useRouter } from 'vue-router'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { createCustomViewpointFromExtent } from '@/services/viewpointHelper'
+import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { usePopUpStore } from '@/stores/popUpStore'
-
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()

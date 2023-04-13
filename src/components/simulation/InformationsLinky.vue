@@ -7,13 +7,13 @@ import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduct
 
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
-async function goToEnedisWebSite() {
-  const url = await apiEnedisService.getUrlUserAuthorization()
-  window.location.href = url
-}
+// async function goToEnedisWebSite() {
+//   const url = await apiEnedisService.getUrlUserAuthorization()
+//   window.location.href = url
+// }
 
 async function goToEnedisLogin() {
-  if (getEnv() == 'dev') {
+  if (getEnv() == 'dev' || getEnv() == 'prod') {
     await apiEnedisService.setPRMUser(getEnedisSandboxPrm())
     const consumption = await apiEnedisService.getAnnualConsumption()
     if (consumption.annual_consumption !== undefined) {
@@ -22,15 +22,17 @@ async function goToEnedisLogin() {
       )
     }
     window.alert(JSON.stringify(consumption))
-  } else if (getEnv() == 'prod') {
-    const prm = await apiEnedisService.getPRMUser()
-    if (prm === undefined) {
-      await goToEnedisWebSite()
-      return
-    }
-    const consumption = await apiEnedisService.getAnnualConsumption()
-    window.alert(JSON.stringify(consumption))
   }
+  // TODO: set up prod when we have prod url
+  // else if (getEnv() == 'prod') {
+  // const prm = await apiEnedisService.getPRMUser()
+  // if (prm === undefined) {
+  //   await goToEnedisWebSite()
+  //   return
+  // }
+  // const consumption = await apiEnedisService.getAnnualConsumption()
+  // window.alert(JSON.stringify(consumption))
+  // }
 }
 </script>
 
