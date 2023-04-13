@@ -66,14 +66,10 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
  * create grid on all the bbox of the roof, then rotate
  * exclude squares which are not entirely inside the roof shape
  */
-export function generateRectangleGrid(
-  rennesApp: RennesApp,
-  roofShape: GeoJSONFeatureCollection
-) {
+export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
   const roofAzimut = roofShape.features[0].properties?.azimuth
   const roofSlope =
     useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
-  console.log('Slope', roofSlope)
   const bboxOnRoof = bbox(roofShape)
   let cellWidth, cellHeight
   if (roofAzimut < 180) {

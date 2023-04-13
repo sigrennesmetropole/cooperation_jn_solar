@@ -92,7 +92,7 @@ async function setupInstallation() {
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
     let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
     displayRoofShape(rennesApp, roofShape)
-    grid = generateRectangleGrid(rennesApp, roofShape)
+    grid = generateRectangleGrid(roofShape)
     displayGridOnMap(rennesApp, grid)
     addRoofInteractionOn2dMap(rennesApp)
   }
