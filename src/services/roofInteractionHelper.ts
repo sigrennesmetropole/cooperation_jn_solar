@@ -3,12 +3,15 @@ import { Select } from 'ol/interaction'
 import { always, click } from 'ol/events/condition'
 import {
   bbox,
+  bboxPolygon,
   buffer,
   difference,
   point,
   polygon,
   randomPolygon,
+  square,
   transformRotate,
+  transformScale,
   union,
 } from '@turf/turf'
 import rectangleGrid from '@turf/rectangle-grid'
@@ -68,24 +71,29 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
  */
 export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
   const roofAzimut = roofShape.features[0].properties?.azimuth
+  const squareSize = 475
   const roofSlope =
     useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
-  const bboxOnRoof = bbox(roofShape)
+  const bboxRoofShape = bbox(roofShape)
+  const bboxOnRoof = bbox(
+    transformScale(bboxPolygon(square(bboxRoofShape)), 1.5)
+  )
   let cellWidth, cellHeight
   if (roofAzimut < 180) {
-    cellHeight = 45
-    cellWidth = 45 * Math.cos(Number(roofSlope) * (Math.PI / 180))
+    cellHeight = squareSize
+    cellWidth = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
   } else {
-    cellWidth = 45
-    cellHeight = 45 * Math.cos(Number(roofSlope) * (Math.PI / 180))
+    cellWidth = squareSize
+    cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
   }
 
   const grid = rectangleGrid(bboxOnRoof, cellWidth, cellHeight, {
-    units: 'centimeters',
+    units: 'millimeters',
   })
-  const rotatedPoly = transformRotate(grid, -(roofAzimut % 90))
 
-  rotatedPoly.features = rotatedPoly.features.filter((f) => {
+  transformRotate(grid, -roofAzimut, { mutate: true })
+
+  grid.features = grid.features.filter((f) => {
     let intersect = false
     for (const roofShapeFeature of roofShape.features) {
       if (booleanIntersects(roofShapeFeature, f)) {
@@ -95,7 +103,7 @@ export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
     }
     return intersect
   })
-  return rotatedPoly
+  return grid
 }
 
 export function displayGridOnMap(
@@ -155,7 +163,9 @@ export function getSquaresOfInteraction() {
 }
 
 export function unionAllRoofPan(roofPans: GeoJSONFeatureCollection) {
-  let res: Feature<Geometry, Properties> | null = roofPans.features[0]!
+  // @ts-ignore
+  let res: Feature<Polygon | MultiPolygon, Properties> | null =
+    roofPans.features[0]!
   roofPans.features.forEach((f, idx) => {
     if (res && idx > 0) {
       // @ts-ignore

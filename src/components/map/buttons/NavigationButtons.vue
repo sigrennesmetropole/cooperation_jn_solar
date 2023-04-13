@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue'
-import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewPointHelper'
+import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
 
 import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'

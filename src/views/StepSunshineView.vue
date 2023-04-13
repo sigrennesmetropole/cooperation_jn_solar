@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { inject, onBeforeMount } from 'vue'
-import { usePanelsStore } from '@/stores/panels'
 import { viewList } from '@/model/views.model'
-import { useViewsStore } from '@/stores/views'
-import { useSimulationStore } from '@/stores/simulations'
 import LeaveButton from '@/components/simulation/LeaveButton.vue'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
@@ -14,10 +11,15 @@ import SavingsStep from '@/components/simulation/SavingsStep.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
+import { createViewpointFromRoofFeature } from '@/services/viewPointHelper'
+
 import { useRoofsStore } from '@/stores/roof'
-import type { RennesApp } from '@/services/RennesApp'
 import { useMapStore } from '@/stores/map'
-import { createViewpointFromRoofFeature } from '@/services/viewpointHelper'
+import { usePanelsStore } from '@/stores/panels'
+import { useViewsStore } from '@/stores/views'
+import { useSimulationStore } from '@/stores/simulations'
+
+import type { RennesApp } from '@/services/RennesApp'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
