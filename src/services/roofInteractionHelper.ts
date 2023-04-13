@@ -8,12 +8,13 @@ import {
   point,
   polygon,
   randomPolygon,
-  squareGrid,
   transformRotate,
   union,
 } from '@turf/turf'
+import rectangleGrid from '@turf/rectangle-grid'
 import type { Feature, FeatureCollection, Properties } from '@turf/helpers'
 import type olFeature from 'ol/Feature'
+import type olGeometry from 'ol/geom/Geometry'
 import type { GeoJSONLayer } from '@vcmap/core'
 import type { LayerOpenlayersImpl } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
@@ -24,6 +25,7 @@ import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import type { GeoJsonProperties, Geometry } from 'geojson'
 import booleanIntersects from '@turf/boolean-intersects'
 import type { MultiPolygon } from '@turf/helpers'
+import { useRoofsStore } from '@/stores/roof'
 
 const selected = new Style({
   fill: new Fill({
@@ -64,13 +66,23 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
  * create grid on all the bbox of the roof, then rotate
  * exclude squares which are not entirely inside the roof shape
  */
-export function generateSquareGrid(
-  rennesApp: RennesApp,
-  roofShape: GeoJSONFeatureCollection
-) {
+export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
   const roofAzimut = roofShape.features[0].properties?.azimuth
+  const roofSlope =
+    useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
   const bboxOnRoof = bbox(roofShape)
-  const grid = squareGrid(bboxOnRoof, 80, { units: 'centimeters' })
+  let cellWidth, cellHeight
+  if (roofAzimut < 180) {
+    cellHeight = 45
+    cellWidth = 45 * Math.cos(Number(roofSlope) * (Math.PI / 180))
+  } else {
+    cellWidth = 45
+    cellHeight = 45 * Math.cos(Number(roofSlope) * (Math.PI / 180))
+  }
+
+  const grid = rectangleGrid(bboxOnRoof, cellWidth, cellHeight, {
+    units: 'centimeters',
+  })
   const rotatedPoly = transformRotate(grid, -(roofAzimut % 90))
 
   rotatedPoly.features = rotatedPoly.features.filter((f) => {
@@ -166,6 +178,13 @@ export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
   return res
 }
 
+export function substractSelectedSquares(squareGrid: olFeature<olGeometry>[]) {
+  // @ts-ignore
+
+  const selectedSquares = getSquaresOfInteraction()
+  return squareGrid.filter((square) => !selectedSquares.includes(square))
+}
+
 export function getSubstractedRoofArea(
   roofsPans: FeatureCollection<Geometry, GeoJsonProperties>
 ) {
@@ -176,6 +195,7 @@ export function getSubstractedRoofArea(
   }
   return res
 }
+
 export function removeRoofGrid(rennesApp: RennesApp) {
   const gridLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.roofSquaresArea

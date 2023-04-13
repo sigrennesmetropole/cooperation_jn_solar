@@ -17,11 +17,11 @@ import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
   displayRoofShape,
-  generateSquareGrid,
-  getSubstractedRoofArea,
+  generateRectangleGrid,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
+  substractSelectedSquares,
 } from '@/services/roofInteractionHelper'
 import {
   displaySolarPanel,
@@ -34,6 +34,7 @@ import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { viewList } from '@/model/views.model'
+import type { GeoJSONLayer } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -43,6 +44,8 @@ const solarPanelStore = useSolarPanelStore()
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
+
+let grid
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -89,7 +92,7 @@ async function setupInstallation() {
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
     let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
     displayRoofShape(rennesApp, roofShape)
-    let grid = generateSquareGrid(rennesApp, roofShape)
+    grid = generateRectangleGrid(roofShape)
     displayGridOnMap(rennesApp, grid)
     addRoofInteractionOn2dMap(rennesApp)
   }
@@ -106,11 +109,11 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentSubStep == 2
   ) {
     // substractedRoofArea: the result polygon on which compute solar panels
-    let substractedRoofArea = getSubstractedRoofArea(
-      roofsStore.getFeaturesOfSelectedPanRoof()
+    const allSquares: GeoJSONLayer = await rennesApp.getLayerByKey(
+      RENNES_LAYER.roofSquaresArea
     )
-    console.log('SubstractedRoofArea', substractedRoofArea)
-
+    let substractedRoofArea = substractSelectedSquares(allSquares.getFeatures())
+    console.log('Grid of roof area', substractedRoofArea)
     const sampleSolarPanels = solarPanelFixtures()
     solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
     solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
