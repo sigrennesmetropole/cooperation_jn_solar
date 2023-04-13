@@ -15,6 +15,7 @@ import { createCustomViewpointFromExtent } from '@/services/viewpointHelper'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { usePopUpStore } from '@/stores/popUpStore'
 
+
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
 const roofStore = useRoofsStore()

@@ -4,10 +4,10 @@ import type {
   AddressCommune,
   AddressStreet,
 } from '@/model/address.model'
-import { createNewViewpointFromAddress } from '@/services/viewpointHelper'
+import { createNewViewpointFromAddress } from '@/services/viewPointHelper'
 import type { RennesApp } from '@/services/RennesApp'
 import { apiSitesorgService } from '@/services/api-sitesorg'
-import { createCustomViewpointFromExtent } from '@/services/viewpointHelper'
+import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import { lineString, bbox, distance } from '@turf/turf'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
