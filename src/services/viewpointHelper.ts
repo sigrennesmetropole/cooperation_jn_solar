@@ -2,6 +2,7 @@ import { Viewpoint, type ViewpointOptions } from '@vcmap/core'
 import { destination, point } from '@turf/turf'
 import type { BBox, Feature, Point, Properties } from '@turf/turf'
 import type { GeoJSONFeature } from 'ol/format/GeoJSON'
+import { oppositeAzimuth } from '@/model/roof.model'
 
 const cameraDistance = 150
 
@@ -50,7 +51,7 @@ export async function createViewpointFromRoofFeature(feature: GeoJSONFeature) {
   const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
   vpJson.pitch = -45
   if (feature.properties === null) return undefined
-  vpJson.heading = 360 - feature.properties.azimuth
+  vpJson.heading = oppositeAzimuth(feature.properties.azimuth)
   vpJson.distance = cameraDistance * (Math.SQRT2 / 2)
   vp = new Viewpoint(vpJson)
   return vp
