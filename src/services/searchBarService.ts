@@ -9,7 +9,7 @@ import type { RennesApp } from '@/services/RennesApp'
 import { apiSitesorgService } from '@/services/api-sitesorg'
 import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import { lineString, bbox, distance } from '@turf/turf'
-import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
+import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewPointHelper'
 
 function extractCoordinatesFromItem(item: AddressCommune | AddressStreet) {
   let coordinates = item.upperCorner.split(' ')
