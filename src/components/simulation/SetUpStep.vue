@@ -6,7 +6,6 @@ import economies from '@/assets/icons/economies.svg'
 import SimulationResult from '@/components/simulation/SimulationResult.vue'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import { useRoofsStore } from '@/stores/roof'
-import { mapRoofSurfaceModel } from '@/model/roof.model'
 
 const simulationStore = useSimulationStore()
 const solarPanelStore = useSolarPanelStore()
@@ -29,12 +28,12 @@ const updateCurrentNumSolarPanel = (changes: number) => {
   <template
     v-else-if="
       simulationStore.currentSubStep == 2 &&
-      roofsStore.selectedRoofFeature !== null
+      roofsStore.getRoofSurfaceModelOfSelectedPanRoof() !== undefined
     "
   >
     <SimulationResult
       :max-num-solar-panel="solarPanelStore.maxNumberSolarPanel"
-      :roof-surface="mapRoofSurfaceModel(roofsStore.selectedRoofFeature)"
+      :roof-surface="roofsStore.getRoofSurfaceModelOfSelectedPanRoof()"
       :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
       @solarPanelChanges="updateCurrentNumSolarPanel"
     >
