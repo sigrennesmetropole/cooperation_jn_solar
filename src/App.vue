@@ -3,21 +3,19 @@ import { onBeforeMount, provide, computed } from 'vue'
 import SidePanel from '@/components/home/SidePanel.vue'
 import { RennesApp } from '@/services/RennesApp'
 import MapComponent from '@/components/map/MapComponent.vue'
-import mapConfig from './map.config.json'
-import { useViewsStore } from './stores/views'
+import mapConfig from '@/map.config.json'
+import { useViewsStore } from '@/stores/views'
 import SearchBar from '@/components/search_bar/SearchBar.vue'
-import { viewList } from './model/views.model'
-import UiPopUpBottomInformation from '@/components/ui/UiPopUpBottomInformation.vue'
+import { viewList } from '@/model/views.model'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
-import { useSimulationStore } from '@/stores/simulations'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
 import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
+import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
-const simulationStore = useSimulationStore()
 const popUpStore = usePopUpStore()
 
 onBeforeMount(() => {
@@ -110,15 +108,7 @@ const panelAlignment = computed(() => {
       :isRedirectOnSearch="viewStore.currentView !== viewList.home"
     ></SearchBar>
 
-    <UiPopUpBottomInformation
-      v-else-if="
-        viewStore.currentView === viewList['step-sunshine'] &&
-        simulationStore.currentStep === 2 &&
-        simulationStore.currentSubStep === 1
-      "
-      :text="'Cliquez sur les zones qui ne peuvent pas accueillir de panneaux\n photovoltaïques (présence de fenêtre de toit, cheminée...)'"
-      class="absolute z-20 bottom-5 left-[20%]"
-    />
+    <UiExplanationsStepSunshine />
 
     <DistrictDataTooltip
       v-if="viewStore.currentView === viewList['districts']"
