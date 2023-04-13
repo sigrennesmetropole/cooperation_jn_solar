@@ -50,15 +50,16 @@ export const useRoofsStore = defineStore('roofs', () => {
   function getRoofSurfaceModelOfSelectedPanRoof():
     | RoofSurfaceModel
     | undefined {
-    return roofSurfacesList.value?.find(
-      (roofSuface) => roofSuface.surface_id === selectedRoofSurfaceId.value
-    )
+    return roofSurfacesList.value?.find((roofSuface) => {
+      return roofSuface.surface_id == selectedRoofSurfaceId.value
+    })
   }
 
   return {
     roofsFeatures,
     selectedRoofSurfaceId,
     roofSurfacesList,
+    selectedBuildingId,
     setRoofsFeatures,
     setSelectRoofSurfaceId,
     setSelectedBuildingId,

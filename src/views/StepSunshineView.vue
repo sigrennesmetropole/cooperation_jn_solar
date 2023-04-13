@@ -16,6 +16,8 @@ import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { useRoofsStore } from '@/stores/roof'
 import type { RennesApp } from '@/services/RennesApp'
+import { useMapStore } from '@/stores/map'
+import { createViewpointFromRoofFeature } from '@/services/viewpointHelper'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
@@ -23,6 +25,7 @@ const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
 const roofStore = useRoofsStore()
+const mapStore = useMapStore()
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['step-sunshine'])
@@ -36,6 +39,16 @@ const highlightStyle = new VectorStyleItem({
 
 roofStore.$subscribe(async () => {
   await highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+  let feature = null
+  roofStore.roofsFeatures?.features?.forEach((f) => {
+    if (f.properties?.surface_id == roofStore.selectedRoofSurfaceId) {
+      feature = f
+    }
+  })
+  if (feature !== null) {
+    const vp = await createViewpointFromRoofFeature(feature)
+    if (vp !== undefined) mapStore.viewPoint = vp
+  }
 })
 
 async function highlightSelectedRoofPan(surfaceId: string) {

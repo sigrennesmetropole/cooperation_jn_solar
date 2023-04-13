@@ -6,6 +6,7 @@ import SelectRoofInteraction from '@/interactions/selectRoofInteraction'
 import ForbidenClickInteraction from '@/interactions/forbidClickInteraction'
 import type { RennesApp } from '@/services/RennesApp'
 import SelectDistrictInteraction from './selectDistrictInteractions'
+import { useSimulationStore } from '@/stores/simulations'
 
 function _getSelectRoofInteraction(
   rennesApp: RennesApp
@@ -39,15 +40,29 @@ export function cleanHighlightedRoofs(rennesApp: RennesApp) {
     res.unhighlight()
   }
 }
+
+export function isInteractionBuilding() {
+  const viewStore = useViewsStore()
+  return [
+    viewList['roof-selected-information'],
+    viewList['roof-selection'],
+  ].includes(viewStore.currentView)
+}
+
+export function isInteractionPanRoof() {
+  const viewStore = useViewsStore()
+  const simulationStore = useSimulationStore()
+  return (
+    viewStore.currentView === viewList['step-sunshine'] &&
+    simulationStore.currentStep === 1 &&
+    simulationStore.currentSubStep === 1
+  )
+}
+
 export function createMapInteractions(rennesApp: RennesApp) {
   const viewStore = useViewsStore()
   let selectInteraction
-  if (
-    [
-      viewList['roof-selected-information'],
-      viewList['roof-selection'],
-    ].includes(viewStore.currentView)
-  ) {
+  if (isInteractionBuilding() || isInteractionPanRoof()) {
     if (_getSelectRoofInteraction(rennesApp) == null) {
       selectInteraction = new SelectRoofInteraction(
         rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),

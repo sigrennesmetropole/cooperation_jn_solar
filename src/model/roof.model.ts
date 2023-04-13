@@ -51,6 +51,11 @@ function azimuthToOrientation(azimuth: number) {
   }
 }
 
+export function oppositeAzimuth(azimuth: number) {
+  const newAzimuth = (azimuth + 180) % 360
+  return newAzimuth
+}
+
 export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
   const geoJSONFormat = new GeoJSON()
   const feature = geoJSONFormat.readFeature(geojson)
