@@ -65,14 +65,25 @@ const heightClass = computed(() => {
       class="rounded-lg"
       @click="router.push('/roof-selection')"
       v-show="shouldDisplayHomeButton()"
-      ><IconHome
-    /></UiIconButton>
+      ariaLabelButton="Réinitialiser"
+      title-button="Réinitialiser"
+      ><IconHome />
+    </UiIconButton>
+
     <div class="flex flex-col zoom-buttons text-2xl [&>*]:p-2" role="group">
-      <UiIconButton class="rounded-t-lg" @click="() => zoom(false)">
-        <IconPlus />
+      <UiIconButton
+        class="rounded-t-lg"
+        @click="() => zoom(false)"
+        ariaLabelButton="Zoom vers l'avant"
+        title-button="Zoom vers l'avant"
+        ><IconPlus />
       </UiIconButton>
-      <UiIconButton class="rounded-b-lg" @click="() => zoom(true)">
-        <IconMinus />
+      <UiIconButton
+        class="rounded-b-lg"
+        @click="() => zoom(true)"
+        ariaLabelButton="Zoom vers l'arrière"
+        title-button="Zoom vers l'arrière"
+        ><IconMinus />
       </UiIconButton>
     </div>
     <CompassComponent v-if="mapStore.is3D()" />
