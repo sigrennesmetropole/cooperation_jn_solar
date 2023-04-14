@@ -32,6 +32,8 @@ import {
 import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
+import { useViewsStore } from '@/stores/views'
+
 import type { GeoJSONLayer } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -41,6 +43,7 @@ const addressStore = useAddressStore()
 const solarPanelStore = useSolarPanelStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
+const viewStore = useViewsStore()
 
 let grid
 
@@ -136,6 +139,9 @@ layerStore.$subscribe(async () => {
   await updateLayersVisibility()
 })
 
+viewStore.$subscribe(async () => {
+  createMapInteractions(rennesApp)
+})
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
