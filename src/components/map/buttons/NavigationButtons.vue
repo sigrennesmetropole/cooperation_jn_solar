@@ -58,7 +58,7 @@ const heightClass = computed(() => {
 <template>
   <div
     :class="heightClass"
-    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center overflow-hidden w-32 select-none"
+    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center w-32 select-none"
     :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
   >
     <UiIconButton
@@ -113,16 +113,14 @@ const heightClass = computed(() => {
 }
 [data-title]:after {
   content: attr(data-title);
-  background-color: #00ff00;
-  color: #111;
-  font-size: 16px;
+  background-color: rgba(23, 23, 23, 0.8);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
   position: absolute;
-  padding: 1px 5px 2px 5px;
+  padding: 8px 24px;
   right: 40px;
   white-space: nowrap;
-  box-shadow: 1px 1px 3px #222222;
-  opacity: 0;
-  border: 1px solid #111111;
   z-index: 99999;
   visibility: hidden;
 }
