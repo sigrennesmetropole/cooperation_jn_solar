@@ -84,6 +84,7 @@ async function disableOlInteraction() {
 }
 
 async function setupInstallation() {
+  console.log('set up installation')
   //force synchrone switch for adding openlayer interaction, update the store
   await rennesApp.maps.setActiveMap('ol')
   await mapStore.activate2d()
@@ -142,6 +143,7 @@ layerStore.$subscribe(async () => {
 viewStore.$subscribe(async () => {
   createMapInteractions(rennesApp)
 })
+
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
