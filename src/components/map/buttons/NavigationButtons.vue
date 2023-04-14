@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, computed, Ref, ref } from 'vue'
+import { inject, computed } from 'vue'
 import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
 
 import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
@@ -69,15 +69,6 @@ const heightClass = computed(() => {
       title-button="Réinitialiser"
       ><IconHome />
     </UiIconButton>
-
-    <b-button
-      :disabled="false"
-      class="relative shadow-lg w-12 h-12 bg-white flex items-center justify-center hover:bg-gray-100 focus:ring-2 focus:z-10 focus:ring-slate-400 focus:outline-none"
-      data-title="data-title"
-    >
-      <IconHome />
-    </b-button>
-
     <div class="flex flex-col zoom-buttons text-2xl [&>*]:p-2" role="group">
       <UiIconButton
         class="rounded-t-lg"
@@ -104,27 +95,3 @@ const heightClass = computed(() => {
     <UiDescribeButtonCompass></UiDescribeButtonCompass>
   </div>
 </template>
-
-<style>
-[data-title]:hover:after {
-  opacity: 1;
-  transition: all 0.1s ease 0.5s;
-  visibility: visible;
-}
-[data-title]:after {
-  content: attr(data-title);
-  background-color: rgba(23, 23, 23, 0.8);
-  border-radius: 8px;
-  color: white;
-  font-size: 14px;
-  position: absolute;
-  padding: 8px 24px;
-  right: 40px;
-  white-space: nowrap;
-  z-index: 99999;
-  visibility: hidden;
-}
-[data-title] {
-  position: relative;
-}
-</style>
