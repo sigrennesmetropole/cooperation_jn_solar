@@ -1,51 +1,49 @@
 import { describe, it, expect, vi } from 'vitest'
-import { routes } from '@/router'
-import { useSimulationStore } from '@/stores/simulations'
-import { createRouter, createWebHistory, Router } from 'vue-router'
-import { mount, VueWrapper } from '@vue/test-utils'
-import FooterButton from '@/components/simulation/FooterButtons.vue'
+import { mount } from '@vue/test-utils'
+import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import { createTestingPinia } from '@pinia/testing'
+import { useSimulationStore } from '@/stores/simulations'
 
+const wrapper = mount(FooterButtons, {
+  global: {
+    plugins: [
+      createTestingPinia({
+        createSpy: vi.fn,
+        stubActions: false,
+      }),
+    ],
+  },
+  propsData: {
+    isDisplayNextButton: true,
+  },
+})
+const simulationStore = useSimulationStore()
 describe('FooterButton', () => {
-  describe('when it is clicked on Suivant', () => {
-    let router: Router
-    let wrapper: VueWrapper
-    const simulationStore = useSimulationStore()
-
+  describe("I'm on step 1 and subStep 1", () => {
     beforeEach(async () => {
-      router = createRouter({
-        history: createWebHistory(),
-        routes: routes,
+      simulationStore.setCurrentStep(1)
+      simulationStore.setCurrentSubStep(1)
+    })
+    it('goes to the next step when it is clicked on Suivant', async () => {
+      const nextButton = wrapper.find('#nextButton')
+      await nextButton.trigger('click')
+      expect(simulationStore.currentStep).toBe(2)
+      expect(simulationStore.currentSubStep).toBe(1)
+    })
+  }),
+    describe("I'm on step 2 and subStep 1", () => {
+      beforeEach(async () => {
+        simulationStore.setCurrentStep(2)
+        simulationStore.setCurrentSubStep(1)
       })
-      router.push('/')
-      await router.isReady()
-
-      wrapper = mount(FooterButton, {
-        global: {
-          plugins: [
-            createTestingPinia({
-              createSpy: vi.fn,
-              stubActions: false,
-              stubPatch: false,
-              fakeApp: true,
-            }),
-            router,
-          ],
-        },
+      it('goes to the next step when it is clicked on Suivant', async () => {
+        const nextButton = wrapper.find('#nextButton')
+        await nextButton.trigger('click')
+        expect(simulationStore.currentStep).toBe(2)
+        expect(simulationStore.currentSubStep).toBe(2)
       })
     })
-    it('goes to the next step', async () => {
-      const footerButton = wrapper.findComponent(FooterButton)
 
-      /////// quelle étape de la step ?
-      const actualStep = simulationStore.currentStep
-
-      const push = jest.spyOn(router, 'push')
-      await footerButton?.trigger('click')
-      expect(push).toHaveBeenCalledTimes(1)
-      // expect(push).toHaveBeenCalledWith('/home')
-    })
-  })
   // describe('when it is clicked on Valider', () => {
   //     it('goes to the step 3', () => {
 

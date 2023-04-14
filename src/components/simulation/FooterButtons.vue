@@ -55,6 +55,7 @@ const textNextButton = computed(() => {
     <button
       v-if="props.isDisplayNextButton"
       @click="clickButtonNext()"
+      id="nextButton"
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
       <img
