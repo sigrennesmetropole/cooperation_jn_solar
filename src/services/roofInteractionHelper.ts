@@ -42,11 +42,11 @@ const selected = new Style({
 
 const gridStyle = new Style({
   fill: new Fill({
-    color: 'rgba(255,255,255,0)',
+    color: 'rgba(255,255,255,0.1)',
   }),
   stroke: new Stroke({
-    color: 'rgba(0,0,0,0.7)',
-    width: 1,
+    color: 'rgba(255,255,255,0.7)',
+    width: 0.5,
   }),
 })
 let selectClick: Select
