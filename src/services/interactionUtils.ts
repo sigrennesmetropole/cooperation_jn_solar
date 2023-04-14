@@ -7,6 +7,7 @@ import ForbidenClickInteraction from '@/interactions/forbidClickInteraction'
 import type { RennesApp } from '@/services/RennesApp'
 import SelectDistrictInteraction from './selectDistrictInteractions'
 import { useSimulationStore } from '@/stores/simulations'
+import { useDistrictStore } from '@/stores/districtInformations'
 
 function _getSelectRoofInteraction(
   rennesApp: RennesApp
@@ -61,8 +62,22 @@ export function isInteractionPanRoof() {
 
 export function createMapInteractions(rennesApp: RennesApp) {
   const viewStore = useViewsStore()
+  const districtStore = useDistrictStore()
+
   let selectInteraction
-  if (isInteractionBuilding() || isInteractionPanRoof()) {
+  if (
+    [viewList['home'], viewList['roof-selection']].includes(
+      viewStore.currentView
+    ) &&
+    districtStore.checkboxChecked === true
+  ) {
+    rennesApp.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
+    const selectDistrictInteraction = new SelectDistrictInteraction(rennesApp)
+    rennesApp.maps.eventHandler.addExclusiveInteraction(
+      selectDistrictInteraction,
+      () => {}
+    )
+  } else if (isInteractionBuilding() || isInteractionPanRoof()) {
     if (_getSelectRoofInteraction(rennesApp) == null) {
       selectInteraction = new SelectRoofInteraction(
         rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
@@ -73,21 +88,14 @@ export function createMapInteractions(rennesApp: RennesApp) {
         selectInteraction,
         () => {}
       )
+    } else if (viewStore.currentView === viewList.home) {
+      const forbidClickInteraction = new ForbidenClickInteraction()
+      rennesApp.maps.eventHandler.addExclusiveInteraction(
+        forbidClickInteraction,
+        () => {}
+      )
+    } else {
+      rennesApp.maps.eventHandler.removeExclusive()
     }
-  } else if (viewStore.currentView === viewList.home) {
-    const forbidClickInteraction = new ForbidenClickInteraction()
-    rennesApp.maps.eventHandler.addExclusiveInteraction(
-      forbidClickInteraction,
-      () => {}
-    )
-  } else if (viewStore.currentView == viewList['districts']) {
-    rennesApp.maps.eventHandler.featureInteraction.setActive(EventType.CLICK)
-    const selectDistrictInteraction = new SelectDistrictInteraction(rennesApp)
-    rennesApp.maps.eventHandler.addExclusiveInteraction(
-      selectDistrictInteraction,
-      () => {}
-    )
-  } else {
-    rennesApp.maps.eventHandler.removeExclusive()
   }
 }

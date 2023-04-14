@@ -14,6 +14,7 @@ const viewStore = useViewsStore()
 onMounted(() => {
   viewStore.setCurrentView(viewList['home'])
   panelsStore.setTypePanelDisplay('left')
+  panelsStore.isCompletelyHidden = false
 })
 </script>
 
