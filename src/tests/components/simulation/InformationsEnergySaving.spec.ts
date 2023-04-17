@@ -11,6 +11,8 @@ describe('InformationsEnergySaving.vue', () => {
 
   it('renders the component correctly', () => {
     expect(wrapper.exists()).toBe(true)
+
+    expect(wrapper.html()).toMatchSnapshot()
   })
 
   it('displays the correct information for the currentInfo', () => {
