@@ -40,7 +40,6 @@ class SelectRoofInteraction extends AbstractInteraction {
     this._highlighted = false
     this._hasFeature = false
     this._rennesApp = rennesApp
-    this.setActive()
   }
 
   _highlight(featureId: string) {

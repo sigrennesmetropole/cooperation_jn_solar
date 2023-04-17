@@ -5,7 +5,7 @@ import {
   ModificationKeyType,
 } from '@vcmap/core'
 import type { InteractionEvent } from '@vcmap/core'
-import type { RennesApp } from './RennesApp'
+import type { RennesApp } from '../services/RennesApp'
 import { apiEnedisDistrictService } from '@/services/api-enedis-district'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { RENNES_LAYER } from '@/stores/layers'
@@ -14,7 +14,7 @@ import { Point } from 'ol/geom'
 import {
   addGenericListenerForUpdatePositions,
   updateDistrictPointCoordinates,
-} from './AboveMapService'
+} from '../services/AboveMapService'
 import { selectedDistrict } from '@/services/viewStyles'
 
 class SelectDistrictInteraction extends AbstractInteraction {
