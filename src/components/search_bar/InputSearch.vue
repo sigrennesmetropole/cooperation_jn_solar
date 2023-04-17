@@ -5,11 +5,19 @@ import iconMultiply from '@/assets/icons/icon-multiply.svg'
 import iconFilterSearchBar from '@/assets/icons/icon-filter-searchbar.svg'
 import { useAddressStore } from '@/stores/address'
 
-const props = defineProps<{
-  isDisplayAutocompletion: boolean
-  isEmptySearch: boolean
-  sizeBeginSearch: number
-}>()
+defineProps({
+  isDisplayAutocompletion: {
+    type: Boolean,
+    default: false,
+  },
+  isEmptySearch: {
+    type: Boolean,
+    default: false,
+  },
+  sizeBeginSearch: {
+    type: Number,
+  },
+})
 
 const search = ref('')
 const emit = defineEmits(['emptySearch', 'toggleFilters', 'inputKeyUp'])
@@ -29,9 +37,7 @@ addressStore.$subscribe(() => {
   <div
     class="flex flex-row items-center h-11 shadow-lg rounded-lg p-0 mb-0 bg-white w-[402px]"
     :class="
-      props.isDisplayAutocompletion || props.isEmptySearch
-        ? 'border border-black'
-        : ''
+      isDisplayAutocompletion || isEmptySearch ? 'border border-black' : ''
     "
   >
     <div class="flex flex-row items-center justify-center w-8 h-full ml-2">
@@ -49,12 +55,14 @@ addressStore.$subscribe(() => {
       class="flex flex-row items-center justify-center w-11 h-full cursor-pointer"
       @click="emptySearch()"
       v-if="search !== ''"
+      id="button-empty-search"
     >
       <img :src="iconMultiply" class="w-4 h-4" />
     </button>
     <button
       class="flex flex-row items-center justify-center w-11 h-full cursor-pointer border-l border-neutral-200"
       @click="$emit('toggleFilters')"
+      id="toggle-filters"
     >
       <img :src="iconFilterSearchBar" class="w-4 h-4" />
     </button>
