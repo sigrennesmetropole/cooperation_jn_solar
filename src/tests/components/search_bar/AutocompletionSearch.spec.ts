@@ -18,6 +18,10 @@ describe('AutocompletionSearch.vue', () => {
     })
   })
 
+  it('renders correctly', () => {
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
   it('renders the correct number of autocompletion items', () => {
     const autocompletionItems = wrapper.findAll('.autocompletion-item')
     expect(autocompletionItems.length).toBe(14)

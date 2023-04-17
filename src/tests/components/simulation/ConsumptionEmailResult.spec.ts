@@ -18,6 +18,7 @@ describe('ConsumptionEmailResult', () => {
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
 
+    // @ts-ignore
     expect(wrapper.vm.validEmail).toBe(false)
     expect(wrapper.find('#errorEmail').exists()).toBe(true)
     expect(wrapper.find('#errorEmail').classes()).toContain('bg-rose-50')
@@ -29,6 +30,7 @@ describe('ConsumptionEmailResult', () => {
     await wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
 
+    // @ts-ignore
     expect(wrapper.vm.validEmail).toBe(true)
     expect(wrapper.find('#errorEmail').exists()).toBe(false)
   })
@@ -38,9 +40,11 @@ describe('ConsumptionEmailResult', () => {
     const checkBox = wrapper.findComponent(CheckBox)
 
     await checkBox.vm.$emit('checkBoxChange', true)
+    // @ts-ignore
     expect(wrapper.vm.isCheckboxChecked).toBe(true)
 
     await checkBox.vm.$emit('checkBoxChange', false)
+    // @ts-ignore
     expect(wrapper.vm.isCheckboxChecked).toBe(false)
   })
 
@@ -49,9 +53,7 @@ describe('ConsumptionEmailResult', () => {
     const privacyLink = wrapper.find('[data-testid="privacy-link"]')
 
     // @ts-ignore
-    const windowOpenSpy = jest
-      .spyOn(window, 'open')
-      .mockImplementation(() => {})
+    const windowOpenSpy = jest.spyOn(window, 'open')
 
     await privacyLink.trigger('click')
     const privacyLinkData = legalList.find(

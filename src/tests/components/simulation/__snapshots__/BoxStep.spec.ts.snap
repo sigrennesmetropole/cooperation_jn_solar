@@ -1,0 +1,8 @@
+// Vitest Snapshot v1
+
+exports[`BoxStep > renders correctly 1`] = `
+"<div class=\\"flex flex-col items-center justify-center border border-slate-600 rounded-lg px-6\\">
+  <div>Name of Step</div><img src=\\"test-image.jpg\\" alt=\\"Test Image\\">
+  <p>Some text</p><button class=\\"mt-4 mb-6 bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center w-full\\"><span>Click me</span></button>
+</div>"
+`;

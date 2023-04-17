@@ -1,0 +1,60 @@
+// Vitest Snapshot v1
+
+exports[`AutocompletionSearch.vue > renders correctly 1`] = `
+"<div class=\\"font-dm-sans flex flex-col rounded mt-0 shadow-lg bg-white max-h-[300px] overflow-auto w-[402px] scrollbar scrollbar-thumb-black scrollbar-track-inerth scrollbar-thumb-rounded-full scrollbar-w-1\\">
+  <ul>
+    <li class=\\"border-b border-neutral-200 py-1\\"><span class=\\"font-dm-sans font-normal text-xs text-neutral-600 px-3\\">Adresses</span></li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"0\\" data-item-index=\\"0\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">37 B rue de <strong>Rennes</strong>, l'Hermitage</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"0\\" data-item-index=\\"1\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">36 rue de <strong>Rennes</strong>, Chevaigné</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"0\\" data-item-index=\\"2\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">32 rue de <strong>Rennes</strong>, Corps-Nuds</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"0\\" data-item-index=\\"3\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">37 A rue de <strong>Rennes</strong>, l'Hermitage</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"0\\" data-item-index=\\"4\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">32 rue de <strong>Rennes</strong>, Chevaigné</div>
+    </li>
+  </ul>
+  <ul>
+    <li class=\\"border-b border-neutral-200 py-1\\"><span class=\\"font-dm-sans font-normal text-xs text-neutral-600 px-3\\">Organismes</span></li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"1\\" data-item-index=\\"0\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Aéroport <strong>Rennes</strong> Bretagne</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"1\\" data-item-index=\\"1\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Agence Locale de l'Energie et du Climat du Pays de <strong>Rennes</strong></div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"1\\" data-item-index=\\"2\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Aide à Domicile de <strong>Rennes</strong></div>
+    </li>
+  </ul>
+  <ul>
+    <li class=\\"border-b border-neutral-200 py-1\\"><span class=\\"font-dm-sans font-normal text-xs text-neutral-600 px-3\\">Voies</span></li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"2\\" data-item-index=\\"0\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Chemin d'exploitation 46 des Ga<strong>rennes</strong>, Bruz</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"2\\" data-item-index=\\"1\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Rue de <strong>Rennes</strong>, Thorigné-Fouillard</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"2\\" data-item-index=\\"2\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Rue de <strong>Rennes</strong>, Saint-Armel</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"2\\" data-item-index=\\"3\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Rue de <strong>Rennes</strong>, Acigné</div>
+    </li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"2\\" data-item-index=\\"4\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\">Rue de <strong>Rennes</strong>, l'Hermitage</div>
+    </li>
+  </ul>
+  <ul>
+    <li class=\\"border-b border-neutral-200 py-1\\"><span class=\\"font-dm-sans font-normal text-xs text-neutral-600 px-3\\">Commune</span></li>
+    <li class=\\"cursor-pointer border-b border-neutral-200 py-1 autocompletion-item\\" data-category-index=\\"3\\" data-item-index=\\"0\\">
+      <div class=\\"px-3 font-dm-sans font-normal text-sm\\"><strong>Rennes</strong></div>
+    </li>
+  </ul>
+</div>"
+`;

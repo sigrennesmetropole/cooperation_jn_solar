@@ -44,6 +44,10 @@ describe('InputSearch.vue', () => {
     expect(filterIcon.exists()).toBe(true)
   })
 
+  it('renders correctly', () => {
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
   it('emits toggleFilters event when filter button is clicked', async () => {
     // Find the filter button and trigger a click event
     const filterButton = wrapper.find('button[id="toggle-filters"]')

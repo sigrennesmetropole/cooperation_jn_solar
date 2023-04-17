@@ -1,0 +1,8 @@
+// Vitest Snapshot v1
+
+exports[`InputSearch.vue > renders correctly 1`] = `
+"<div class=\\"flex flex-row items-center h-11 shadow-lg rounded-lg p-0 mb-0 bg-white w-[402px] border border-black\\">
+  <div class=\\"flex flex-row items-center justify-center w-8 h-full ml-2\\"><img src=\\"/src/assets/icons/magnifying-glass.svg\\" class=\\"w-4 h-4\\"></div><input id=\\"autocomplete-input\\" class=\\"w-full h-full border-none text-base font-medium font-dm-sans placeholder-black focus:ring-0 !border-black\\" type=\\"text\\" placeholder=\\"Entrez votre adresse ici\\">
+  <!--v-if--><button class=\\"flex flex-row items-center justify-center w-11 h-full cursor-pointer border-l border-neutral-200\\" id=\\"toggle-filters\\"><img src=\\"/src/assets/icons/icon-filter-searchbar.svg\\" class=\\"w-4 h-4\\"></button>
+</div>"
+`;

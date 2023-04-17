@@ -32,5 +32,3 @@ coverage
 *.iml
 
 .env
-
-__snapshots__/

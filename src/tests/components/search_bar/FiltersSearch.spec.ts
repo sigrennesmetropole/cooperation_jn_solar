@@ -38,6 +38,10 @@ describe('FiltersSearch.vue', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
+  it('renders correctly', () => {
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
   it('displays the filters', () => {
     const filters = wrapper.findAll('label')
     expect(filters).toHaveLength(4)
