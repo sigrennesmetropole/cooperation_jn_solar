@@ -47,6 +47,7 @@ const textNextButton = computed(() => {
     <button
       v-else-if="simulationStore.currentStep != 1"
       @click="clickButtonPrevious()"
+      id="previousButton"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
       <span class="font-dm-sans text-black text-base font-medium">
