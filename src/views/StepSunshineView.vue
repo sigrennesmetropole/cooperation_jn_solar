@@ -63,7 +63,10 @@ async function highlightSelectedRoofPan(surfaceId: string) {
 }
 
 function isDisplayNextButton() {
-  if (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2) {
+  if (
+    (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 3) ||
+    (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2)
+  ) {
     return false
   }
   return true
