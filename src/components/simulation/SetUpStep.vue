@@ -42,6 +42,7 @@ const updateCurrentNumSolarPanel = (changes: number) => {
     <BoxStep
       v-if="simulationStore.currentSubStep == 2"
       @buttonBoxAction="goToThirdStep()"
+      id="savingsCalculation"
     >
       <template v-slot:nameOfStep>
         <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
