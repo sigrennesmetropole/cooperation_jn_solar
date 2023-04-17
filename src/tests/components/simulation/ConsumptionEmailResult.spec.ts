@@ -52,16 +52,19 @@ describe('ConsumptionEmailResult', () => {
     const wrapper = mount(ConsumptionEmailResult)
     const privacyLink = wrapper.find('[data-testid="privacy-link"]')
 
-    // @ts-ignore
-    const windowOpenSpy = jest.spyOn(window, 'open')
+    // Store the original window.open function and create a mock
+    const originalWindowOpen = window.open
+    const windowOpenMock = jest.fn()
+    window.open = windowOpenMock
 
     await privacyLink.trigger('click')
     const privacyLinkData = legalList.find(
       (elt) => elt.slug === 'confidentialite'
     )
     // @ts-ignore
-    expect(windowOpenSpy).toHaveBeenCalledWith(privacyLinkData.link, '_blank')
+    expect(windowOpenMock).toHaveBeenCalledWith(privacyLinkData.link, '_blank')
 
-    windowOpenSpy.mockRestore()
+    // Restore window.open
+    window.open = originalWindowOpen
   })
 })
