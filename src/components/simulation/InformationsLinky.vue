@@ -7,12 +7,9 @@ import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduct
 
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
-async function goToEnedisWebSite() {
-  const url = await apiEnedisService.getUrlUserAuthorization()
-  window.location.href = url
-}
-
 async function goToEnedisLogin() {
+  const url = await apiEnedisService.getUrlUserAuthorization()
+
   if (getEnv() == 'dev') {
     await apiEnedisService.setPRMUser(getEnedisSandboxPrm())
     const consumption = await apiEnedisService.getAnnualConsumption()
@@ -25,7 +22,7 @@ async function goToEnedisLogin() {
   } else if (getEnv() == 'prod') {
     const prm = await apiEnedisService.getPRMUser()
     if (prm === undefined) {
-      await goToEnedisWebSite()
+      window.location.href = url
       return
     }
     const consumption = await apiEnedisService.getAnnualConsumption()

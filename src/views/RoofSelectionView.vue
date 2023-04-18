@@ -10,7 +10,6 @@ import type { RennesApp } from '@/services/RennesApp'
 import RoofSelectionTooltip from '@/components/roof_selection/RoofSelectionTooltip.vue'
 import { useAddressStore } from '@/stores/address'
 import {
-  cleanHighlightedRoofs,
   disableSelectRoofInteraction,
   enableSelectRoofInteraction,
 } from '@/services/interactionUtils'
@@ -48,7 +47,7 @@ onMounted(() => {
         enableSelectRoofInteraction(rennesApp)
       }
     })
-  cleanHighlightedRoofs(rennesApp)
+  rennesApp.clearRoofsHighlight()
 })
 
 const tooltipToDisplay = computed(() => {

@@ -1,27 +1,27 @@
+import type { InteractionEvent } from '@vcmap/core'
 import {
   AbstractInteraction,
+  CesiumTilesetLayer,
   EventType,
+  ModificationKeyType,
+  Projection,
   VcsEvent,
   VectorStyleItem,
-  ModificationKeyType,
-  CesiumTilesetLayer,
 } from '@vcmap/core'
-import type { InteractionEvent } from '@vcmap/core'
-import { Projection } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
-import type { RennesApp } from '../services/RennesApp'
+import type { RennesApp } from '@/services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import router from '@/router'
 import { useRoofsStore } from '@/stores/roof'
 import { useAddressStore } from '@/stores/address'
 import { apiAdresseDataGouvService } from '@/services/api-adresse-data-gouv'
+import {
+  isInteractionBuilding,
+  isInteractionPanRoof,
+} from '@/services/interactionUtils'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(63,185,30)' },
-  stroke: {
-    color: '#ffffff',
-    width: 2,
-  },
 })
 
 class SelectRoofInteraction extends AbstractInteraction {
@@ -40,7 +40,6 @@ class SelectRoofInteraction extends AbstractInteraction {
     this._highlighted = false
     this._hasFeature = false
     this._rennesApp = rennesApp
-    this.setActive()
   }
 
   _highlight(featureId: string) {
@@ -51,12 +50,14 @@ class SelectRoofInteraction extends AbstractInteraction {
   }
 
   unhighlight() {
-    this._highlighted = false
-    this._selectableLayer.featureVisibility.clearHighlighting()
+    if (this._highlighted) {
+      this._highlighted = false
+      this._rennesApp.clearRoofsHighlight()
+    }
   }
 
   _highglightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
-    this._selectableLayer.featureVisibility.clearHighlighting()
+    this.unhighlight()
     buildingRoofs.features.forEach((f) => {
       this._highlight(f.properties?.surface_id)
     })
@@ -68,7 +69,9 @@ class SelectRoofInteraction extends AbstractInteraction {
   ) {
     const roofStore = useRoofsStore()
     roofStore.setSelectedBuildingId(selectedBuildingId)
-    roofStore.setSelectRoofFeature(buildingRoofs.features[0])
+    roofStore.setSelectRoofSurfaceId(
+      buildingRoofs.features[0].properties?.surface_id
+    )
     router.push({ name: 'roof-selected-information' })
   }
 
@@ -82,21 +85,50 @@ class SelectRoofInteraction extends AbstractInteraction {
         const addressStore = useAddressStore()
         addressStore.setLatitudeAndLongitude(latitude, longitude)
 
-        apiAdresseDataGouvService.fetchAddressesFromLatLon(latitude, longitude)
+        await apiAdresseDataGouvService.fetchAddressesFromLatLon(
+          latitude,
+          longitude
+        )
       }
     }
   }
 
   async pipe(event: InteractionEvent) {
-    const selectedBuilding = event.feature
-    const selectedBuildingId =
-      selectedBuilding?.getProperty('attributes')['BUILDINGID']
-    if (selectedBuilding) {
-      const buildingRoofs: GeoJSONFeatureCollection =
-        await roofWfsService.fetchRoofs(selectedBuildingId)
-      this._highglightRoofsOfTheBuilding(buildingRoofs)
-      await this._setLatitudeAndLongitude(event)
-      this._goToNextStep(buildingRoofs, selectedBuildingId)
+    if (event.type == EventType.CLICK) {
+      const selectedBuilding = event.feature
+      if (!selectedBuilding) {
+        return event
+      }
+
+      const selectedBuildingId =
+        selectedBuilding?.getProperty('attributes')['BUILDINGID']
+
+      if (isInteractionBuilding()) {
+        const buildingRoofs: GeoJSONFeatureCollection =
+          await roofWfsService.fetchRoofs(selectedBuildingId)
+        this._highglightRoofsOfTheBuilding(buildingRoofs)
+        await this._setLatitudeAndLongitude(event)
+        this._goToNextStep(buildingRoofs, selectedBuildingId)
+      } else if (isInteractionPanRoof()) {
+        const roofStore = useRoofsStore()
+        if (selectedBuildingId !== roofStore.selectedBuildingId) {
+          return event
+        }
+        const idRoof = selectedBuilding.getProperty('id')
+        if (!idRoof) {
+          return event
+        }
+        let isRoofFeature = false
+        roofStore.roofsFeatures?.features?.forEach((f) => {
+          if (f.properties?.surface_id == idRoof) {
+            isRoofFeature = true
+          }
+        })
+        if (!isRoofFeature) {
+          return event
+        }
+        roofStore.setSelectRoofSurfaceId(idRoof)
+      }
     }
     return event
   }

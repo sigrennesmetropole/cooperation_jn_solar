@@ -9,14 +9,17 @@ import SearchBar from '@/components/search_bar/SearchBar.vue'
 import { viewList } from '@/model/views.model'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
+import DistrictDisplayButton from '@/components/map/DistrictDisplayButton.vue'
 import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
+import { useDistrictStore } from './stores/districtInformations'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const popUpStore = usePopUpStore()
+const districtStore = useDistrictStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -24,7 +27,7 @@ onBeforeMount(() => {
 })
 
 function isLeftPanelRetractable() {
-  const retractableList = [viewList['roof-selection'], viewList['districts']]
+  const retractableList = viewList['roof-selection']
   return retractableList.includes(viewStore.currentView)
 }
 
@@ -33,7 +36,6 @@ const isDisplaySearchBar = computed(() => {
     viewList['roof-selection'],
     viewList['roof-selected-information'],
     viewList.home,
-    viewList['districts'],
   ].includes(viewStore.currentView)
 })
 
@@ -42,12 +44,17 @@ const isDisplayAsideAndMap = computed(() => {
     viewList['home'],
     viewList['roof-selected-information'],
     viewList['step-sunshine'],
-    viewList['districts'],
   ].includes(viewStore.currentView)
 })
 
 const isDisplayFloatAndMap = computed(() => {
   return [viewList['roof-selection']].includes(viewStore.currentView)
+})
+
+const isDisplayDistrictCheckbox = computed(() => {
+  return [viewList['home'], viewList['roof-selection']].includes(
+    viewStore.currentView
+  )
 })
 
 const panelAlignment = computed(() => {
@@ -103,7 +110,7 @@ const panelAlignment = computed(() => {
       v-if="isDisplaySearchBar"
       class="absolute z-20 top-6 left-6"
       :style="
-        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 20px;'
+        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 24px;'
       "
       :isRedirectOnSearch="viewStore.currentView !== viewList.home"
     ></SearchBar>
@@ -111,8 +118,13 @@ const panelAlignment = computed(() => {
     <UiExplanationsStepSunshine />
 
     <DistrictDataTooltip
-      v-if="viewStore.currentView === viewList['districts']"
+      v-if="districtStore.checkboxChecked === true"
     ></DistrictDataTooltip>
+
+    <DistrictDisplayButton
+      v-if="isDisplayDistrictCheckbox"
+      class="absolute z-20"
+    ></DistrictDisplayButton>
 
     <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
     <TermsOfUsePopup

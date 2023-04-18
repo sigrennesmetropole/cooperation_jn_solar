@@ -5,20 +5,21 @@ import type {
   GeoJSONFeature,
   GeoJSONFeatureCollection,
 } from 'ol/format/GeoJSON'
-import { mapRoofSurfaceModel } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
+import { featureCollection } from '@turf/turf'
 
 export const useRoofsStore = defineStore('roofs', () => {
+  // id of the selected building
   const selectedBuildingId: Ref<string | null> = ref(null)
 
+  // all the features from the roof: all the pans
   const roofsFeatures: Ref<GeoJSONFeatureCollection | null> = ref(null)
-  /*
-   * Some roofsFeatures has the same surface_id .
-   * For reasons of simplicity for the calculations, we must store a clone of roofsFeatures but removing duplicates with the same surface_id.
-   *
-   */
-  const roofsFeaturesGroupBySurfaceId: Ref<GeoJSONFeatureCollection | null> =
-    ref(null)
-  const selectedRoofFeature: Ref<GeoJSONFeature | null> = ref(null)
+
+  // map model list of the roof for the accordions
+  const roofSurfacesList: Ref<RoofSurfaceModel[] | null> = ref(null)
+
+  // surface_id of the select roof pan, only highlight method need to use it over the getter on the geom/surface model
+  const selectedRoofSurfaceId: Ref<string | null> = ref(null)
 
   function setSelectedBuildingId(buildingId: string) {
     selectedBuildingId.value = buildingId
@@ -28,33 +29,42 @@ export const useRoofsStore = defineStore('roofs', () => {
     roofsFeatures.value = features
   }
 
-  function setRoofsFeaturesGroupBySurfaceId(
-    features: GeoJSONFeatureCollection
-  ) {
-    roofsFeaturesGroupBySurfaceId.value = features
+  function setRoofSurfacesList(list: RoofSurfaceModel[]) {
+    roofSurfacesList.value = list
   }
 
-  function setSelectRoofFeature(feature: GeoJSONFeature) {
-    selectedRoofFeature.value = feature
+  function setSelectRoofSurfaceId(surfaceId: string) {
+    selectedRoofSurfaceId.value = surfaceId
   }
 
-  function setSelectRoofFeatureFromSurfaceId(surface_id: string) {
-    roofsFeatures.value?.features.forEach((feature) => {
-      const featureFormatted = mapRoofSurfaceModel(feature)
-      if (featureFormatted.surface_id === surface_id) {
-        setSelectRoofFeature(feature)
+  function getFeaturesOfSelectedPanRoof(): GeoJSONFeatureCollection {
+    const features: GeoJSONFeature[] = []
+    roofsFeatures.value?.features?.forEach((f) => {
+      if (f.properties?.surface_id === selectedRoofSurfaceId.value) {
+        features.push(f)
       }
+    })
+    return featureCollection(features)
+  }
+
+  function getRoofSurfaceModelOfSelectedPanRoof():
+    | RoofSurfaceModel
+    | undefined {
+    return roofSurfacesList.value?.find((roofSuface) => {
+      return roofSuface.surface_id == selectedRoofSurfaceId.value
     })
   }
 
   return {
     roofsFeatures,
-    selectedRoofFeature,
-    roofsFeaturesGroupBySurfaceId,
+    selectedRoofSurfaceId,
+    roofSurfacesList,
+    selectedBuildingId,
     setRoofsFeatures,
-    setSelectRoofFeature,
-    setSelectRoofFeatureFromSurfaceId,
+    setSelectRoofSurfaceId,
     setSelectedBuildingId,
-    setRoofsFeaturesGroupBySurfaceId,
+    setRoofSurfacesList,
+    getFeaturesOfSelectedPanRoof,
+    getRoofSurfaceModelOfSelectedPanRoof,
   }
 })

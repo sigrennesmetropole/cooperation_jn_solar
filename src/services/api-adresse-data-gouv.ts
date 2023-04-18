@@ -7,7 +7,7 @@ class ApiAdresseDataGouvService {
     const baseUrl = 'https://api-adresse.data.gouv.fr/reverse/'
     const url = baseUrl + `?lon=${lon}&lat=${lat}`
 
-    fetch(url).then(function (response) {
+    return fetch(url).then(function (response) {
       if (response.ok) {
         return response.json().then(function (json) {
           if (json.features !== undefined && json.features.length > 0) {

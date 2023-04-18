@@ -14,6 +14,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
   const previousViewPoint: Ref<Viewpoint | null> = ref(null)
   const newPointAbscissa: Ref<number> = ref(0)
   const newPointOrdinate: Ref<number> = ref(0)
+  const checkboxChecked: Ref<boolean> = ref(false)
 
   function setDistrictIrisCode(newDistrictCode: number) {
     districtCode.value = newDistrictCode
@@ -60,6 +61,10 @@ export const useDistrictStore = defineStore('districtInformations', () => {
     newPointOrdinate.value = newOrdinate
   }
 
+  function setCheckboxChecked(newAction: boolean) {
+    checkboxChecked.value = newAction
+  }
+
   function resetDistrictStore() {
     setDistrictInformations(0, '', 0, 0, 0)
   }
@@ -74,6 +79,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
     previousViewPoint,
     newPointAbscissa,
     newPointOrdinate,
+    checkboxChecked,
     setDistrictIrisCode,
     setDistrictName,
     setDistrictConsumption,
@@ -82,6 +88,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
     setDistrictInformations,
     setNewPointFeatureOnSelectedDistrict,
     setNewCoordinates,
+    setCheckboxChecked,
     resetDistrictStore,
   }
 })

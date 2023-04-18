@@ -21,7 +21,7 @@ const height = computed(() => {
     <h4 class="mx-6 mt-6 mb-3 font-dm-sans font-bold text-lg text-black">
       {{ props.title }}
     </h4>
-    <div class="mx-6 mb-6 font-dm-sans text-sm text-black">
+    <div class="mx-6 mb-6 font-dm-sans text-sm -tracking-[.01em] text-black">
       {{ props.content }}
     </div>
     <div v-if="props.displayCloseButton" class="mx-6 mb-6">

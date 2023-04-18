@@ -9,7 +9,7 @@ import {
 } from '@/model/solarPanel.model'
 
 const props = defineProps<{
-  roofSurface: RoofSurfaceModel | null
+  roofSurface: RoofSurfaceModel | undefined
   maxNumSolarPanel: number
   currentNumSolarPanel: number
 }>()

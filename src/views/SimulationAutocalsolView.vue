@@ -6,7 +6,6 @@ import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { useAddressStore } from '@/stores/address'
 import { useRoofsStore } from '@/stores/roof'
-import { mapRoofSurfaceModel } from '@/model/roof.model'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { getPeakPower } from '@/services/solarPanel'
 import { apiAutocalsolService } from '@/services/api-autocalsol'
@@ -28,14 +27,11 @@ const state = reactive({
 })
 
 onMounted(async () => {
-  let selectedRoof = null
-  if (roofsStore.selectedRoofFeature !== null) {
-    selectedRoof = mapRoofSurfaceModel(roofsStore.selectedRoofFeature)
-  }
+  let selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
   if (
-    selectedRoof === null ||
-    selectedRoof.inclinaison === undefined ||
-    selectedRoof.azimuth === undefined
+    selectedRoof === undefined ||
+    selectedRoof?.inclinaison === undefined ||
+    selectedRoof?.azimuth === undefined
   ) {
     return
   }
@@ -51,9 +47,6 @@ onMounted(async () => {
     peak_power: getPeakPower(),
   }
 
-  if (state.dataAutocalsol === null) {
-    return
-  }
   state.autocalsolResult = await apiAutocalsolService.getComputeData(
     state.dataAutocalsol
   )

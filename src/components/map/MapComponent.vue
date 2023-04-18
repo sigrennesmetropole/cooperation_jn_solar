@@ -17,10 +17,11 @@ import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
   displayRoofShape,
-  generateSquareGrid,
+  generateRectangleGrid,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
+  substractSelectedSquares,
 } from '@/services/roofInteractionHelper'
 import {
   displaySolarPanel,
@@ -29,19 +30,22 @@ import {
   zoomToSolarPanel,
 } from '@/services/solarPanel'
 import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
-import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { viewList } from '@/model/views.model'
+import { useViewsStore } from '@/stores/views'
+
+import type { GeoJSONLayer } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
 const simulationStore = useSimulationStore()
 const addressStore = useAddressStore()
 const solarPanelStore = useSolarPanelStore()
-const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
+const viewStore = useViewsStore()
+
+let grid
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -79,27 +83,37 @@ async function disableOlInteraction() {
   }
 }
 
+async function setupInstallation() {
+  //force synchrone switch for adding openlayer interaction, update the store
+  await rennesApp.maps.setActiveMap('ol')
+  await mapStore.activate2d()
+  if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
+    await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
+    await layerStore.enableLayer(RENNES_LAYER.roofShape)
+    let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
+    displayRoofShape(rennesApp, roofShape)
+    grid = generateRectangleGrid(roofShape)
+    displayGridOnMap(rennesApp, grid)
+    addRoofInteractionOn2dMap(rennesApp)
+  }
+}
+
 simulationStore.$subscribe(async () => {
   if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
-    //force synchrone switch for adding openlayer interaction, update the store
-    await rennesApp.maps.setActiveMap('ol')
-    await mapStore.activate2d()
-    if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
-      await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
-      await layerStore.enableLayer(RENNES_LAYER.roofShape)
-      let roofShape = roofsStore.selectedRoofFeature!
-      displayRoofShape(rennesApp, roofShape)
-      let grid = generateSquareGrid(rennesApp, roofShape)
-      displayGridOnMap(rennesApp, grid)
-      addRoofInteractionOn2dMap(rennesApp)
-    }
+    await setupInstallation()
   } else if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
   ) {
+    // substractedRoofArea: the result polygon on which compute solar panels
+    const allSquares: GeoJSONLayer = await rennesApp.getLayerByKey(
+      RENNES_LAYER.roofSquaresArea
+    )
+    let substractedRoofArea = substractSelectedSquares(allSquares.getFeatures())
+    console.log('Grid of roof area', substractedRoofArea)
     const sampleSolarPanels = solarPanelFixtures()
     solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
     solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
@@ -121,17 +135,13 @@ solarPanelStore.$subscribe(async () => {
   )
 })
 
-viewStore.$subscribe(async () => {
-  if (viewStore.currentView == viewList['districts']) {
-    await layerStore.enableLayer(RENNES_LAYER.iris)
-  }
-  createMapInteractions(rennesApp)
-})
-
 layerStore.$subscribe(async () => {
   await updateLayersVisibility()
 })
 
+viewStore.$subscribe(async () => {
+  createMapInteractions(rennesApp)
+})
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
@@ -140,8 +150,6 @@ mapStore.$subscribe(async () => {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
   }
 })
-
-roofsStore.$subscribe(async () => {})
 </script>
 
 <template>
