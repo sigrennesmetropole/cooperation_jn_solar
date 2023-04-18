@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
+</script>
+
 <template>
   <div
     class="flex flex-col gap-12 w-[880px] h-fit bg-white rounded-xl px-8 py-16 mx-auto mt-32 mb-[79px]"
@@ -96,12 +100,22 @@
       </h2>
       <div class="font-normal">
         <h3 class="text-xl font-bold mb-2">
-          Consommation électrique annuelle et adresse :
+          Consommation électrique annuelle, adresse et surface d'installation
+          des panneaux photovoltaïques :
         </h3>
         <p class="text-base">
           Ces données sont renseignées par l'utilisateur de la Plateforme ou,
           pour la consommation électrique, si l'utilisateur le souhaite, obtenue
-          par connexion au service DataConnect d'Enedis.
+          par connexion au service DataConnect d'Enedis. La surface
+          d'installation des panneaux est calculée automatiquement après que
+          l'utilisateur ait retiré les obstacles présents sur la toiture.
+        </p>
+      </div>
+      <div class="font-normal">
+        <h3 class="text-xl font-bold mb-2">Adresse mail :</h3>
+        <p class="text-base">
+          Cette donnée est renseignée si l'utilisateur de la Plateforme souhaite
+          un envoi du rapport de synthèse à son adresse mail.
         </p>
       </div>
       <div class="font-normal">
@@ -129,7 +143,8 @@
     </div>
     <div class="font-normal">
       <h3 class="text-xl font-bold mb-2">
-        Consommation électrique annuelle et adresse :
+        Consommation électrique annuelle, adresse et surface d'installation des
+        panneaux photovoltaïques :
       </h3>
       <p class="text-base mb-6">
         Ces données sont utilisées par Rennes Métropole pour simuler la part de
@@ -137,11 +152,30 @@
         installation photovoltaïque, consommée sur place et celle revendue et
         injectée sur le réseau.
       </p>
+    </div>
+    <div class="font-normal">
+      <h3 class="text-xl font-bold mb-2">Adresse mail :</h3>
       <p class="text-base">
-        L'outil Captcha protège la Plateforme contre l'inscription en masse de
-        façon automatisé.
+        Cette donnée est renseignée si l'utilisateur de la Plateforme souhaite
+        un envoi du rapport de synthèse à son adresse mail.
       </p>
     </div>
+
+    <p class="text-2xl font-bold">Licéité du traitement des données</p>
+    <div class="font-normal text-base">
+      <p class="mb-6">
+        Les traitements de données personnelles que nous mettons en œuvre
+        reposent sur le consentement de l'utilisateur (acceptation des cookies,
+        communication des données personnelles). Le consentement peut être
+        retiré à tout moment par l'utilisateur (voir la rubrique quels sont vos
+        droits / comment les exercer).
+        <br /><br />
+        L'utilisateur a le droit de s'opposer au dépôt de ces cookies en
+        cliquant sur "refuser". Pour de plus amples informations sur les
+        cookies, vous pouvez consulter notre politique de gestion des cookies.
+      </p>
+    </div>
+
     <p class="text-2xl font-bold">
       Pendant combien de temps vos données sont-elles conservées ?
     </p>
@@ -208,23 +242,26 @@
         >
       </p>
     </div>
+
     <p class="text-2xl font-bold">
       Nos engagements en matière de sous-traitance, communication et transferts
       de données.
     </p>
-    <div class="text-base font-normal">
-      <p class="mb-6">
+    <div class="bg-lime-50 flex flex-row items-center justify-center gap-3 p-2">
+      <img :src="iconCheckGreen" />
+      <span class="text-sm font-normal font-dm-sans color-lime-900">
         Vos données nominatives sont à usage interne, elles sont strictement
         confidentielles et ne peuvent être divulguées à des tiers, sauf en cas
         d'accord express.
-      </p>
+      </span>
+    </div>
+    <div class="text-base font-normal">
       <p class="mb-6">
         En cas de communication de vos données personnelles à un tiers, quelle
         que soit sa qualité, nous nous assurerons préalablement que ce dernier
-        est tenu d'appliquer des conditions de confidentialité identiques aux
+        est tenu d´appliquer des conditions de confidentialité identiques aux
         nôtres.
-      </p>
-      <p class="mb-6">
+        <br />
         Nous nous engageons à (i) ce que tout sous-traitant, dont CampToCamp
         propulsant la Plateforme et l'INES réalisant la simulation présentent
         des garanties contractuelles suffisantes et appropriées pour respecter
@@ -232,26 +269,9 @@
         à respecter les dispositions du RGPD applicables aux transferts des
         données.
       </p>
-      <p>
-        Sur la base de nos obligations légales, vos données personnelles
-        pourront être divulguées en application d'une loi, d'un règlement ou en
-        vertu d'une décision d'une autorité réglementaire ou judiciaire
-        compétente.[GC1] Dans une logique d'ouverture en ligne des informations
-        détenues par les acteurs publics et privés, vos contributions publiques
-        pourront, <span class="font-medium">après anonymisation</span>, être
-        consultées par via sur le site
-        <a
-          class="underline decoration-1 font-medium"
-          href="https://data.rennesmetropole.fr/page/home"
-          target="_blank"
-          >https://data.rennesmetropole.fr/page/home</a
-        >.
-      </p>
     </div>
-    <p class="text-2xl font-bold">
-      Nos engagements en matière de sous-traitance, communication et transferts
-      de données.
-    </p>
+
+    <p class="text-2xl font-bold">Indications en cas de violation de données</p>
     <div class="text-base font-normal">
       <p class="mb-6">
         Nous nous engageons à mettre en œuvre toutes les mesures techniques et
@@ -268,6 +288,7 @@
         conséquence la réalisation des risques identifiés ci-dessus, nous nous
         engageons à :
       </p>
+      <br />
       <ul>
         <li>
           · Vous notifier l'incident dans les plus brefs délais si cela est
@@ -280,6 +301,7 @@
           incident.
         </li>
       </ul>
+      <br />
       <p>
         En aucun cas les engagements définis au point ci-dessus ne peuvent être
         assimilés à une quelconque reconnaissance de faute ou de responsabilité
