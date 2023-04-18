@@ -65,7 +65,7 @@ const updateCurrentNumSolarPanel = (changes: number) => {
       </template>
     </BoxStep>
   </template>
-  <template v-if="simulationStore.currentSubStep == 3">
+  <template v-else-if="simulationStore.currentSubStep == 3">
     <NoPanelOnRoof></NoPanelOnRoof>
   </template>
 </template>
