@@ -58,21 +58,31 @@ const heightClass = computed(() => {
 <template>
   <div
     :class="heightClass"
-    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center overflow-hidden w-32 select-none"
+    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center w-32 select-none"
     :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
   >
     <UiIconButton
       class="rounded-lg"
       @click="router.push('/roof-selection')"
       v-show="shouldDisplayHomeButton()"
-      ><IconHome
-    /></UiIconButton>
+      ariaLabelButton="Réinitialiser"
+      title-button="Réinitialiser"
+      ><IconHome />
+    </UiIconButton>
     <div class="flex flex-col zoom-buttons text-2xl [&>*]:p-2" role="group">
-      <UiIconButton class="rounded-t-lg" @click="() => zoom(false)">
-        <IconPlus />
+      <UiIconButton
+        class="rounded-t-lg"
+        @click="() => zoom(false)"
+        ariaLabelButton="Zoom vers l'avant"
+        title-button="Zoom vers l'avant"
+        ><IconPlus />
       </UiIconButton>
-      <UiIconButton class="rounded-b-lg" @click="() => zoom(true)">
-        <IconMinus />
+      <UiIconButton
+        class="rounded-b-lg"
+        @click="() => zoom(true)"
+        ariaLabelButton="Zoom vers l'arrière"
+        title-button="Zoom vers l'arrière"
+        ><IconMinus />
       </UiIconButton>
     </div>
     <CompassComponent v-if="mapStore.is3D()" />
