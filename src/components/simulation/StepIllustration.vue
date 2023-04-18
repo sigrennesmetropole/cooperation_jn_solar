@@ -21,6 +21,7 @@ defineProps({
     <p
       class="font-dm-sans font-medium text-xs"
       :class="selected ? '' : 'text-neutral-400'"
+      id="step-title"
     >
       {{ text }}
     </p>
