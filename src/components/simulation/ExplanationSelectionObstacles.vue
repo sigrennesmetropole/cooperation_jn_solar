@@ -14,7 +14,7 @@ import deleted from '@/assets/icons/interface-delete.svg'
           <img class="w-1 h-1" :src="deleted" alt="" />
         </div>
         <p class="font-dm-sans text-sm font-normal">
-          Zones ne peuvant pas accueillir de panneaux solaires.
+          Zones ne pouvant pas accueillir de panneaux solaires.
         </p>
       </div>
     </div>

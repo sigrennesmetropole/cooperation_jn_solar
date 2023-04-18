@@ -6,6 +6,7 @@ import economies from '@/assets/icons/economies.svg'
 import SimulationResult from '@/components/simulation/SimulationResult.vue'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import { useRoofsStore } from '@/stores/roof'
+import NoPanelOnRoof from './NoPanelOnRoof.vue'
 
 const simulationStore = useSimulationStore()
 const solarPanelStore = useSolarPanelStore()
@@ -63,5 +64,8 @@ const updateCurrentNumSolarPanel = (changes: number) => {
         </span>
       </template>
     </BoxStep>
+  </template>
+  <template v-else-if="simulationStore.currentSubStep == 3">
+    <NoPanelOnRoof></NoPanelOnRoof>
   </template>
 </template>
