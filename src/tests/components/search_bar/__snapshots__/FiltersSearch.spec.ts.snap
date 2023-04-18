@@ -1,0 +1,41 @@
+// Vitest Snapshot v1
+
+exports[`FiltersSearch.vue > renders correctly 1`] = `
+"<div class=\\"flex flex-col rounded mt-1 shadow-lg bg-white w-[402px] py-7 px-3\\">
+  <div class=\\"flex flex-row items-center justify-between\\"><span class=\\"font-dm-sans font-bold text-2xl px-3\\"> Paramètres de recherche </span><button class=\\"flex items-center justify-between border-2 border-black rounded p-1 cursor-pointer\\"><img class=\\"w-3 h-3\\" src=\\"/src/assets/icons/icon-multiply-black2.svg\\"></button></div>
+  <div class=\\"flex flex-col gap-1 ml-5 mt-3\\">
+    <div class=\\"flex flex-row\\">
+      <div class=\\"flex p-0 gap-3 items-top\\">
+        <div class=\\"shadow-sm w-5 h-5 rounded border flex justify-center items-center mt-[3px] border-slate-400\\"><input type=\\"checkbox\\" class=\\"opacity-0 absolute\\"><svg class=\\"w-3 h-3 pointer-events-none stroke-slate-900 stroke-2\\" viewBox=\\"0 0 14 14\\" style=\\"display: none;\\">
+            <path d=\\"M0.5 8.5498L3.23 12.0598C3.32212 12.1795 3.44016 12.2768 3.57525 12.3443C3.71034 12.4119 3.85898 12.4479 4.01 12.4498C4.15859 12.4515 4.3057 12.4201 4.44063 12.3578C4.57555 12.2956 4.6949 12.204 4.79 12.0898L13.5 1.5498\\" fill=\\"none\\"></path>
+          </svg></div>
+        <div class=\\"flex w-fit\\"><span class=\\"font-dm-sans font-normal text-sm color-black\\"></span></div>
+      </div><label for=\\"Communes\\">Communes</label>
+    </div>
+    <div class=\\"flex flex-row\\">
+      <div class=\\"flex p-0 gap-3 items-top\\">
+        <div class=\\"shadow-sm w-5 h-5 rounded border flex justify-center items-center mt-[3px] border-slate-900\\"><input type=\\"checkbox\\" class=\\"opacity-0 absolute\\"><svg class=\\"w-3 h-3 pointer-events-none stroke-slate-900 stroke-2\\" viewBox=\\"0 0 14 14\\" style=\\"\\">
+            <path d=\\"M0.5 8.5498L3.23 12.0598C3.32212 12.1795 3.44016 12.2768 3.57525 12.3443C3.71034 12.4119 3.85898 12.4479 4.01 12.4498C4.15859 12.4515 4.3057 12.4201 4.44063 12.3578C4.57555 12.2956 4.6949 12.204 4.79 12.0898L13.5 1.5498\\" fill=\\"none\\"></path>
+          </svg></div>
+        <div class=\\"flex w-fit\\"><span class=\\"font-dm-sans font-normal text-sm color-black\\"></span></div>
+      </div><label for=\\"Adresses\\">Adresses</label>
+    </div>
+    <div class=\\"flex flex-row\\">
+      <div class=\\"flex p-0 gap-3 items-top\\">
+        <div class=\\"shadow-sm w-5 h-5 rounded border flex justify-center items-center mt-[3px] border-slate-400\\"><input type=\\"checkbox\\" class=\\"opacity-0 absolute\\"><svg class=\\"w-3 h-3 pointer-events-none stroke-slate-900 stroke-2\\" viewBox=\\"0 0 14 14\\" style=\\"display: none;\\">
+            <path d=\\"M0.5 8.5498L3.23 12.0598C3.32212 12.1795 3.44016 12.2768 3.57525 12.3443C3.71034 12.4119 3.85898 12.4479 4.01 12.4498C4.15859 12.4515 4.3057 12.4201 4.44063 12.3578C4.57555 12.2956 4.6949 12.204 4.79 12.0898L13.5 1.5498\\" fill=\\"none\\"></path>
+          </svg></div>
+        <div class=\\"flex w-fit\\"><span class=\\"font-dm-sans font-normal text-sm color-black\\"></span></div>
+      </div><label for=\\"Voies\\">Voies</label>
+    </div>
+    <div class=\\"flex flex-row\\">
+      <div class=\\"flex p-0 gap-3 items-top\\">
+        <div class=\\"shadow-sm w-5 h-5 rounded border flex justify-center items-center mt-[3px] border-slate-900\\"><input type=\\"checkbox\\" class=\\"opacity-0 absolute\\"><svg class=\\"w-3 h-3 pointer-events-none stroke-slate-900 stroke-2\\" viewBox=\\"0 0 14 14\\" style=\\"\\">
+            <path d=\\"M0.5 8.5498L3.23 12.0598C3.32212 12.1795 3.44016 12.2768 3.57525 12.3443C3.71034 12.4119 3.85898 12.4479 4.01 12.4498C4.15859 12.4515 4.3057 12.4201 4.44063 12.3578C4.57555 12.2956 4.6949 12.204 4.79 12.0898L13.5 1.5498\\" fill=\\"none\\"></path>
+          </svg></div>
+        <div class=\\"flex w-fit\\"><span class=\\"font-dm-sans font-normal text-sm color-black\\"></span></div>
+      </div><label for=\\"Organismes\\">Organismes</label>
+    </div>
+  </div>
+</div>"
+`;

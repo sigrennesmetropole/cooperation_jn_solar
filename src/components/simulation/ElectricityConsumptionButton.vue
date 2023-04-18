@@ -11,6 +11,7 @@ const simulationStore = useSimulationStore()
     <button
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
       @click="simulationStore.currentSubStep = 3"
+      id="button-manual-input"
     >
       <span class="text-white text-base font-medium"
         >Saisir les informations de ma facture</span
@@ -24,6 +25,7 @@ const simulationStore = useSimulationStore()
     <button
       class="border border-black rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
       @click="simulationStore.currentSubStep = 4"
+      id="button-linky"
     >
       <img :src="expandArrow" class="h-5 w-5" />
       <span class="text-black text-base font-medium"
