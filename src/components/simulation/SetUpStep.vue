@@ -23,7 +23,9 @@ const updateCurrentNumSolarPanel = (changes: number) => {
 
 <template>
   <template v-if="simulationStore.currentSubStep == 1">
-    <ExplanationSelectionObstacles></ExplanationSelectionObstacles>
+    <ExplanationSelectionObstacles
+      id="explanationSelectionObstacles"
+    ></ExplanationSelectionObstacles>
   </template>
   <template
     v-else-if="
@@ -36,6 +38,7 @@ const updateCurrentNumSolarPanel = (changes: number) => {
       :roof-surface="roofsStore.getRoofSurfaceModelOfSelectedPanRoof()"
       :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
       @solarPanelChanges="updateCurrentNumSolarPanel"
+      id="simulationResult"
     >
     </SimulationResult>
 

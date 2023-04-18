@@ -55,6 +55,7 @@ describe('SetUpStep', () => {
       ]
       roofsStore.selectedRoofSurfaceId = '53291'
     })
+    // BoxStep Component
     it('test if boxStep exists', async () => {
       const boxStep = wrapper.find('#savingsCalculation')
       expect(boxStep.exists()).toBe(true)
@@ -83,7 +84,41 @@ describe('SetUpStep', () => {
       expect(simulationStore.currentStep).toBe(3)
       expect(simulationStore.currentSubStep).toBe(1)
     })
+    // SimulationResult component
+    it('test if simulationResult exists', async () => {
+      const result = wrapper.find('#simulationResult')
+      expect(result.exists()).toBe(true)
+    })
   })
 
-  /////////////           A faire : vérification des autres compsants : ExplanationSelectionObstacles et SimulationResult
+  // ExplanationSelectionObstacles component
+  describe("I'm on step 2 and subStep 1", () => {
+    beforeEach(async () => {
+      simulationStore.setCurrentStep(2)
+      simulationStore.setCurrentSubStep(1)
+    })
+    it('test if ExplanationSelectionObstacles exists', async () => {
+      const explanation = wrapper.find('#explanationSelectionObstacles')
+      expect(explanation.exists()).toBe(true)
+    })
+    it('test if ExplanationSelectionObstacles exists', async () => {
+      const explanation = wrapper.find('#explanationSelectionObstacles')
+      expect(explanation.html()).toMatchSnapshot()
+    })
+    it('test image component', async () => {
+      const explanation = wrapper.find('#explanationSelectionObstacles')
+      const obstaclesIcon = explanation.find('img[src$="select-obstacles.jpg"]')
+      const deleteIcon = explanation.find('img[src$="interface-delete.svg"]')
+      expect(obstaclesIcon.exists()).toBe(true)
+      expect(deleteIcon.exists()).toBe(true)
+    })
+    it('test text component', async () => {
+      const explanation = wrapper.find('#explanationSelectionObstacles')
+      const p = explanation.findAll('p')
+      expect(p).toHaveLength(1)
+      expect(p[0].text()).toBe(
+        'Zones ne peuvant pas accueillir de panneaux solaires.'
+      )
+    })
+  })
 })
