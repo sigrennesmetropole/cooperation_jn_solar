@@ -24,7 +24,9 @@ const updateCurrentNumSolarPanel = (changes: number) => {
 
 <template>
   <template v-if="simulationStore.currentSubStep == 1">
-    <ExplanationSelectionObstacles></ExplanationSelectionObstacles>
+    <ExplanationSelectionObstacles
+      id="explanationSelectionObstacles"
+    ></ExplanationSelectionObstacles>
   </template>
   <template
     v-else-if="
@@ -37,12 +39,14 @@ const updateCurrentNumSolarPanel = (changes: number) => {
       :roof-surface="roofsStore.getRoofSurfaceModelOfSelectedPanRoof()"
       :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
       @solarPanelChanges="updateCurrentNumSolarPanel"
+      id="simulationResult"
     >
     </SimulationResult>
 
     <BoxStep
       v-if="simulationStore.currentSubStep == 2"
       @buttonBoxAction="goToThirdStep()"
+      id="savingsCalculation"
     >
       <template v-slot:nameOfStep>
         <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
