@@ -9,9 +9,9 @@ import { ref } from 'vue'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 
 const simulationStore = useSimulationStore()
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
 const isDisplayPopup = ref(false)
 const stepAnnualConsumption = ref('manual')
-const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 function showPopUpAllowAnnualConsumption(event: 'manual' | 'linky') {
   stepAnnualConsumption.value = event

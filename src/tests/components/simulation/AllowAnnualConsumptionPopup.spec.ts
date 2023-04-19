@@ -1,4 +1,4 @@
-// Import necessary libraries and components
+// @ts-nocheck
 import { mount } from '@vue/test-utils'
 import AllowAnnualConsumptionPopup from '@/components/simulation/AllowAnnualConsumptionPopup.vue'
 import CheckBox from '@/components/simulation/CheckBox.vue'

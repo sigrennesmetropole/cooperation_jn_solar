@@ -58,6 +58,7 @@ function checkBoxChange(event: boolean, type_checkbox: 'allow' | 'notallow') {
           <button
             @click="$emit('close')"
             class="w-5 h-5 border border-black rounded ml-auto hover:bg-neutral-400 flex justify-center items-center"
+            id="closeButtonPopup"
           >
             x
           </button>
