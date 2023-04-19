@@ -3,7 +3,7 @@ import UiExplanationTooltip from '@/components/ui/UiExplanationTooltip.vue'
 
 function tooltipWithButton() {
   return {
-    titre: "Localisez votre lieux d'habitation",
+    titre: "Localisez votre lieu d'habitation",
     content:
       'Renseignez une adresse ci-dessus ou naviguez sur la carte grâce aux outils en bas à droite.',
     displayCloseButton: true,
