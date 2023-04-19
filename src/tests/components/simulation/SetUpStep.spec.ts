@@ -117,7 +117,7 @@ describe('SetUpStep', () => {
       const p = explanation.findAll('p')
       expect(p).toHaveLength(1)
       expect(p[0].text()).toBe(
-        'Zones ne peuvant pas accueillir de panneaux solaires.'
+        'Zones ne pouvant pas accueillir de panneaux solaires.'
       )
     })
   })
