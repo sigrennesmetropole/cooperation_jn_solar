@@ -78,20 +78,14 @@ export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
   const bboxOnRoof = bbox(
     transformScale(bboxPolygon(square(bboxRoofShape)), 1.5)
   )
-  let cellWidth, cellHeight
-  if (roofAzimut < 180) {
-    cellHeight = squareSize
-    cellWidth = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
-  } else {
-    cellWidth = squareSize
-    cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
-  }
+  const cellWidth = squareSize
+  const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
 
   const grid = rectangleGrid(bboxOnRoof, cellWidth, cellHeight, {
     units: 'millimeters',
   })
 
-  transformRotate(grid, -roofAzimut, { mutate: true })
+  transformRotate(grid, roofAzimut, { mutate: true })
 
   grid.features = grid.features.filter((f) => {
     let intersect = false
