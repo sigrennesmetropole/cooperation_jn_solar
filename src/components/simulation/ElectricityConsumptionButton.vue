@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import rectangle from '@/assets/icons/rectangle.svg'
 import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
-import { useSimulationStore } from '@/stores/simulations'
-
-const simulationStore = useSimulationStore()
 </script>
 
 <template>
   <div class="flex flex-col gap-2.5 py-6 font-dm-sans">
     <button
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
-      @click="simulationStore.currentSubStep = 3"
+      @click="$emit('clickAnnualConsumption', 'manual')"
       id="button-manual-input"
     >
       <span class="text-white text-base font-medium"
@@ -24,7 +21,7 @@ const simulationStore = useSimulationStore()
     </div>
     <button
       class="border border-black rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
-      @click="simulationStore.currentSubStep = 4"
+      @click="$emit('clickAnnualConsumption', 'linky')"
       id="button-linky"
     >
       <img :src="expandArrow" class="h-5 w-5" />

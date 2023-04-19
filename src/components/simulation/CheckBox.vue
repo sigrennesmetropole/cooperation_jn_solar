@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, defineEmits } from 'vue'
+import { computed, ref, defineEmits, watchEffect } from 'vue'
 import type { Ref } from 'vue'
 
 const props = defineProps<{
@@ -13,6 +13,10 @@ const emit = defineEmits<{
 
 const checked = ref(props.isChecked)
 const isFocus: Ref<boolean> = ref(false)
+
+watchEffect(() => {
+  checked.value = props.isChecked
+})
 
 function statusChange() {
   checked.value = !checked.value
