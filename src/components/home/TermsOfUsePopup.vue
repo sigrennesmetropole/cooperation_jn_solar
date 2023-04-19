@@ -23,7 +23,7 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
           </button>
         </div>
         <div
-          class="relative flex flex-col mx-auto mt-13 pr-8 rounded-lg gap-8 overflow-auto scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-red-600 scrollbar-track-neutral-400 font-dms-sans"
+          class="relative flex flex-col mx-auto mt-13 pr-8 rounded-lg gap-8 overflow-auto scrollbar-thin scrollbar-w-[3px] scrollbar-thumb-red-600 scrollbar-track-neutral-400 font-dm-sans"
           style="background-color: rgba(255, 255, 255, 1)"
         >
           <p class="text-sm font-normal">
@@ -65,8 +65,11 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
             bloquer l’ensoleillement, tels que les arbres ou bâtiments à
             proximité (visibles dans le Modèle Numérique de Surface), la pente
             et l’orientation de la surface. Plus de détails dans la
-            documentation d’aide Modélisation du rayonnement solaire.
-            <br /><br />
+            <a
+              href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/modeling-solar-radiation.htm"
+              class="underline"
+              >documentation d’aide Modélisation du rayonnement solaire</a
+            >. <br /><br />
             Les résultats de la simulation sont classés suivant le code couleur
             défini ci-dessous et sont affichés sur les toitures des bâtiments de
             la maquette 3D.
@@ -250,7 +253,7 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
             demander la suppression d’un lien qu’elle estime non conforme à sa
             ligne éditoriale.
             <br /><br />
-            Rennes Mé tropole ne peut en aucun cas être tenu responsable de la
+            Rennes Métropole ne peut en aucun cas être tenu responsable de la
             mise à disposition du présent site via un lien hypertexte, et ne
             peut supporter aucune responsabilité sur le contenu, les produits,
             les services, etc. disponibles sur ces sites destinataires ou à

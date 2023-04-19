@@ -146,7 +146,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         Consommation électrique annuelle, adresse et surface d'installation des
         panneaux photovoltaïques :
       </h3>
-      <p class="text-base mb-6">
+      <p class="text-base">
         Ces données sont utilisées par Rennes Métropole pour simuler la part de
         production photovoltaïque associée au pré-dimensionnement d'une
         installation photovoltaïque, consommée sur place et celle revendue et
@@ -163,7 +163,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
 
     <p class="text-2xl font-bold">Licéité du traitement des données</p>
     <div class="font-normal text-base">
-      <p class="mb-6">
+      <p>
         Les traitements de données personnelles que nous mettons en œuvre
         reposent sur le consentement de l'utilisateur (acceptation des cookies,
         communication des données personnelles). Le consentement peut être
@@ -266,8 +266,13 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         propulsant la Plateforme et l'INES réalisant la simulation présentent
         des garanties contractuelles suffisantes et appropriées pour respecter
         vos droits, afin que le traitement réponde aux exigences du RGPD et (ii)
-        à respecter les dispositions du RGPD applicables aux transferts des
-        données.
+        à respecter les
+        <a
+          href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees/chapitre5"
+          class="underline"
+          >dispositions</a
+        >
+        du RGPD applicables aux transferts des données.
       </p>
     </div>
 
@@ -301,8 +306,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
           incident.
         </li>
       </ul>
-      <br />
-      <p>
+      <p class="mt-10">
         En aucun cas les engagements définis au point ci-dessus ne peuvent être
         assimilés à une quelconque reconnaissance de faute ou de responsabilité
         quant à la survenance de l'incident en question.
