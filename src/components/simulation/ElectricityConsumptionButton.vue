@@ -44,6 +44,7 @@ function skipStep() {
       conservée ultérieurement. Je peux également obtenir une simulation
       partielle sans renseigner ma consommation.
       <span
+        id="skipText"
         class="font-medium underline decoration-1 cursor-pointer"
         @click="skipStep()"
         >Passer cette étape</span
