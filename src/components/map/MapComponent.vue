@@ -142,6 +142,7 @@ layerStore.$subscribe(async () => {
 viewStore.$subscribe(async () => {
   createMapInteractions(rennesApp)
 })
+
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)

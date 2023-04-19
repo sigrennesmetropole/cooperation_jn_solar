@@ -1,4 +1,4 @@
-import { Fill, Stroke, Style } from 'ol/style'
+import { Fill, Icon, Stroke, Style } from 'ol/style'
 import { Select } from 'ol/interaction'
 import { always, click } from 'ol/events/condition'
 import {
@@ -29,24 +29,35 @@ import type { GeoJsonProperties, Geometry } from 'geojson'
 import booleanIntersects from '@turf/boolean-intersects'
 import type { MultiPolygon } from '@turf/helpers'
 import { useRoofsStore } from '@/stores/roof'
+import type { Polygon } from 'ol/geom'
+
+import checkIcon from '@/assets/icons/checkicon.png'
 
 const selected = new Style({
-  fill: new Fill({
-    color: 'rgba(255,0,0,0.43)',
-  }),
-  stroke: new Stroke({
-    color: 'rgba(0,0,0,0.7)',
-    width: 2,
+  geometry: function (feature) {
+    const geometry: Polygon = feature.getGeometry() as Polygon
+    const geometryType = geometry.getType()
+    return geometryType == 'Polygon'
+      ? geometry.getInteriorPoint()
+      : geometryType == 'MultiPolygon'
+      ? geometry.getInteriorPoint()
+      : geometry
+  },
+  image: new Icon({
+    anchor: [0.5, 0.5],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'fraction',
+    src: checkIcon,
   }),
 })
 
 const gridStyle = new Style({
   fill: new Fill({
-    color: 'rgba(255,255,255,0)',
+    color: 'rgba(79, 70, 229, 0.2)',
   }),
   stroke: new Stroke({
-    color: 'rgba(0,0,0,0.7)',
-    width: 1,
+    color: 'rgba(255,255,255,0.7)',
+    width: 0.5,
   }),
 })
 let selectClick: Select
@@ -176,6 +187,7 @@ export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
   squares.forEach((square) => {
     const r = square.getGeometry()?.getCoordinates()!
     if (res) {
+      // @ts-ignore
       res = difference(res, polygon(r))
     }
   })
@@ -192,6 +204,7 @@ export function substractSelectedSquares(squareGrid: olFeature<olGeometry>[]) {
 export function getSubstractedRoofArea(
   roofsPans: FeatureCollection<Geometry, GeoJsonProperties>
 ) {
+  // @ts-ignore
   const union: Feature<Geometry, Properties> | null = unionAllRoofPan(roofsPans)
   let res
   if (union) {
