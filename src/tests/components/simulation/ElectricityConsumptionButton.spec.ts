@@ -1,44 +1,25 @@
 import ElectricityConsumptionButton from '@/components/simulation/ElectricityConsumptionButton.vue'
-import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { mount, VueWrapper } from '@vue/test-utils'
-import { createTestingPinia } from '@pinia/testing'
-import { useSimulationStore } from '@/stores/simulations'
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
 
 describe('ElectricityConsumptionButton.vue', () => {
-  let wrapper: VueWrapper
+  it('emits "clickAnnualConsumption" with "manual" when "Saisir les informations de ma facture" button is clicked', async () => {
+    const wrapper = mount(ElectricityConsumptionButton)
 
-  beforeEach(async () => {
-    wrapper = mount(ElectricityConsumptionButton, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-            stubActions: false,
-            stubPatch: false,
-            fakeApp: true,
-          }),
-        ],
-      },
-    })
+    const manualInputButton = wrapper.find('#button-manual-input')
+    await manualInputButton.trigger('click')
+
+    expect(wrapper.emitted('clickAnnualConsumption')).toBeTruthy()
+    expect(wrapper.emitted('clickAnnualConsumption')![0]).toEqual(['manual'])
   })
 
-  it('renders the component correctly', () => {
-    expect(wrapper.exists()).toBe(true)
+  it('emits "clickAnnualConsumption" with "linky" when "Connecter mon compteur Linky" button is clicked', async () => {
+    const wrapper = mount(ElectricityConsumptionButton)
 
-    expect(wrapper.html()).toMatchSnapshot()
-  })
+    const linkyButton = wrapper.find('#button-linky')
+    await linkyButton.trigger('click')
 
-  it('updates currentSubStep to 3 when the first button is clicked', async () => {
-    const simulationStore = useSimulationStore()
-    const firstButton = wrapper.find('[id="button-manual-input"]')
-    await firstButton.trigger('click')
-    expect(simulationStore.currentSubStep).toBe(3)
-  })
-
-  it('updates currentSubStep to 4 when the second button is clicked', async () => {
-    const simulationStore = useSimulationStore()
-    const secondButton = wrapper.find('[id="button-linky"]')
-    await secondButton.trigger('click')
-    expect(simulationStore.currentSubStep).toBe(4)
+    expect(wrapper.emitted('clickAnnualConsumption')).toBeTruthy()
+    expect(wrapper.emitted('clickAnnualConsumption')![0]).toEqual(['linky'])
   })
 })
