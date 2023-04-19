@@ -92,5 +92,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     goToPreviousStep,
     goToNextStep,
     isCurrentStepFinal,
+    goToFinalView,
   }
 })
