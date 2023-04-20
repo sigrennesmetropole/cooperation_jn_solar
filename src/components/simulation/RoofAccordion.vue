@@ -22,7 +22,7 @@ const props = defineProps<{
   >
     <div
       class="flex flex-row items-center p-0 gap-2"
-      :aria-expanded="props.isOpen"
+      :aria-expanded="props.isOpen == true"
     >
       <div class="flex flex-row py-0 px-2 gap-3 grow items-center">
         <div class="flex flex-row p-0 gap-3 grow items-center">
@@ -59,6 +59,7 @@ const props = defineProps<{
     <div class="flex flex-col p-0 bg-white" v-if="props.isOpen">
       <div
         class="box-border flex flex-col p-5 gap-4 border-[1px] border-slate-200 rounded-lg"
+        id="info-box"
       >
         <div class="flex flex-row p-0 gap-4">
           <div class="flex flex-col items-start p-0 grow">
@@ -105,7 +106,7 @@ const props = defineProps<{
       </div>
     </div>
 
-    <div class="flex flex-col p-0 bg-white" v-if="displayContents">
+    <div class="flex flex-col p-0 bg-white" v-if="props.isOpen">
       <RoofInformationsBox
         :roofSurface="props.roofSurface"
         :isDisplayBox="true"

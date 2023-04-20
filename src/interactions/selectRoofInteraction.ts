@@ -92,7 +92,6 @@ class SelectRoofInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
-    if (!this.active) return event
     if (event.type == EventType.CLICK) {
       const selectedBuilding = event.feature
       if (!selectedBuilding) {

@@ -30,7 +30,6 @@ class ForbidenClickInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
-    if (!this.active) return event
     this._isClickOnHomePageValid()
     return event
   }

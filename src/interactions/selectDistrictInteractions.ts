@@ -78,7 +78,6 @@ class SelectDistrictInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
-    if (!this.active) return event
     const districtStore = useDistrictStore()
     const selectedDistrict = event.feature
 

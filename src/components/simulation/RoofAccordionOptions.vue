@@ -2,7 +2,7 @@
 import RoofAccordion from '@/components/simulation/RoofAccordion.vue'
 import { onBeforeMount, reactive } from 'vue'
 import { useRoofsStore } from '@/stores/roof'
-import { RoofSurfaceModel } from '@/model/roof.model'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
 const roofsStore = useRoofsStore()
 let roofsSorted: RoofSurfaceModel[]
