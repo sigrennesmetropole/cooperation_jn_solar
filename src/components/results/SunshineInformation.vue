@@ -1,25 +1,12 @@
 <script setup lang="ts">
 import potentiel from '@/assets/icons/potentiel.svg'
-import { useRoofsStore } from '@/stores/roof'
 import { useAddressStore } from '@/stores/address'
 import RoofInformationsBox from '@/components/simulation/RoofInformationsBox.vue'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
 const addressStore = useAddressStore()
-const roofsStore = useRoofsStore()
 
-const address = addressStore.address
-
-let selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
-//TODO : remove this line when not testing
-selectedRoof = {
-  surface_id: 53123,
-  values: [13.832112, 74.012886, 12.155002, 0],
-  favorable: 10,
-  total: 87,
-  orientation: 'EST',
-  azimuth: 80,
-  inclinaison: 1,
-}
+const props = defineProps<{ selectedRoof: RoofSurfaceModel }>()
 </script>
 
 <template>
@@ -32,11 +19,14 @@ selectedRoof = {
     </div>
 
     <div class="px-2 mt-2">
-      <div class="font-normal text-xs mb-4">
-        {{ address }}
+      <div class="font-normal text-xs mb-4" id="div-address">
+        {{ addressStore.address }}
       </div>
 
-      <RoofInformationsBox :roofSurface="selectedRoof" :isDisplayBox="false" />
+      <RoofInformationsBox
+        :roofSurface="props.selectedRoof"
+        :isDisplayBox="false"
+      />
     </div>
   </div>
 </template>
