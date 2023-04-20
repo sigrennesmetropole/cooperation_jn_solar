@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import rectangle from '@/assets/icons/rectangle.svg'
 import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
-import { useSimulationStore } from '@/stores/simulations'
+import { useSimulationStore, DEFAULT_CONSUMPTION } from '@/stores/simulations'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 
 const simulationStore = useSimulationStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 function skipStep() {
-  consumptionAndProductionStore.setAnnualConsumption(6000)
+  consumptionAndProductionStore.setAnnualConsumption(DEFAULT_CONSUMPTION)
   simulationStore.goToFinalView()
 }
 </script>
