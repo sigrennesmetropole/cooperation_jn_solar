@@ -2,7 +2,6 @@
 import potentiel from '@/assets/icons/potentiel.svg'
 import { useRoofsStore } from '@/stores/roof'
 import { useAddressStore } from '@/stores/address'
-
 import RoofInformationsBox from '@/components/simulation/RoofInformationsBox.vue'
 
 const addressStore = useAddressStore()
