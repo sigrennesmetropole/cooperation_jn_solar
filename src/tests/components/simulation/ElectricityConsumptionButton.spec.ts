@@ -3,6 +3,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { useSimulationStore } from '@/stores/simulations'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 
 describe('ElectricityConsumptionButton.vue', () => {
   let wrapper: VueWrapper
@@ -40,5 +41,12 @@ describe('ElectricityConsumptionButton.vue', () => {
     const secondButton = wrapper.find('[id="button-linky"]')
     await secondButton.trigger('click')
     expect(simulationStore.currentSubStep).toBe(4)
+  })
+  it('update consumption information when "Passer cette étape" is clicked', async () => {
+    const consumptionAndProductionStore = useConsumptionAndProductionStore()
+
+    const skipText = wrapper.find('[id="skipText"]')
+    await skipText.trigger('click')
+    expect(consumptionAndProductionStore.annualConsumption).toBe(6000)
   })
 })
