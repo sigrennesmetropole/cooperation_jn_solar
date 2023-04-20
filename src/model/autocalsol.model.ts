@@ -12,6 +12,8 @@ export type AutocalsolResult = {
   consoByMonth: number[]
   prodByHour: [string, number | string][]
   consoByHour: [string, number | string][]
+  consoAnnualInjected: number
+  consoAnnualAutoConsumed: number
 }
 
 /**
