@@ -13,16 +13,14 @@ onMounted(async () => {})
 </script>
 
 <template>
-  <div class="flex flex-row mx-auto gap-6">
-    <div
-      class="w-[360px] font-dm-sans font-medium flex flex-col mt-[184px] gap-6"
-    >
+  <div class="flex flex-row mx-auto mt-[184px] gap-6 w-[80%] justify-center">
+    <div class="w-[25%] font-dm-sans font-medium flex flex-col gap-6">
       <ConsumptionInformation></ConsumptionInformation>
     </div>
-    <div
-      class="w-[800px] font-dm-sans font-medium flex flex-col mt-[184px] gap-8"
-    >
-      <div></div>
+    <div class="w-[55%] font-dm-sans font-medium flex flex-col gap-8">
+      <div>
+        <ConsumptionInformation></ConsumptionInformation>
+      </div>
     </div>
   </div>
 </template>
