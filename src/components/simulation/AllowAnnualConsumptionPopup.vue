@@ -50,7 +50,7 @@ function checkBoxChange(event: boolean, type_checkbox: 'allow' | 'notallow') {
         class="relative flex flex-col mx-auto mt-25 w-[80%] max-w-full max-h-full p-8 rounded-lg gap-8 overflow-auto"
         style="background-color: rgba(255, 255, 255, 1)"
       >
-        <div class="flex flex-row">
+        <div class="flex flex-row font-dm-sans">
           <h3 class="text-2xl font-bold">
             Quelques précisions avant de continuer :
           </h3>
@@ -83,7 +83,7 @@ function checkBoxChange(event: boolean, type_checkbox: 'allow' | 'notallow') {
             traitées et conservées que le temps de la simulation puis elles
             seront anonymisées.
           </p>
-          <p class="font-medium text-sm text-black">
+          <p class="font-medium text-sm text-neutral-700">
             Vous pouvez lire notre
             <span
               @click="openPrivacy()"

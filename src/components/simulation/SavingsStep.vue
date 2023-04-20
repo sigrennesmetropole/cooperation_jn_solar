@@ -7,6 +7,7 @@ import InformationsLinky from '@/components/simulation/InformationsLinky.vue'
 import AllowAnnualConsumptionPopup from '@/components/simulation/AllowAnnualConsumptionPopup.vue'
 import { ref } from 'vue'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import { DEFAULT_CONSUMPTION } from '@/stores/simulations'
 
 const simulationStore = useSimulationStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
@@ -29,7 +30,7 @@ function clickContinuePopup() {
 
 function goToEndSimulation() {
   isDisplayPopup.value = false
-  consumptionAndProductionStore.setAnnualConsumption(6000)
+  consumptionAndProductionStore.setAnnualConsumption(DEFAULT_CONSUMPTION)
   simulationStore.goToFinalView()
 }
 </script>
