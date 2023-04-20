@@ -18,9 +18,7 @@ onMounted(async () => {})
       <ConsumptionInformation></ConsumptionInformation>
     </div>
     <div class="w-[55%] font-dm-sans font-medium flex flex-col gap-8">
-      <div>
-        <ConsumptionInformation></ConsumptionInformation>
-      </div>
+      <div></div>
     </div>
   </div>
 </template>
