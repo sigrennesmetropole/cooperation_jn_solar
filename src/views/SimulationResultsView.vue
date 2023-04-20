@@ -2,9 +2,10 @@
 import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
+import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
-import { useRoofsStore } from '@/stores/roof'
+import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
@@ -15,6 +16,11 @@ onBeforeMount(async () => {
 
 const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
 
+//TO TEST : remove comment bellow | TODO : remove for production
+// import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+// const consumptionAndProductionStore = useConsumptionAndProductionStore()
+// import { useAddressStore } from '@/stores/address'
+// const addressStore = useAddressStore()
 // consumptionAndProductionStore.setAnnualConsumption(6000)
 // addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
 // const selectedRoof = {
@@ -40,9 +46,9 @@ const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
       <ConsumptionInformation />
     </div>
     <div
-      class="w-[55%] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
+      class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
     >
-      <div></div>
+      <AutocalsolResult />
     </div>
   </div>
 </template>
