@@ -2,6 +2,12 @@
 import electricityProduction from '@/assets/illustrations/electricity-production.svg'
 import equalCircle from '@/assets/illustrations/equal-circle.svg'
 import plusCircle from '@/assets/illustrations/plus-circle.svg'
+
+const props = defineProps<{
+  injected: number
+  autoConsumed: number
+  production: number
+}>()
 </script>
 
 <template>
@@ -26,7 +32,9 @@ import plusCircle from '@/assets/illustrations/plus-circle.svg'
         <div
           class="flex flex-col h-[250px] w-max-[250px] justify-center items-center rounded-lg bg-orange-50 border border-orange-300 px-6 py-4"
         >
-          <span class="font-bold text-3xl mt-2"> 2000 </span>
+          <span class="font-bold text-3xl mt-2">
+            {{ Math.round(props.production) }}
+          </span>
           <span class="font-bold text-base"> kWh/an </span>
           <span class="w-[160px] text-sm font-medium text-center h-[60px]">
             d’électricité produite par votre installation photovoltaïque
@@ -48,7 +56,9 @@ import plusCircle from '@/assets/illustrations/plus-circle.svg'
         <div
           class="h-[250px] w-max-[250px] flex flex-col justify-center items-center rounded-l-lg bg-green-50 border border-r-0 border-green-400 px-6 py-4"
         >
-          <span class="font-bold text-3xl mt-2"> 400 </span>
+          <span class="font-bold text-3xl mt-2">{{
+            Math.round(props.autoConsumed)
+          }}</span>
           <span class="font-bold text-base"> kWh/an </span>
           <span class="w-[160px] text-sm font-medium text-center h-[60px]">
             d’électricité produite et consommée sur place
@@ -72,7 +82,9 @@ import plusCircle from '@/assets/illustrations/plus-circle.svg'
         <div
           class="flex flex-col h-[250px] w-max-[250px] justify-center items-center rounded-r-lg bg-violet-50 border border-l-0 border-indigo-300 px-6 py-4"
         >
-          <span class="font-bold text-3xl mt-2"> 1600 </span>
+          <span class="font-bold text-3xl mt-2">{{
+            Math.round(props.injected)
+          }}</span>
           <span class="font-bold text-base"> kWh/an </span>
           <span class="w-[160px] text-sm font-medium text-center h-[60px]">
             d’électricité vendue et injectée sur le réseau

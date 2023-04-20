@@ -6,21 +6,27 @@ import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
+import { useAutocalsolStore } from '@/stores/autocalsol'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
+const autocalsolStore = useAutocalsolStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['simulation-results'])
 })
 
 const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
+const autocalsolResult = autocalsolStore.autocalsolResult
 
 //TO TEST : remove comment bellow | TODO : remove for production
 // import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 // const consumptionAndProductionStore = useConsumptionAndProductionStore()
 // import { useAddressStore } from '@/stores/address'
 // const addressStore = useAddressStore()
+// import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
+// autocalsolStore.setAutocalsolResult(autocalsolResultExample)
+// const autocalsolResult = autocalsolStore.autocalsolResult
 // consumptionAndProductionStore.setAnnualConsumption(6000)
 // addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
 // const selectedRoof = {
@@ -48,7 +54,10 @@ const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
     <div
       class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
     >
-      <AutocalsolResult />
+      <AutocalsolResult
+        v-if="autocalsolResult !== null"
+        :autocalsolResult="autocalsolResult"
+      />
     </div>
   </div>
 </template>

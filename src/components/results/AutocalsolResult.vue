@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import economies from '@/assets/icons/economies.svg'
 import AutocalsolResultGlobal from '@/components/results/AutocalsolResultGlobal.vue'
+import type { AutocalsolResult } from '@/model/autocalsol.model'
+
+const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
 </script>
 
 <template>
@@ -12,6 +15,13 @@ import AutocalsolResultGlobal from '@/components/results/AutocalsolResultGlobal.
       <span class="font-bold text-2xl"> Votre production d'énergie </span>
     </div>
 
-    <AutocalsolResultGlobal />
+    <AutocalsolResultGlobal
+      :injected="props.autocalsolResult.consoAnnualInjected"
+      :autoConsumed="props.autocalsolResult.consoAnnualAutoConsumed"
+      :production="
+        props.autocalsolResult.consoAnnualInjected +
+        props.autocalsolResult.consoAnnualAutoConsumed
+      "
+    />
   </div>
 </template>
