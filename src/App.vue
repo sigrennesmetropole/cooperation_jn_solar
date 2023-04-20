@@ -91,8 +91,11 @@ const panelAlignment = computed(() => {
     </div>
 
     <div
-      class="flex flex-row bg-slate-100"
-      v-else-if="viewStore.currentView == viewList['end-simulation']"
+      class="flex flex-row bg-slate-100 w-full"
+      v-else-if="
+        viewStore.currentView == viewList['end-simulation'] ||
+        viewStore.currentView == viewList['simulation-results']
+      "
     >
       <RouterView :key="$route.fullPath" />
     </div>

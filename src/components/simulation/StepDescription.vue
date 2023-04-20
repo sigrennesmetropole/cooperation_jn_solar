@@ -24,7 +24,7 @@ const descriptions: Record<number, Record<number, string>> = {
   3: {
     1: 'Estimez quelle sera votre production, quelle part vous consommerez directement (en fonction de votre profil de consommation) et quelle part sera injectée sur le réseau.',
     2: 'Renseignez votre consommation électrique annuelle',
-    3: '',
+    3: 'Pour estimer mes économies (la part d’énergie produite consommée sur place), je renseigne ma consommation électrique annuelle',
     4: '',
   },
 }

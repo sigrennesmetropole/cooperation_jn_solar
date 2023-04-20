@@ -1,6 +1,7 @@
 import ElectricityConsumptionButton from '@/components/simulation/ElectricityConsumptionButton.vue'
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 
 describe('ElectricityConsumptionButton.vue', () => {
   it('emits "clickAnnualConsumption" with "manual" when "Saisir les informations de ma facture" button is clicked', async () => {
@@ -21,5 +22,13 @@ describe('ElectricityConsumptionButton.vue', () => {
 
     expect(wrapper.emitted('clickAnnualConsumption')).toBeTruthy()
     expect(wrapper.emitted('clickAnnualConsumption')![0]).toEqual(['linky'])
+  })
+  it('update consumption information when "Passer cette étape" is clicked', async () => {
+    const consumptionAndProductionStore = useConsumptionAndProductionStore()
+    const wrapper = mount(ElectricityConsumptionButton)
+
+    const skipText = wrapper.find('[id="skipText"]')
+    await skipText.trigger('click')
+    expect(consumptionAndProductionStore.annualConsumption).toBe(6000)
   })
 })

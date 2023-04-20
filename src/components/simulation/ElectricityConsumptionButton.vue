@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import rectangle from '@/assets/icons/rectangle.svg'
 import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import { useSimulationStore, DEFAULT_CONSUMPTION } from '@/stores/simulations'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+
+const simulationStore = useSimulationStore()
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
+
+function skipStep() {
+  consumptionAndProductionStore.setAnnualConsumption(DEFAULT_CONSUMPTION)
+  simulationStore.goToFinalView()
+}
 </script>
 
 <template>
@@ -20,7 +30,7 @@ import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.
       <img :src="rectangle" />
     </div>
     <button
-      class="border border-black rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
+      class="border border-black rounded-lg gap-3 mb-6 px-4 py-3 items-center flex flex-row justify-center"
       @click="$emit('clickAnnualConsumption', 'linky')"
       id="button-linky"
     >
@@ -29,5 +39,16 @@ import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.
         >Connecter mon compteur Linky</span
       >
     </button>
+    <p class="text-xs font-dm-sans font-normal text-neutral-600">
+      Ma consommation n'est traitée que le temps de la simulation et n' est pas
+      conservée ultérieurement. Je peux également obtenir une simulation
+      partielle sans renseigner ma consommation.
+      <span
+        id="skipText"
+        class="font-medium underline decoration-1 cursor-pointer"
+        @click="skipStep()"
+        >Passer cette étape</span
+      >
+    </p>
   </div>
 </template>

@@ -2,6 +2,14 @@ export function getEnv() {
   return import.meta.env.VITE_ENV
 }
 
+export function isDev() {
+  return import.meta.env.DEV
+}
+
+export function isProd() {
+  return import.meta.env.PROD
+}
+
 export function getUrlBackOffice() {
   return import.meta.env.VITE_URL_BACKOFFICE
 }

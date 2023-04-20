@@ -35,7 +35,7 @@ describe('StepDescription', () => {
     const descriptions = [
       'Estimez quelle sera votre production, quelle part vous consommerez directement (en fonction de votre profil de consommation) et quelle part sera injectée sur le réseau.',
       'Renseignez votre consommation électrique annuelle',
-      '',
+      'Pour estimer mes économies (la part d’énergie produite consommée sur place), je renseigne ma consommation électrique annuelle',
       '',
     ]
     it('renders the correct description for each subStep in step', () => {
