@@ -1,21 +1,39 @@
-// import { mount } from '@vue/test-utils'
-// import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
-// import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
-
-// const consumptionAndProductionStore = useConsumptionAndProductionStore()
+import { mount, VueWrapper } from '@vue/test-utils'
+import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import { createTestingPinia } from '@pinia/testing'
+import { vi } from 'vitest'
 
 describe('ConsumptionInformation', () => {
-  //   it('renders correctly', () => {
-  //     const wrapper = mount(ConsumptionInformation, {
-  //     })
-  //     expect(wrapper.exists()).toBe(true)
-  //   })
-  // it('display annual consumption', async () => {
-  //     const wrapper = mount(ConsumptionInformation, {
-  //     })
-  //     consumptionAndProductionStore.setAnnualConsumption(6000)
-  //     const consumptionValue = wrapper.find('[id="consumptionValue"]')
-  //     console.log ("valeur du paragraphe", consumptionValue.text())
-  //     expect(consumptionAndProductionStore.annualConsumption).toBe(consumptionValue.text())
-  //   })
+  let wrapper: VueWrapper
+
+  beforeEach(async () => {
+    wrapper = mount(ConsumptionInformation, {
+      global: {
+        plugins: [
+          createTestingPinia({
+            createSpy: vi.fn,
+            stubActions: false,
+            stubPatch: false,
+            fakeApp: true,
+          }),
+        ],
+      },
+    })
+  })
+
+  it('renders correctly', () => {
+    const consumptionAndProductionStore = useConsumptionAndProductionStore()
+    consumptionAndProductionStore.setAnnualConsumption(6000)
+    expect(wrapper.exists()).toBe(true)
+  })
+  it('display annual consumption', async () => {
+    const consumptionAndProductionStore = useConsumptionAndProductionStore()
+    consumptionAndProductionStore.setAnnualConsumption(6000)
+    await wrapper.vm.$nextTick()
+    const consumptionValue = wrapper.find('[id="consumptionValue"]')
+    expect(consumptionAndProductionStore.annualConsumption + ' kWh/an').toBe(
+      consumptionValue.text()
+    )
+  })
 })
