@@ -5,6 +5,7 @@ import { useViewsStore } from '@/stores/views'
 // import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
+import SolarCoop from '@/components/results/SolarCoop.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
@@ -43,7 +44,9 @@ const selectedRoof = {
 </script>
 
 <template>
-  <div class="flex flex-row mx-auto mt-[184px] w-full gap-6 justify-center">
+  <div
+    class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center overflow-y-scroll"
+  >
     <div
       class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
     >
@@ -61,6 +64,7 @@ const selectedRoof = {
         :autocalsolResult="autocalsolResult"
       />
       <GoFurther></GoFurther>
+      <SolarCoop></SolarCoop>
     </div>
   </div>
 </template>
