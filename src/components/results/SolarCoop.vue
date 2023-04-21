@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
-import photoVoltaique from '@/assets/illustrations/solar-coop.svg'
+import solarCoop from '@/assets/illustrations/solar-coop.svg'
 
 const SOLAR_COOP_LINK = 'https://www.solarcoop.fr/'
 
@@ -20,7 +20,11 @@ function goToSolarCoopInfo() {
       <div
         class="flex flex-row w-[50%] justify-center h-fit border border-neutral-300 rounded-lg px-5 py-8"
       >
-        <img :src="photoVoltaique" />
+        <img
+          :src="solarCoop"
+          @click="goToSolarCoopInfo()"
+          class="cursor-pointer"
+        />
       </div>
       <div class="flex flex-col w-[50%] h-fit">
         <p class="font-dm-sans text-base font-normal">
