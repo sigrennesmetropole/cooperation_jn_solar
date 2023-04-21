@@ -91,7 +91,7 @@ const panelAlignment = computed(() => {
     </div>
 
     <div
-      class="flex flex-row bg-slate-100 w-full"
+      class="overflow-auto flex flex-row bg-slate-100 w-full"
       v-else-if="
         viewStore.currentView == viewList['end-simulation'] ||
         viewStore.currentView == viewList['simulation-results']
@@ -138,5 +138,3 @@ const panelAlignment = computed(() => {
     <notifications position="top left" />
   </main>
 </template>
-
-<style scoped></style>
