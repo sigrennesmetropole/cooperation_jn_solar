@@ -22,6 +22,7 @@ function getIndexCurrentRoof() {
     return
   }
   const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
+  console.log('selectedRoof', selectedRoof)
   roofsSorted.forEach((roof, index) => {
     if (roof.surface_id === selectedRoof?.surface_id) {
       indexSelectedRoof.value = index
