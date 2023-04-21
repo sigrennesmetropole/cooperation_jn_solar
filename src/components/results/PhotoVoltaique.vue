@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import PhotoVoltaique from '@/assets/illustrations/photo_voltaique.svg'
-import GoToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
-import GoToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import photoVoltaique from '@/assets/illustrations/photo_voltaique.svg'
+import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
+import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+
+const PHOTOVOLTAIQUE_LINK = 'https://www.photovoltaique.info/fr/'
 
 function goToPhotovoltaiqueInfo() {
-  window.open('https://www.photovoltaique.info/fr/', '_blank')
+  window.open(PHOTOVOLTAIQUE_LINK, '_blank')
 }
 </script>
 
@@ -13,7 +15,7 @@ function goToPhotovoltaiqueInfo() {
     <div
       class="flex flex-row w-[50%] justify-center h-fit border border-neutral-300 rounded-lg px-5 py-8"
     >
-      <img :src="PhotoVoltaique" />
+      <img :src="photoVoltaique" />
     </div>
     <div class="flex flex-col w-[50%] h-fit">
       <p class="font-dm-sans text-base font-normal">
@@ -23,7 +25,7 @@ function goToPhotovoltaiqueInfo() {
           @click="goToPhotovoltaiqueInfo()"
         >
           <strong> photovoltaique.info &nbsp;</strong>
-          <img :src="GoToBlack" class="w-[14px] h-[14px]" />
+          <img :src="goToBlack" class="w-[14px] h-[14px]" />
         </span>
         regroupe l’essentiel des informations techniques et réglementaires sur
         le photovoltaïque.
@@ -34,7 +36,7 @@ function goToPhotovoltaiqueInfo() {
         id="photovoltaiqueButton"
         class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit items-center flex flex-row justify-center mt-4"
       >
-        <img class="w-5 h-5" :src="GoToWhite" alt="" />
+        <img class="w-5 h-5" :src="goToWhite" alt="" />
         <span class="font-dm-sans text-white text-base font-bold">
           Visiter le site</span
         >

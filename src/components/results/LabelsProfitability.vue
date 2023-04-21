@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import expandIcon from '../../assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import expandIcon from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 
 const props = defineProps<{
   link: string

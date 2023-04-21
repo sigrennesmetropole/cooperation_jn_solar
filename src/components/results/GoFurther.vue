@@ -2,9 +2,9 @@
 import PhotoVoltaique from '@/components/results/PhotoVoltaique.vue'
 import LabelsProfitability from '@/components/results/LabelsProfitability.vue'
 import qualiLabels from '@/assets/illustrations/quali_labels.svg'
-import qualitenr from '../../assets/illustrations/qualitEnR.png'
-import qualibat from '../../assets/illustrations/qualibat.avif'
-import qualifelec from '../../assets/illustrations/qualifelec.png'
+import qualitenr from '@/assets/illustrations/qualitEnR.png'
+import qualibat from '@/assets/illustrations/qualibat.avif'
+import qualifelec from '@/assets/illustrations/qualifelec.png'
 import profitability from '@/assets/illustrations/profitability.svg'
 </script>
 
