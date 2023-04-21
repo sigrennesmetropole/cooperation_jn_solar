@@ -17,7 +17,7 @@ function skipStep() {
   <div class="flex flex-col gap-2.5 py-6 font-dm-sans">
     <button
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
-      @click="simulationStore.currentSubStep = 3"
+      @click="$emit('clickAnnualConsumption', 'manual')"
       id="button-manual-input"
     >
       <span class="text-white text-base font-medium"
@@ -30,8 +30,8 @@ function skipStep() {
       <img :src="rectangle" />
     </div>
     <button
-      class="border border-black rounded-lg gap-3 px-4 py-3 mb-6 items-center flex flex-row justify-center"
-      @click="simulationStore.currentSubStep = 4"
+      class="border border-black rounded-lg gap-3 mb-6 px-4 py-3 items-center flex flex-row justify-center"
+      @click="$emit('clickAnnualConsumption', 'linky')"
       id="button-linky"
     >
       <img :src="expandArrow" class="h-5 w-5" />
