@@ -5,6 +5,7 @@ import { useViewsStore } from '@/stores/views'
 // import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
+import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
@@ -61,6 +62,7 @@ const selectedRoof = {
         :autocalsolResult="autocalsolResult"
       />
       <GoFurther></GoFurther>
+      <EnergiesRennes></EnergiesRennes>
     </div>
   </div>
 </template>
