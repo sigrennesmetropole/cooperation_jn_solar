@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import SimulationSteps from './SimulationSteps.vue'
+import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import { mount } from '@vue/test-utils'
 
 describe('#SimulationsSteps render different step according to input', () => {
