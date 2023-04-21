@@ -7,6 +7,9 @@ import ConsumptionInformation from '@/components/results/ConsumptionInformation.
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
+import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
+import { useAddressStore } from '@/stores/address'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 
 const viewStore = useViewsStore()
 // const roofsStore = useRoofsStore()
@@ -20,17 +23,15 @@ onBeforeMount(async () => {
 // const autocalsolResult = autocalsolStore.autocalsolResult
 
 //TO TEST : remove comment bellow | TODO : remove for production
-import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
-import { useAddressStore } from '@/stores/address'
 const addressStore = useAddressStore()
-import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
+// @ts-ignore
 autocalsolStore.setAutocalsolResult(autocalsolResultExample)
 const autocalsolResult = autocalsolStore.autocalsolResult
 consumptionAndProductionStore.setAnnualConsumption(6000)
 addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
 const selectedRoof = {
-  surface_id: 53123,
+  surface_id: '53123',
   values: [13.832112, 74.012886, 12.155002, 0],
   favorable: 10,
   total: 87,
