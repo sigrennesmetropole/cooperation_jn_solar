@@ -1,10 +1,10 @@
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { type View, viewList } from '@/model/views.model'
+import { type View } from '@/model/views.model'
 
 export const useViewsStore = defineStore('views', () => {
-  const currentView: Ref<View> = ref(viewList.home)
+  const currentView: Ref<View | null> = ref(null)
   function setCurrentView(view: View) {
     currentView.value = view
   }

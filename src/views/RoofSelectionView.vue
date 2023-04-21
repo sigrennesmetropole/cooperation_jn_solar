@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useViewsStore } from '@/stores/views'
 import { computed, inject, onMounted, ref } from 'vue'
-import { viewList } from '@/model/views.model'
 import { usePanelsStore } from '@/stores/panels'
 import FigureEnergy from '@/components/roof_selection/FigureEnergy.vue'
 import AddressTooltip from '@/components/roof_selection/AddressTooltip.vue'
@@ -16,7 +14,6 @@ import {
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
-const viewStore = useViewsStore()
 const addressStore = useAddressStore()
 let isOpen = ref(true)
 let isBuildingSelectionActive = ref(false)
@@ -25,7 +22,6 @@ let addressClosedByUser = ref(false)
 let DISTANCE_MAX_FOR_SELECTION = 600
 
 onMounted(() => {
-  viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true
   rennesApp

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useViewsStore } from '@/stores/views'
 
 const routes = [
   {
@@ -47,6 +48,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const viewStore = useViewsStore()
+  viewStore.setCurrentView(to.name)
+
+  // Continue navigation
+  next()
 })
 
 export { routes }

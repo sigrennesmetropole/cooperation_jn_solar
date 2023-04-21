@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { inject, onBeforeMount } from 'vue'
-import { viewList } from '@/model/views.model'
 import LeaveButton from '@/components/simulation/LeaveButton.vue'
 import SimulationSteps from '@/components/simulation/SimulationSteps.vue'
 import StepTitle from '@/components/simulation/StepTitle.vue'
@@ -12,11 +11,9 @@ import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { createViewpointFromRoofFeature } from '@/services/viewPointHelper'
-
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { usePanelsStore } from '@/stores/panels'
-import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
 
 import type { RennesApp } from '@/services/RennesApp'
@@ -24,13 +21,11 @@ import type { RennesApp } from '@/services/RennesApp'
 const rennesApp = inject('rennesApp') as RennesApp
 
 const panelsStore = usePanelsStore()
-const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
 const roofStore = useRoofsStore()
 const mapStore = useMapStore()
 
 onBeforeMount(() => {
-  viewStore.setCurrentView(viewList['step-sunshine'])
   panelsStore.setTypePanelDisplay('right')
   highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
 })

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue'
-import { viewList } from '@/model/views.model'
-import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
@@ -11,17 +8,9 @@ import { useAutocalsolStore } from '@/stores/autocalsol'
 // import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
 // import { useAddressStore } from '@/stores/address'
 // import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
-import { usePanelsStore } from '@/stores/panels'
 
-const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
 const autocalsolStore = useAutocalsolStore()
-const panelsStore = usePanelsStore()
-
-onBeforeMount(async () => {
-  viewStore.setCurrentView(viewList['simulation-results'])
-  panelsStore.isCompletelyHidden = true
-})
 
 const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
 const autocalsolResult = autocalsolStore.autocalsolResult
@@ -46,24 +35,26 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 </script>
 
 <template>
-  <div class="flex flex-row mx-auto mt-[184px] w-full gap-6 justify-center">
-    <div
-      class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
-    >
-      <SunshineInformation
-        v-if="selectedRoof !== undefined"
-        :selected-roof="selectedRoof"
-      />
-      <ConsumptionInformation />
-    </div>
-    <div
-      class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
-    >
-      <AutocalsolResult
-        v-if="autocalsolResult !== null"
-        :autocalsolResult="autocalsolResult"
-      />
-      <GoFurther></GoFurther>
+  <div class="bg-slate-100 w-full overflow-y-auto">
+    <div class="flex flex-row mx-auto mt-[184px] w-full gap-6 justify-center">
+      <div
+        class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
+      >
+        <SunshineInformation
+          v-if="selectedRoof !== undefined"
+          :selected-roof="selectedRoof"
+        />
+        <ConsumptionInformation />
+      </div>
+      <div
+        class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
+      >
+        <AutocalsolResult
+          v-if="autocalsolResult !== null"
+          :autocalsolResult="autocalsolResult"
+        />
+        <GoFurther></GoFurther>
+      </div>
     </div>
   </div>
 </template>

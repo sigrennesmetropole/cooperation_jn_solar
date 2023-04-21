@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { useViewsStore } from '@/stores/views'
 import { onBeforeMount } from 'vue'
-import { viewList } from '@/model/views.model'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
 import BoxStep from '@/components/simulation/BoxStep.vue'
@@ -15,7 +13,6 @@ import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { usePopUpStore } from '@/stores/popUpStore'
 
-const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
 const roofStore = useRoofsStore()
 const mapStore = useMapStore()
@@ -23,7 +20,6 @@ const router = useRouter()
 const popUpStore = usePopUpStore()
 
 onBeforeMount(async () => {
-  viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
   panelsStore.isCompletelyHidden = false
   if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
