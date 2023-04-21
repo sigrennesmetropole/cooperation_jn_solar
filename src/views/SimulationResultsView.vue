@@ -4,6 +4,7 @@ import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 // import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
+import GoFurther from '@/components/results/GoFurther.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
@@ -59,6 +60,7 @@ const selectedRoof = {
         v-if="autocalsolResult !== null"
         :autocalsolResult="autocalsolResult"
       />
+      <GoFurther></GoFurther>
     </div>
   </div>
 </template>
