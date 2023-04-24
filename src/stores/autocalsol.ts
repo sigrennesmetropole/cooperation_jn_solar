@@ -6,7 +6,7 @@ import type { AutocalsolResult } from '@/model/autocalsol.model'
 export const useAutocalsolStore = defineStore('autocalsolStore', () => {
   const autocalsolResult: Ref<AutocalsolResult | null> = ref(null)
 
-  function setAutocalsolResult(result: AutocalsolResult) {
+  function setAutocalsolResult(result: AutocalsolResult | null) {
     autocalsolResult.value = result
   }
 
