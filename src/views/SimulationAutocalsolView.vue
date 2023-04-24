@@ -12,14 +12,21 @@ import { getPeakPower } from '@/services/solarPanel'
 import { apiAutocalsolService } from '@/services/api-autocalsol'
 import type { AutocalsolData } from '@/model/autocalsol.model'
 import { azimuthForAutocalsol } from '@/model/autocalsol.model'
+import { useAutocalsolStore } from '@/stores/autocalsol'
+import { useRouter } from 'vue-router'
+import { usePanelsStore } from '@/stores/panels'
 
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
 const roofsStore = useRoofsStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
+const autocalsolStore = useAutocalsolStore()
+const router = useRouter()
+const panelsStore = usePanelsStore()
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['end-simulation'])
+  panelsStore.isCompletelyHidden = true
 })
 
 const state = reactive({
@@ -51,21 +58,25 @@ onMounted(async () => {
   state.autocalsolResult = await apiAutocalsolService.getComputeData(
     state.dataAutocalsol
   )
+  autocalsolStore.setAutocalsolResult(state.autocalsolResult)
   console.log(state.autocalsolResult)
+  router.push('/simulation-results')
 })
 </script>
 
 <template>
-  <div
-    class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll gap-6"
-  >
+  <div class="overflow-auto flex flex-row bg-slate-100 w-full">
     <div
-      class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
+      class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll gap-6"
     >
-      {{ state.dataAutocalsol }}
+      <div
+        class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
+      >
+        {{ state.dataAutocalsol }}
+      </div>
+      <WaitingAnimation></WaitingAnimation>
+      <FailComponent></FailComponent>
+      <CertifiedInstaller></CertifiedInstaller>
     </div>
-    <WaitingAnimation></WaitingAnimation>
-    <FailComponent></FailComponent>
-    <CertifiedInstaller></CertifiedInstaller>
   </div>
 </template>

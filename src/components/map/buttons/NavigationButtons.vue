@@ -43,7 +43,7 @@ const shouldDisplayHomeButton = () => {
     viewList.home,
     viewList['roof-selection'],
     viewList['roof-selected-information'],
-  ].includes(viewStore.currentView)
+  ].includes(viewStore.currentView!)
 }
 
 const heightClass = computed(() => {

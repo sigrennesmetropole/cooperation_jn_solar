@@ -30,7 +30,6 @@ function goToPhotovoltaiqueInfo() {
         regroupe l’essentiel des informations techniques et réglementaires sur
         le photovoltaïque.
       </p>
-
       <button
         @click="goToPhotovoltaiqueInfo()"
         id="photovoltaiqueButton"
