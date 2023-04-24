@@ -5,6 +5,7 @@ import type { View } from '@/model/views.model'
 
 export const useViewsStore = defineStore('views', () => {
   const currentView: Ref<View | null> = ref(null)
+
   function setCurrentView(view: View) {
     currentView.value = view
   }

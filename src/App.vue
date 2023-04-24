@@ -25,28 +25,28 @@ onBeforeMount(() => {
 })
 function isLeftPanelRetractable() {
   const retractableList = viewList['roof-selection']
-  return retractableList.includes(viewStore.currentView)
+  return retractableList.includes(viewStore.currentView!)
 }
 const isDisplaySearchBar = computed(() => {
   return [
     viewList['roof-selection'],
     viewList['roof-selected-information'],
     viewList.home,
-  ].includes(viewStore.currentView)
+  ].includes(viewStore.currentView!)
 })
 const isDisplayAsideAndMap = computed(() => {
   return [
     viewList['home'],
     viewList['roof-selected-information'],
     viewList['step-sunshine'],
-  ].includes(viewStore.currentView)
+  ].includes(viewStore.currentView!)
 })
 const isDisplayFloatAndMap = computed(() => {
-  return [viewList['roof-selection']].includes(viewStore.currentView)
+  return [viewList['roof-selection']].includes(viewStore.currentView!)
 })
 const isDisplayDistrictCheckbox = computed(() => {
   return [viewList['home'], viewList['roof-selection']].includes(
-    viewStore.currentView
+    viewStore.currentView!
   )
 })
 const panelAlignment = computed(() => {
@@ -65,7 +65,7 @@ const isPageFullScreen = computed(() => {
     viewList['end-simulation'],
     viewList['simulation-results'],
     null,
-  ].includes(viewStore.currentView)
+  ].includes(viewStore.currentView!)
 })
 </script>
 
