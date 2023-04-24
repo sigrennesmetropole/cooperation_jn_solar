@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, reactive } from 'vue'
 import WaitingAnimation from '@/components/simulation/WaitingAnimation.vue'
+import FailComponent from '@/components/simulation/FailComponent.vue'
 import CertifiedInstaller from '@/components/simulation/CertifiedInstaller.vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
@@ -64,6 +65,7 @@ onMounted(async () => {
       {{ state.dataAutocalsol }}
     </div>
     <WaitingAnimation></WaitingAnimation>
+    <FailComponent></FailComponent>
     <CertifiedInstaller></CertifiedInstaller>
   </div>
 </template>
