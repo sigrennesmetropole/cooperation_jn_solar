@@ -34,6 +34,9 @@ import { useRoofsStore } from '@/stores/roof'
 import type { Polygon } from 'ol/geom'
 
 import checkIcon from '@/assets/icons/checkicon.png'
+import { OlDragSquaresInteraction } from '@/interactions/olDragSquaresInteraction'
+import type { Vector as VectorLayer } from 'ol/layer'
+import type { Vector as VectorSource } from 'ol/source'
 
 const selected = new Style({
   geometry: function (feature) {
@@ -63,6 +66,7 @@ const gridStyle = new Style({
   }),
 })
 let selectClick: Select
+let dragSquaresInteraction: OlDragSquaresInteraction
 
 /**
  * Mock of the future function, which will return the shape of the roof in the right format
@@ -153,17 +157,22 @@ export function addRoofInteractionOn2dMap(rennesApp: RennesApp) {
     style: selected,
     layers: (layer) => layer == olLayer.olLayer,
   })
-  map.addInteraction(selectClick)
+  dragSquaresInteraction = new OlDragSquaresInteraction(
+    olLayer.getOLLayer() as VectorLayer<VectorSource>,
+    selected
+  )
+  map.addInteraction(dragSquaresInteraction)
 }
 
 export function removeRoofInteractionOn2dMap(rennesApp: RennesApp) {
   const map = rennesApp.getOpenlayerMap()
   map.removeInteraction(selectClick)
+  map.removeInteraction(dragSquaresInteraction)
 }
 
 export function getSquaresOfInteraction() {
   const features: olFeature[] = []
-  selectClick.getFeatures().forEach((selectFeature) => {
+  dragSquaresInteraction.getSelected().forEach((selectFeature) => {
     const reprojFeature = selectFeature
     reprojFeature.setGeometry(
       selectFeature.getGeometry()?.transform('EPSG:3857', 'EPSG:4326')
@@ -171,6 +180,14 @@ export function getSquaresOfInteraction() {
     features.push(reprojFeature)
   })
   return features
+  // selectClick.getFeatures().forEach((selectFeature) => {
+  //   const reprojFeature = selectFeature
+  //   reprojFeature.setGeometry(
+  //     selectFeature.getGeometry()?.transform('EPSG:3857', 'EPSG:4326')
+  //   )
+  //   features.push(reprojFeature)
+  // })
+  // return features
 }
 
 export function unionAllRoofPan(roofPans: GeoJSONFeatureCollection) {
