@@ -15,22 +15,18 @@ import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
-
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const popUpStore = usePopUpStore()
 const districtStore = useDistrictStore()
-
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
 })
-
 function isLeftPanelRetractable() {
   const retractableList = viewList['roof-selection']
   return retractableList.includes(viewStore.currentView)
 }
-
 const isDisplaySearchBar = computed(() => {
   return [
     viewList['roof-selection'],
@@ -38,7 +34,6 @@ const isDisplaySearchBar = computed(() => {
     viewList.home,
   ].includes(viewStore.currentView)
 })
-
 const isDisplayAsideAndMap = computed(() => {
   return [
     viewList['home'],
@@ -46,17 +41,14 @@ const isDisplayAsideAndMap = computed(() => {
     viewList['step-sunshine'],
   ].includes(viewStore.currentView)
 })
-
 const isDisplayFloatAndMap = computed(() => {
   return [viewList['roof-selection']].includes(viewStore.currentView)
 })
-
 const isDisplayDistrictCheckbox = computed(() => {
   return [viewList['home'], viewList['roof-selection']].includes(
     viewStore.currentView
   )
 })
-
 const panelAlignment = computed(() => {
   if (panelStore.isRightPanel()) {
     return 'right-0'
@@ -67,76 +59,75 @@ const panelAlignment = computed(() => {
   // for floating-left, nothing to see
   return ''
 })
+const isPageFullScreen = computed(() => {
+  return [
+    viewList['legal-notice'],
+    viewList['end-simulation'],
+    viewList['simulation-results'],
+    null,
+  ].includes(viewStore.currentView)
+})
 </script>
 
 <template>
   <main class="h-screen flex">
-    <aside
-      class="z-10 absolute"
-      :class="panelAlignment"
-      v-if="isDisplayAsideAndMap"
-    >
-      <SidePanel :is-retractable="isLeftPanelRetractable()">
+    <template v-if="isPageFullScreen">
+      <RouterView :key="$route.fullPath" />
+    </template>
+    <template v-else>
+      <aside
+        class="z-10 absolute"
+        :class="panelAlignment"
+        v-if="isDisplayAsideAndMap"
+      >
+        <SidePanel :is-retractable="isLeftPanelRetractable()">
+          <RouterView :key="$route.fullPath" />
+        </SidePanel>
+      </aside>
+      <div v-if="isDisplayFloatAndMap">
         <RouterView :key="$route.fullPath" />
-      </SidePanel>
-    </aside>
-    <div v-if="isDisplayFloatAndMap">
-      <RouterView :key="$route.fullPath" />
-    </div>
-    <div
-      class="flex flex-row bg-neutral-100"
-      v-else-if="viewStore.currentView == viewList['legal-notice']"
-    >
-      <RouterView :key="$route.fullPath" />
-    </div>
+      </div>
 
-    <div
-      class="flex flex-row bg-slate-100 w-full"
-      v-else-if="
-        viewStore.currentView == viewList['end-simulation'] ||
-        viewStore.currentView == viewList['simulation-results']
-      "
-    >
-      <RouterView :key="$route.fullPath" />
-    </div>
+      <div
+        class="grow"
+        :style="
+          panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''
+        "
+      >
+        <MapComponent
+          v-if="isDisplayAsideAndMap || isDisplayFloatAndMap"
+        ></MapComponent>
+      </div>
 
-    <div
-      class="grow"
-      :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
-    >
-      <MapComponent
-        v-if="isDisplayAsideAndMap || isDisplayFloatAndMap"
-      ></MapComponent>
-    </div>
+      <SearchBar
+        v-if="isDisplaySearchBar"
+        class="absolute z-20 top-6 left-6"
+        :style="
+          viewStore.currentView === viewList.home
+            ? 'left: 480px;'
+            : 'left: 24px;'
+        "
+        :isRedirectOnSearch="viewStore.currentView !== viewList.home"
+      ></SearchBar>
 
-    <SearchBar
-      v-if="isDisplaySearchBar"
-      class="absolute z-20 top-6 left-6"
-      :style="
-        viewStore.currentView === viewList.home ? 'left: 480px;' : 'left: 24px;'
-      "
-      :isRedirectOnSearch="viewStore.currentView !== viewList.home"
-    ></SearchBar>
+      <UiExplanationsStepSunshine />
 
-    <UiExplanationsStepSunshine />
+      <DistrictDataTooltip
+        v-if="districtStore.checkboxChecked === true"
+      ></DistrictDataTooltip>
 
-    <DistrictDataTooltip
-      v-if="districtStore.checkboxChecked === true"
-    ></DistrictDataTooltip>
+      <DistrictDisplayButton
+        v-if="isDisplayDistrictCheckbox"
+        class="absolute z-20"
+      ></DistrictDisplayButton>
 
-    <DistrictDisplayButton
-      v-if="isDisplayDistrictCheckbox"
-      class="absolute z-20"
-    ></DistrictDisplayButton>
-
-    <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
-    <TermsOfUsePopup
-      v-if="popUpStore.isDisplayTermsOfUse"
-      @close="popUpStore.closeTermsOfUse()"
-    />
+      <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
+      <TermsOfUsePopup
+        v-if="popUpStore.isDisplayTermsOfUse"
+        @close="popUpStore.closeTermsOfUse()"
+      />
+    </template>
 
     <notifications position="top left" />
   </main>
 </template>
-
-<style scoped></style>
