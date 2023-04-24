@@ -5,6 +5,7 @@ import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
+import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
 import SolarCoop from '@/components/results/SolarCoop.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
@@ -66,6 +67,7 @@ const autocalsolResult = autocalsolStore.autocalsolResult
         />
         <GoFurther></GoFurther>
         <SolarCoop></SolarCoop>
+        <EnergiesRennes></EnergiesRennes>
       </div>
     </div>
   </div>
