@@ -52,7 +52,7 @@ export function isInteractionBuilding() {
   return [
     viewList['roof-selected-information'],
     viewList['roof-selection'],
-  ].includes(viewStore.currentView)
+  ].includes(viewStore.currentView!)
 }
 
 export function isInteractionPanRoof() {
@@ -70,7 +70,7 @@ function isInteractionDistrict() {
   const districtStore = useDistrictStore()
   return (
     [viewList['home'], viewList['roof-selection']].includes(
-      viewStore.currentView
+      viewStore.currentView!
     ) && districtStore.checkboxChecked === true
   )
 }
