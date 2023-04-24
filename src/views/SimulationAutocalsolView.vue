@@ -11,6 +11,8 @@ import { getPeakPower } from '@/services/solarPanel'
 import { apiAutocalsolService } from '@/services/api-autocalsol'
 import type { AutocalsolData } from '@/model/autocalsol.model'
 import { azimuthForAutocalsol } from '@/model/autocalsol.model'
+import LargeFooter from '@/components/simulation/LargeFooter.vue'
+import { legalList } from '@/constants/legalLinks'
 
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
@@ -65,5 +67,8 @@ onMounted(async () => {
     </div>
     <WaitingAnimation></WaitingAnimation>
     <CertifiedInstaller></CertifiedInstaller>
+    <div class="mx-16 py-10">
+      <LargeFooter class="mt-auto" :legalList="legalList"></LargeFooter>
+    </div>
   </div>
 </template>

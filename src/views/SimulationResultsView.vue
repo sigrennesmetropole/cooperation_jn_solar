@@ -11,6 +11,8 @@ import { useAutocalsolStore } from '@/stores/autocalsol'
 import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
 import { useAddressStore } from '@/stores/address'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import LargeFooter from '@/components/simulation/LargeFooter.vue'
+import { legalList } from '@/constants/legalLinks'
 
 const viewStore = useViewsStore()
 // const roofsStore = useRoofsStore()
@@ -43,24 +45,29 @@ const selectedRoof = {
 </script>
 
 <template>
-  <div class="flex flex-row mx-auto mt-[184px] w-full gap-6 justify-center">
-    <div
-      class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
-    >
-      <SunshineInformation
-        v-if="selectedRoof !== undefined"
-        :selected-roof="selectedRoof"
-      />
-      <ConsumptionInformation />
+  <div class="flex flex-col w-full overflow-y-scroll gap-20">
+    <div class="flex flex-row mx-auto mt-[184px] w-full gap-6 justify-center">
+      <div
+        class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
+      >
+        <SunshineInformation
+          v-if="selectedRoof !== undefined"
+          :selected-roof="selectedRoof"
+        />
+        <ConsumptionInformation />
+      </div>
+      <div
+        class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
+      >
+        <AutocalsolResult
+          v-if="autocalsolResult !== null"
+          :autocalsolResult="autocalsolResult"
+        />
+        <GoFurther></GoFurther>
+      </div>
     </div>
-    <div
-      class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
-    >
-      <AutocalsolResult
-        v-if="autocalsolResult !== null"
-        :autocalsolResult="autocalsolResult"
-      />
-      <GoFurther></GoFurther>
+    <div class="mx-16 py-10">
+      <LargeFooter class="mt-auto" :legalList="legalList"></LargeFooter>
     </div>
   </div>
 </template>
