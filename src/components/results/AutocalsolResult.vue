@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import economies from '@/assets/icons/economies.svg'
 import AutocalsolResultGlobal from '@/components/results/AutocalsolResultGlobal.vue'
+import NeighbourhoodData from '@/components/results/NeighbourhoodData.vue'
 import type { AutocalsolResult } from '@/model/autocalsol.model'
 
 const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
@@ -23,5 +24,6 @@ const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
         props.autocalsolResult.consoAnnualAutoConsumed
       "
     />
+    <NeighbourhoodData></NeighbourhoodData>
   </div>
 </template>
