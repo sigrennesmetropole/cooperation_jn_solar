@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, reactive } from 'vue'
+import { onBeforeMount, onMounted, reactive, ref, Ref } from 'vue'
 import WaitingAnimation from '@/components/simulation/WaitingAnimation.vue'
 import FailComponent from '@/components/simulation/FailComponent.vue'
 import CertifiedInstaller from '@/components/simulation/CertifiedInstaller.vue'
@@ -24,6 +24,8 @@ const autocalsolStore = useAutocalsolStore()
 const router = useRouter()
 const panelsStore = usePanelsStore()
 
+let isAutocalsolError: Ref<boolean> = ref(false)
+
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['end-simulation'])
   panelsStore.isCompletelyHidden = true
@@ -34,7 +36,8 @@ const state = reactive({
   autocalsolResult: null as null,
 })
 
-onMounted(async () => {
+async function callAutocalsolApi() {
+  isAutocalsolError.value = false
   let selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
   if (
     selectedRoof === undefined ||
@@ -55,12 +58,23 @@ onMounted(async () => {
     peak_power: getPeakPower(),
   }
 
-  state.autocalsolResult = await apiAutocalsolService.getComputeData(
-    state.dataAutocalsol
-  )
-  autocalsolStore.setAutocalsolResult(state.autocalsolResult)
-  console.log(state.autocalsolResult)
-  router.push('/simulation-results')
+  try {
+    state.autocalsolResult = await apiAutocalsolService.getComputeData(
+      state.dataAutocalsol
+    )
+    autocalsolStore.setAutocalsolResult(state.autocalsolResult)
+    if (autocalsolStore.autocalsolResult === null) {
+      isAutocalsolError.value = true
+    } else {
+      router.push('/simulation-results')
+    }
+  } catch (error) {
+    isAutocalsolError.value = true
+  }
+}
+
+onMounted(async () => {
+  callAutocalsolApi()
 })
 </script>
 
@@ -74,8 +88,11 @@ onMounted(async () => {
       >
         {{ state.dataAutocalsol }}
       </div>
-      <WaitingAnimation></WaitingAnimation>
-      <FailComponent></FailComponent>
+      <WaitingAnimation v-if="isAutocalsolError === false"></WaitingAnimation>
+      <FailComponent
+        v-if="isAutocalsolError === true"
+        @retry-end-simulation="callAutocalsolApi()"
+      ></FailComponent>
       <CertifiedInstaller></CertifiedInstaller>
     </div>
   </div>
