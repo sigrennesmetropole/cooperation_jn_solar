@@ -106,9 +106,7 @@ onMounted(async () => {
 
 <template>
   <div class="overflow-auto flex flex-row bg-slate-100 w-full">
-    <div
-      class="w-screen font-dm-sans font-medium flex flex-col gap-6"
-    >
+    <div class="w-screen font-dm-sans font-medium flex flex-col gap-6">
       <div
         class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
       >
@@ -120,9 +118,9 @@ onMounted(async () => {
         @retry-end-simulation="callAutocalsolApi()"
       ></FailComponent>
       <CertifiedInstaller></CertifiedInstaller>
-    <div class="mx-16 py-10">
-      <LargeFooter class="mt-auto" :legalList="legalList"></LargeFooter>
+      <div class="mx-16 py-10">
+        <LargeFooter class="mt-auto" :legalList="legalList"></LargeFooter>
+      </div>
     </div>
   </div>
- </div>
 </template>
