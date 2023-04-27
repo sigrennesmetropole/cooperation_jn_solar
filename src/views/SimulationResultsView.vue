@@ -44,10 +44,8 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 </script>
 
 <template>
-  <div class="bg-slate-100 w-full overflow-y-auto">
-    <div
-      class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center overflow-y-scroll"
-    >
+  <div class="bg-slate-100 w-full overflow-y-scroll">
+    <div class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center">
       <div
         class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
       >
