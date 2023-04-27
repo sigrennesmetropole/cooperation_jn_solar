@@ -10,7 +10,7 @@ import { useRoofsStore } from '@/stores/roof'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { getPeakPower } from '@/services/solarPanel'
 import { apiAutocalsolService } from '@/services/api-autocalsol'
-import type { AutocalsolData } from '@/model/autocalsol.model'
+import type { AutocalsolData, AutocalsolResult } from '@/model/autocalsol.model'
 import { azimuthForAutocalsol } from '@/model/autocalsol.model'
 import { useAutocalsolStore } from '@/stores/autocalsol'
 import { useRouter } from 'vue-router'
@@ -25,6 +25,27 @@ const router = useRouter()
 const panelsStore = usePanelsStore()
 
 let isAutocalsolError: Ref<boolean> = ref(false)
+
+function isAutocalsolResult(
+  result: {
+    prodByMonth: number[]
+    consoByMonth: number[]
+    prodByHour: [string, string | number][]
+    consoByHour: [string, string | number][]
+    consoAnnualInjected: number
+    consoAnnualAutoConsumed: number
+  } | null
+): result is AutocalsolResult {
+  return (
+    typeof result === 'object' &&
+    result?.prodByMonth instanceof Array &&
+    result?.consoByMonth instanceof Array &&
+    result?.prodByHour instanceof Array &&
+    result?.consoByHour instanceof Array &&
+    typeof result?.consoAnnualInjected === 'number' &&
+    typeof result?.consoAnnualAutoConsumed === 'number'
+  )
+}
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['end-simulation'])
@@ -63,7 +84,10 @@ async function callAutocalsolApi() {
       state.dataAutocalsol
     )
     autocalsolStore.setAutocalsolResult(state.autocalsolResult)
-    if (autocalsolStore.autocalsolResult === null) {
+    if (
+      !isAutocalsolResult(autocalsolStore.autocalsolResult) ||
+      autocalsolStore.autocalsolResult === null
+    ) {
       isAutocalsolError.value = true
     } else {
       router.push('/simulation-results')
