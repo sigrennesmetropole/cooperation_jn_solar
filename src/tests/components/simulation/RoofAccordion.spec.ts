@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import RoofAccordion from '../../../components/simulation/RoofAccordion.vue'
+import RoofAccordion from '@/components/simulation/RoofAccordion.vue'
 import { mount } from '@vue/test-utils'
 import type { RoofSurfaceModel } from '@/model/roof.model'
+import RoofInformationsBox from '@/components/simulation/RoofInformationsBox.vue'
 
 const roofSurface: RoofSurfaceModel = {
   surface_id: '1',
@@ -34,7 +35,7 @@ describe('#RoofAccordion', () => {
       index: 0,
     }
     const wrapper = mount(RoofAccordion, { props })
-    const divTravelTime = wrapper.findAll('#info-box')
+    const divTravelTime = wrapper.findAllComponents(RoofInformationsBox)
     expect(divTravelTime.length).toBe(1)
   })
   it('is not expanded when isOpen to false', () => {

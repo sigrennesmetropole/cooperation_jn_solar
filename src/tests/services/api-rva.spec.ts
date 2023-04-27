@@ -1,6 +1,6 @@
 import fetchMock from 'jest-fetch-mock'
-import { describe, it, expect } from 'vitest'
 import { apiRvaService } from '@/services/api-rva'
+import { describe, afterEach, expect, it } from 'vitest'
 
 fetchMock.enableMocks()
 
