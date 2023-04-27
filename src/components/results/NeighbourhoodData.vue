@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import warning from '@/assets/icons/chat-message-warning.svg'
-import { apiInseeIrisService } from '@/services/api-insee-code-iris'
+import { apiIrisService } from '@/services/api-code-iris'
 import { useAddressStore } from '@/stores/address'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { onBeforeMount } from 'vue'
@@ -10,7 +10,7 @@ const districtStore = useDistrictStore()
 const addressStore = useAddressStore()
 
 async function gettingIrisCode(lat: string, lon: string) {
-  const irisCode = await apiInseeIrisService.getCodeIris(lat, lon)
+  const irisCode = await apiIrisService.getCodeIris(lat, lon)
   districtStore.setDistrictIrisCode(irisCode)
   return irisCode
 }
@@ -47,11 +47,11 @@ onBeforeMount(async () => {
     <p>
       Cette installation contribuerait à la transition énergétique de votre
       quartier/commune qui dispose de
-      <span class="font-bold">{{
+      <span class="font-bold" id="number-panel">{{
         districtStore.districtNumberInstallations
       }}</span>
       sites de production photovoltaïque représentant annuellement
-      <span class="font-bold"
+      <span class="font-bold" id="district-production"
         >{{ keepDecimals(districtStore.districtProduction, 1) }} MWh.</span
       >
     </p>
