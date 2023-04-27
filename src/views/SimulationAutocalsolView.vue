@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, reactive } from 'vue'
+import { onBeforeMount, onMounted, reactive, ref, Ref } from 'vue'
 import WaitingAnimation from '@/components/simulation/WaitingAnimation.vue'
+import FailComponent from '@/components/simulation/FailComponent.vue'
 import CertifiedInstaller from '@/components/simulation/CertifiedInstaller.vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
@@ -9,18 +10,48 @@ import { useRoofsStore } from '@/stores/roof'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { getPeakPower } from '@/services/solarPanel'
 import { apiAutocalsolService } from '@/services/api-autocalsol'
-import type { AutocalsolData } from '@/model/autocalsol.model'
+import type { AutocalsolData, AutocalsolResult } from '@/model/autocalsol.model'
 import { azimuthForAutocalsol } from '@/model/autocalsol.model'
 import LargeFooter from '@/components/simulation/LargeFooter.vue'
 import { legalList } from '@/constants/legalLinks'
+import { useAutocalsolStore } from '@/stores/autocalsol'
+import { useRouter } from 'vue-router'
+import { usePanelsStore } from '@/stores/panels'
 
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
 const roofsStore = useRoofsStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
+const autocalsolStore = useAutocalsolStore()
+const router = useRouter()
+const panelsStore = usePanelsStore()
+
+let isAutocalsolError: Ref<boolean> = ref(false)
+
+function isAutocalsolResult(
+  result: {
+    prodByMonth: number[]
+    consoByMonth: number[]
+    prodByHour: [string, string | number][]
+    consoByHour: [string, string | number][]
+    consoAnnualInjected: number
+    consoAnnualAutoConsumed: number
+  } | null
+): result is AutocalsolResult {
+  return (
+    typeof result === 'object' &&
+    result?.prodByMonth instanceof Array &&
+    result?.consoByMonth instanceof Array &&
+    result?.prodByHour instanceof Array &&
+    result?.consoByHour instanceof Array &&
+    typeof result?.consoAnnualInjected === 'number' &&
+    typeof result?.consoAnnualAutoConsumed === 'number'
+  )
+}
 
 onBeforeMount(() => {
   viewStore.setCurrentView(viewList['end-simulation'])
+  panelsStore.isCompletelyHidden = true
 })
 
 const state = reactive({
@@ -28,7 +59,8 @@ const state = reactive({
   autocalsolResult: null as null,
 })
 
-onMounted(async () => {
+async function callAutocalsolApi() {
+  isAutocalsolError.value = false
   let selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
   if (
     selectedRoof === undefined ||
@@ -49,26 +81,48 @@ onMounted(async () => {
     peak_power: getPeakPower(),
   }
 
-  state.autocalsolResult = await apiAutocalsolService.getComputeData(
-    state.dataAutocalsol
-  )
-  console.log(state.autocalsolResult)
+  try {
+    state.autocalsolResult = await apiAutocalsolService.getComputeData(
+      state.dataAutocalsol
+    )
+    autocalsolStore.setAutocalsolResult(state.autocalsolResult)
+    if (
+      !isAutocalsolResult(autocalsolStore.autocalsolResult) ||
+      autocalsolStore.autocalsolResult === null
+    ) {
+      isAutocalsolError.value = true
+    } else {
+      router.push('/simulation-results')
+    }
+  } catch (error) {
+    isAutocalsolError.value = true
+  }
+}
+
+onMounted(async () => {
+  callAutocalsolApi()
 })
 </script>
 
 <template>
-  <div
-    class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll gap-6"
-  >
+  <div class="overflow-auto flex flex-row bg-slate-100 w-full">
     <div
-      class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
+      class="w-screen font-dm-sans font-medium flex flex-col gap-6"
     >
-      {{ state.dataAutocalsol }}
-    </div>
-    <WaitingAnimation></WaitingAnimation>
-    <CertifiedInstaller></CertifiedInstaller>
+      <div
+        class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
+      >
+        {{ state.dataAutocalsol }}
+      </div>
+      <WaitingAnimation v-if="isAutocalsolError === false"></WaitingAnimation>
+      <FailComponent
+        v-if="isAutocalsolError === true"
+        @retry-end-simulation="callAutocalsolApi()"
+      ></FailComponent>
+      <CertifiedInstaller></CertifiedInstaller>
     <div class="mx-16 py-10">
       <LargeFooter class="mt-auto" :legalList="legalList"></LargeFooter>
     </div>
   </div>
+ </div>
 </template>

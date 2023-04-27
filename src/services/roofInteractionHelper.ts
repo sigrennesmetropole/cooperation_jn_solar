@@ -4,7 +4,9 @@ import { always, click } from 'ol/events/condition'
 import {
   bbox,
   bboxPolygon,
+  booleanPointInPolygon,
   buffer,
+  center,
   difference,
   point,
   polygon,
@@ -14,6 +16,7 @@ import {
   transformScale,
   union,
 } from '@turf/turf'
+import type { Polygon as turfPolygon } from '@turf/helpers'
 import rectangleGrid from '@turf/rectangle-grid'
 import type { Feature, FeatureCollection, Properties } from '@turf/helpers'
 import type olFeature from 'ol/Feature'
@@ -26,7 +29,6 @@ import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import type { GeoJsonProperties, Geometry } from 'geojson'
-import booleanIntersects from '@turf/boolean-intersects'
 import type { MultiPolygon } from '@turf/helpers'
 import { useRoofsStore } from '@/stores/roof'
 import type { Polygon } from 'ol/geom'
@@ -97,11 +99,15 @@ export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
   })
 
   transformRotate(grid, roofAzimut, { mutate: true })
-
   grid.features = grid.features.filter((f) => {
     let intersect = false
     for (const roofShapeFeature of roofShape.features) {
-      if (booleanIntersects(roofShapeFeature, f)) {
+      if (
+        booleanPointInPolygon(
+          center(f),
+          roofShapeFeature.geometry as turfPolygon
+        )
+      ) {
         intersect = true
         break
       }

@@ -59,7 +59,7 @@ import economies from '@/assets/icons/economies.svg'
             <div
               class="items-center text-base font-dm-sans font-bold text-black text-lg"
             >
-              Estimez votre production d’énergie
+              Estimez vos économies d’énergie
             </div>
           </div>
         </div>

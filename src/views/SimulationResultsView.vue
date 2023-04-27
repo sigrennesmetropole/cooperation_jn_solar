@@ -2,51 +2,52 @@
 import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
-// import { useRoofsStore } from '@/stores/roof'
+import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
+import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
+import SolarCoop from '@/components/results/SolarCoop.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
-import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
-import { useAddressStore } from '@/stores/address'
-import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import LargeFooter from '@/components/simulation/LargeFooter.vue'
 import { legalList } from '@/constants/legalLinks'
 
 const viewStore = useViewsStore()
-// const roofsStore = useRoofsStore()
+const roofsStore = useRoofsStore()
 const autocalsolStore = useAutocalsolStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['simulation-results'])
 })
 
-// const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
-// const autocalsolResult = autocalsolStore.autocalsolResult
+const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
+const autocalsolResult = autocalsolStore.autocalsolResult
 
 //TO TEST : remove comment bellow | TODO : remove for production
-const consumptionAndProductionStore = useConsumptionAndProductionStore()
-const addressStore = useAddressStore()
-// @ts-ignore
-autocalsolStore.setAutocalsolResult(autocalsolResultExample)
-const autocalsolResult = autocalsolStore.autocalsolResult
-consumptionAndProductionStore.setAnnualConsumption(6000)
-addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
-const selectedRoof = {
-  surface_id: '53123',
-  values: [13.832112, 74.012886, 12.155002, 0],
-  favorable: 10,
-  total: 87,
-  orientation: 'EST',
-  azimuth: 80,
-  inclinaison: 1,
-}
+// const consumptionAndProductionStore = useConsumptionAndProductionStore()
+// const addressStore = useAddressStore()
+// // @ts-ignore
+// autocalsolStore.setAutocalsolResult(autocalsolResultExample)
+// const autocalsolResult = autocalsolStore.autocalsolResult
+// consumptionAndProductionStore.setAnnualConsumption(6000)
+// addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
+// const selectedRoof = {
+//   surface_id: '53123',
+//   values: [13.832112, 74.012886, 12.155002, 0],
+//   favorable: 10,
+//   total: 87,
+//   orientation: 'EST',
+//   azimuth: 80,
+//   inclinaison: 1,
+// }
 </script>
 
 <template>
-  <div class="flex flex-col w-full overflow-y-scroll gap-20">
-    <div class="flex flex-row mx-auto mt-[184px] w-full gap-6 justify-center">
+  <div class="bg-slate-100 w-full overflow-y-auto">
+    <div
+      class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center overflow-y-scroll"
+    >
       <div
         class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
       >
@@ -64,6 +65,8 @@ const selectedRoof = {
           :autocalsolResult="autocalsolResult"
         />
         <GoFurther></GoFurther>
+        <SolarCoop></SolarCoop>
+        <EnergiesRennes></EnergiesRennes>
       </div>
     </div>
     <div class="mx-16 py-10">
