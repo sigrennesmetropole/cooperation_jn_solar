@@ -35,6 +35,9 @@ const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
       consommation, par exemple mettre en route vos appareils électriques en
       journée au moment de la production photovoltaïque.
     </p>
-    <AutocalsolResultGraph />
+
+    <div class="border border-slate-300 rounded-md w-[760px]">
+      <AutocalsolResultGraph />
+    </div>
   </div>
 </template>

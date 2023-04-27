@@ -1,25 +1,35 @@
 <template>
-  <div class="relative">
+  <div class="relative ml-1">
     <highcharts :options="chartOptions" ref="chart"></highcharts>
 
-    <!-- Sun -->
-    <img class="absolute top-[95px] left-[340px] z-30" :src="sun" alt="" />
     <img
-      class="absolute top-[120px] left-[180px] z-20"
-      :src="eclipseFull"
+      class="absolute top-[175px] left-[60px] z-30 w-[600px]"
+      :src="graphSunMoon"
       alt=""
     />
+  </div>
 
-    <!--Moon -->
-    <img class="absolute top-[95px] left-[690px] z-30" :src="moon" alt="" />
+  <div class="flex flex-row font-dm-sans ml-10 my-4">
+    <div class="font-normal text-sm border-amber-500 border-l-4 pl-3">
+      Production
+    </div>
+    <div class="font-normal text-sm border-teal-700 border-l-4 pl-3 ml-6">
+      Consommation
+    </div>
+    <div class="flex flex-row ml-6">
+      <div class="bg-emerald-500 w-6 h-6 rounded-sm"></div>
+      <span class="font-normal text-sm ml-3"> Autoconsommation </span>
+    </div>
+    <div class="flex flex-row ml-6">
+      <div class="bg-indigo-600 w-6 h-6 rounded-sm"></div>
+      <span class="font-normal text-sm ml-3"> Revente </span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import sun from '@/assets/icons/sun.svg'
-import eclipseFull from '@/assets/icons/eclipse-full.svg'
-import moon from '@/assets/icons/moon.svg'
+import graphSunMoon from '@/assets/icons/graph-sun-moon.svg'
 
 const productionData = [
   0, //3h
@@ -51,7 +61,7 @@ const productionData = [
 const consommationData = [
   2, //3h
   3,
-  2,
+  4,
   3,
   2,
   3,
@@ -65,12 +75,12 @@ const consommationData = [
   3,
   2,
   3, // 18h
-  2,
+  4,
   3,
   2, //20h
   3,
   2,
-  3,
+  4,
   2, //24h
   3,
 ]
@@ -79,20 +89,15 @@ const chartOptions = computed(() => {
   return {
     chart: {
       type: 'areaspline',
-      width: 800, // set the width of the chart
+      width: 730, // set the width of the chart
       height: 400,
+      marginLeft: 30,
     },
     title: {
       text: 'Production et consommation journalière',
     },
     legend: {
-      layout: 'horizontal',
-      align: 'left',
-      verticalAlign: 'bottom',
-      floating: false,
-      borderWidth: 1,
-      backgroundColor: '#FFFFFF',
-      x: 70,
+      enabled: false,
     },
     xAxis: {
       categories: [
@@ -105,7 +110,7 @@ const chartOptions = computed(() => {
         '9h',
         '10h',
         '11h',
-        'Midi',
+        '12h',
         '13h',
         '14h',
         '15h',
@@ -117,18 +122,19 @@ const chartOptions = computed(() => {
         '21h',
         '22h',
         '23h',
-        'Minuit',
+        '24h',
         '1h',
         '2h',
       ],
       labels: {
         useHTML: true,
         formatter: function () {
-          return this.value === 'Midi' || this.value === 'Minuit'
-            ? `<strong>${this.value}</strong>`
-            : this.value
+          return this.value === '12h' || this.value === '24h'
+            ? `<strong style="font-size: 9px;">${this.value}</strong>`
+            : `<span style="font-size: 9px;">${this.value}</span>`
         },
       },
+      rotation: 0, // Rotate the title to be horizontal (optional)
     },
     yAxis: {
       title: {
@@ -137,20 +143,35 @@ const chartOptions = computed(() => {
         rotation: 0, // Rotate the title to be horizontal (optional)
         offset: 0, // Set the offset to 0 so the title is displayed right at the top of the yAxis line
         y: -20, // Adjust the vertical position of the title (optional)
-        x: 20, // Adjust the horizontal position of the title (optional)
+        x: 70, // Adjust the horizontal position of the title (optional)
         style: {
           fontSize: '11px', // Set the font size to 18px (or any other desired value)
           fontWeight: 'bold', // Set the font weight to bold (optional)
         },
       },
+      labels: {
+        enabled: false,
+      },
+      lineWidth: 1, // Set the width of the yAxis line (default is 1)
+      gridLineWidth: 0,
     },
     tooltip: {
-      shared: true,
-      headerFormat: '<b>{point.x}</b><br>',
+      enabled: false,
     },
     plotOptions: {
       areaspline: {
         fillOpacity: 0.5,
+        marker: {
+          enabled: false, // Disable data points
+        },
+        states: {
+          inactive: {
+            opacity: 1,
+          },
+          hover: {
+            enabled: false,
+          },
+        },
       },
     },
     series: [
@@ -159,20 +180,17 @@ const chartOptions = computed(() => {
         lineColor: '#F59E0B',
         color: '#4F46E5',
         data: productionData,
-        marker: {
-          fillColor: '#F59E0B',
-        },
       },
       {
         name: 'Consommation',
         data: consommationData,
         color: '#10B981',
         lineColor: '#0F766E',
-        marker: {
-          fillColor: '#0F766E',
-        },
       },
     ],
+    credits: {
+      enabled: false, // Disable the Highcharts.com credit link
+    },
   }
 })
 </script>

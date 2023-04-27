@@ -59,7 +59,7 @@ const selectedRoof = {
         <ConsumptionInformation />
       </div>
       <div
-        class="w-[55%] max-w-[850px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
+        class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
       >
         <AutocalsolResult
           v-if="autocalsolResult !== null"
