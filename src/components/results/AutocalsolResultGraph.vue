@@ -1,11 +1,25 @@
 <template>
-  <div>
+  <div class="relative">
     <highcharts :options="chartOptions" ref="chart"></highcharts>
+
+    <!-- Sun -->
+    <img class="absolute top-[95px] left-[340px] z-30" :src="sun" alt="" />
+    <img
+      class="absolute top-[120px] left-[180px] z-20"
+      :src="eclipseFull"
+      alt=""
+    />
+
+    <!--Moon -->
+    <img class="absolute top-[95px] left-[690px] z-30" :src="moon" alt="" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import sun from '@/assets/icons/sun.svg'
+import eclipseFull from '@/assets/icons/eclipse-full.svg'
+import moon from '@/assets/icons/moon.svg'
 
 const productionData = [
   0, //3h
@@ -65,6 +79,8 @@ const chartOptions = computed(() => {
   return {
     chart: {
       type: 'areaspline',
+      width: 800, // set the width of the chart
+      height: 400,
     },
     title: {
       text: 'Production et consommation journalière',
@@ -130,7 +146,7 @@ const chartOptions = computed(() => {
     },
     tooltip: {
       shared: true,
-      headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>',
+      headerFormat: '<b>{point.x}</b><br>',
     },
     plotOptions: {
       areaspline: {
@@ -150,7 +166,7 @@ const chartOptions = computed(() => {
       {
         name: 'Consommation',
         data: consommationData,
-        color: '#D1FAE5',
+        color: '#10B981',
         lineColor: '#0F766E',
         marker: {
           fillColor: '#0F766E',
