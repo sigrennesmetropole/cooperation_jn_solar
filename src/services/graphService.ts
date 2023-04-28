@@ -2,7 +2,7 @@
   Autocalsol data is sorted by hour. Except that the graph starts at 3am and not midnight
   So we have to sort the hours starting with 3am
 */
-function sortedHoursWith3amStart(data: [string, number][]) {
+export function sortedHoursWith3amStart(data: [string, number][]) {
   const after3hours: number[] = []
   const before3hours: number[] = []
   data.forEach((element) => {
@@ -16,7 +16,7 @@ function sortedHoursWith3amStart(data: [string, number][]) {
 }
 
 const STUFFING_PRECISION = 10
-function stuffingData(data: number[]): number[] {
+export function stuffingData(data: number[]): number[] {
   const newData = []
   for (let i = 0; i < data.length; i++) {
     newData.push(data[i])
@@ -94,7 +94,7 @@ export function generateXAxis() {
     '21h',
     '22h',
     '23h',
-    '24h',
+    '0h',
     '1h',
     '2h',
   ]
