@@ -39,11 +39,9 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
 }
 
 const shouldDisplayHomeButton = () => {
-  return [
-    viewList.home,
-    viewList['roof-selection'],
-    viewList['roof-selected-information'],
-  ].includes(viewStore.currentView!)
+  return [viewList['roof-selected-information']].includes(
+    viewStore.currentView!
+  )
 }
 
 const heightClass = computed(() => {
