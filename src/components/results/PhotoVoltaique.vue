@@ -21,11 +21,11 @@ function goToPhotovoltaiqueInfo() {
       <p class="font-dm-sans text-base font-normal">
         Le site de référence
         <span
-          class="underline inline-flex items-center cursor-pointer font-medium"
+          class="inline-flex items-center cursor-pointer font-medium"
           @click="goToPhotovoltaiqueInfo()"
         >
-          <strong> photovoltaique.info &nbsp;</strong>
-          <img :src="goToBlack" class="w-[14px] h-[14px]" />
+          <strong class="underline"> photovoltaique.info</strong>
+          <img :src="goToBlack" class="w-[14px] h-[14px] ml-1" />
         </span>
         regroupe l’essentiel des informations techniques et réglementaires sur
         le photovoltaïque.
