@@ -10,8 +10,20 @@ export const useAutocalsolStore = defineStore('autocalsolStore', () => {
     autocalsolResult.value = result
   }
 
+  function resetAutocalsolResult() {
+    autocalsolResult.value = {
+      prodByMonth: [],
+      consoByMonth: [],
+      prodByHour: [],
+      consoByHour: [],
+      consoAnnualInjected: 0,
+      consoAnnualAutoConsumed: 0,
+    }
+  }
+
   return {
     autocalsolResult,
     setAutocalsolResult,
+    resetAutocalsolResult,
   }
 })

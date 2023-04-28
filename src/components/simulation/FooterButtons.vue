@@ -2,6 +2,17 @@
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { useAddressStore } from '@/stores/address'
+import { useRoofsStore } from '@/stores/roof'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import { useAutocalsolStore } from '@/stores/autocalsol'
+import { useSolarPanelStore } from '@/stores/solarPanels'
+
+const addressStore = useAddressStore()
+const roofStore = useRoofsStore()
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
+const autocalsolStore = useAutocalsolStore()
+const solarPanelStore = useSolarPanelStore()
 
 const props = defineProps<{
   isDisplayNextButton: Boolean
@@ -11,6 +22,15 @@ const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
+  window.alert(
+    'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+  )
+  addressStore.resetAddress()
+  roofStore.resetRoofStore()
+  consumptionAndProductionStore.resetAnnualConsumption()
+  autocalsolStore.resetAutocalsolResult()
+  solarPanelStore.resetPanelStore()
+
   router.push('/roof-selection')
 }
 function clickButtonPrevious() {
