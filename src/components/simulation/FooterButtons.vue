@@ -11,6 +11,9 @@ const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
+  window.alert(
+    'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+  )
   router.push('/roof-selection')
 }
 function clickButtonPrevious() {
