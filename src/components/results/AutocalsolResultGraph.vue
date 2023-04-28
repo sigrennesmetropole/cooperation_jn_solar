@@ -42,12 +42,15 @@ const chartOptions = computed(() => {
       categories: xAxis,
       labels: {
         useHTML: true,
+        // @ts-ignore
         formatter: function () {
+          // @ts-ignore
           if (this.value === '') return ''
-
+          // @ts-ignore
           return this.value === '12h' || this.value === '0h'
             ? `<div style="width: 2px; height: 15px; background-color: black;" />`
-            : `<span style="font-size: 9px;">${this.value}</span>`
+            : // @ts-ignore
+              `<span style="font-size: 9px;">${this.value}</span>`
         },
       },
       rotation: 0,

@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { shallowMount } from '@vue/test-utils'
 import AutocalsolResultGraph from '@/components/results/AutocalsolResultGraph.vue'
 import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
-import { VueWrapper } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
 
 const HighchartsMock = {
   template: '<div></div>',
