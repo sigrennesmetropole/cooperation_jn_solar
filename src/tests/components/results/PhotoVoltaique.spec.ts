@@ -11,7 +11,7 @@ describe('PhotoVoltaique.vue', () => {
   })
 
   it('renders the photovoltaique.info link correctly', () => {
-    const link = wrapper.find('span.underline')
+    const link = wrapper.find('strong.underline')
     expect(link.text()).toContain('photovoltaique.info')
   })
 

@@ -1,5 +1,6 @@
 import FiltersSearch from '@/components/search_bar/FiltersSearch.vue'
 import { mount, VueWrapper } from '@vue/test-utils'
+import { beforeEach, describe, afterEach, expect, it } from 'vitest'
 
 describe('FiltersSearch.vue', () => {
   let wrapper: VueWrapper

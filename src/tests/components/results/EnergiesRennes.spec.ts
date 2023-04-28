@@ -11,7 +11,7 @@ describe('Energies.vue', () => {
   })
 
   it('renders the Énergies du pays de Rennes link correctly', () => {
-    const link = wrapper.find('span.underline')
+    const link = wrapper.find('strong.underline')
     expect(link.text()).toContain('Énergies du pays de Rennes')
   })
 
