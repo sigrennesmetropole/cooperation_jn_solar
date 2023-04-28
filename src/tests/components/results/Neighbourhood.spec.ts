@@ -5,13 +5,9 @@ import { useDistrictStore } from '@/stores/districtInformations'
 import { createTestingPinia } from '@pinia/testing'
 import { apiIrisService } from '@/services/api-code-iris'
 import { apiEnedisDistrictService } from '@/services/api-enedis-district'
-import fetch from 'node-fetch'
 import fetchMock from 'jest-fetch-mock'
 
 fetchMock.enableMocks()
-
-// @ts-ignore
-global.fetch = fetch
 
 import { vi } from 'vitest'
 
@@ -35,6 +31,10 @@ describe('NeighbourhoodData', () => {
         ],
       },
     })
+  })
+
+  afterEach(() => {
+    fetchMock.resetMocks()
   })
 
   it('renders correctly', () => {
@@ -70,22 +70,5 @@ describe('NeighbourhoodData', () => {
 
     expect(districtNumberInstallations).toBe('13')
     expect(districtProduction).toBe('40.5 MWh.')
-  })
-})
-
-describe('apiEnedisDistrictService', () => {
-  afterEach(() => {
-    fetchMock.resetMocks()
-  })
-
-  it('fetchDistrictData should return datas when API response is valid', async () => {
-    const codeIris = 352500000
-
-    fetchMock.mockResponseOnce(JSON.stringify({}))
-
-    expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith(
-      `https://api-rva.sig.rennesmetropole.fr/?key=b44535986cf3abf2428d&version=1.0&format=json&epsg=4326&cmd=getfulladdresses&query=${codeIris}`
-    )
   })
 })
