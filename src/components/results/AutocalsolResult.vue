@@ -5,6 +5,7 @@ import AutocalsolResultGraph from '@/components/results/AutocalsolResultGraph.vu
 import type { AutocalsolResult } from '@/model/autocalsol.model'
 
 const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
+console.log(props)
 </script>
 
 <template>
@@ -37,7 +38,10 @@ const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
     </p>
 
     <div class="border border-slate-300 rounded-md w-[760px]">
-      <AutocalsolResultGraph />
+      <AutocalsolResultGraph
+        :prodByHour="props.autocalsolResult.prodByHour"
+        :consoByHour="props.autocalsolResult.consoByHour"
+      />
     </div>
   </div>
 </template>
