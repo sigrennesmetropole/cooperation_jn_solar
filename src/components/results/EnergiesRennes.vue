@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
 import goToAmber from '@/assets/icons/icon-external-link-amber.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import energies from '@/assets/illustrations/energies.svg'
+import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+
+const props = defineProps<{
+  isPdf: boolean
+}>()
 
 const ENERGIES_LINK = 'https://energiesdupaysderennes.fr/'
 const VILAINE_LINK = 'https://soleilsurvilaine.centralesvillageoises.fr/'
@@ -45,16 +49,7 @@ function goToVilaineInfo() {
           est une association citoyenne pour le développement du solaire
           photovoltaïque sur Rennes et sa région.
         </p>
-        <button
-          @click="goToEnergiesInfo()"
-          id="energiesButton"
-          class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit items-center flex flex-row justify-center mt-4"
-        >
-          <img class="w-5 h-5" :src="goToWhite" alt="" />
-          <span class="font-dm-sans text-white text-base font-bold">
-            Visiter le site</span
-          >
-        </button>
+        <ButtonVisitWebsite :link="ENERGIES_LINK" :isPdf="props.isPdf" />
       </div>
     </div>
     <div>

@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
 import solarCoop from '@/assets/illustrations/solar-coop.svg'
+import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+
+const props = defineProps<{
+  isPdf: boolean
+}>()
 
 const SOLAR_COOP_LINK = 'https://www.solarcoop.fr/'
 
@@ -32,16 +36,7 @@ function goToSolarCoopInfo() {
           Solarcoop qui vous aidera à trouver la meilleure installation.
         </p>
 
-        <button
-          @click="goToSolarCoopInfo()"
-          id="solarCoopButton"
-          class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit items-center flex flex-row justify-center mt-4"
-        >
-          <img class="w-5 h-5" :src="goToWhite" alt="" />
-          <span class="font-dm-sans text-white text-base font-bold">
-            Visiter le site</span
-          >
-        </button>
+        <ButtonVisitWebsite :link="SOLAR_COOP_LINK" :isPdf="props.isPdf" />
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 import { onBeforeMount } from 'vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
-import { useRoofsStore } from '@/stores/roof'
+// import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
 import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
@@ -11,36 +11,39 @@ import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
 import LargeFooter from '@/components/simulation/LargeFooter.vue'
+import PdfSimulation from '@/components/results/PdfSimulation.vue'
 import { legalList } from '@/constants/legalLinks'
+import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
+import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import { useAddressStore } from '@/stores/address'
 
 const viewStore = useViewsStore()
-const roofsStore = useRoofsStore()
+// const roofsStore = useRoofsStore()
 const autocalsolStore = useAutocalsolStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['simulation-results'])
 })
 
-const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
-const autocalsolResult = autocalsolStore.autocalsolResult
+// const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
+// const autocalsolResult = autocalsolStore.autocalsolResult
 
 //TO TEST : remove comment bellow | TODO : remove for production
-// const consumptionAndProductionStore = useConsumptionAndProductionStore()
-// const addressStore = useAddressStore()
-// @ts-ignore
-// autocalsolStore.setAutocalsolResult(autocalsolResultExample)
-// const autocalsolResult = autocalsolStore.autocalsolResult
-// consumptionAndProductionStore.setAnnualConsumption(6000)
-// addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
-// const selectedRoof = {
-//   surface_id: '53123',
-//   values: [13.832112, 74.012886, 12.155002, 0],
-//   favorable: 10,
-//   total: 87,
-//   orientation: 'EST',
-//   azimuth: 80,
-//   inclinaison: 1,
-// }
+const consumptionAndProductionStore = useConsumptionAndProductionStore()
+const addressStore = useAddressStore()
+autocalsolStore.setAutocalsolResult(autocalsolResultExample)
+const autocalsolResult = autocalsolStore.autocalsolResult
+consumptionAndProductionStore.setAnnualConsumption(6000)
+addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
+const selectedRoof = {
+  surface_id: '53123',
+  values: [13.832112, 74.012886, 12.155002, 0],
+  favorable: 10,
+  total: 87,
+  orientation: 'EST',
+  azimuth: 80,
+  inclinaison: 1,
+}
 </script>
 
 <template>
@@ -58,6 +61,11 @@ const autocalsolResult = autocalsolStore.autocalsolResult
       <div
         class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
       >
+        <PdfSimulation
+          :selected-roof="selectedRoof"
+          :autocalsolResult="autocalsolResult"
+        />
+
         <AutocalsolResult
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"
