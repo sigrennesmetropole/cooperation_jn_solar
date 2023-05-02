@@ -16,6 +16,14 @@ export function sortedHoursWith3amStart(data: [string, number][]) {
 }
 
 const STUFFING_PRECISION = 10
+/**
+ * By default, we have one value for one hour. When we calculate the intersection, the precision of the intersection graph is not very good
+ * So we need to add dummy data to have a more accurate intersection graph
+ *
+ * Example: 10h we have a production of 1000W and 11h we have a production of 2000W
+ * The intersection graph will be a straight line between 1000W and 2000W
+ * With the stuffing, we will have 10 values between 1000W and 2000W : 1000W, 1100W, 1200W, 1300W, 1400W, 1500W, 1600W, 1700W, 1800W, 1900W, 2000W
+ */
 export function stuffingData(data: number[]): number[] {
   const newData = []
   for (let i = 0; i < data.length; i++) {

@@ -5,7 +5,6 @@ import AutocalsolResultGraph from '@/components/results/AutocalsolResultGraph.vu
 import type { AutocalsolResult } from '@/model/autocalsol.model'
 
 const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
-console.log(props)
 </script>
 
 <template>

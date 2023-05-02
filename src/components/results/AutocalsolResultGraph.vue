@@ -119,7 +119,9 @@ const chartOptions = computed(() => {
       },
     ],
     credits: {
-      enabled: false, // Disable the Highcharts.com credit link
+      position: {
+        y: -50, // Add a margin above the credits by moving it 20 pixels up from the bottom
+      },
     },
   }
 })
