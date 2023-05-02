@@ -1,18 +1,9 @@
 <script setup lang="ts">
 import iconDelete from '@/assets/icons/icon-delete.svg'
 import { useRouter } from 'vue-router'
-import { useAddressStore } from '@/stores/address'
-import { useRoofsStore } from '@/stores/roof'
-import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
-import { useAutocalsolStore } from '@/stores/autocalsol'
-import { useSolarPanelStore } from '@/stores/solarPanels'
+import { resetStoresAndRedirect } from '@/services/resetStores'
 
 const router = useRouter()
-const addressStore = useAddressStore()
-const roofStore = useRoofsStore()
-const consumptionAndProductionStore = useConsumptionAndProductionStore()
-const autocalsolStore = useAutocalsolStore()
-const solarPanelStore = useSolarPanelStore()
 
 function displayErrorMessage() {
   if (
@@ -20,12 +11,7 @@ function displayErrorMessage() {
       'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
     )
   ) {
-    addressStore.resetAddress()
-    roofStore.resetRoofStore()
-    consumptionAndProductionStore.resetAnnualConsumption()
-    autocalsolStore.resetAutocalsolResult()
-    solarPanelStore.resetPanelStore()
-
+    resetStoresAndRedirect()
     router.push('/roof-selection')
   }
 }
