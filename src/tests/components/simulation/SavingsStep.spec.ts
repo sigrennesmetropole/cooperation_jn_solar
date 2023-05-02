@@ -10,6 +10,7 @@ import AllowAnnualConsumptionPopup from '@/components/simulation/AllowAnnualCons
 import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
 import ElectricityConsumptionManual from '@/components/simulation/ElectricityConsumptionManual.vue'
 import { useSimulationStore } from '@/stores/simulations'
+import { DEFAULT_CONSUMPTION } from '@/stores/simulations'
 
 describe('SavingsStep.vue', () => {
   let wrapper: VueWrapper
@@ -124,7 +125,9 @@ describe('SavingsStep.vue', () => {
       await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.isDisplayPopup).toBe(false)
-      expect(consumptionAndProductionStore.annualConsumption).toBe(6000)
+      expect(consumptionAndProductionStore.annualConsumption).toBe(
+        DEFAULT_CONSUMPTION
+      )
       expect(goToFinalViewSpy).toHaveBeenCalled()
 
       goToFinalViewSpy.mockRestore()
