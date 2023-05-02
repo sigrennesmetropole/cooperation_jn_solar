@@ -50,29 +50,18 @@ const router = createRouter({
   routes: routes,
 })
 
-// router.beforeEach((to, from, next) => {
-//   console.log('avant le routing')
-//   console.log('from', from.name)
-//   console.log('to', to.name)
-//   if (from.name === undefined && to.name !== 'home') {
-//     next({ name: 'home' })
-//   } else {
-//     next()
-//   }
-// })
-
-// const roofStore = useRoofsStore()
-
-// router.beforeEach((to, from, next) => {
-//   // if( roofStore.selectedBuildingId === null) {
-//     console.log ("store vide")
-//     // console.log(roofStore.selectedBuildingId)
-//     // next({ name: 'roof-selection' })
-//   // }
-//   // else {
-//     next()
-//   // }
-// })
+router?.beforeEach((to, from, next) => {
+  if (
+    from.name === undefined &&
+    to.name !== 'home' &&
+    from.name === undefined &&
+    to.name !== 'roof-selection'
+  ) {
+    next({ name: 'roof-selection' })
+  } else {
+    next()
+  }
+})
 
 export { routes }
 export default router

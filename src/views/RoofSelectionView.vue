@@ -13,11 +13,13 @@ import {
   disableSelectRoofInteraction,
   enableSelectRoofInteraction,
 } from '@/services/interactionUtils'
+import { useMapStore } from '@/stores/map'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
+const mapStore = useMapStore()
 let isOpen = ref(true)
 let isBuildingSelectionActive = ref(false)
 let addressClosedByUser = ref(false)
@@ -28,26 +30,30 @@ onMounted(() => {
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true
-  rennesApp
-    .get3DMap()
-    .getScene()
-    .postRender.addEventListener(() => {
-      let cameraDistance = rennesApp.getCurrentDistance()!
-      if (
-        isBuildingSelectionActive.value &&
-        cameraDistance > DISTANCE_MAX_FOR_SELECTION
-      ) {
-        isBuildingSelectionActive.value = false
-        disableSelectRoofInteraction(rennesApp)
-      } else if (
-        !isBuildingSelectionActive.value &&
-        cameraDistance <= DISTANCE_MAX_FOR_SELECTION
-      ) {
-        isBuildingSelectionActive.value = true
-        enableSelectRoofInteraction(rennesApp)
-      }
-    })
-  rennesApp.clearRoofsHighlight()
+})
+mapStore.$subscribe(async () => {
+  if (mapStore.isInitializeMap) {
+    rennesApp
+      .get3DMap()
+      .getScene()
+      .postRender.addEventListener(() => {
+        let cameraDistance = rennesApp.getCurrentDistance()!
+        if (
+          isBuildingSelectionActive.value &&
+          cameraDistance > DISTANCE_MAX_FOR_SELECTION
+        ) {
+          isBuildingSelectionActive.value = false
+          disableSelectRoofInteraction(rennesApp)
+        } else if (
+          !isBuildingSelectionActive.value &&
+          cameraDistance <= DISTANCE_MAX_FOR_SELECTION
+        ) {
+          isBuildingSelectionActive.value = true
+          enableSelectRoofInteraction(rennesApp)
+        }
+      })
+    rennesApp.clearRoofsHighlight()
+  }
 })
 
 const tooltipToDisplay = computed(() => {
