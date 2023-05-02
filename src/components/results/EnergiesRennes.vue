@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import goToAmber from '@/assets/icons/icon-external-link-amber.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
 
@@ -38,7 +39,7 @@ function goToVilaineInfo() {
         />
       </div>
       <div class="flex flex-col w-[50%] h-fit">
-        <p class="font-dm-sans text-base font-normal">
+        <p class="font-dm-sans text-base font-medium text-neutral-900">
           <span
             class="inline-flex items-center cursor-pointer font-medium"
             @click="goToEnergiesInfo()"
@@ -52,8 +53,11 @@ function goToVilaineInfo() {
         <ButtonVisitWebsite :link="ENERGIES_LINK" :isPdf="props.isPdf" />
       </div>
     </div>
-    <div>
-      <p class="font-dm-sans text-base font-normal">
+    <div
+      class="flex flex-row gap-3 border border-neutral-300 rounded-lg px-2 py-[29px]"
+    >
+      <img :src="information" class="w-[18px] h-[18px] ml-1" />
+      <p class="font-dm-sans text-sm font-medium text-slate-900">
         Pour Acigné et Brécé, il existe aussi
         <span
           id="vilaine"
