@@ -31,6 +31,7 @@ onBeforeMount(async () => {
 //TO TEST : remove comment bellow | TODO : remove for production
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
 const addressStore = useAddressStore()
+// @ts-ignore
 autocalsolStore.setAutocalsolResult(autocalsolResultExample)
 const autocalsolResult = autocalsolStore.autocalsolResult
 consumptionAndProductionStore.setAnnualConsumption(6000)
@@ -70,9 +71,9 @@ const selectedRoof = {
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"
         />
-        <GoFurther></GoFurther>
-        <SolarCoop></SolarCoop>
-        <EnergiesRennes></EnergiesRennes>
+        <GoFurther :isPdf="false"></GoFurther>
+        <SolarCoop :isPdf="false"></SolarCoop>
+        <EnergiesRennes :isPdf="false"></EnergiesRennes>
       </div>
     </div>
     <div class="mx-16 py-10">

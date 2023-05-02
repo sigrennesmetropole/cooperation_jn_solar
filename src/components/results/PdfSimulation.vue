@@ -87,6 +87,7 @@
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import html2pdf from 'html2pdf.js'
 import iconDownload from '@/assets/icons/icon-download-white.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'

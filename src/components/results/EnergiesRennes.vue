@@ -50,7 +50,11 @@ function goToVilaineInfo() {
           est une association citoyenne pour le développement du solaire
           photovoltaïque sur Rennes et sa région.
         </p>
-        <ButtonVisitWebsite :link="ENERGIES_LINK" :isPdf="props.isPdf" />
+        <ButtonVisitWebsite
+          id="energiesButton"
+          :link="ENERGIES_LINK"
+          :isPdf="props.isPdf"
+        />
       </div>
     </div>
     <div

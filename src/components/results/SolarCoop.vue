@@ -28,6 +28,7 @@ function goToSolarCoopInfo() {
           :src="solarCoop"
           @click="goToSolarCoopInfo()"
           class="cursor-pointer"
+          id="solarCoopImg"
         />
       </div>
       <div class="flex flex-col w-[50%] h-fit">
