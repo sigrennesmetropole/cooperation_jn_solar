@@ -93,6 +93,7 @@ simulationStore.$subscribe(async () => {
       let roofShape = roofsStore.selectedRoofFeature!
       displayRoofShape(rennesApp, roofShape)
       let grid = generateSquareGrid(rennesApp, roofShape)
+      console.log(roofShape)
       displayGridOnMap(rennesApp, grid)
       addRoofInteractionOn2dMap(rennesApp)
     }
