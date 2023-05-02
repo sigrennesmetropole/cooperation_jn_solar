@@ -27,7 +27,7 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 //TO TEST : remove comment bellow | TODO : remove for production
 // const consumptionAndProductionStore = useConsumptionAndProductionStore()
 // const addressStore = useAddressStore()
-// // @ts-ignore
+// @ts-ignore
 // autocalsolStore.setAutocalsolResult(autocalsolResultExample)
 // const autocalsolResult = autocalsolStore.autocalsolResult
 // consumptionAndProductionStore.setAnnualConsumption(6000)
