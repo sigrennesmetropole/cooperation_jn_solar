@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import iconDelete from '@/assets/icons/icon-delete.svg'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useAddressStore } from '@/stores/address'
 import { useRoofsStore } from '@/stores/roof'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { useAutocalsolStore } from '@/stores/autocalsol'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 
-// const router = useRouter()
+const router = useRouter()
 const addressStore = useAddressStore()
 const roofStore = useRoofsStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
@@ -15,29 +15,19 @@ const autocalsolStore = useAutocalsolStore()
 const solarPanelStore = useSolarPanelStore()
 
 function displayErrorMessage() {
-  window.alert(
-    'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
-  )
+  if (
+    window.confirm(
+      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+    )
+  ) {
+    addressStore.resetAddress()
+    roofStore.resetRoofStore()
+    consumptionAndProductionStore.resetAnnualConsumption()
+    autocalsolStore.resetAutocalsolResult()
+    solarPanelStore.resetPanelStore()
 
-  console.log('1', addressStore._customProperties)
-  console.log('2', roofStore.roofSurfacesList)
-  console.log('3', consumptionAndProductionStore.annualConsumption)
-  console.log('4', autocalsolStore.autocalsolResult)
-  console.log('5', solarPanelStore.currentNumberSolarPanel)
-
-  addressStore.resetAddress()
-  roofStore.resetRoofStore()
-  consumptionAndProductionStore.resetAnnualConsumption()
-  autocalsolStore.resetAutocalsolResult()
-  solarPanelStore.resetPanelStore()
-
-  console.log('1', addressStore._customProperties)
-  console.log('2', roofStore.roofSurfacesList)
-  console.log('3', consumptionAndProductionStore.annualConsumption)
-  console.log('4', autocalsolStore.autocalsolResult)
-  console.log('5', solarPanelStore.currentNumberSolarPanel)
-
-  // router.push('/roof-selection')
+    router.push('/roof-selection')
+  }
 }
 </script>
 <template>

@@ -22,16 +22,19 @@ const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
-  window.alert(
-    'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
-  )
-  addressStore.resetAddress()
-  roofStore.resetRoofStore()
-  consumptionAndProductionStore.resetAnnualConsumption()
-  autocalsolStore.resetAutocalsolResult()
-  solarPanelStore.resetPanelStore()
+  if (
+    window.confirm(
+      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+    )
+  ) {
+    addressStore.resetAddress()
+    roofStore.resetRoofStore()
+    consumptionAndProductionStore.resetAnnualConsumption()
+    autocalsolStore.resetAutocalsolResult()
+    solarPanelStore.resetPanelStore()
 
-  router.push('/roof-selection')
+    router.push('/roof-selection')
+  }
 }
 function clickButtonPrevious() {
   simulationStore.goToPreviousStep()
