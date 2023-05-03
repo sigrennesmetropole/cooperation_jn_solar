@@ -5,9 +5,11 @@ import {
   solarPanelPlacementAlgorithm,
   solarPanelPlacement,
   extractCentroids,
-  Matrix,
 } from '../solarPanelPlacement'
-import { solarPanelPlacement as solarPanelPlacementMatrix } from '../solarPanelPlacementMatrix'
+import {
+  solarPanelPlacement as solarPanelPlacementMatrix,
+  Matrix,
+} from '../solarPanelPlacementMatrix'
 import type { FeatureCollection, Polygon, Properties } from '@turf/turf'
 
 describe('solar panel placement', () => {
@@ -23,14 +25,10 @@ describe('solar panel placement', () => {
     const grid: FeatureCollection<Polygon, Properties> =
       JSON.parse(fileContents)
 
-    const horizontalSolarPanels = solarPanelPlacementAlgorithm(
-      grid,
-      true,
-      false
-    )
+    const horizontalSolarPanels = solarPanelPlacementAlgorithm(grid, true, true)
     expect(horizontalSolarPanels.features.length).greaterThanOrEqual(9)
 
-    const verticalSolarPanels = solarPanelPlacementAlgorithm(grid, false, false)
+    const verticalSolarPanels = solarPanelPlacementAlgorithm(grid, false, true)
     // In this test case, the vertical placement is not optimum, only 8
     expect(verticalSolarPanels.features.length).greaterThanOrEqual(8)
 
@@ -67,6 +65,26 @@ describe('solar panel placement', () => {
     // result.solarPanels.forEach((sp) => {
     //   console.log(sp)
     // })
+
+    expect(result.orientation).equal('vertical')
+    expect(result.solarPanels.length).equal(127)
+  })
+
+  test('test solar panel algorithm from simple matrix', () => {
+    // Read GeoJSON file
+    const fileContents = fs.readFileSync(
+      path.join(__dirname, 'simple_roof_matrix.json'),
+      {
+        encoding: 'utf-8',
+      }
+    )
+
+    const matrix: Matrix = JSON.parse(fileContents)
+    expect(matrix.length).equal(6)
+    expect(matrix[0].length).equal(8)
+    console.log(matrix[0][0])
+
+    const result = solarPanelPlacementMatrix(matrix, true, 'simple-')
 
     expect(result.orientation).equal('vertical')
     expect(result.solarPanels.length).equal(127)

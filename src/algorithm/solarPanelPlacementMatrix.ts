@@ -125,9 +125,13 @@ export function solarPanelPlacementAlgorithm(
   return solarPanels
 }
 
-export function solarPanelPlacement(matrix: Matrix, debug: boolean = false) {
+export function solarPanelPlacement(
+  matrix: Matrix,
+  debug: boolean = false,
+  prefix: string = ''
+) {
   const matrixGeoJSON = matrixToGeoJSON(matrix)
-  writeFeature('matrix.geojson', matrixGeoJSON, debug)
+  writeFeature(`${prefix}matrix.geojson`, matrixGeoJSON, debug)
 
   const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
   const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
@@ -143,7 +147,7 @@ export function solarPanelPlacement(matrix: Matrix, debug: boolean = false) {
   }
 
   const matrixGeoJSONCovered = matrixToGeoJSON(matrix, solarPanels)
-  writeFeature('matrix-covered.geojson', matrixGeoJSONCovered, debug)
+  writeFeature(`${prefix}matrix-covered.geojson`, matrixGeoJSONCovered, debug)
 
   return { solarPanels: solarPanels, orientation: orientation }
 }
