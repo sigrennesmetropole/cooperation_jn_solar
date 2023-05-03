@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import iconDelete from '@/assets/icons/icon-delete.svg'
 import { useRouter } from 'vue-router'
+import { resetStoresAndRedirect } from '@/services/resetStores'
+
 const router = useRouter()
+
+function displayErrorMessage() {
+  if (
+    window.confirm(
+      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+    )
+  ) {
+    resetStoresAndRedirect()
+    router.push('/roof-selection')
+  }
+}
 </script>
 <template>
   <div
@@ -13,7 +26,7 @@ const router = useRouter()
       </span>
       <button
         class="flex flex-row items-center pb-1 gap-2.5"
-        @click="router.push('/roof-selection')"
+        @click="displayErrorMessage()"
       >
         <img :src="iconDelete" class="w-4 h-4" alt="" />
         <span class="font-dm-sans font-normal text-xs ml-auto">Quitter</span>
