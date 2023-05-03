@@ -1,14 +1,10 @@
-import {
-  createRouter,
-  createWebHistory,
-  NavigationGuardNext,
-  RouteLocationNormalized,
-} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const redirectToRoofSelection = (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext
+  // @ts-ignore
+  to,
+  from,
+  next
 ) => {
   if (
     (from.name === undefined || from.name === null) &&
