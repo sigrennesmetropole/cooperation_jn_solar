@@ -35,6 +35,7 @@ import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
 
 import type { GeoJSONLayer } from '@vcmap/core'
+import { getCenter } from 'ol/extent'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -83,7 +84,7 @@ async function disableOlInteraction() {
   }
 }
 
-async function setupInstallation() {
+async function setupGridInstallation() {
   //force synchrone switch for adding openlayer interaction, update the store
   await rennesApp.maps.setActiveMap('ol')
   await mapStore.activate2d()
@@ -95,7 +96,26 @@ async function setupInstallation() {
     grid = generateRectangleGrid(roofShape)
     displayGridOnMap(rennesApp, grid)
     addRoofInteractionOn2dMap(rennesApp)
+    rennesApp.getOpenlayerMap().getView().setZoom(22)
+    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox!))
   }
+}
+
+async function setupSolarPanelFixtures() {
+  const allSquares: GeoJSONLayer = await rennesApp.getLayerByKey(
+    RENNES_LAYER.roofSquaresArea
+  )
+  // substractedRoofArea: the result polygon on which compute solar panels
+  let substractedRoofArea = substractSelectedSquares(allSquares.getFeatures())
+  console.log('Grid of roof area', substractedRoofArea)
+  const sampleSolarPanels = solarPanelFixtures()
+  solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
+  solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
+  await displaySolarPanel(rennesApp, sampleSolarPanels)
+  await layerStore.enableLayer(RENNES_LAYER.solarPanel)
+  // Zoom to solar panel
+  await mapStore.activate3d()
+  await zoomToSolarPanel(rennesApp)
 }
 
 simulationStore.$subscribe(async () => {
@@ -103,25 +123,12 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
-    await setupInstallation()
+    await setupGridInstallation()
   } else if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 2
   ) {
-    // substractedRoofArea: the result polygon on which compute solar panels
-    const allSquares: GeoJSONLayer = await rennesApp.getLayerByKey(
-      RENNES_LAYER.roofSquaresArea
-    )
-    let substractedRoofArea = substractSelectedSquares(allSquares.getFeatures())
-    console.log('Grid of roof area', substractedRoofArea)
-    const sampleSolarPanels = solarPanelFixtures()
-    solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
-    solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
-    await displaySolarPanel(rennesApp, sampleSolarPanels)
-    await layerStore.enableLayer(RENNES_LAYER.solarPanel)
-    // Zoom to solar panel
-    await mapStore.activate3d()
-    await zoomToSolarPanel(rennesApp)
+    await setupSolarPanelFixtures()
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()

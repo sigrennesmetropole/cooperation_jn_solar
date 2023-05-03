@@ -2,6 +2,7 @@
 import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
 import goToAmber from '@/assets/icons/icon-external-link-amber.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
 
 const ENERGIES_LINK = 'https://energiesdupaysderennes.fr/'
@@ -34,13 +35,13 @@ function goToVilaineInfo() {
         />
       </div>
       <div class="flex flex-col w-[50%] h-fit">
-        <p class="font-dm-sans text-base font-normal">
+        <p class="font-dm-sans text-base font-medium text-neutral-900">
           <span
-            class="underline inline-flex items-center cursor-pointer font-medium"
+            class="inline-flex items-center cursor-pointer font-medium"
             @click="goToEnergiesInfo()"
           >
-            <strong> Énergies du pays de Rennes &nbsp;</strong>
-            <img :src="goToBlack" class="w-[14px] h-[14px]" />
+            <strong class="underline"> Énergies du pays de Rennes </strong>
+            <img :src="goToBlack" class="w-[14px] h-[14px] ml-1" />
           </span>
           est une association citoyenne pour le développement du solaire
           photovoltaïque sur Rennes et sa région.
@@ -57,16 +58,19 @@ function goToVilaineInfo() {
         </button>
       </div>
     </div>
-    <div>
-      <p class="font-dm-sans text-base font-normal">
+    <div
+      class="flex flex-row gap-3 border border-neutral-300 rounded-lg px-2 py-[29px]"
+    >
+      <img :src="information" class="w-[18px] h-[18px] ml-1" />
+      <p class="font-dm-sans text-sm font-medium text-slate-900">
         Pour Acigné et Brécé, il existe aussi
         <span
           id="vilaine"
-          class="underline inline-flex items-center cursor-pointer font-medium"
+          class="inline-flex items-center cursor-pointer font-medium"
           @click="goToVilaineInfo()"
         >
-          <strong>l'association Soleil sur Vilaine &nbsp;</strong>
-          <img :src="goToAmber" class="w-[14px] h-[14px]" />
+          <strong class="underline">l'association Soleil sur Vilaine</strong>
+          <img :src="goToAmber" class="w-[14px] h-[14px] ml-1" />
         </span>
       </p>
     </div>

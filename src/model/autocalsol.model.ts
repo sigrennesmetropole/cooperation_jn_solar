@@ -10,8 +10,8 @@ export type AutocalsolData = {
 export type AutocalsolResult = {
   prodByMonth: number[]
   consoByMonth: number[]
-  prodByHour: [string, number | string][]
-  consoByHour: [string, number | string][]
+  prodByHour: [string, number][]
+  consoByHour: [string, number][]
   consoAnnualInjected: number
   consoAnnualAutoConsumed: number
 }
