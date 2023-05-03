@@ -99,17 +99,17 @@ const router = createRouter({
 })
 
 if (router !== undefined) {
-  router.beforeEach((to, from, next) => {
-    // Continue navigation
-    next()
-
-    // Track the page view after navigation is confirmed
-    router.afterEach(() => {
+  router.afterEach(
+    (
+      // @ts-ignore
+      to
+    ) => {
+      // Track the page view after navigation is confirmed
       _paq.push(['setCustomUrl', to.fullPath])
       _paq.push(['setDocumentTitle', to.meta.title || 'My New Title'])
       _paq.push(['trackPageView'])
-    })
-  })
+    }
+  )
 }
 
 export { routes }
