@@ -4,10 +4,12 @@ import { always, click } from 'ol/events/condition'
 import {
   bbox,
   bboxPolygon,
+  booleanEqual,
   booleanPointInPolygon,
   buffer,
   center,
   difference,
+  featureCollection,
   point,
   polygon,
   randomPolygon,
@@ -16,20 +18,28 @@ import {
   transformScale,
   union,
 } from '@turf/turf'
-import type { Polygon as turfPolygon } from '@turf/helpers'
-import rectangleGrid from '@turf/rectangle-grid'
-import type { Feature, FeatureCollection, Properties } from '@turf/helpers'
+import type {
+  AllGeoJSON,
+  BBox,
+  Feature,
+  FeatureCollection,
+  MultiPolygon,
+  Point,
+  Polygon as turfPolygon,
+  Properties,
+} from '@turf/helpers'
+// @ts-ignore
+import { rectangleGrid } from '@/helpers/rectangleGrid'
+import type { Grid } from '@/helpers/rectangleGrid'
 import type olFeature from 'ol/Feature'
 import type olGeometry from 'ol/geom/Geometry'
-import type { GeoJSONLayer } from '@vcmap/core'
-import type { LayerOpenlayersImpl } from '@vcmap/core'
+import type { GeoJSONLayer, LayerOpenlayersImpl } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { GeoJSON } from 'ol/format'
 import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import type { GeoJsonProperties, Geometry } from 'geojson'
-import type { MultiPolygon } from '@turf/helpers'
 import { useRoofsStore } from '@/stores/roof'
 import type { Polygon } from 'ol/geom'
 
@@ -77,44 +87,87 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
   return polygon.features[0]
 }
 
+export function bboxRoof(roofShape: GeoJSONFeatureCollection): BBox {
+  const bboxRoofShape = bbox(roofShape)
+  return bbox(transformScale(bboxPolygon(square(bboxRoofShape)), 1.5))
+}
 /**
  * Generate grid on the shape of the roof
  * create grid on all the bbox of the roof, then rotate
  * exclude squares which are not entirely inside the roof shape
  */
-export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
+export function generateRectangleGrid(
+  roofShape: GeoJSONFeatureCollection,
+  bboxOnRoof: BBox
+): Grid {
   const roofAzimut = roofShape.features[0].properties?.azimuth
   const squareSize = 475
   const roofSlope =
     useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
-  const bboxRoofShape = bbox(roofShape)
-  const bboxOnRoof = bbox(
-    transformScale(bboxPolygon(square(bboxRoofShape)), 1.5)
-  )
   const cellWidth = squareSize
   const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
 
-  const grid = rectangleGrid(bboxOnRoof, cellWidth, cellHeight, {
-    units: 'millimeters',
-  })
+  const { rows, columns, featureCollection } = rectangleGrid(
+    bboxOnRoof,
+    cellWidth,
+    cellHeight,
+    {
+      units: 'millimeters',
+    }
+  )
+  transformRotate(featureCollection, roofAzimut, { mutate: true })
+  featureCollection.features.map(
+    (f: Feature) => (f.properties!.center = center(f.geometry).geometry)
+  )
+  return { rows, columns, featureCollection: featureCollection }
+}
 
-  transformRotate(grid, roofAzimut, { mutate: true })
-  grid.features = grid.features.filter((f) => {
-    let intersect = false
+export type Square = {
+  usable: boolean
+  squareCenter: Geometry
+}
+
+export type Matrix = Square[][]
+
+export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
+  let x = 0,
+    y = 0
+  const matrix: Matrix = []
+  const arrFeatures: Array<Feature<Geometry>> = []
+  // @ts-ignore
+  grid.featureCollection.features.forEach((f: Feature<Geometry>) => {
+    let isInside: boolean = false
     for (const roofShapeFeature of roofShape.features) {
+      if (x == 0) matrix[y] = []
       if (
         booleanPointInPolygon(
-          center(f),
+          center(f as AllGeoJSON),
           roofShapeFeature.geometry as turfPolygon
         )
       ) {
-        intersect = true
-        break
+        isInside = true
       }
     }
-    return intersect
+    if (isInside) {
+      arrFeatures.push(f)
+      matrix[y].push({
+        usable: true,
+        squareCenter: center(f as AllGeoJSON).geometry,
+      })
+    } else {
+      matrix[y].push({
+        usable: false,
+        squareCenter: center(f as AllGeoJSON).geometry,
+      })
+    }
+    x = (x + 1) % grid.columns
+    if (x == 0) {
+      y = (y + 1) % grid.rows
+    }
   })
-  return grid
+  // @ts-ignore
+  grid.featureCollection = featureCollection(arrFeatures)
+  return { grid, matrix }
 }
 
 export function displayGridOnMap(
@@ -202,9 +255,25 @@ export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
 
 export function substractSelectedSquares(squareGrid: olFeature<olGeometry>[]) {
   // @ts-ignore
-
   const selectedSquares = getSquaresOfInteraction()
   return squareGrid.filter((square) => !selectedSquares.includes(square))
+}
+
+export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
+  // @ts-ignore
+  const selectedSquares = getSquaresOfInteraction()
+  let x, y
+  for (x = 0; x < squareGrid.length; x++) {
+    for (y = 0; y < squareGrid[x].length; y++) {
+      for (const selectedSquare of selectedSquares) {
+        const center = selectedSquare.getProperty('center') as Point
+        if (booleanEqual(center, squareGrid[x][y].squareCenter as Point)) {
+          squareGrid[x][y].usable = false
+          break
+        }
+      }
+    }
+  }
 }
 
 export function getSubstractedRoofArea(

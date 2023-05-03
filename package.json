@@ -32,6 +32,8 @@
     "@sigrennesmetropole/cooperation_jn_common_ui": "0.0.19",
     "@tailwindcss/forms": "^0.5.3",
     "@turf/boolean-intersects": "^6.5.0",
+    "@turf/distance": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
     "@turf/rectangle-grid": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "@vcmap-cesium/engine": "~1.1.2",

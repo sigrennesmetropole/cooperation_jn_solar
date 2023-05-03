@@ -7,6 +7,7 @@ import type {
 } from 'ol/format/GeoJSON'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { featureCollection } from '@turf/turf'
+import type { Matrix } from '@/services/roofInteractionHelper'
 
 export const useRoofsStore = defineStore('roofs', () => {
   // id of the selected building
@@ -20,6 +21,8 @@ export const useRoofsStore = defineStore('roofs', () => {
 
   // surface_id of the select roof pan, only highlight method need to use it over the getter on the geom/surface model
   const selectedRoofSurfaceId: Ref<string | null> = ref(null)
+
+  const gridMatrix: Ref<Matrix | null> = ref(null)
 
   function setSelectedBuildingId(buildingId: string) {
     selectedBuildingId.value = buildingId
@@ -60,6 +63,7 @@ export const useRoofsStore = defineStore('roofs', () => {
     selectedRoofSurfaceId,
     roofSurfacesList,
     selectedBuildingId,
+    gridMatrix,
     setRoofsFeatures,
     setSelectRoofSurfaceId,
     setSelectedBuildingId,

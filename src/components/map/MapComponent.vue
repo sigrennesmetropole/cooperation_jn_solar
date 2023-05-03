@@ -15,13 +15,15 @@ import { useAddressStore } from '@/stores/address'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
+  bboxRoof,
   displayGridOnMap,
   displayRoofShape,
+  filterGrid,
   generateRectangleGrid,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
-  substractSelectedSquares,
+  substractSelectedSquaresFromGrid,
 } from '@/services/roofInteractionHelper'
 import {
   displaySolarPanel,
@@ -34,8 +36,8 @@ import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
 
-import type { GeoJSONLayer } from '@vcmap/core'
 import { getCenter } from 'ol/extent'
+import type { Grid } from '@/helpers/rectangleGrid'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -45,8 +47,6 @@ const solarPanelStore = useSolarPanelStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
 const viewStore = useViewsStore()
-
-let grid
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -93,21 +93,23 @@ async function setupGridInstallation() {
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
     let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
     displayRoofShape(rennesApp, roofShape)
-    grid = generateRectangleGrid(roofShape)
-    displayGridOnMap(rennesApp, grid)
+    let bboxOnRoof = bboxRoof(roofShape)
+    let grid: Grid = generateRectangleGrid(roofShape, bboxOnRoof)
+    let { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
+      roofShape,
+      grid
+    )
+    roofsStore.gridMatrix = gridMatrix
+    displayGridOnMap(rennesApp, filterGeomGrid.featureCollection)
     addRoofInteractionOn2dMap(rennesApp)
     rennesApp.getOpenlayerMap().getView().setZoom(22)
-    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox!))
+    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(bboxOnRoof))
   }
 }
 
 async function setupSolarPanelFixtures() {
-  const allSquares: GeoJSONLayer = await rennesApp.getLayerByKey(
-    RENNES_LAYER.roofSquaresArea
-  )
-  // substractedRoofArea: the result polygon on which compute solar panels
-  let substractedRoofArea = substractSelectedSquares(allSquares.getFeatures())
-  console.log('Grid of roof area', substractedRoofArea)
+  substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
+  console.log('matrix for placement algo: ', roofsStore.gridMatrix)
   const sampleSolarPanels = solarPanelFixtures()
   solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
   solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length

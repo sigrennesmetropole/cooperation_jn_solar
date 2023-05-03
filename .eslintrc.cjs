@@ -24,6 +24,6 @@ module.exports = {
   rules: {
     'no-prototype-builtins': 'off',
     '@typescript-eslint/ban-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 }
