@@ -1,34 +1,67 @@
-import { Fill, Stroke, Style } from 'ol/style'
+import { Fill, Icon, Stroke, Style } from 'ol/style'
 import { Select } from 'ol/interaction'
 import { always, click } from 'ol/events/condition'
 import {
   bbox,
-  booleanContains,
+  bboxPolygon,
+  booleanPointInPolygon,
   buffer,
+  center,
+  difference,
   point,
+  polygon,
   randomPolygon,
-  squareGrid,
+  square,
   transformRotate,
+  transformScale,
+  union,
 } from '@turf/turf'
-import type { FeatureCollection } from '@turf/helpers'
+import type { Polygon as turfPolygon } from '@turf/helpers'
+import rectangleGrid from '@turf/rectangle-grid'
+import type { Feature, FeatureCollection, Properties } from '@turf/helpers'
+import type olFeature from 'ol/Feature'
+import type olGeometry from 'ol/geom/Geometry'
 import type { GeoJSONLayer } from '@vcmap/core'
 import type { LayerOpenlayersImpl } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { GeoJSON } from 'ol/format'
 import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
-import type { GeoJSONFeature } from 'ol/format/GeoJSON'
+import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import type { GeoJsonProperties, Geometry } from 'geojson'
+import type { MultiPolygon } from '@turf/helpers'
+import { useRoofsStore } from '@/stores/roof'
+import type { Polygon } from 'ol/geom'
+
+import checkIcon from '@/assets/icons/checkicon.png'
 
 const selected = new Style({
-  fill: new Fill({
-    color: '#ff0000',
-  }),
-  stroke: new Stroke({
-    color: 'rgba(0,0,0,0.7)',
-    width: 2,
+  geometry: function (feature) {
+    const geometry: Polygon = feature.getGeometry() as Polygon
+    const geometryType = geometry.getType()
+    return geometryType == 'Polygon'
+      ? geometry.getInteriorPoint()
+      : geometryType == 'MultiPolygon'
+      ? geometry.getInteriorPoint()
+      : geometry
+  },
+  image: new Icon({
+    anchor: [0.5, 0.5],
+    anchorXUnits: 'fraction',
+    anchorYUnits: 'fraction',
+    src: checkIcon,
   }),
 })
 
+const gridStyle = new Style({
+  fill: new Fill({
+    color: 'rgba(79, 70, 229, 0.2)',
+  }),
+  stroke: new Stroke({
+    color: 'rgba(255,255,255,0.7)',
+    width: 0.5,
+  }),
+})
 let selectClick: Select
 
 /**
@@ -49,20 +82,41 @@ export function generateRandomRoofShape(geoloc: Coordinate) {
  * create grid on all the bbox of the roof, then rotate
  * exclude squares which are not entirely inside the roof shape
  */
-export function generateSquareGrid(
-  rennesApp: RennesApp,
-  roofShape: GeoJSONFeature
-) {
-  const roofAzimut = roofShape.properties?.azimuth
-  const bboxOnRoof = roofShape.bbox!
-  const grid = squareGrid(bboxOnRoof, 45, { units: 'centimeters' })
-  const rotatedPoly = transformRotate(grid, 90 - roofAzimut)
-
-  rotatedPoly.features = rotatedPoly.features.filter((f) =>
-    booleanContains(roofShape, f)
+export function generateRectangleGrid(roofShape: GeoJSONFeatureCollection) {
+  const roofAzimut = roofShape.features[0].properties?.azimuth
+  const squareSize = 475
+  const roofSlope =
+    useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+  const bboxRoofShape = bbox(roofShape)
+  const bboxOnRoof = bbox(
+    transformScale(bboxPolygon(square(bboxRoofShape)), 1.5)
   )
-  return rotatedPoly
+  const cellWidth = squareSize
+  const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
+
+  const grid = rectangleGrid(bboxOnRoof, cellWidth, cellHeight, {
+    units: 'millimeters',
+  })
+
+  transformRotate(grid, roofAzimut, { mutate: true })
+  grid.features = grid.features.filter((f) => {
+    let intersect = false
+    for (const roofShapeFeature of roofShape.features) {
+      if (
+        booleanPointInPolygon(
+          center(f),
+          roofShapeFeature.geometry as turfPolygon
+        )
+      ) {
+        intersect = true
+        break
+      }
+    }
+    return intersect
+  })
+  return grid
 }
+
 export function displayGridOnMap(
   rennesApp: RennesApp,
   geojson: FeatureCollection
@@ -73,11 +127,12 @@ export function displayGridOnMap(
   const format = new GeoJSON()
   const marker = format.readFeatures(geojson)
   gridLayer.addFeatures(marker)
+  gridLayer.setStyle(gridStyle)
 }
 
 export function displayRoofShape(
   rennesApp: RennesApp,
-  geojson: GeoJSONFeature
+  geojson: GeoJSONFeatureCollection
 ) {
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.roofShape
@@ -104,6 +159,64 @@ export function addRoofInteractionOn2dMap(rennesApp: RennesApp) {
 export function removeRoofInteractionOn2dMap(rennesApp: RennesApp) {
   const map = rennesApp.getOpenlayerMap()
   map.removeInteraction(selectClick)
+}
+
+export function getSquaresOfInteraction() {
+  const features: olFeature[] = []
+  selectClick.getFeatures().forEach((selectFeature) => {
+    const reprojFeature = selectFeature
+    reprojFeature.setGeometry(
+      selectFeature.getGeometry()?.transform('EPSG:3857', 'EPSG:4326')
+    )
+    features.push(reprojFeature)
+  })
+  return features
+}
+
+export function unionAllRoofPan(roofPans: GeoJSONFeatureCollection) {
+  // @ts-ignore
+  let res: Feature<Polygon | MultiPolygon, Properties> | null =
+    roofPans.features[0]!
+  roofPans.features.forEach((f, idx) => {
+    if (res && idx > 0) {
+      // @ts-ignore
+      res = union(res, f.geometry)
+    }
+  })
+  return res
+}
+
+export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
+  // @ts-ignore
+  let res: Feature<Polygon | MultiPolygon> | null = roofPans
+  const squares = getSquaresOfInteraction()
+  squares.forEach((square) => {
+    const r = square.getGeometry()?.getCoordinates()!
+    if (res) {
+      // @ts-ignore
+      res = difference(res, polygon(r))
+    }
+  })
+  return res
+}
+
+export function substractSelectedSquares(squareGrid: olFeature<olGeometry>[]) {
+  // @ts-ignore
+
+  const selectedSquares = getSquaresOfInteraction()
+  return squareGrid.filter((square) => !selectedSquares.includes(square))
+}
+
+export function getSubstractedRoofArea(
+  roofsPans: FeatureCollection<Geometry, GeoJsonProperties>
+) {
+  // @ts-ignore
+  const union: Feature<Geometry, Properties> | null = unionAllRoofPan(roofsPans)
+  let res
+  if (union) {
+    res = substractSquareFromRoofPanUnion(union)
+  }
+  return res
 }
 
 export function removeRoofGrid(rennesApp: RennesApp) {

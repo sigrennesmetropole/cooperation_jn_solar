@@ -14,7 +14,6 @@ class ForbidenClickInteraction extends AbstractInteraction {
   constructor() {
     super(EventType.CLICK, ModificationKeyType.ALL)
     this.mapClicked = new VcsEvent()
-    this.setActive()
   }
 
   _isClickOnHomePageValid() {

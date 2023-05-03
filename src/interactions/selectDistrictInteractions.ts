@@ -5,13 +5,16 @@ import {
   ModificationKeyType,
 } from '@vcmap/core'
 import type { InteractionEvent } from '@vcmap/core'
-import type { RennesApp } from './RennesApp'
+import type { RennesApp } from '../services/RennesApp'
 import { apiEnedisDistrictService } from '@/services/api-enedis-district'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { RENNES_LAYER } from '@/stores/layers'
 import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
-import { updateDistrictPointCoordinates } from './AboveMapService'
+import {
+  addGenericListenerForUpdatePositions,
+  updateDistrictPointCoordinates,
+} from '../services/AboveMapService'
 import { selectedDistrict } from '@/services/viewStyles'
 
 class SelectDistrictInteraction extends AbstractInteraction {
@@ -80,6 +83,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
     if (selectedDistrict === undefined) {
       districtStore.resetDistrictStore()
+      this._unhighlight()
       return event
     }
     const irisCode = selectedDistrict?.getProperty('code_iris')
@@ -88,6 +92,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
       await this._interactionDistrict(event)
       updateDistrictPointCoordinates(this._rennesApp)
       await this.gettingDistrictDatas(irisCode)
+      addGenericListenerForUpdatePositions(this._rennesApp)
     }
     return event
   }

@@ -3,6 +3,7 @@ import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import router from '@/router'
 
+export const DEFAULT_CONSUMPTION = 0 as const
 export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
   const currentSubStep: Ref<number> = ref(1)
@@ -11,6 +12,7 @@ export const useSimulationStore = defineStore('simulation', () => {
     { step: 1, subStep: 1, isFinal: false }, // Choose roof side
     { step: 2, subStep: 1, isFinal: false }, // Select obstacle
     { step: 2, subStep: 2, isFinal: false }, // Select the number of solar panel
+    { step: 2, subStep: 3, isFinal: false }, // No roof panel available
     { step: 3, subStep: 1, isFinal: false }, // Energy saving information
     { step: 3, subStep: 2, isFinal: false }, // Select input invoice or connect to Linky
     { step: 3, subStep: 3, isFinal: true }, // Input tarif/invoice
@@ -62,6 +64,9 @@ export const useSimulationStore = defineStore('simulation', () => {
       setCurrentStep(availableSteps[indexPreviousStepNotFinal].step)
       setCurrentSubStep(availableSteps[indexPreviousStepNotFinal].subStep)
     }
+    if (currentStep.value == 2 && currentSubStep.value == 3) {
+      goToPreviousStep()
+    }
   }
 
   function goToNextStep() {
@@ -73,9 +78,11 @@ export const useSimulationStore = defineStore('simulation', () => {
     if (currentIndex + 1 >= availableSteps.length) {
       return
     }
-
     setCurrentStep(availableSteps[currentIndex + 1].step)
     setCurrentSubStep(availableSteps[currentIndex + 1].subStep)
+    if (currentStep.value == 2 && currentSubStep.value == 3) {
+      goToNextStep()
+    }
   }
 
   return {
@@ -86,5 +93,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     goToPreviousStep,
     goToNextStep,
     isCurrentStepFinal,
+    goToFinalView,
   }
 })

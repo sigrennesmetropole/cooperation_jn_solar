@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import UiExplanationTooltip from '@/components/ui/UiExplanationTooltip.vue'
 import { ref } from 'vue'
-const title = "Localisez votre lieux d'habitation"
+const title = "Localisez votre lieu d'habitation"
 const content =
   'Renseignez une adresse ci-dessus ou naviguez sur la carte grâce aux outils en bas à droite.'
 const contentCloseButton = "J'ai compris"

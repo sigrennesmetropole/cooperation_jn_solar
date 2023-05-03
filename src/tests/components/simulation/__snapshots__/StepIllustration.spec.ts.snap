@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`StepIllustration.vue > renders the component correctly 1`] = `
+"<div class=\\"flex flex-col items-center py-2 px-3 grow\\"><img src=\\"potentiel.svg\\" alt=\\"\\" class=\\"\\">
+  <p class=\\"font-dm-sans font-medium text-xs\\" id=\\"step-title\\">Ensoleillement</p>
+</div>"
+`;

@@ -11,9 +11,14 @@ export const useConsumptionAndProductionStore = defineStore(
       annualConsumption.value = new_annual_consumption
     }
 
+    function resetAnnualConsumption() {
+      setAnnualConsumption(0)
+    }
+
     return {
       annualConsumption,
       setAnnualConsumption,
+      resetAnnualConsumption,
     }
   }
 )

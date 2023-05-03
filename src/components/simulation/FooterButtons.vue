@@ -2,6 +2,7 @@
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { resetStoresAndRedirect } from '@/services/resetStores'
 
 const props = defineProps<{
   isDisplayNextButton: Boolean
@@ -11,7 +12,14 @@ const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
-  router.push('/roof-selection')
+  if (
+    window.confirm(
+      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+    )
+  ) {
+    resetStoresAndRedirect()
+    router.push('/roof-selection')
+  }
 }
 function clickButtonPrevious() {
   simulationStore.goToPreviousStep()
@@ -37,6 +45,7 @@ const textNextButton = computed(() => {
     <button
       v-if="simulationStore.currentStep == 1"
       @click="clickButtonCancel()"
+      id="cancelButton"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
       <span class="font-dm-sans text-black text-base font-medium">
@@ -46,6 +55,7 @@ const textNextButton = computed(() => {
     <button
       v-else-if="simulationStore.currentStep != 1"
       @click="clickButtonPrevious()"
+      id="previousButton"
       class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
       <span class="font-dm-sans text-black text-base font-medium">
@@ -55,6 +65,7 @@ const textNextButton = computed(() => {
     <button
       v-if="props.isDisplayNextButton"
       @click="clickButtonNext()"
+      id="nextButton"
       class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
       <img

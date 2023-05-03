@@ -23,14 +23,16 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div
-    class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll"
-  >
-    <HeaderLegalNotice></HeaderLegalNotice>
-    <LegalNotice v-if="legalLink == 'mentions-legales'"></LegalNotice>
-    <Privacy v-else-if="legalLink == 'confidentialite'"></Privacy>
-    <SiteMap v-else-if="legalLink == 'plan-du-site'"></SiteMap>
-    <Accessibility v-else-if="legalLink == 'accessibilite'"></Accessibility>
-    <Cookies v-else-if="legalLink == 'cookies'"></Cookies>
+  <div class="flex flex-row bg-neutral-100">
+    <div
+      class="w-screen font-dm-sans font-medium flex flex-col overflow-y-scroll"
+    >
+      <HeaderLegalNotice></HeaderLegalNotice>
+      <LegalNotice v-if="legalLink == 'mentions-legales'"></LegalNotice>
+      <Privacy v-else-if="legalLink == 'confidentialite'"></Privacy>
+      <SiteMap v-else-if="legalLink == 'plan-du-site'"></SiteMap>
+      <Accessibility v-else-if="legalLink == 'accessibilite'"></Accessibility>
+      <Cookies v-else-if="legalLink == 'cookies'"></Cookies>
+    </div>
   </div>
 </template>

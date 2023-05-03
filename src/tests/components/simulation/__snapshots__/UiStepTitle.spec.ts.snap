@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`UiStepTitle.vue > renders the component correctly 1`] = `
+"<div class=\\"flex flex-col items-center p-0 gap-1\\"><img src=\\"installation.svg\\" class=\\"h-[88px] w-[88px]\\" alt=\\"\\">
+  <h1 class=\\"font-dm-sans font-bold text-[30px] leading-9 text-center\\">Votre installation</h1>
+</div>"
+`;

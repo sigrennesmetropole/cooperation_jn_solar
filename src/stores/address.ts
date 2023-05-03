@@ -19,11 +19,16 @@ export const useAddressStore = defineStore('address', () => {
     address.value = new_address
   }
 
+  function resetAddress() {
+    setLatitudeAndLongitude(0, 0), setAddress('')
+  }
+
   return {
     latitude,
     longitude,
     setLatitudeAndLongitude,
     address,
     setAddress,
+    resetAddress,
   }
 })

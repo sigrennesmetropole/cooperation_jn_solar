@@ -121,7 +121,8 @@ There are currently three ways of doing it:
 
 On: https://argocd.apps.green.gs-fr-prod.camptocamp.com/applications/rennes3d-dev-vcmap-demo
 
-The app must be "OutOfSync" because a new image has been set on the _values.yaml_ file but not deploy yet. Click on sync and wait for the app to be avalaible. -->
+The app must be "OutOfSync" because a new image has been set on the _values.yaml_ file but not deploy yet. Click on sync and wait for the app to be avalaible.
+-->
 
 ## Commands
 
