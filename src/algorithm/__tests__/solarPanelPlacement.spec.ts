@@ -4,7 +4,8 @@ import * as path from 'path'
 import {
   solarPanelPlacementAlgorithm,
   solarPanelPlacement,
-  extractCentroids as extractSolarPanelCentroid,
+  extractCentroids,
+  Matrix,
 } from '../solarPanelPlacement'
 import type { FeatureCollection, Polygon, Properties } from '@turf/turf'
 
@@ -38,10 +39,26 @@ describe('solar panel placement', () => {
     )
     expect(solarPanelsPlacement.orientation).equal('horizontal')
 
-    const solarPanelCentroids = extractSolarPanelCentroid(
+    const solarPanelCentroids = extractCentroids(
       solarPanelsPlacement.solarPanels,
       true
     )
     expect(solarPanelCentroids.features.length).equal(9)
+  })
+
+  test('test solar panel algorithm from matrix', () => {
+    // Read GeoJSON file
+    const fileContents = fs.readFileSync(
+      path.join(__dirname, 'normal_roof_matrix.json'),
+      {
+        encoding: 'utf-8',
+      }
+    )
+
+    const matrix: Matrix = JSON.parse(fileContents)
+
+    console.log(matrix.length)
+    console.log(matrix[0].length)
+    console.log(matrix[0][0])
   })
 })

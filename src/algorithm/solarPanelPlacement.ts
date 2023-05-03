@@ -44,10 +44,17 @@ import {
   booleanIntersects,
   centroid,
   Point,
+  Geometry,
 } from '@turf/turf'
 import * as fs from 'fs'
 import * as path from 'path'
 
+export type Square = {
+  usable: boolean
+  squareCenter: Geometry
+}
+
+export type Matrix = Square[][]
 // Helper function
 
 function writeFeature(
