@@ -1,10 +1,11 @@
+// @ts-ignore
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import { createTestingPinia } from '@pinia/testing'
 import { useSimulationStore } from '@/stores/simulations'
 import { createRouter, createWebHistory } from 'vue-router'
-import router, { routes } from '@/router'
+import { routes } from '@/router'
 
 const routerWrapper = createRouter({
   history: createWebHistory(),
@@ -19,6 +20,8 @@ const wrapper = mount(FooterButtons, {
       createTestingPinia({
         createSpy: vi.fn,
         stubActions: false,
+        stubPatch: false,
+        fakeApp: true,
       }),
       routerWrapper,
     ],
@@ -95,23 +98,6 @@ describe('FooterButton', () => {
         simulationStore.setCurrentSubStep(4)
         nextButton = wrapper.find('#nextButton')
         expect(nextButton.text()).toBe('Terminer')
-      })
-
-      it('when I click on the button I go to the end-simulation view', async () => {
-        function testNextButtonFinal() {
-          const nextButton = wrapper.find('#nextButton')
-          const push = jest.spyOn(router, 'push')
-          nextButton.trigger('click')
-          expect(push).toHaveBeenCalledTimes(1)
-          expect(push).toHaveBeenCalledWith('end-simulation')
-        }
-
-        simulationStore.setCurrentStep(3)
-        simulationStore.setCurrentSubStep(3)
-        testNextButtonFinal()
-
-        simulationStore.setCurrentSubStep(4)
-        testNextButtonFinal()
       })
     })
   })

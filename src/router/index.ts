@@ -1,5 +1,25 @@
-// import { useRoofsStore } from '@/stores/roof'
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  NavigationGuardNext,
+  RouteLocationNormalized,
+} from 'vue-router'
+
+const redirectToRoofSelection = (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) => {
+  if (
+    (from.name === undefined || from.name === null) &&
+    to.name !== 'home' &&
+    to.name !== 'roof-selection'
+  ) {
+    next({ name: 'roof-selection' })
+  } else {
+    next()
+  }
+}
 
 const routes = [
   {
@@ -12,34 +32,39 @@ const routes = [
     component: () => import('../views/HomeView.vue'),
   },
   {
-    path: '/roof-selected-information',
-    name: 'roof-selected-information',
-    component: () => import('../views/RoofSelectedInformation.vue'),
-  },
-  {
     path: '/roof-selection',
     name: 'roof-selection',
     component: () => import('../views/RoofSelectionView.vue'),
   },
   {
+    path: '/roof-selected-information',
+    name: 'roof-selected-information',
+    component: () => import('../views/RoofSelectedInformation.vue'),
+    beforeEnter: redirectToRoofSelection,
+  },
+  {
     path: '/step-sunshine',
     name: 'step-sunshine',
     component: () => import('../views/StepSunshineView.vue'),
+    beforeEnter: redirectToRoofSelection,
   },
   {
     path: '/legalnotice/:legallink',
     name: 'legal-notice',
     component: () => import('../views/LegalNoticeView.vue'),
+    beforeEnter: redirectToRoofSelection,
   },
   {
     path: '/end-simulation',
     name: 'end-simulation',
     component: () => import('../views/SimulationAutocalsolView.vue'),
+    beforeEnter: redirectToRoofSelection,
   },
   {
     path: '/simulation-results',
     name: 'simulation-results',
     component: () => import('../views/SimulationResultsView.vue'),
+    beforeEnter: redirectToRoofSelection,
   },
 
   // TODO: Create 404 route?
@@ -48,19 +73,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: routes,
-})
-
-router?.beforeEach((to, from, next) => {
-  if (
-    from.name === undefined &&
-    to.name !== 'home' &&
-    from.name === undefined &&
-    to.name !== 'roof-selection'
-  ) {
-    next({ name: 'roof-selection' })
-  } else {
-    next()
-  }
 })
 
 export { routes }

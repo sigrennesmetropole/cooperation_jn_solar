@@ -4,13 +4,13 @@ import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduct
 import { useRoofsStore } from '@/stores/roof'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 
-const addressStore = useAddressStore()
-const roofStore = useRoofsStore()
-const consumptionAndProductionStore = useConsumptionAndProductionStore()
-const autocalsolStore = useAutocalsolStore()
-const solarPanelStore = useSolarPanelStore()
-
 export function resetStoresAndRedirect() {
+  const addressStore = useAddressStore()
+  const roofStore = useRoofsStore()
+  const consumptionAndProductionStore = useConsumptionAndProductionStore()
+  const autocalsolStore = useAutocalsolStore()
+  const solarPanelStore = useSolarPanelStore()
+
   addressStore.resetAddress()
   roofStore.resetRoofStore()
   consumptionAndProductionStore.resetAnnualConsumption()
