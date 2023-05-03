@@ -3,7 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 const redirectToRoofSelection = (
   // @ts-ignore
   to,
+  // @ts-ignore
   from,
+  // @ts-ignore
   next
 ) => {
   if (
