@@ -3,11 +3,9 @@ import NeighbourhoodData from '@/components/results/NeighbourhoodData.vue'
 import { useAddressStore } from '@/stores/address'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { createTestingPinia } from '@pinia/testing'
-import { apiIrisService } from '@/services/api-code-iris'
-import { apiEnedisDistrictService } from '@/services/api-enedis-district'
+/* eslint-disable */
 import fetchMock from 'jest-fetch-mock'
-
-fetchMock.enableMocks()
+/* eslint-enable */
 
 import { vi } from 'vitest'
 
@@ -17,10 +15,6 @@ describe('NeighbourhoodData', () => {
   beforeEach(async () => {
     wrapper = mount(NeighbourhoodData, {
       global: {
-        provide: {
-          apiIrisService,
-          apiEnedisDistrictService,
-        },
         plugins: [
           createTestingPinia({
             createSpy: vi.fn,
@@ -33,16 +27,13 @@ describe('NeighbourhoodData', () => {
     })
   })
 
-  afterEach(() => {
-    fetchMock.resetMocks()
-  })
-
   it('renders correctly', () => {
     const addressStore = useAddressStore()
-    const districtStore = useDistrictStore()
     addressStore.setLatitudeAndLongitude(48.119741, -1.656597)
-    districtStore.setDistrictProduction(40.5)
+    const districtStore = useDistrictStore()
     districtStore.setDistrictNumberInstallations(13)
+    districtStore.setDistrictProduction(40.5)
+    districtStore.setDistrictIrisCode(35200000)
 
     expect(wrapper.exists()).toBe(true)
   })
@@ -65,7 +56,6 @@ describe('NeighbourhoodData', () => {
     await wrapper.vm.$nextTick()
 
     const districtNumberInstallations = wrapper.find('#number-panel').text()
-    console.log('nombre panneaux', districtNumberInstallations)
     const districtProduction = wrapper.find('#district-production').text()
 
     expect(districtNumberInstallations).toBe('13')
