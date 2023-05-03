@@ -132,23 +132,44 @@ export function solarPanelPlacement(matrix: Matrix, debug: boolean = false) {
   const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
   const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
 
+  let orientation
+  let solarPanels
   if (horizontalSolarPanels.length >= verticalSolarPanels.length) {
-    return {
-      solarPanels: horizontalSolarPanels,
-      orientation: 'horizontal',
-    }
+    solarPanels = horizontalSolarPanels
+    orientation = 'horizontal'
   } else {
-    return { solarPanels: verticalSolarPanels, orientation: 'vertical' }
+    solarPanels = verticalSolarPanels
+    orientation = 'vertical'
   }
+
+  const matrixGeoJSONCovered = matrixToGeoJSON(matrix, solarPanels)
+  writeFeature('matrix-covered.geojson', matrixGeoJSONCovered, debug)
+
+  return { solarPanels: solarPanels, orientation: orientation }
 }
 
-export function matrixToGeoJSON(matrix: Matrix) {
+export function matrixToGeoJSON(
+  matrix: Matrix,
+  solarPanels: SolarPanelGrid[] = []
+) {
   const fc: FeatureCollection<Polygon, Properties> = featureCollection([])
   const length = 0.05
+
+  const coveredGrids: Record<number, number> = {}
+  for (let i = 0; i < solarPanels.length; i++) {
+    solarPanels[i].gridIndexes.forEach((gridIndex) => {
+      coveredGrids[gridIndex[0] * matrix[0].length + gridIndex[1]] = i
+    })
+  }
+
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
-      const x: number = j * length
-      const y: number = i * length
+      const x: number = i * length
+      const y: number = j * length
+      let solarPanelIndex = null
+      if (coveredGrids[i * matrix[0].length + j]) {
+        solarPanelIndex = coveredGrids[i * matrix[0].length + j]
+      }
       const grid: Feature<Polygon, Properties> = polygon(
         [
           [
@@ -159,10 +180,15 @@ export function matrixToGeoJSON(matrix: Matrix) {
             [x, y],
           ],
         ],
-        { index: i * matrix[0].length + j, usable: matrix[i][j].usable }
+        {
+          index: i * matrix[0].length + j,
+          usable: matrix[i][j].usable,
+          solar_panel_index: solarPanelIndex,
+        }
       )
       fc.features.push(grid)
     }
   }
+
   return fc
 }
