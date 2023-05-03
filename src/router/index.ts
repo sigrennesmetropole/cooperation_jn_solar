@@ -85,15 +85,6 @@ const routes = [
     },
   },
   {
-    path: '/districts',
-    name: 'districts',
-    component: () => import('../views/DistrictsView.vue'),
-    meta: {
-      title: 'Page Districts',
-    },
-    beforeEnter: redirectToRoofSelection,
-  },
-  {
     path: '/simulation-results',
     name: 'simulation-results',
     component: () => import('../views/SimulationResultsView.vue'),
