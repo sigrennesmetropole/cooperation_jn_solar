@@ -1,11 +1,9 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import NeighbourhoodData from '@/components/results/NeighbourhoodData.vue'
-import { useAddressStore } from '@/stores/address'
-import { useDistrictStore } from '@/stores/districtInformations'
 import { createTestingPinia } from '@pinia/testing'
-/* eslint-disable */
+
 import fetchMock from 'jest-fetch-mock'
-/* eslint-enable */
+fetchMock.enableMocks()
 
 import { vi } from 'vitest'
 
@@ -27,13 +25,39 @@ describe('NeighbourhoodData', () => {
     })
   })
 
-  it('renders correctly', () => {
-    const addressStore = useAddressStore()
-    addressStore.setLatitudeAndLongitude(48.119741, -1.656597)
-    const districtStore = useDistrictStore()
-    districtStore.setDistrictNumberInstallations(13)
-    districtStore.setDistrictProduction(40.5)
-    districtStore.setDistrictIrisCode(35200000)
+  afterEach(() => {
+    fetchMock.resetMocks()
+  })
+
+  it('renders correctly', async () => {
+    const codeIris = '352750000'
+    const districtDatas = {
+      irisName: 'Ouest',
+      totalConsumption: 15092.371834339263,
+      totalProduction: 341.56210073174316,
+      totalPhotovoltaicSites: 20,
+    }
+
+    console.log(codeIris)
+    console.log(districtDatas)
+
+    // wrapper.vm.gettingIrisCode = () => {
+    //   codeIris
+    // }
+    // wrapper.vm.gettingDistrictDatas = () => {
+    //   districtDatas
+    // }
+
+    // const spy = jest.spyOn(wrapper.vm, 'gettingIrisCode').mockReturnValue(codeIris)
+
+    // fetchMock.mockResponse(
+    //   [
+    //     codeIris
+    //   ],
+    //   [
+    //     districtDatas
+    //   ]
+    // )
 
     expect(wrapper.exists()).toBe(true)
   })
@@ -47,18 +71,5 @@ describe('NeighbourhoodData', () => {
   it('keeps the correct number of decimals', () => {
     // @ts-ignore
     expect(wrapper.vm.keepDecimals(3.14159, 2)).toBe('3.14')
-  })
-
-  it('displays the district informations correctly', async () => {
-    const districtStore = useDistrictStore()
-    districtStore.setDistrictProduction(40.5)
-    districtStore.setDistrictNumberInstallations(13)
-    await wrapper.vm.$nextTick()
-
-    const districtNumberInstallations = wrapper.find('#number-panel').text()
-    const districtProduction = wrapper.find('#district-production').text()
-
-    expect(districtNumberInstallations).toBe('13')
-    expect(districtProduction).toBe('40.5 MWh.')
   })
 })

@@ -11,7 +11,6 @@ const addressStore = useAddressStore()
 
 async function gettingIrisCode(lat: string, lon: string) {
   const irisCode = await apiIrisService.getCodeIris(lat, lon)
-  districtStore.setDistrictIrisCode(irisCode)
   return irisCode
 }
 
@@ -19,10 +18,7 @@ async function gettingDistrictDatas(codeIris: number) {
   const districtDatas = await apiEnedisDistrictService.getDistrictDatas(
     codeIris
   )
-  districtStore.setDistrictProduction(districtDatas.totalProduction)
-  districtStore.setDistrictNumberInstallations(
-    districtDatas.totalPhotovoltaicSites
-  )
+  return districtDatas
 }
 
 function keepDecimals(float: number, numberOfDecimals: number) {
@@ -35,7 +31,13 @@ onBeforeMount(async () => {
     addressStore.latitude.toString(),
     addressStore.longitude.toString()
   )
-  await gettingDistrictDatas(irisCode)
+  districtStore.setDistrictIrisCode(irisCode)
+
+  const districtDatas = await gettingDistrictDatas(irisCode)
+  districtStore.setDistrictProduction(districtDatas.totalProduction)
+  districtStore.setDistrictNumberInstallations(
+    districtDatas.totalPhotovoltaicSites
+  )
 })
 </script>
 
