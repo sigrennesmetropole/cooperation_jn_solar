@@ -15,10 +15,12 @@ import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
+
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const popUpStore = usePopUpStore()
 const districtStore = useDistrictStore()
+
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
@@ -67,6 +69,22 @@ const isPageFullScreen = computed(() => {
     null,
   ].includes(viewStore.currentView!)
 })
+
+const isAlertBoxBrowserNotDisplay = computed(() => {
+  return [viewList['home'], viewList['roof-selection'], null].includes(
+    viewStore.currentView!
+  )
+})
+
+if (isAlertBoxBrowserNotDisplay.value) {
+  window.addEventListener('beforeunload', function (e) {
+    e.preventDefault()
+    e.returnValue =
+      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+    e.cancelable
+    e.stopPropagation()
+  })
+}
 </script>
 
 <template>
