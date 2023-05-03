@@ -7,6 +7,7 @@ import {
   extractCentroids,
   Matrix,
 } from '../solarPanelPlacement'
+import { solarPanelPlacement as solarPanelPlacementMatrix } from '../solarPanelPlacementMatrix'
 import type { FeatureCollection, Polygon, Properties } from '@turf/turf'
 
 describe('solar panel placement', () => {
@@ -56,9 +57,18 @@ describe('solar panel placement', () => {
     )
 
     const matrix: Matrix = JSON.parse(fileContents)
-
     console.log(matrix.length)
     console.log(matrix[0].length)
     console.log(matrix[0][0])
+
+    const result = solarPanelPlacementMatrix(matrix)
+
+    console.log(result.orientation)
+    // result.solarPanels.forEach((sp) => {
+    //   console.log(sp)
+    // })
+
+    expect(result.orientation).equal('vertical')
+    expect(result.solarPanels.length).equal(127)
   })
 })
