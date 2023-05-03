@@ -61,7 +61,7 @@ describe('solar panel placement', () => {
     console.log(matrix[0].length)
     console.log(matrix[0][0])
 
-    const result = solarPanelPlacementMatrix(matrix)
+    const result = solarPanelPlacementMatrix(matrix, true)
 
     console.log(result.orientation)
     // result.solarPanels.forEach((sp) => {

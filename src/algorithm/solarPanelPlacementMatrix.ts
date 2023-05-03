@@ -1,4 +1,14 @@
-import type { Geometry } from '@turf/turf'
+import {
+  Feature,
+  FeatureCollection,
+  Geometry,
+  Polygon,
+  Properties,
+  featureCollection,
+  polygon,
+} from '@turf/turf'
+
+import { writeFeature } from './solarPanelPlacement'
 
 export type Square = {
   usable: boolean
@@ -115,7 +125,10 @@ export function solarPanelPlacementAlgorithm(
   return solarPanels
 }
 
-export function solarPanelPlacement(matrix: Matrix) {
+export function solarPanelPlacement(matrix: Matrix, debug: boolean = false) {
+  const matrixGeoJSON = matrixToGeoJSON(matrix)
+  writeFeature('matrix.geojson', matrixGeoJSON, debug)
+
   const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
   const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
 
@@ -127,4 +140,29 @@ export function solarPanelPlacement(matrix: Matrix) {
   } else {
     return { solarPanels: verticalSolarPanels, orientation: 'vertical' }
   }
+}
+
+export function matrixToGeoJSON(matrix: Matrix) {
+  const fc: FeatureCollection<Polygon, Properties> = featureCollection([])
+  const length = 0.05
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      const x: number = j * length
+      const y: number = i * length
+      const grid: Feature<Polygon, Properties> = polygon(
+        [
+          [
+            [x, y],
+            [x + length, y],
+            [x + length, y + length],
+            [x, y + length],
+            [x, y],
+          ],
+        ],
+        { index: i * matrix[0].length + j, usable: matrix[i][j].usable }
+      )
+      fc.features.push(grid)
+    }
+  }
+  return fc
 }
