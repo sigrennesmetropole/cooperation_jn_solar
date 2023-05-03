@@ -5,6 +5,8 @@ import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper
 import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconMinus } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { IconSynchronize } from '@sigrennesmetropole/cooperation_jn_common_ui'
+
 import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { UiDescribeButtonCompass } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
@@ -16,6 +18,7 @@ import type { RennesApp } from '@/services/RennesApp'
 import { useRouter } from 'vue-router'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useMapStore } from '@/stores/map'
+import type { Viewpoint } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const viewStore = useViewsStore()
@@ -38,6 +41,11 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
   }
 }
 
+async function resetZoom() {
+  const newVp = mapStore.viewPoint as Viewpoint
+  await rennesApp.maps?.activeMap.gotoViewpoint(newVp)
+}
+
 const shouldDisplayHomeButton = () => {
   return [viewList['roof-selected-information']].includes(
     viewStore.currentView!
@@ -46,9 +54,9 @@ const shouldDisplayHomeButton = () => {
 
 const heightClass = computed(() => {
   if (!shouldDisplayHomeButton()) {
-    return ['h-[14rem]']
+    return ['h-[16rem]']
   } else {
-    return ['h-[18rem]']
+    return ['h-[20rem]']
   }
 })
 </script>
@@ -76,11 +84,18 @@ const heightClass = computed(() => {
         ><IconPlus />
       </UiIconButton>
       <UiIconButton
-        class="rounded-b-lg"
         @click="() => zoom(true)"
         ariaLabelButton="Zoom vers l'arrière"
         title-button="Zoom vers l'arrière"
         ><IconMinus />
+      </UiIconButton>
+      <UiIconButton
+        class="rounded-b-lg"
+        @click="() => resetZoom()"
+        ariaLabelButton="Réinitialiser le zoom"
+        title-button="Réinitialiser le zoom"
+      >
+        <IconSynchronize />
       </UiIconButton>
     </div>
     <CompassComponent v-if="mapStore.is3D()" />
