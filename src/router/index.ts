@@ -98,17 +98,19 @@ const router = createRouter({
   routes: routes,
 })
 
-router.beforeEach((to, from, next) => {
-  // Continue navigation
-  next()
+if (router !== undefined) {
+  router.beforeEach((to, from, next) => {
+    // Continue navigation
+    next()
 
-  // Track the page view after navigation is confirmed
-  router.afterEach(() => {
-    _paq.push(['setCustomUrl', to.fullPath])
-    _paq.push(['setDocumentTitle', to.meta.title || 'My New Title'])
-    _paq.push(['trackPageView'])
+    // Track the page view after navigation is confirmed
+    router.afterEach(() => {
+      _paq.push(['setCustomUrl', to.fullPath])
+      _paq.push(['setDocumentTitle', to.meta.title || 'My New Title'])
+      _paq.push(['trackPageView'])
+    })
   })
-})
+}
 
 export { routes }
 export default router
