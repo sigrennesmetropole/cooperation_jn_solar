@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { _paq } from '@/matomo.js'
 
 const redirectToRoofSelection = (
   // @ts-ignore
@@ -23,46 +24,70 @@ const routes = [
   {
     path: '/',
     redirect: '/home',
+    meta: {
+      title: 'Page Home',
+    },
   },
   {
     path: '/home',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
+    meta: {
+      title: 'Page Home',
+    },
   },
   {
     path: '/roof-selection',
     name: 'roof-selection',
     component: () => import('../views/RoofSelectionView.vue'),
+    meta: {
+      title: 'Page Roof Selection',
+    },
   },
   {
     path: '/roof-selected-information',
     name: 'roof-selected-information',
     component: () => import('../views/RoofSelectedInformation.vue'),
     beforeEnter: redirectToRoofSelection,
+    meta: {
+      title: 'Page Roof Selected Information',
+    },
   },
   {
     path: '/step-sunshine',
     name: 'step-sunshine',
     component: () => import('../views/StepSunshineView.vue'),
     beforeEnter: redirectToRoofSelection,
+    meta: {
+      title: 'Page Step Sunshine',
+    },
   },
   {
     path: '/legalnotice/:legallink',
     name: 'legal-notice',
     component: () => import('../views/LegalNoticeView.vue'),
     beforeEnter: redirectToRoofSelection,
+    meta: {
+      title: 'Page Legal Notice',
+    },
   },
   {
     path: '/end-simulation',
     name: 'end-simulation',
     component: () => import('../views/SimulationAutocalsolView.vue'),
     beforeEnter: redirectToRoofSelection,
+    meta: {
+      title: 'Page End Simulation',
+    },
   },
   {
     path: '/simulation-results',
     name: 'simulation-results',
     component: () => import('../views/SimulationResultsView.vue'),
     beforeEnter: redirectToRoofSelection,
+    meta: {
+      title: 'Page Simulation Results',
+    },
   },
 
   // TODO: Create 404 route?
@@ -72,6 +97,20 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: routes,
 })
+
+if (router !== undefined) {
+  router.beforeEach((to, from, next) => {
+    // Continue navigation
+    next()
+
+    // Track the page view after navigation is confirmed
+    router.afterEach(() => {
+      _paq.push(['setCustomUrl', to.fullPath])
+      _paq.push(['setDocumentTitle', to.meta.title || 'My New Title'])
+      _paq.push(['trackPageView'])
+    })
+  })
+}
 
 export { routes }
 export default router
