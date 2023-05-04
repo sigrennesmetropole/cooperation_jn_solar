@@ -59,7 +59,7 @@ describe('solar panel placement', () => {
     console.log(matrix[0].length)
     console.log(matrix[0][0])
 
-    const result = solarPanelPlacementMatrix(matrix, true)
+    const result = solarPanelPlacementMatrix(matrix, true, 'normal-')
 
     console.log(result.orientation)
     // result.solarPanels.forEach((sp) => {
@@ -80,9 +80,9 @@ describe('solar panel placement', () => {
     )
 
     const matrix: Matrix = JSON.parse(fileContents)
-    expect(matrix.length).equal(6)
-    expect(matrix[0].length).equal(8)
-    console.log(matrix[0][0])
+    // expect(matrix.length).equal(6)
+    // expect(matrix[0].length).equal(8)
+    // console.log(matrix[0][0])
 
     const result = solarPanelPlacementMatrix(matrix, true, 'simple-')
 

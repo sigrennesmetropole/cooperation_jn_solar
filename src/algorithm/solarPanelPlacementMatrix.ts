@@ -2,9 +2,11 @@ import {
   Feature,
   FeatureCollection,
   Geometry,
+  Point,
   Polygon,
   Properties,
   featureCollection,
+  point,
   polygon,
 } from '@turf/turf'
 
@@ -133,6 +135,9 @@ export function solarPanelPlacement(
   const matrixGeoJSON = matrixToGeoJSON(matrix)
   writeFeature(`${prefix}matrix.geojson`, matrixGeoJSON, debug)
 
+  const centroidGeoJSON = matrixCentroidToGeoJSON(matrix)
+  writeFeature(`${prefix}centroids.geojson`, centroidGeoJSON, debug)
+
   const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
   const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
 
@@ -194,5 +199,26 @@ export function matrixToGeoJSON(
     }
   }
 
+  return fc
+}
+
+export function matrixCentroidToGeoJSON(matrix: Matrix) {
+  const fc: FeatureCollection<Point, Properties> = featureCollection([])
+  let index = 0
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      // const index = i * matrix[0].length + j
+      const x = matrix[i][j].squareCenter.coordinates[0] as number
+      const y = matrix[i][j].squareCenter.coordinates[1] as number
+      const p: Feature<Point, Properties> = point([x, y], {
+        index: index,
+        usable: matrix[i][j].usable,
+        i: i,
+        j: j,
+      })
+      index = index + 1
+      fc.features.push(p)
+    }
+  }
   return fc
 }
