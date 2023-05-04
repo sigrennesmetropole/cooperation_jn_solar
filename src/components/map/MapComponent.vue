@@ -109,7 +109,10 @@ async function setupGridInstallation() {
 
 async function setupSolarPanelFixtures() {
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
-  console.log('matrix for placement algo: ', roofsStore.gridMatrix)
+  console.log(
+    'matrix for placement algo (filter by remove box): ',
+    roofsStore.gridMatrix!
+  )
   const sampleSolarPanels = solarPanelFixtures()
   solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
   solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length

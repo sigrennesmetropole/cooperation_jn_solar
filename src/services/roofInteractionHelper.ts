@@ -9,6 +9,7 @@ import {
   buffer,
   center,
   difference,
+  feature,
   featureCollection,
   point,
   polygon,
@@ -130,43 +131,54 @@ export type Square = {
 export type Matrix = Square[][]
 
 export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
+  //TODO: remove featureArray, for test
+  const featureArray: Feature[] = []
   let x = 0,
     y = 0
   const matrix: Matrix = []
   const arrFeatures: Array<Feature<Geometry>> = []
   // @ts-ignore
-  grid.featureCollection.features.forEach((f: Feature<Geometry>) => {
-    let isInside: boolean = false
-    for (const roofShapeFeature of roofShape.features) {
-      if (x == 0) matrix[y] = []
-      if (
-        booleanPointInPolygon(
-          center(f as AllGeoJSON),
-          roofShapeFeature.geometry as turfPolygon
-        )
-      ) {
-        isInside = true
+  grid.featureCollection.features.forEach(
+    (f: Feature<Geometry>, index: number) => {
+      let isInside: boolean = false
+      const centerGridCase = center(f as AllGeoJSON)
+      if (x == 0) {
+        matrix[y] = []
+      }
+      for (const roofShapeFeature of roofShape.features) {
+        if (
+          booleanPointInPolygon(
+            centerGridCase,
+            roofShapeFeature.geometry as turfPolygon
+          )
+        ) {
+          isInside = true
+        }
+      }
+      if (isInside) {
+        arrFeatures.push(f)
+      }
+      featureArray[index] = feature(centerGridCase.geometry, {
+        usable: isInside,
+        rowIndex: y,
+        colIndex: x,
+      })
+      matrix[y][x] = {
+        usable: isInside,
+        squareCenter: centerGridCase.geometry,
+      }
+      y = (y + 1) % grid.rows
+      if (y == 0) {
+        x = (x + 1) % grid.columns
       }
     }
-    if (isInside) {
-      arrFeatures.push(f)
-      matrix[y].push({
-        usable: true,
-        squareCenter: center(f as AllGeoJSON).geometry,
-      })
-    } else {
-      matrix[y].push({
-        usable: false,
-        squareCenter: center(f as AllGeoJSON).geometry,
-      })
-    }
-    x = (x + 1) % grid.columns
-    if (x == 0) {
-      y = (y + 1) % grid.rows
-    }
-  })
+  )
   // @ts-ignore
   grid.featureCollection = featureCollection(arrFeatures)
+  console.log(
+    'Geojson Result (non filtered by box remove)',
+    featureCollection(featureArray)
+  )
   return { grid, matrix }
 }
 
