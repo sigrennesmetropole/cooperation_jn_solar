@@ -149,16 +149,16 @@ export function solarPanelPlacement(
   const centroidGeoJSON = matrixCentroidToGeoJSON(matrix)
   writeFeature(`${prefix}centroids.geojson`, centroidGeoJSON, debug)
 
-  const newMatrix = rearrangeMatrix(matrix)
+  // const newMatrix = rearrangeMatrix(matrix)
 
-  const newMatrixGeoJSON = matrixToGeoJSON(newMatrix)
-  writeFeature(`${prefix}new-matrix.geojson`, newMatrixGeoJSON, debug)
+  // const newMatrixGeoJSON = matrixToGeoJSON(newMatrix)
+  // writeFeature(`${prefix}new-matrix.geojson`, newMatrixGeoJSON, debug)
 
-  const newCentroidGeoJSON = matrixCentroidToGeoJSON(newMatrix)
-  writeFeature(`${prefix}new-centroids.geojson`, newCentroidGeoJSON, debug)
+  // const newCentroidGeoJSON = matrixCentroidToGeoJSON(newMatrix)
+  // writeFeature(`${prefix}new-centroids.geojson`, newCentroidGeoJSON, debug)
 
-  const verticalSolarPanels = solarPanelPlacementAlgorithm(newMatrix, false)
-  const horizontalSolarPanels = solarPanelPlacementAlgorithm(newMatrix, true)
+  const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
+  const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
 
   let orientation
   let solarPanels
@@ -170,7 +170,7 @@ export function solarPanelPlacement(
     orientation = 'vertical'
   }
 
-  const matrixGeoJSONCovered = matrixToGeoJSON(newMatrix, solarPanels)
+  const matrixGeoJSONCovered = matrixToGeoJSON(matrix, solarPanels)
   writeFeature(`${prefix}matrix-covered.geojson`, matrixGeoJSONCovered, debug)
 
   return { solarPanels: solarPanels, orientation: orientation }
@@ -192,7 +192,7 @@ export function matrixToGeoJSON(
 
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
-      const x: number = i * length
+      const x: number = i * -length
       const y: number = j * length
       let solarPanelIndex = null
       if (coveredGrids[i * matrix[0].length + j]) {
@@ -202,14 +202,14 @@ export function matrixToGeoJSON(
         [
           [
             [x, y],
-            [x + length, y],
-            [x + length, y + length],
+            [x - length, y],
+            [x - length, y + length],
             [x, y + length],
             [x, y],
           ],
         ],
         {
-          index: i * matrix[0].length + j,
+          index: j * matrix.length + i,
           usable: matrix[i][j].usable,
           solar_panel_index: solarPanelIndex,
         }
@@ -223,10 +223,9 @@ export function matrixToGeoJSON(
 
 export function matrixCentroidToGeoJSON(matrix: Matrix) {
   const fc: FeatureCollection<Point, Properties> = featureCollection([])
-  let index = 0
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[0].length; j++) {
-      // const index = i * matrix[0].length + j
+      const index = j * matrix.length + i
       const x = matrix[i][j].squareCenter.coordinates[0] as number
       const y = matrix[i][j].squareCenter.coordinates[1] as number
       const p: Feature<Point, Properties> = point([x, y], {
@@ -235,7 +234,6 @@ export function matrixCentroidToGeoJSON(matrix: Matrix) {
         i: i,
         j: j,
       })
-      index = index + 1
       fc.features.push(p)
     }
   }
