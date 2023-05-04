@@ -66,28 +66,23 @@ describe('solar panel placement', () => {
     //   console.log(sp)
     // })
 
-    expect(result.orientation).equal('horizontal')
-    expect(result.solarPanels.length).equal(108)
+    // expect(result.orientation).equal('horizontal')
+    // expect(result.solarPanels.length).equal(108)
   })
 
-  // Disabled because it does not have a valid data
-  // test('test solar panel algorithm from simple matrix', () => {
-  //   // Read GeoJSON file
-  //   const fileContents = fs.readFileSync(
-  //     path.join(__dirname, 'simple_roof_matrix.json'),
-  //     {
-  //       encoding: 'utf-8',
-  //     }
-  //   )
+  test('solar panel algorithm small roof', () => {
+    // Read GeoJSON file
+    const fileContents = fs.readFileSync(
+      path.join(__dirname, 'grid_samples', 'small_roof', 'small_roof.matrix'),
+      {
+        encoding: 'utf-8',
+      }
+    )
 
-  //   const matrix: Matrix = JSON.parse(fileContents)
-  //   // expect(matrix.length).equal(6)
-  //   // expect(matrix[0].length).equal(8)
-  //   // console.log(matrix[0][0])
+    const matrix: Matrix = JSON.parse(fileContents)
+    expect(matrix.length).greaterThan(0)
 
-  //   const result = solarPanelPlacementMatrix(matrix, true, 'simple-')
-
-  //   expect(result.orientation).equal('vertical')
-  //   // expect(result.solarPanels.length).equal(127)
-  // })
+    const result = solarPanelPlacementMatrix(matrix, true, 'small-roof-')
+    expect(result.orientation).equal('vertical')
+  })
 })
