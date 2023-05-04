@@ -72,10 +72,16 @@ function isAllSolarPanelGridUsable(
 
 function isAllSolarPanelGridNotCovered(
   solarPanelGrid: SolarPanelGrid,
-  coveredGrids: Set<[number, number]>
+  coveredGrids: Set<number>,
+  matrixWidth: number
 ) {
   for (let i = 0; i < solarPanelGrid.gridIndexes.length; i++) {
-    if (coveredGrids.has(solarPanelGrid.gridIndexes[i])) {
+    // scalarIndex means to have a number instead of a [number, number]
+    // because indexOf doesn't work on array of array
+    const scalarIndex =
+      solarPanelGrid.gridIndexes[i][0] * matrixWidth +
+      solarPanelGrid.gridIndexes[i][1]
+    if (coveredGrids.has(scalarIndex)) {
       return false
     }
   }
@@ -100,17 +106,22 @@ export function solarPanelPlacementAlgorithm(
   const matrixWidth = matrix[0].length
 
   const solarPanels: SolarPanelGrid[] = []
-  const coveredGrids: Set<[number, number]> = new Set()
+  const coveredGrids: Set<number> = new Set()
 
   for (let i = 0; i < matrixLength; i++) {
     for (let j = 0; j < matrixWidth; j++) {
       if (matrix[i][j].usable) {
         const solarPanel = createSolarPanel([i, j], horizontal)
         if (isAllSolarPanelGridUsable(matrix, solarPanel)) {
-          if (isAllSolarPanelGridNotCovered(solarPanel, coveredGrids)) {
+          if (
+            isAllSolarPanelGridNotCovered(solarPanel, coveredGrids, matrixWidth)
+          ) {
             solarPanels.push(solarPanel)
             for (let k = 0; k < solarPanel.gridIndexes.length; k++) {
-              coveredGrids.add(solarPanel.gridIndexes[k])
+              const scalarIndex =
+                solarPanel.gridIndexes[k][0] * matrixWidth +
+                solarPanel.gridIndexes[k][1]
+              coveredGrids.add(scalarIndex)
             }
           } else {
             // skipped because the solar panel cover grid that has been covered by other solar panel

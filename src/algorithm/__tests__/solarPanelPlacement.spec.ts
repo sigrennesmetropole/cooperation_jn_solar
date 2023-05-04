@@ -66,8 +66,8 @@ describe('solar panel placement', () => {
     //   console.log(sp)
     // })
 
-    expect(result.orientation).equal('vertical')
-    // expect(result.solarPanels.length).equal(127)
+    expect(result.orientation).equal('horizontal')
+    expect(result.solarPanels.length).equal(108)
   })
 
   // Disabled because it does not have a valid data
