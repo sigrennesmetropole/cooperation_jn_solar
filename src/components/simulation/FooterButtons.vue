@@ -2,7 +2,6 @@
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
-import { resetStores } from '@/services/resetStores'
 import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const props = defineProps<{
@@ -14,7 +13,6 @@ const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
   if (window.confirm(WINDOW_CONFIRM_MESSAGE)) {
-    resetStores()
     router.push('/roof-selection')
   }
 }
