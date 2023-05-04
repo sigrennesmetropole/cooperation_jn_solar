@@ -28,7 +28,9 @@ let addressClosedByUser = ref(false)
 let DISTANCE_MAX_FOR_SELECTION = 600
 
 onMounted(() => {
-  rennesApp.clearRoofsHighlight()
+  if (mapStore.isInitializeMap) {
+    rennesApp.clearRoofsHighlight()
+  }
   resetStores()
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
@@ -36,6 +38,7 @@ onMounted(() => {
 })
 mapStore.$subscribe(async () => {
   if (mapStore.isInitializeMap) {
+    rennesApp.clearRoofsHighlight()
     rennesApp
       .get3DMap()
       .getScene()
