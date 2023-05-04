@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue'
-import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
+import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
 
 import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconPlus } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { IconMinus } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import { IconSynchronize } from '@sigrennesmetropole/cooperation_jn_common_ui'
+
 import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { UiDescribeButtonCompass } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
@@ -16,6 +18,7 @@ import type { RennesApp } from '@/services/RennesApp'
 import { useRouter } from 'vue-router'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useMapStore } from '@/stores/map'
+import type { Viewpoint } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const viewStore = useViewsStore()
@@ -38,19 +41,22 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
   }
 }
 
+async function resetZoom() {
+  const newVp = mapStore.viewPoint as Viewpoint
+  await rennesApp.maps?.activeMap.gotoViewpoint(newVp)
+}
+
 const shouldDisplayHomeButton = () => {
-  return [
-    viewList.home,
-    viewList['roof-selection'],
-    viewList['roof-selected-information'],
-  ].includes(viewStore.currentView)
+  return [viewList['roof-selected-information']].includes(
+    viewStore.currentView!
+  )
 }
 
 const heightClass = computed(() => {
   if (!shouldDisplayHomeButton()) {
-    return ['h-[14rem]']
+    return ['h-[16rem]']
   } else {
-    return ['h-[18rem]']
+    return ['h-[20rem]']
   }
 })
 </script>
@@ -58,21 +64,38 @@ const heightClass = computed(() => {
 <template>
   <div
     :class="heightClass"
-    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center overflow-hidden w-32 select-none"
+    class="transition-[height] absolute right-2 bottom-10 flex flex-col [&>*]:m-2 text-gray-dark items-center w-32 select-none"
     :style="panelStore.isRightPanel() ? `margin-right: ${PANEL_WIDTH};` : ''"
   >
     <UiIconButton
       class="rounded-lg"
       @click="router.push('/roof-selection')"
       v-show="shouldDisplayHomeButton()"
-      ><IconHome
-    /></UiIconButton>
+      ariaLabelButton="Réinitialiser"
+      title-button="Réinitialiser"
+      ><IconHome />
+    </UiIconButton>
     <div class="flex flex-col zoom-buttons text-2xl [&>*]:p-2" role="group">
-      <UiIconButton class="rounded-t-lg" @click="() => zoom(false)">
-        <IconPlus />
+      <UiIconButton
+        class="rounded-t-lg"
+        @click="() => zoom(false)"
+        ariaLabelButton="Zoom vers l'avant"
+        title-button="Zoom vers l'avant"
+        ><IconPlus />
       </UiIconButton>
-      <UiIconButton class="rounded-b-lg" @click="() => zoom(true)">
-        <IconMinus />
+      <UiIconButton
+        @click="() => zoom(true)"
+        ariaLabelButton="Zoom vers l'arrière"
+        title-button="Zoom vers l'arrière"
+        ><IconMinus />
+      </UiIconButton>
+      <UiIconButton
+        class="rounded-b-lg"
+        @click="() => resetZoom()"
+        ariaLabelButton="Réinitialiser le zoom"
+        title-button="Réinitialiser le zoom"
+      >
+        <IconSynchronize />
       </UiIconButton>
     </div>
     <CompassComponent v-if="mapStore.is3D()" />

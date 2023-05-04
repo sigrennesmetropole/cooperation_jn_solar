@@ -7,9 +7,9 @@ const displayContents = ref(false)
 </script>
 
 <template>
-  <div class="flex flex-col bg-slate-100 border border-slate-100">
+  <div class="flex flex-col bg-slate-100 border border-slate-100 px-4">
     <div class="flex flex-row">
-      <div class="flex flex-row items-center justify-center ml-4 h-14">
+      <div class="flex flex-row items-center justify-center h-14">
         <slot name="title"></slot>
       </div>
 
@@ -21,7 +21,7 @@ const displayContents = ref(false)
         <img v-else :src="iconArrowUp" class="w-4 h-4" />
       </div>
     </div>
-    <div class="ml-4 mb-2 flex flex-row" v-if="displayContents">
+    <div class="mb-2 flex flex-row" v-if="displayContents">
       <slot name="contents"></slot>
     </div>
   </div>

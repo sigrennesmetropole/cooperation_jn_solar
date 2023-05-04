@@ -1,0 +1,160 @@
+{
+  "addressRva": [
+    {
+      "insee": "35131",
+      "idlane": "3179",
+      "idaddress": "87781",
+      "number": "37",
+      "extension": "",
+      "building": "B",
+      "addr1": "37 B",
+      "addr2": "37 B rue de Rennes",
+      "addr3": "37 B rue de <strong>Rennes</strong>, l'Hermitage",
+      "x": "-1.80428706975102",
+      "y": "48.1233099744015"
+    },
+    {
+      "insee": "35079",
+      "idlane": "6238",
+      "idaddress": "102434",
+      "number": "36",
+      "extension": "",
+      "building": "",
+      "addr1": "36",
+      "addr2": "36 rue de Rennes",
+      "addr3": "36 rue de <strong>Rennes</strong>, Chevaigné",
+      "x": "-1.62614671911707",
+      "y": "48.2094538688442"
+    },
+    {
+      "insee": "35088",
+      "idlane": "391",
+      "idaddress": "93964",
+      "number": "32",
+      "extension": "",
+      "building": "",
+      "addr1": "32",
+      "addr2": "32 rue de Rennes",
+      "addr3": "32 rue de <strong>Rennes</strong>, Corps-Nuds",
+      "x": "-1.5881555360926",
+      "y": "47.9817915468975"
+    },
+    {
+      "insee": "35131",
+      "idlane": "3179",
+      "idaddress": "87780",
+      "number": "37",
+      "extension": "",
+      "building": "A",
+      "addr1": "37 A",
+      "addr2": "37 A rue de Rennes",
+      "addr3": "37 A rue de <strong>Rennes</strong>, l'Hermitage",
+      "x": "-1.80427798219525",
+      "y": "48.1232124606668"
+    },
+    {
+      "insee": "35079",
+      "idlane": "6238",
+      "idaddress": "102419",
+      "number": "32",
+      "extension": "",
+      "building": "",
+      "addr1": "32",
+      "addr2": "32 rue de Rennes",
+      "addr3": "32 rue de <strong>Rennes</strong>, Chevaigné",
+      "x": "-1.62701816226593",
+      "y": "48.2093496525293"
+    }
+  ],
+  "addressOrganization": [
+    {
+      "id": "595",
+      "addr": "Aéroport <strong>Rennes</strong> Bretagne"
+    },
+    {
+      "id": "4744",
+      "addr": "Agence Locale de l'Energie et du Climat du Pays de <strong>Rennes</strong>"
+    },
+    {
+      "id": "5166",
+      "addr": "Aide à Domicile de <strong>Rennes</strong>"
+    }
+  ],
+  "communes": [
+    {
+      "insee": "35238",
+      "name": "<strong>Rennes</strong>",
+      "name2": "RENNES",
+      "nameindex": "Rennes",
+      "lowerCorner": "-1.75258759787575 48.0769155146712",
+      "upperCorner": "-1.62440453826733 48.1549705421273"
+    }
+  ],
+  "streets": [
+    {
+      "insee": "35047",
+      "idlane": "25626",
+      "fantoir": "R395",
+      "type": "Chemin d'exploitation",
+      "name": "Chemin d'exploitation 46 des Garennes",
+      "name2": "CHEMIN D'EXPLOITATION 46 DES GARENNES",
+      "name3": "46 des Garennes",
+      "nameindex": "46 des Garennes (Chemin d'exploitation)",
+      "name4": "Chemin d'exploitation 46 des Ga<strong>rennes</strong>, Bruz",
+      "lowerCorner": "-1.75315067433775 48.0041604905942",
+      "upperCorner": "-1.74180748688913 48.0078042041275"
+    },
+    {
+      "insee": "35334",
+      "idlane": "7715",
+      "fantoir": "0060",
+      "type": "Rue",
+      "name": "Rue de Rennes",
+      "name2": "RUE DE RENNES",
+      "name3": "de Rennes",
+      "nameindex": "Rennes (Rue de)",
+      "name4": "Rue de <strong>Rennes</strong>, Thorigné-Fouillard",
+      "lowerCorner": "-1.58386316402515 48.1516490494572",
+      "upperCorner": "-1.5799503580491 48.1536864252297"
+    },
+    {
+      "insee": "35250",
+      "idlane": "1079",
+      "fantoir": "0022",
+      "type": "Rue",
+      "name": "Rue de Rennes",
+      "name2": "RUE DE RENNES",
+      "name3": "de Rennes",
+      "nameindex": "Rennes (Rue de)",
+      "name4": "Rue de <strong>Rennes</strong>, Saint-Armel",
+      "lowerCorner": "-1.6002134670577 48.0140820822421",
+      "upperCorner": "-1.59504190227835 48.0149596383537"
+    },
+    {
+      "insee": "35001",
+      "idlane": "6910",
+      "fantoir": "0123",
+      "type": "Rue",
+      "name": "Rue de Rennes",
+      "name2": "RUE DE RENNES",
+      "name3": "de Rennes",
+      "nameindex": "Rennes (Rue de)",
+      "name4": "Rue de <strong>Rennes</strong>, Acigné",
+      "lowerCorner": "-1.55125491825307 48.1337190388902",
+      "upperCorner": "-1.53952926146012 48.138087740126"
+    },
+    {
+      "insee": "35131",
+      "idlane": "3179",
+      "fantoir": "0300",
+      "type": "Rue",
+      "name": "Rue de Rennes",
+      "name2": "RUE DE RENNES",
+      "name3": "de Rennes",
+      "nameindex": "Rennes (Rue de)",
+      "name4": "Rue de <strong>Rennes</strong>, l'Hermitage",
+      "lowerCorner": "-1.81745944060658 48.1228385592451",
+      "upperCorner": "-1.79987128727581 48.1255252136401"
+    }
+  ]
+}

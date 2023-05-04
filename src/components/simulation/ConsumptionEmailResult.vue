@@ -11,14 +11,6 @@ const isCheckBoxOnError = ref(false)
 const userEmail = ref('')
 const isCheckboxChecked = ref(false)
 
-const errorEmail = computed(() => {
-  if (validEmail.value) {
-    return 'hidden'
-  } else {
-    return 'bg-rose-50 border border-rose-200 rounded-lg p-2 text-rose-900 text-sm font-normal'
-  }
-})
-
 const errorPicto = computed(() => {
   if (validEmail.value) {
     return 'hidden'
@@ -79,7 +71,13 @@ const openPrivacy = () => {
           v-model="userEmail"
           class="border border-neutral-400 rounded"
         />
-        <div :class="errorEmail">Veuillez vérifier votre adresse mail.</div>
+        <div
+          id="errorEmail"
+          v-if="!validEmail"
+          class="bg-rose-50 border border-rose-200 rounded-lg p-2 text-rose-900 text-sm font-normal"
+        >
+          Veuillez vérifier votre adresse mail.
+        </div>
       </div>
 
       <CheckBox
@@ -101,8 +99,10 @@ const openPrivacy = () => {
           <span
             @click="openPrivacy()"
             class="font-medium underline decoration-1 hover:cursor-pointer"
-            >Politique de confidentialité</span
+            data-testid="privacy-link"
           >
+            Politique de confidentialité
+          </span>
         </p>
         <img :src="expandIcon" class="w-3.5 h-3.5 ml-2 mt-1" />
       </div>

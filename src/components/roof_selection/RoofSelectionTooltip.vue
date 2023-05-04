@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import UiExplanationTooltip from '@/components/ui/UiExplanationTooltip.vue'
 import { ref } from 'vue'
-const title = 'Sélectionnez un pan de toit'
-const content = 'Cliquez sur le pan de toit à étudier.'
+const title = 'Sélectionnez un bâtiment'
+const content = 'Cliquez sur un bâtiment pour commencer la simulation'
 let isOpen = ref(true)
 </script>
 <template>

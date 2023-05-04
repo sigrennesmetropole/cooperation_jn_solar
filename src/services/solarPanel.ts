@@ -3,7 +3,7 @@ import type { RennesApp } from '@/services/RennesApp'
 import { GeoJSONLayer, GlobalHider, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
-import { cloneViewPointAndResetCameraPosition } from '@/helpers/viewpointHelper'
+import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
 import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
 import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
@@ -95,7 +95,6 @@ export async function filterSolarPanelByMaxSolarPanel(
     .getFeatures()
     .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
     .map((f) => f.getId()!)
-
   solarPanel.featureVisibility.hideObjects(featuresToHide)
 }
 

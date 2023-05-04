@@ -7,6 +7,15 @@ export type AutocalsolData = {
   peak_power: number
 }
 
+export type AutocalsolResult = {
+  prodByMonth: number[]
+  consoByMonth: number[]
+  prodByHour: [string, number][]
+  consoByHour: [string, number][]
+  consoAnnualInjected: number
+  consoAnnualAutoConsumed: number
+}
+
 /**
  * The value for the azimuth is between -180 and 180 for autocalsol
  * With : East = -90, West = 90, South = 0

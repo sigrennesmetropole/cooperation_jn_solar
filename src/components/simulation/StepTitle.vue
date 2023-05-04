@@ -16,7 +16,7 @@ const imageSources = [potentiel, installation, economies]
 const titles = [
   'Votre ensoleillement',
   'Votre installation',
-  'Vos économies d’énergie',
+  'Votre production d’énergie',
 ]
 </script>
 

@@ -74,9 +74,9 @@ const getIdValue = (
 
 const selectedIndex = ref(-1)
 const scrollToSelectedItem = () => {
-  if (container.value && selectedIndex.value !== -1) {
+  if (container.value && getSelectedIndex() !== -1) {
     const { categoryIndex, localIndex } = getCategoryAndLocalIndex(
-      selectedIndex.value
+      getSelectedIndex()
     )
     const selectedItem = container.value.querySelector(
       `.autocompletion-item[data-category-index="${categoryIndex}"][data-item-index="${localIndex}"]`
@@ -89,10 +89,10 @@ const scrollToSelectedItem = () => {
   }
 }
 
-const onKeyDown = (event: KeyboardEvent) => {
+const onKeyPress = (event: KeyboardEvent) => {
   if (event.key === 'ArrowUp') {
     event.preventDefault()
-    if (selectedIndex.value > 0) {
+    if (getSelectedIndex() > 0) {
       selectedIndex.value--
     }
     scrollToSelectedItem()
@@ -102,15 +102,15 @@ const onKeyDown = (event: KeyboardEvent) => {
       (sum, item) => sum + item.data.length,
       0
     )
-    if (selectedIndex.value < totalItems - 1) {
+    if (getSelectedIndex() < totalItems - 1) {
       selectedIndex.value++
-    } else if (selectedIndex.value >= totalItems - 1) {
+    } else if (getSelectedIndex() >= totalItems - 1) {
       selectedIndex.value = 0
     }
     scrollToSelectedItem()
   } else if (event.key === 'Enter') {
     const { categoryIndex, localIndex } = getCategoryAndLocalIndex(
-      selectedIndex.value
+      getSelectedIndex()
     )
     const item = autocompletionFormatted.value[categoryIndex]
     const selectedItem = item.data[localIndex]
@@ -126,9 +126,9 @@ watch(
   () => props.isDisplayAutocompletion,
   (value) => {
     if (value) {
-      window.addEventListener('keydown', onKeyDown)
+      window.addEventListener('keydown', onKeyPress)
     } else {
-      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('keydown', onKeyPress)
     }
   },
   { immediate: true }
@@ -155,6 +155,10 @@ const getCategoryAndLocalIndex = (globalIndex: number) => {
   }
 
   return { categoryIndex, localIndex }
+}
+
+const getSelectedIndex = () => {
+  return selectedIndex.value
 }
 </script>
 

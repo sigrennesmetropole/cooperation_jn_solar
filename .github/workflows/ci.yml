@@ -35,7 +35,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-      # - run: npm run test:unit:ci
+      - run: npm run test:unit:ci
 
   histoire-deploy:
     runs-on: ubuntu-latest

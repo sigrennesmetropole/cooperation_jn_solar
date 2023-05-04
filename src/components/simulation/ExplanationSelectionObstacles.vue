@@ -1,23 +1,12 @@
 <script setup lang="ts">
-import step2 from '@/assets/illustrations/Steps.jpg'
-import validation from '@/assets/icons/interface-validation.svg'
+import SelectObstacles from '@/assets/illustrations/select-obstacles.jpg'
 import deleted from '@/assets/icons/interface-delete.svg'
 </script>
 
 <template>
   <div>
-    <img class="w-full" :src="step2" alt="" />
+    <img class="w-full" :src="SelectObstacles" alt="" />
     <div class="mt-6">
-      <div class="flex flex-row items-center mb-2">
-        <div
-          class="flex flex-row justify-center items-center bg-lime-200 rounded-full w-2.5 h-2.5 mr-2"
-        >
-          <img class="w-1 h-1" :src="validation" alt="" />
-        </div>
-        <p class="font-dm-sans text-sm font-normal">
-          Les zones colorées peuvent accueillir des panneaux.
-        </p>
-      </div>
       <div class="flex flex-row items-center">
         <div
           class="flex flex-row justify-center items-center bg-rose-200 rounded-full w-2.5 h-2.5 mr-2"
@@ -25,7 +14,7 @@ import deleted from '@/assets/icons/interface-delete.svg'
           <img class="w-1 h-1" :src="deleted" alt="" />
         </div>
         <p class="font-dm-sans text-sm font-normal">
-          Les zones barrées ne peuvent pas en accueillir.
+          Zones ne pouvant pas accueillir de panneaux solaires.
         </p>
       </div>
     </div>
