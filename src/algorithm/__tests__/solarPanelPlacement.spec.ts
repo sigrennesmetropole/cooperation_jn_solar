@@ -9,6 +9,7 @@ import {
 import {
   solarPanelPlacement as solarPanelPlacementMatrix,
   Matrix,
+  rearrangeMatrix,
 } from '../solarPanelPlacementMatrix'
 import type { FeatureCollection, Polygon, Properties } from '@turf/turf'
 
@@ -54,7 +55,11 @@ describe('solar panel placement', () => {
       }
     )
 
-    const matrix: Matrix = JSON.parse(fileContents)
+    let matrix: Matrix = JSON.parse(fileContents)
+    // The test file is not properly arranged (row and column is switched)
+    // We need to rearrange it
+    matrix = rearrangeMatrix(matrix)
+
     console.log(matrix.length)
     console.log(matrix[0].length)
     console.log(matrix[0][0])
@@ -66,8 +71,8 @@ describe('solar panel placement', () => {
     //   console.log(sp)
     // })
 
-    // expect(result.orientation).equal('horizontal')
-    // expect(result.solarPanels.length).equal(108)
+    expect(result.orientation).equal('horizontal')
+    expect(result.solarPanels.length).equal(108)
   })
 
   test('solar panel algorithm small roof', () => {

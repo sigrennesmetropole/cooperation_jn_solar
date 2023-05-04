@@ -240,7 +240,7 @@ export function matrixCentroidToGeoJSON(matrix: Matrix) {
   return fc
 }
 
-function rearrangeMatrix(matrix: Matrix) {
+export function rearrangeMatrix(matrix: Matrix) {
   const newMatrix: Matrix = []
   let index = 0
   for (let i = 0; i < matrix.length; i++) {
