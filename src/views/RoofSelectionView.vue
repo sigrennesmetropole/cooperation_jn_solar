@@ -14,6 +14,7 @@ import {
   enableSelectRoofInteraction,
 } from '@/services/interactionUtils'
 import { useMapStore } from '@/stores/map'
+import { resetStores } from '@/services/resetStores'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
@@ -27,6 +28,8 @@ let addressClosedByUser = ref(false)
 let DISTANCE_MAX_FOR_SELECTION = 600
 
 onMounted(() => {
+  rennesApp.clearRoofsHighlight()
+  resetStores()
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true
