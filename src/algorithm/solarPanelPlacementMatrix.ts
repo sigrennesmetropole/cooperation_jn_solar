@@ -138,8 +138,16 @@ export function solarPanelPlacement(
   const centroidGeoJSON = matrixCentroidToGeoJSON(matrix)
   writeFeature(`${prefix}centroids.geojson`, centroidGeoJSON, debug)
 
-  const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
-  const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
+  const newMatrix = rearrangeMatrix(matrix)
+
+  const newMatrixGeoJSON = matrixToGeoJSON(newMatrix)
+  writeFeature(`${prefix}new-matrix.geojson`, newMatrixGeoJSON, debug)
+
+  const newCentroidGeoJSON = matrixCentroidToGeoJSON(newMatrix)
+  writeFeature(`${prefix}new-centroids.geojson`, newCentroidGeoJSON, debug)
+
+  const verticalSolarPanels = solarPanelPlacementAlgorithm(newMatrix, false)
+  const horizontalSolarPanels = solarPanelPlacementAlgorithm(newMatrix, true)
 
   let orientation
   let solarPanels
@@ -151,7 +159,7 @@ export function solarPanelPlacement(
     orientation = 'vertical'
   }
 
-  const matrixGeoJSONCovered = matrixToGeoJSON(matrix, solarPanels)
+  const matrixGeoJSONCovered = matrixToGeoJSON(newMatrix, solarPanels)
   writeFeature(`${prefix}matrix-covered.geojson`, matrixGeoJSONCovered, debug)
 
   return { solarPanels: solarPanels, orientation: orientation }
@@ -221,4 +229,19 @@ export function matrixCentroidToGeoJSON(matrix: Matrix) {
     }
   }
   return fc
+}
+
+function rearrangeMatrix(matrix: Matrix) {
+  const newMatrix: Matrix = []
+  let index = 0
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++) {
+      if (index % matrix.length == 0) {
+        newMatrix.push([])
+      }
+      newMatrix[newMatrix.length - 1].push(matrix[i][j])
+      index = index + 1
+    }
+  }
+  return newMatrix
 }
