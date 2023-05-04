@@ -1,4 +1,3 @@
-<!-- Pdf.vue -->
 <template>
   <div ref="document" class="pdf-container">
     <button
@@ -15,7 +14,7 @@
 
     <div
       id="element-to-convert"
-      class="bg-slate-100 flex flex-col items-center"
+      class="flex flex-col items-center h-full bg-slate-100"
     >
       <h1 class="font-bold text-3xl">Résultat de votre simulation</h1>
       <div class="w-[90%] flex flex-row font-medium gap-6 ml-2 mr-2 mt-10">
@@ -25,6 +24,7 @@
         />
         <ConsumptionInformation />
       </div>
+
       <div
         class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10 shadow-md"
       >
@@ -77,7 +77,7 @@
       <div class="page-break"></div>
 
       <div
-        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] h-fit bg-white rounded-xl p-6 mt-10 shadow-md"
+        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] bg-white rounded-xl p-6 mt-10 shadow-md mb-[300px]"
       >
         <SolarCoop :isPdf="true"></SolarCoop>
         <EnergiesRennes :isPdf="true"></EnergiesRennes>
