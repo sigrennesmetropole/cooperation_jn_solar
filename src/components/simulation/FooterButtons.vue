@@ -2,7 +2,7 @@
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
-import { resetStoresAndRedirect } from '@/services/resetStores'
+import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const props = defineProps<{
   isDisplayNextButton: Boolean
@@ -12,12 +12,7 @@ const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
-  if (
-    window.confirm(
-      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
-    )
-  ) {
-    resetStoresAndRedirect()
+  if (window.confirm(WINDOW_CONFIRM_MESSAGE)) {
     router.push('/roof-selection')
   }
 }

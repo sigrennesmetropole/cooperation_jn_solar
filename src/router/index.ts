@@ -12,7 +12,8 @@ const redirectToRoofSelection = (
   if (
     (from.name === undefined || from.name === null) &&
     to.name !== 'home' &&
-    to.name !== 'roof-selection'
+    to.name !== 'roof-selection' &&
+    to.name !== 'legal-notice'
   ) {
     next({ name: 'roof-selection' })
   } else {

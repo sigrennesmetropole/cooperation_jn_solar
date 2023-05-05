@@ -21,7 +21,7 @@ import {
 } from '@/services/interactionUtils'
 
 const highlightStyle = new VectorStyleItem({
-  fill: { color: 'rgb(63,185,30)' },
+  fill: { color: 'rgb(74,222,128)' },
 })
 
 class SelectRoofInteraction extends AbstractInteraction {

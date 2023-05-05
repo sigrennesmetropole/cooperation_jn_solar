@@ -14,6 +14,7 @@ import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
+import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
@@ -78,8 +79,7 @@ const isAlertBoxBrowserNotDisplay = computed(() => {
 if (isAlertBoxBrowserNotDisplay.value) {
   window.addEventListener('beforeunload', function (e) {
     e.preventDefault()
-    e.returnValue =
-      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+    e.returnValue = WINDOW_CONFIRM_MESSAGE
     e.cancelable
     e.stopPropagation()
   })
