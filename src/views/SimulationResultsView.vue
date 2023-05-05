@@ -4,6 +4,7 @@ import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { useRoofsStore } from '@/stores/roof'
 import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
+import ProductionInformation from '@/components/results/ProductionInformation.vue'
 import GoFurther from '@/components/results/GoFurther.vue'
 import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
 import SolarCoop from '@/components/results/SolarCoop.vue'
@@ -12,10 +13,15 @@ import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
 import LargeFooter from '@/components/simulation/LargeFooter.vue'
 import { legalList } from '@/constants/legalLinks'
+// import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+// import { useAddressStore } from '@/stores/address'
+// import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
+import { useSolarPanelStore } from '@/stores/solarPanels'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
 const autocalsolStore = useAutocalsolStore()
+const solarPanelStore = useSolarPanelStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['simulation-results'])
@@ -27,7 +33,7 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 //TO TEST : remove comment bellow | TODO : remove for production
 // const consumptionAndProductionStore = useConsumptionAndProductionStore()
 // const addressStore = useAddressStore()
-// @ts-ignore
+// // @ts-ignore
 // autocalsolStore.setAutocalsolResult(autocalsolResultExample)
 // const autocalsolResult = autocalsolStore.autocalsolResult
 // consumptionAndProductionStore.setAnnualConsumption(6000)
@@ -41,6 +47,7 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 //   azimuth: 80,
 //   inclinaison: 1,
 // }
+// solarPanelStore.currentNumberSolarPanel = 6
 </script>
 
 <template>
@@ -52,6 +59,10 @@ const autocalsolResult = autocalsolStore.autocalsolResult
         <SunshineInformation
           v-if="selectedRoof !== undefined"
           :selected-roof="selectedRoof"
+        />
+        <ProductionInformation
+          v-if="solarPanelStore.currentNumberSolarPanel > 0"
+          :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
         />
         <ConsumptionInformation />
       </div>
