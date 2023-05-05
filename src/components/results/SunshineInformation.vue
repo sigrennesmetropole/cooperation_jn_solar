@@ -13,7 +13,7 @@ const props = defineProps<{ selectedRoof: RoofSurfaceModel }>()
   <div
     class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto shadow-md font-dm-sans"
   >
-    <div class="flex flex-row justify-center items-center gap-2">
+    <div class="flex flex-row items-center gap-2 ml-1">
       <img :src="potentiel" alt="" class="w-11 h-10" />
       <span class="font-bold text-2xl"> Votre ensoleillement </span>
     </div>
