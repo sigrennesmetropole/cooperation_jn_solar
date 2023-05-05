@@ -10,7 +10,8 @@ import {
   polygon,
 } from '@turf/turf'
 
-import { writeFeature } from './solarPanelPlacement'
+import * as fs from 'fs'
+import * as path from 'path'
 
 export type Square = {
   usable: boolean
@@ -24,6 +25,19 @@ export type SolarPanelGrid = {
 }
 
 // Helper function
+
+export function writeFeature(
+  outputFileName: string,
+  feature: FeatureCollection | Feature,
+  debug: boolean = false
+) {
+  if (debug) {
+    fs.writeFileSync(
+      path.join(__dirname, outputFileName),
+      JSON.stringify(feature)
+    )
+  }
+}
 
 function createSolarPanel(
   index: [number, number],
