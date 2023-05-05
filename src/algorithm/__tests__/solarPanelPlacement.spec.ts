@@ -2,10 +2,10 @@ import { describe, expect, test } from 'vitest'
 import * as fs from 'fs'
 import * as path from 'path'
 import {
-  solarPanelPlacement as solarPanelPlacementMatrix,
+  solarPanelPlacement,
   Matrix,
   rearrangeMatrix,
-} from '../solarPanelPlacementMatrix'
+} from '../solarPanelPlacement'
 
 describe('solar panel placement', () => {
   test('test solar panel algorithm from matrix', () => {
@@ -22,16 +22,7 @@ describe('solar panel placement', () => {
     // We need to rearrange it
     matrix = rearrangeMatrix(matrix)
 
-    console.log(matrix.length)
-    console.log(matrix[0].length)
-    console.log(matrix[0][0])
-
-    const result = solarPanelPlacementMatrix(matrix, true, 'normal-')
-
-    console.log(result.orientation)
-    // result.solarPanels.forEach((sp) => {
-    //   console.log(sp)
-    // })
+    const result = solarPanelPlacement(matrix, true, 'normal-')
 
     expect(result.orientation).equal('horizontal')
     expect(result.solarPanels.length).equal(108)
@@ -49,7 +40,7 @@ describe('solar panel placement', () => {
     const matrix: Matrix = JSON.parse(fileContents)
     expect(matrix.length).greaterThan(0)
 
-    const result = solarPanelPlacementMatrix(matrix, true, 'small-roof-')
+    const result = solarPanelPlacement(matrix, true, 'small-roof-')
     expect(result.orientation).equal('vertical')
     expect(result.solarPanels.length).equal(3)
   })
@@ -66,7 +57,7 @@ describe('solar panel placement', () => {
     const matrix: Matrix = JSON.parse(fileContents)
     expect(matrix.length).greaterThan(0)
 
-    const result = solarPanelPlacementMatrix(matrix, true, 'medium-roof-')
+    const result = solarPanelPlacement(matrix, true, 'medium-roof-')
     expect(result.orientation).equal('vertical')
     expect(result.solarPanels.length).equal(106)
   })
@@ -83,7 +74,7 @@ describe('solar panel placement', () => {
     const matrix: Matrix = JSON.parse(fileContents)
     expect(matrix.length).greaterThan(0)
 
-    const result = solarPanelPlacementMatrix(matrix, true, 'big-roof-')
+    const result = solarPanelPlacement(matrix, true, 'big-roof-')
     expect(result.orientation).equal('vertical')
     expect(result.solarPanels.length).equal(157)
   })

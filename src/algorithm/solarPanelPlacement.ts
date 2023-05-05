@@ -104,8 +104,7 @@ function isAllSolarPanelGridNotCovered(
 
 export function solarPanelPlacementAlgorithm(
   matrix: Matrix,
-  horizontal: boolean = true,
-  debug: boolean = false
+  horizontal: boolean = true
 ) {
   // Iterate all grid from the matrix
   // If the grid is not usable, skip
@@ -114,7 +113,6 @@ export function solarPanelPlacementAlgorithm(
   // Check all 8 grids of the solar panel are usable in the matrix
   // If so, check all 8 grids are not yet covered by solar panel (checking if they are in covered grids or not)
   // If so, push those 8 grids to the list of covered grids
-  console.log(debug)
 
   const matrixLength = matrix.length
   const matrixWidth = matrix[0].length
@@ -166,14 +164,6 @@ export function solarPanelPlacement(
 
   const centroidGeoJSON = matrixCentroidToGeoJSON(matrix)
   writeFeature(`${prefix}centroids.geojson`, centroidGeoJSON, debug)
-
-  // const newMatrix = rearrangeMatrix(matrix)
-
-  // const newMatrixGeoJSON = matrixToGeoJSON(newMatrix)
-  // writeFeature(`${prefix}new-matrix.geojson`, newMatrixGeoJSON, debug)
-
-  // const newCentroidGeoJSON = matrixCentroidToGeoJSON(newMatrix)
-  // writeFeature(`${prefix}new-centroids.geojson`, newCentroidGeoJSON, debug)
 
   const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
   const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
