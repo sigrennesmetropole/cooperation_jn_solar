@@ -28,6 +28,7 @@ import type {
   Point,
   Polygon as turfPolygon,
   Properties,
+  GeometryCollection,
 } from '@turf/helpers'
 // @ts-ignore
 import { rectangleGrid } from '@/helpers/rectangleGrid'
@@ -136,43 +137,41 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
   let x = 0,
     y = 0
   const matrix: Matrix = []
-  const arrFeatures: Array<Feature<Geometry>> = []
+  const arrFeatures: Array<Feature<Geometry, Properties>> = []
   // @ts-ignore
-  grid.featureCollection.features.forEach(
-    (f: Feature<Geometry>, index: number) => {
-      let isInside: boolean = false
-      const centerGridCase = center(f as AllGeoJSON)
-      if (x == 0) {
-        matrix[y] = []
-      }
-      for (const roofShapeFeature of roofShape.features) {
-        if (
-          booleanPointInPolygon(
-            centerGridCase,
-            roofShapeFeature.geometry as turfPolygon
-          )
-        ) {
-          isInside = true
-        }
-      }
-      if (isInside) {
-        arrFeatures.push(f)
-      }
-      featureArray[index] = feature(centerGridCase.geometry, {
-        usable: isInside,
-        rowIndex: y,
-        colIndex: x,
-      })
-      matrix[y][x] = {
-        usable: isInside,
-        squareCenter: centerGridCase.geometry,
-      }
-      y = (y + 1) % grid.rows
-      if (y == 0) {
-        x = (x + 1) % grid.columns
+  grid.featureCollection.features.forEach((f, index: number) => {
+    let isInside: boolean = false
+    const centerGridCase = center(f as AllGeoJSON)
+    if (x == 0) {
+      matrix[y] = []
+    }
+    for (const roofShapeFeature of roofShape.features) {
+      if (
+        booleanPointInPolygon(
+          centerGridCase,
+          roofShapeFeature.geometry as turfPolygon
+        )
+      ) {
+        isInside = true
       }
     }
-  )
+    if (isInside) {
+      arrFeatures.push(f as Feature<Geometry, Properties>)
+    }
+    featureArray[index] = feature(centerGridCase.geometry, {
+      usable: isInside,
+      rowIndex: y,
+      colIndex: x,
+    })
+    matrix[y][x] = {
+      usable: isInside,
+      squareCenter: centerGridCase.geometry,
+    }
+    y = (y + 1) % grid.rows
+    if (y == 0) {
+      x = (x + 1) % grid.columns
+    }
+  })
   // @ts-ignore
   grid.featureCollection = featureCollection(arrFeatures)
   console.log(
