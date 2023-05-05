@@ -89,5 +89,6 @@ describe('solar panel placement', () => {
 
     const result = solarPanelPlacementMatrix(matrix, true, 'small-roof-')
     expect(result.orientation).equal('vertical')
+    expect(result.solarPanels.length).equal(3)
   })
 })

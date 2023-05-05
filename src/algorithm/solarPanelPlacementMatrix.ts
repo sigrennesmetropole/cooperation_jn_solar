@@ -73,14 +73,14 @@ function isAllSolarPanelGridUsable(
 function isAllSolarPanelGridNotCovered(
   solarPanelGrid: SolarPanelGrid,
   coveredGrids: Set<number>,
-  matrixWidth: number
+  matrixLength: number
 ) {
   for (let i = 0; i < solarPanelGrid.gridIndexes.length; i++) {
     // scalarIndex means to have a number instead of a [number, number]
     // because indexOf doesn't work on array of array
     const scalarIndex =
-      solarPanelGrid.gridIndexes[i][0] * matrixWidth +
-      solarPanelGrid.gridIndexes[i][1]
+      solarPanelGrid.gridIndexes[i][1] * matrixLength +
+      solarPanelGrid.gridIndexes[i][0]
     if (coveredGrids.has(scalarIndex)) {
       return false
     }
@@ -114,13 +114,17 @@ export function solarPanelPlacementAlgorithm(
         const solarPanel = createSolarPanel([i, j], horizontal)
         if (isAllSolarPanelGridUsable(matrix, solarPanel)) {
           if (
-            isAllSolarPanelGridNotCovered(solarPanel, coveredGrids, matrixWidth)
+            isAllSolarPanelGridNotCovered(
+              solarPanel,
+              coveredGrids,
+              matrixLength
+            )
           ) {
             solarPanels.push(solarPanel)
             for (let k = 0; k < solarPanel.gridIndexes.length; k++) {
               const scalarIndex =
-                solarPanel.gridIndexes[k][0] * matrixWidth +
-                solarPanel.gridIndexes[k][1]
+                solarPanel.gridIndexes[k][1] * matrixLength +
+                solarPanel.gridIndexes[k][0]
               coveredGrids.add(scalarIndex)
             }
           } else {
@@ -186,7 +190,7 @@ export function matrixToGeoJSON(
   const coveredGrids: Record<number, number> = {}
   for (let i = 0; i < solarPanels.length; i++) {
     solarPanels[i].gridIndexes.forEach((gridIndex) => {
-      coveredGrids[gridIndex[0] * matrix[0].length + gridIndex[1]] = i
+      coveredGrids[gridIndex[1] * matrix.length + gridIndex[0]] = i
     })
   }
 
@@ -194,10 +198,7 @@ export function matrixToGeoJSON(
     for (let j = 0; j < matrix[0].length; j++) {
       const x: number = i * -length
       const y: number = j * length
-      let solarPanelIndex = null
-      if (coveredGrids[i * matrix[0].length + j]) {
-        solarPanelIndex = coveredGrids[i * matrix[0].length + j]
-      }
+      const solarPanelIndex = coveredGrids[j * matrix.length + i]
       const grid: Feature<Polygon, Properties> = polygon(
         [
           [
