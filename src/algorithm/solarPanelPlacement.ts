@@ -240,22 +240,6 @@ export function matrixCentroidToGeoJSON(matrix: Matrix) {
   return fc
 }
 
-// Used to fix the wrong matrix representation, can be deleted later.
-export function rearrangeMatrix(matrix: Matrix) {
-  const newMatrix: Matrix = []
-  let index = 0
-  for (let i = 0; i < matrix.length; i++) {
-    for (let j = 0; j < matrix[0].length; j++) {
-      if (index % matrix.length == 0) {
-        newMatrix.push([])
-      }
-      newMatrix[newMatrix.length - 1].push(matrix[i][j])
-      index = index + 1
-    }
-  }
-  return newMatrix
-}
-
 function buildCoverageMatrix(
   length: number,
   width: number,

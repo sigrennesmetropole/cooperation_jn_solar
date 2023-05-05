@@ -1,33 +1,9 @@
 import { describe, expect, test } from 'vitest'
 import * as fs from 'fs'
 import * as path from 'path'
-import {
-  solarPanelPlacement,
-  Matrix,
-  rearrangeMatrix,
-} from '../solarPanelPlacement'
+import { solarPanelPlacement, Matrix } from '../solarPanelPlacement'
 
 describe('solar panel placement', () => {
-  test('test solar panel algorithm from matrix', () => {
-    // Read GeoJSON file
-    const fileContents = fs.readFileSync(
-      path.join(__dirname, 'normal_roof_matrix.json'),
-      {
-        encoding: 'utf-8',
-      }
-    )
-
-    let matrix: Matrix = JSON.parse(fileContents)
-    // The test file is not properly arranged (row and column is switched)
-    // We need to rearrange it
-    matrix = rearrangeMatrix(matrix)
-
-    const result = solarPanelPlacement(matrix, true, 'normal-')
-
-    expect(result.orientation).equal('horizontal')
-    expect(result.solarPanels.length).equal(108)
-  })
-
   test('solar panel algorithm small roof', () => {
     // Read GeoJSON file
     const fileContents = fs.readFileSync(
