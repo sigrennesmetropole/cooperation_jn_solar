@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import photoVoltaique from '@/assets/illustrations/photo_voltaique.svg'
-import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+
+const props = defineProps<{
+  isPdf: boolean
+}>()
 
 const PHOTOVOLTAIQUE_LINK = 'https://www.photovoltaique.info/fr/'
 
@@ -22,6 +26,7 @@ function goToPhotovoltaiqueInfo() {
         Le site de référence
         <span
           class="inline-flex items-center cursor-pointer font-medium"
+          :class="props.isPdf ? 'mt-4' : ''"
           @click="goToPhotovoltaiqueInfo()"
         >
           <strong class="underline"> photovoltaique.info</strong>
@@ -30,16 +35,8 @@ function goToPhotovoltaiqueInfo() {
         regroupe l’essentiel des informations techniques et réglementaires sur
         le photovoltaïque.
       </p>
-      <button
-        @click="goToPhotovoltaiqueInfo()"
-        id="photovoltaiqueButton"
-        class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit items-center flex flex-row justify-center mt-4"
-      >
-        <img class="w-5 h-5" :src="goToWhite" alt="" />
-        <span class="font-dm-sans text-white text-base font-bold">
-          Visiter le site</span
-        >
-      </button>
+
+      <ButtonVisitWebsite :link="PHOTOVOLTAIQUE_LINK" :isPdf="props.isPdf" />
     </div>
   </div>
 </template>

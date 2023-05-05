@@ -12,6 +12,7 @@ import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
 import LargeFooter from '@/components/simulation/LargeFooter.vue'
+import PdfSimulation from '@/components/results/PdfSimulation.vue'
 import { legalList } from '@/constants/legalLinks'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { useAddressStore } from '@/stores/address'
@@ -59,23 +60,30 @@ solarPanelStore.currentNumberSolarPanel = 6
         <SunshineInformation
           v-if="selectedRoof !== undefined"
           :selected-roof="selectedRoof"
+          :isPdf="false"
         />
         <ProductionInformation
           v-if="solarPanelStore.currentNumberSolarPanel > 0"
           :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
         />
-        <ConsumptionInformation />
+        <ConsumptionInformation :isPdf="false" />
       </div>
       <div
         class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
       >
+        <PdfSimulation
+          v-if="selectedRoof !== undefined && autocalsolResult !== null"
+          :selected-roof="selectedRoof"
+          :autocalsolResult="autocalsolResult"
+        />
+
         <AutocalsolResult
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"
         />
-        <GoFurther></GoFurther>
-        <SolarCoop></SolarCoop>
-        <EnergiesRennes></EnergiesRennes>
+        <GoFurther :isPdf="false"></GoFurther>
+        <SolarCoop :isPdf="false"></SolarCoop>
+        <EnergiesRennes :isPdf="false"></EnergiesRennes>
       </div>
     </div>
     <div class="mx-16 py-10">

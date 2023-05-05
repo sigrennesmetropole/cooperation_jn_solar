@@ -1,16 +1,22 @@
 import { useAddressStore } from '@/stores/address'
 import { useAutocalsolStore } from '@/stores/autocalsol'
+import { useSimulationStore } from '@/stores/simulations'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { useRoofsStore } from '@/stores/roof'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 
-export function resetStoresAndRedirect() {
+export const WINDOW_CONFIRM_MESSAGE =
+  'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
+
+export function resetStores() {
+  const simulationStore = useSimulationStore()
   const addressStore = useAddressStore()
   const roofStore = useRoofsStore()
   const consumptionAndProductionStore = useConsumptionAndProductionStore()
   const autocalsolStore = useAutocalsolStore()
   const solarPanelStore = useSolarPanelStore()
 
+  simulationStore.resetSimulation()
   addressStore.resetAddress()
   roofStore.resetRoofStore()
   consumptionAndProductionStore.resetAnnualConsumption()
