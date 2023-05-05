@@ -97,7 +97,9 @@ const openPrivacy = () => {
         <p>
           Vous pouvez lire notre
           <span
+            tabindex="0"
             @click="openPrivacy()"
+            @keydown.enter="openPrivacy()"
             class="font-medium underline decoration-1 hover:cursor-pointer"
             data-testid="privacy-link"
           >

@@ -21,8 +21,10 @@ function goToPhotovoltaiqueInfo() {
       <p class="font-dm-sans text-base font-normal">
         Le site de référence
         <span
+          tabindex="0"
           class="inline-flex items-center cursor-pointer font-medium"
           @click="goToPhotovoltaiqueInfo()"
+          @keydown.enter="goToPhotovoltaiqueInfo()"
         >
           <strong class="underline"> photovoltaique.info</strong>
           <img :src="goToBlack" class="w-[14px] h-[14px] ml-1" />

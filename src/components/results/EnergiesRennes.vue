@@ -37,8 +37,10 @@ function goToVilaineInfo() {
       <div class="flex flex-col w-[50%] h-fit">
         <p class="font-dm-sans text-base font-medium text-neutral-900">
           <span
+            tabindex="0"
             class="inline-flex items-center cursor-pointer font-medium"
             @click="goToEnergiesInfo()"
+            @keydown.enter="goToEnergiesInfo()"
           >
             <strong class="underline"> Énergies du pays de Rennes </strong>
             <img :src="goToBlack" class="w-[14px] h-[14px] ml-1" />
@@ -66,8 +68,10 @@ function goToVilaineInfo() {
         Pour Acigné et Brécé, il existe aussi
         <span
           id="vilaine"
+          tabindex="0"
           class="inline-flex items-center cursor-pointer font-medium"
           @click="goToVilaineInfo()"
+          @keydown.enter="goToVilaineInfo()"
         >
           <strong class="underline">l'association Soleil sur Vilaine</strong>
           <img :src="goToAmber" class="w-[14px] h-[14px] ml-1" />
