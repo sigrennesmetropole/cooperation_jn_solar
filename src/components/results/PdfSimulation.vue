@@ -1,93 +1,5 @@
-<template>
-  <div ref="document" class="pdf-container">
-    <button
-      class="bg-black text-white rounded-lg py-4 px-3 flex flex-row gap-3 w-fit items-center ml-auto"
-      @click="exportToPDF()"
-      :disabled="isLoading"
-    >
-      <img :src="iconDownload" alt="" />
-      <span class="font-dm-sans font-medium text-base">
-        Télécharger en PDF
-      </span>
-      <UiSpinnerLoading v-if="isLoading" width="20" height="20" />
-    </button>
-
-    <div
-      id="element-to-convert"
-      class="flex flex-col items-center h-full bg-slate-100"
-    >
-      <h1 class="font-bold text-3xl">Résultat de votre simulation</h1>
-      <div class="w-[90%] flex flex-row font-medium gap-6 ml-2 mr-2 mt-10">
-        <SunshineInformation
-          v-if="props.selectedRoof !== undefined"
-          :selected-roof="props.selectedRoof"
-        />
-        <ConsumptionInformation />
-      </div>
-
-      <div
-        class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10 shadow-md"
-      >
-        <div class="flex flex-row items-center gap-2">
-          <img :src="economies" alt="" class="w-11 h-10" />
-          <span class="font-bold text-2xl"> Votre production d'énergie </span>
-        </div>
-
-        <AutocalsolResultGlobal
-          :injected="props.autocalsolResult.consoAnnualInjected"
-          :autoConsumed="props.autocalsolResult.consoAnnualAutoConsumed"
-          :production="
-            props.autocalsolResult.consoAnnualInjected +
-            props.autocalsolResult.consoAnnualAutoConsumed
-          "
-          :isPdf="true"
-        />
-      </div>
-
-      <div class="page-break"></div>
-
-      <div
-        class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10 shadow-md"
-      >
-        <span class="font-bold text-xl mt-10">
-          Comment réduire au maximum sa facture d'électricité ?
-        </span>
-        <p class="font-normal text-sm">
-          Votre production solaire varie selon la course du soleil. La nuit,
-          votre consommation est intégralement soutirée au réseau. Pour réduire
-          au maximum votre facture d'électricité, il vous faut adapter vos
-          habitudes de consommation, par exemple mettre en route vos appareils
-          électriques en journée au moment de la production photovoltaïque.
-        </p>
-
-        <AutocalsolResultGraph
-          :prodByHour="props.autocalsolResult.prodByHour"
-          :consoByHour="props.autocalsolResult.consoByHour"
-        />
-      </div>
-
-      <div class="page-break"></div>
-
-      <div
-        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] h-fit bg-white rounded-xl p-6 mt-10 shadow-md"
-      >
-        <GoFurther :isPdf="true"></GoFurther>
-      </div>
-
-      <div class="page-break"></div>
-
-      <div
-        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] bg-white rounded-xl p-6 mt-10 shadow-md mb-[300px]"
-      >
-        <SolarCoop :isPdf="true"></SolarCoop>
-        <EnergiesRennes :isPdf="true"></EnergiesRennes>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-// @ts-ignore
+// @ts-ignore : html2pdf.js is not recognized
 import html2pdf from 'html2pdf.js'
 import iconDownload from '@/assets/icons/icon-download-white.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
@@ -145,3 +57,92 @@ async function exportToPDF() {
   }
 }
 </style>
+
+<template>
+  <div ref="document" class="pdf-container">
+    <button
+      class="bg-black text-white rounded-lg py-4 px-3 flex flex-row gap-3 w-fit items-center ml-auto"
+      @click="exportToPDF()"
+      :disabled="isLoading"
+    >
+      <img :src="iconDownload" alt="" />
+      <span class="font-dm-sans font-medium text-base">
+        Télécharger en PDF
+      </span>
+      <UiSpinnerLoading v-if="isLoading" />
+    </button>
+
+    <div
+      id="element-to-convert"
+      class="flex flex-col items-center h-full bg-slate-100"
+    >
+      <h1 class="font-bold text-3xl">Résultat de votre simulation</h1>
+      <div class="w-[90%] flex flex-row font-medium gap-6 ml-2 mr-2 mt-10">
+        <SunshineInformation
+          v-if="props.selectedRoof !== undefined"
+          :selected-roof="props.selectedRoof"
+          :isPdf="true"
+        />
+        <ConsumptionInformation :isPdf="true" />
+      </div>
+
+      <div
+        class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"
+      >
+        <div class="flex flex-row items-center gap-2">
+          <img :src="economies" alt="" class="w-11 h-10" />
+          <span class="font-bold text-2xl"> Votre production d'énergie </span>
+        </div>
+
+        <AutocalsolResultGlobal
+          :injected="props.autocalsolResult.consoAnnualInjected"
+          :autoConsumed="props.autocalsolResult.consoAnnualAutoConsumed"
+          :production="
+            props.autocalsolResult.consoAnnualInjected +
+            props.autocalsolResult.consoAnnualAutoConsumed
+          "
+          :isPdf="true"
+        />
+      </div>
+
+      <div class="page-break"></div>
+
+      <div
+        class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"
+      >
+        <span class="font-bold text-xl mt-10">
+          Comment réduire au maximum sa facture d'électricité ?
+        </span>
+        <p class="font-normal text-sm">
+          Votre production solaire varie selon la course du soleil. La nuit,
+          votre consommation est intégralement soutirée au réseau. Pour réduire
+          au maximum votre facture d'électricité, il vous faut adapter vos
+          habitudes de consommation, par exemple mettre en route vos appareils
+          électriques en journée au moment de la production photovoltaïque.
+        </p>
+
+        <AutocalsolResultGraph
+          :prodByHour="props.autocalsolResult.prodByHour"
+          :consoByHour="props.autocalsolResult.consoByHour"
+        />
+      </div>
+
+      <div class="page-break"></div>
+
+      <div
+        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"
+      >
+        <GoFurther :isPdf="true"></GoFurther>
+      </div>
+
+      <div class="page-break"></div>
+
+      <div
+        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] bg-white rounded-xl p-6 mt-10 mb-[300px]"
+      >
+        <SolarCoop :isPdf="true"></SolarCoop>
+        <EnergiesRennes :isPdf="true"></EnergiesRennes>
+      </div>
+    </div>
+  </div>
+</template>

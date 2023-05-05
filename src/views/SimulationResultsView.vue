@@ -13,9 +13,6 @@ import { useAutocalsolStore } from '@/stores/autocalsol'
 import LargeFooter from '@/components/simulation/LargeFooter.vue'
 import PdfSimulation from '@/components/results/PdfSimulation.vue'
 import { legalList } from '@/constants/legalLinks'
-// import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
-// import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
-// import { useAddressStore } from '@/stores/address'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
@@ -56,8 +53,9 @@ const autocalsolResult = autocalsolStore.autocalsolResult
         <SunshineInformation
           v-if="selectedRoof !== undefined"
           :selected-roof="selectedRoof"
+          :isPdf="false"
         />
-        <ConsumptionInformation />
+        <ConsumptionInformation :isPdf="false" />
       </div>
       <div
         class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"

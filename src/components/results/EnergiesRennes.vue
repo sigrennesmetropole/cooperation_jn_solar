@@ -23,7 +23,8 @@ function goToVilaineInfo() {
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto shadow-md"
+    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto"
+    :class="props.isPdf ? '' : 'shadow-md'"
   >
     <h2 class="font-dm-sans font-bold text-2xl">
       Contacter des associations locales
