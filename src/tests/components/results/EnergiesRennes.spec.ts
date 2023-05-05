@@ -15,16 +15,6 @@ describe('Energies.vue', () => {
     expect(link.text()).toContain('Énergies du pays de Rennes')
   })
 
-  it('calls goToEnergiesInfo() function when the button is clicked', async () => {
-    const spy = jest.spyOn(window, 'open').mockImplementation()
-    const button = wrapper.find('#energiesButton')
-    await button.trigger('click')
-    expect(spy).toHaveBeenCalledWith(
-      'https://energiesdupaysderennes.fr/',
-      '_blank'
-    )
-    spy.mockRestore()
-  })
   it('renders the Énergies du pays de Rennes link correctly', async () => {
     const spy = jest.spyOn(window, 'open').mockImplementation()
     const vilaine = wrapper.find('#vilaine')

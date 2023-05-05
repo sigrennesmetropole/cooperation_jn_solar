@@ -6,7 +6,7 @@ exports[`LabelsProfitability > renders correctly 1`] = `
   <div class=\\"flex flex-row gap-8 w-[100%] h-fit bg-white\\">
     <div class=\\"flex flex-row w-[50%] justify-center h-fit border border-neutral-300 rounded-lg px-5 py-8\\"><img src=\\"/src/assets/illustrations/photo_voltaique.svg\\"></div>
     <div class=\\"flex flex-col w-[50%] h-fit\\">
-      <p class=\\"font-dm-sans text-base font-normal\\"> Le site de référence <span class=\\"inline-flex items-center cursor-pointer font-medium\\"><strong class=\\"underline\\"> photovoltaique.info</strong><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-[14px] h-[14px] ml-1\\"></span> regroupe l’essentiel des informations techniques et réglementaires sur le photovoltaïque. </p><button id=\\"photovoltaiqueButton\\" class=\\"bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit items-center flex flex-row justify-center mt-4\\"><img class=\\"w-5 h-5\\" src=\\"/src/assets/icons/icon-external-link-white-thin.svg\\" alt=\\"\\"><span class=\\"font-dm-sans text-white text-base font-bold\\"> Visiter le site</span></button>
+      <p class=\\"font-dm-sans text-base font-normal\\"> Le site de référence <span class=\\"inline-flex items-center cursor-pointer font-medium\\"><strong class=\\"underline\\"> photovoltaique.info</strong><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-[14px] h-[14px] ml-1\\"></span> regroupe l’essentiel des informations techniques et réglementaires sur le photovoltaïque. </p><a href=\\"https://www.photovoltaique.info/fr/\\" target=\\"_blank\\" class=\\"bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit flex flex-row items-center justify-center mt-4\\"><img class=\\"w-5 h-5\\" src=\\"/src/assets/icons/icon-external-link-white-thin.svg\\" alt=\\"\\"><span class=\\"font-dm-sans text-white text-base font-bold\\"> Visiter le site </span></a>
     </div>
   </div>
   <div class=\\"flex flex-row gap-8\\">
@@ -14,14 +14,14 @@ exports[`LabelsProfitability > renders correctly 1`] = `
       <h2 class=\\"font-dm-sans text-2xl font-bold\\"> 3 labels de qualification pour vous guider dans le choix de votre installateur </h2>
       <div class=\\"py-[18px] px-6 flex flex-row justify-between w-[100%] bg-white rounded-xl\\"><img src=\\"/src/assets/illustrations/qualibat.avif\\" alt=\\"\\" class=\\"h-10 w-10\\"><img src=\\"/src/assets/illustrations/qualitEnR.png\\" alt=\\"\\" class=\\"h-10 w-[79px]\\"><img src=\\"/src/assets/illustrations/qualifelec.png\\" alt=\\"\\" class=\\"h-10 w-[34px]\\"></div>
       <div class=\\"flex flex-row\\">
-        <p class=\\"underline decoration-1 font-medium text-base\\"><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite\\" target=\\"_blank\\"> Accéder à la page </a></p><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite\\" target=\\"_blank\\"><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1\\"></a>
+        <p class=\\"underline decoration-1 font-medium text-base\\"><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite\\" target=\\"_blank\\"> Accéder à la page </a></p><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite\\" target=\\"_blank\\"><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1 mt-1\\"></a>
       </div>
     </div>
     <div class=\\"flex flex-col gap-6 w-[100%] bg-slate-100 rounded-lg p-6 mx-auto\\"><img src=\\"/src/assets/illustrations/profitability.svg\\">
       <h2 class=\\"font-dm-sans text-2xl font-bold\\"> Connaitre des ordres de grandeur de coûts et de rentabilité d'un projet photovoltaïque </h2>
       <div class=\\"h-full\\"></div>
       <div class=\\"flex flex-row\\">
-        <p class=\\"underline decoration-1 font-medium text-base\\"><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/\\" target=\\"_blank\\"> Accéder à la page </a></p><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/\\" target=\\"_blank\\"><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1\\"></a>
+        <p class=\\"underline decoration-1 font-medium text-base\\"><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/\\" target=\\"_blank\\"> Accéder à la page </a></p><a href=\\"https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/\\" target=\\"_blank\\"><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1 mt-1\\"></a>
       </div>
     </div>
   </div>

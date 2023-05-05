@@ -6,12 +6,16 @@ import type { RoofSurfaceModel } from '@/model/roof.model'
 
 const addressStore = useAddressStore()
 
-const props = defineProps<{ selectedRoof: RoofSurfaceModel }>()
+const props = defineProps<{
+  selectedRoof: RoofSurfaceModel
+  isPdf: boolean
+}>()
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto shadow-md font-dm-sans"
+    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto font-dm-sans"
+    :class="props.isPdf ? '' : 'shadow-md'"
   >
     <div class="flex flex-row items-center gap-2 ml-1">
       <img :src="potentiel" alt="" class="w-11 h-10" />

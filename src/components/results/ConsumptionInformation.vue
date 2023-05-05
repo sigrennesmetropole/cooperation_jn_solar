@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
+
+const props = defineProps<{
+  isPdf: boolean
+}>()
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-2 w-[100%] h-fit bg-white rounded-xl p-6 mx-auto shadow-md"
+    class="flex flex-col gap-2 w-[100%] h-fit bg-white rounded-xl p-6 mx-auto"
+    :class="props.isPdf ? '' : 'shadow-md'"
   >
     <p class="font-dm-sans font-bold text-base">Votre consommation actuelle</p>
     <p id="consumptionValue" class="font-dm-sans font-medium text-sm">
