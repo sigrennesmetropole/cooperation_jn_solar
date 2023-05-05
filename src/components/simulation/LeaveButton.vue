@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import iconDelete from '@/assets/icons/icon-delete.svg'
 import { useRouter } from 'vue-router'
-import { resetStoresAndRedirect } from '@/services/resetStores'
+import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const router = useRouter()
 
 function displayErrorMessage() {
-  if (
-    window.confirm(
-      'Cette action vous renvoie en début de simulation, vos données actuelles seront effacées'
-    )
-  ) {
-    resetStoresAndRedirect()
+  if (window.confirm(WINDOW_CONFIRM_MESSAGE)) {
     router.push('/roof-selection')
   }
 }

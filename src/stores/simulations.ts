@@ -85,6 +85,11 @@ export const useSimulationStore = defineStore('simulation', () => {
     }
   }
 
+  function resetSimulation() {
+    setCurrentStep(1)
+    setCurrentSubStep(1)
+  }
+
   return {
     currentStep,
     currentSubStep,
@@ -94,5 +99,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     goToNextStep,
     isCurrentStepFinal,
     goToFinalView,
+    resetSimulation,
   }
 })
