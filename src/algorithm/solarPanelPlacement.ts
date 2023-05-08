@@ -1,7 +1,6 @@
 import {
   Feature,
   FeatureCollection,
-  Geometry,
   Point,
   Polygon,
   Properties,
@@ -10,15 +9,10 @@ import {
   polygon,
 } from '@turf/turf'
 
+import type { Matrix } from '@/services/roofInteractionHelper'
+
 import * as fs from 'fs'
 import * as path from 'path'
-
-export type Square = {
-  usable: boolean
-  squareCenter: Geometry
-}
-
-export type Matrix = Square[][]
 
 // A grid is a one cell in a matrix. It is represented by its row and column
 export type Grid = [number, number]
