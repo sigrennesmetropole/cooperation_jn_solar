@@ -120,25 +120,29 @@ export function solarPanelPlacementAlgorithm(
 
   for (let i = 0; i < matrixLength; i++) {
     for (let j = 0; j < matrixWidth; j++) {
-      if (matrix[i][j].usable) {
-        const solarPanel = createSolarPanelGrid([i, j], horizontal)
-        if (isAllSolarPanelGridUsable(matrix, solarPanel)) {
-          if (isAllSolarPanelGridNotCovered(solarPanel, coverageMatrix)) {
-            solarPanels.push(solarPanel)
-            for (let k = 0; k < solarPanel.length; k++) {
-              const x = solarPanel[k][0]
-              const y = solarPanel[k][1]
-              // Set coverage matrix to the last index of the solar panel
-              coverageMatrix[x][y] = solarPanels.length - 1
-            }
-          } else {
-            // skipped because the solar panel cover grid that has been covered by other solar panel
-          }
-        } else {
-          // skipped because the grids covered by the solar panel are not all usable or beyond the matrix
-        }
-      } else {
+      if (!matrix[i][j].usable) {
         // skipped if the grid is not usable
+        continue
+      }
+
+      const solarPanel = createSolarPanelGrid([i, j], horizontal)
+      if (!isAllSolarPanelGridUsable(matrix, solarPanel)) {
+        // skipped because the grids covered by the solar panel are not all usable or beyond the matrix
+        continue
+      }
+      if (!isAllSolarPanelGridNotCovered(solarPanel, coverageMatrix)) {
+        // skipped because the solar panel cover grid that has been covered by other solar panel
+        continue
+      }
+
+      // All those check are good, then the solar panel is added to the list
+      solarPanels.push(solarPanel)
+      // Update coverage matrix, set the grid from the solar panel to the index of the solar panel
+      for (let k = 0; k < solarPanel.length; k++) {
+        const x = solarPanel[k][0]
+        const y = solarPanel[k][1]
+        // Set coverage matrix to the last index of the solar panel
+        coverageMatrix[x][y] = solarPanels.length - 1
       }
     }
   }
@@ -146,6 +150,8 @@ export function solarPanelPlacementAlgorithm(
   return solarPanels
 }
 
+// Main function, basically run the algorithm for both horizontal and vertical orientation
+// Return the one that has more solar panels
 export function solarPanelPlacement(
   matrix: Matrix,
   debug: boolean = false,
@@ -176,7 +182,7 @@ export function solarPanelPlacement(
   return { solarPanels: solarPanels, orientation: orientation }
 }
 
-// Used to write a GeoJSON representation of the matrix' to check
+// Used to write a GeoJSON representation of the matrix' to check/debug
 // the order / formation of the grid and the solar panel
 // The representation is a square that has equal length (0.05) and starting from coordinate (0, 0)
 export function matrixToGeoJSON(
@@ -227,7 +233,7 @@ export function matrixToGeoJSON(
   return fc
 }
 
-// Used to write a GeoJSON representation of the matrix's centroid to check
+// Used to write a GeoJSON representation of the matrix's centroid to check/debug
 // the order / formation of the grid
 export function matrixCentroidToGeoJSON(matrix: Matrix) {
   const fc: FeatureCollection<Point, Properties> = featureCollection([])
@@ -248,6 +254,8 @@ export function matrixCentroidToGeoJSON(matrix: Matrix) {
   return fc
 }
 
+// Create a matrix that represent if a grid is already covered or not
+// -1 if not covered
 function buildCoverageMatrix(
   length: number,
   width: number,
