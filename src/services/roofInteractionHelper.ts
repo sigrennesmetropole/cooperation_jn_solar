@@ -126,7 +126,7 @@ export function generateRectangleGrid(
 
 export type Square = {
   usable: boolean
-  squareCenter: Geometry
+  squareCenter: Point
 }
 
 export type Matrix = Square[][]

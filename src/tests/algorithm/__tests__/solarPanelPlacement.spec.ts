@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'vitest'
 import * as fs from 'fs'
 import * as path from 'path'
-import { solarPanelPlacement, Matrix } from '@/algorithm/solarPanelPlacement'
+import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
+import type { Matrix } from '@/services/roofInteractionHelper'
 
 describe('solar panel placement', () => {
   test('solar panel algorithm small roof', () => {
