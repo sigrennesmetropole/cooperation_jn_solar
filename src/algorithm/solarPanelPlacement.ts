@@ -27,7 +27,7 @@ export type Grid = [number, number]
 export type SolarPanelGrid = Grid[]
 
 // Helper function
-
+// Write FeatureCollection or Feature to a file, for debugging
 export function writeFeature(
   outputFileName: string,
   feature: FeatureCollection | Feature,
@@ -63,6 +63,9 @@ function createSolarPanelGrid(
   return solarPanelGrid
 }
 
+// Check if the grid on the solar panel are all usable
+// Usable grid means it has a usable = True
+// In the real situation, not usable = outside the roof area/polygon or excluded by the user (e.g. there is a obstacle)
 function isAllSolarPanelGridUsable(
   matrix: Matrix,
   solarPanelGrid: SolarPanelGrid
@@ -100,18 +103,25 @@ function isAllSolarPanelGridNotCovered(
   return true
 }
 
+// Main part of the solar panel placement algorithm.
+// It use a greedy approach to solve the problem (greedy in term of putting
+// the solar panel as early as possible)
+
+// *** Below are the algorithm ***
+
+// Iterate all grid from the matrix
+// If the grid is not usable, skip the grid
+// If the grid is usable, create a SolarPanelGrid from it (either vertical or horizontal)
+// SolarPanelGrid object -> list of 8 grids
+// Check all 8 grids of the solar panel are usable in the matrix
+// If there is a grid that is not usable, skip to the next grid
+// If all is usable, check all 8 grids are not yet covered by solar panel (checking if they are in covered grids or not)
+// If there is a grid that has been covered, skip to the next grid
+// If so, push those 8 grids to the list of covered grids and put the solar panel in the list of solar panel
 export function solarPanelPlacementAlgorithm(
   matrix: Matrix,
   horizontal: boolean = true
 ) {
-  // Iterate all grid from the matrix
-  // If the grid is not usable, skip
-  // If the grid is usable, create a solar panel object from it (either vertical or horizontal)
-  // SolarPanel object -> list of 8 grids
-  // Check all 8 grids of the solar panel are usable in the matrix
-  // If so, check all 8 grids are not yet covered by solar panel (checking if they are in covered grids or not)
-  // If so, push those 8 grids to the list of covered grids
-
   const matrixLength = matrix.length
   const matrixWidth = matrix[0].length
 
@@ -126,6 +136,7 @@ export function solarPanelPlacementAlgorithm(
       }
 
       const solarPanel = createSolarPanelGrid([i, j], horizontal)
+
       if (!isAllSolarPanelGridUsable(matrix, solarPanel)) {
         // skipped because the grids covered by the solar panel are not all usable or beyond the matrix
         continue
