@@ -39,6 +39,7 @@ import { useViewsStore } from '@/stores/views'
 import { getCenter } from 'ol/extent'
 import type { Grid } from '@/helpers/rectangleGrid'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -115,12 +116,15 @@ async function setupSolarPanelFixtures() {
     roofsStore.gridMatrix!
   )
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
-
+  const selectedRoofModel: RoofSurfaceModel =
+    roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
   // convert solarPanels to solarPanelModel
   const sampleSolarPanels = solarPanelGridToSolarPanelModel(
     roofsStore.gridMatrix!,
     result.solarPanels,
-    result.orientation
+    result.orientation,
+    selectedRoofModel.inclinaison,
+    selectedRoofModel.azimuth
   )
   solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
   solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length

@@ -113,12 +113,12 @@ export function solarPanelGridToSolarPanelModel(
   matrixGrid: Matrix,
   solarPanelGrids: SolarPanelGrid[],
   orientation: string,
-  roofSlope: number = 45,
+  roofInclinaison: number = 45,
   roofAzimut: number = 0
 ): SolarPanelModel[] {
   const solarPanelModels: SolarPanelModel[] = []
   console.log(
-    `roofSlope: ${roofSlope}, roofAzimut: ${roofAzimut}, orientation ${orientation}`
+    `roofInclinaison: ${roofInclinaison}, roofAzimut: ${roofAzimut}, orientation ${orientation}`
   )
   console.log(solarPanelGrids)
   solarPanelGrids.forEach((spg: SolarPanelGrid, index: number) => {
@@ -129,8 +129,8 @@ export function solarPanelGridToSolarPanelModel(
       y: center.geometry.coordinates[1],
       z: 50,
       pitch: 0,
-      roll: 0,
-      heading: 0,
+      roll: -roofInclinaison,
+      heading: roofAzimut,
     }
     solarPanelModels.push(solarPanelModel)
   })
