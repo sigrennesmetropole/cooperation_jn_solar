@@ -7,6 +7,11 @@ import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper
 import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
 import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
+import type { SolarPanelGrid } from '@/algorithm/solarPanelPlacement'
+import type { Matrix } from './roofInteractionHelper'
+import { center, points } from '@turf/turf'
+
+import type { Feature, Properties, Point, Position } from '@turf/turf'
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -102,4 +107,47 @@ export function getPeakPower() {
   const solarPanelStore = useSolarPanelStore()
   const peakPower = solarPanelStore.currentNumberSolarPanel * SOLAR_PANEL_POWER
   return Math.round(peakPower * 100) / 100
+}
+
+export function solarPanelGridToSolarPanelModel(
+  matrixGrid: Matrix,
+  solarPanelGrids: SolarPanelGrid[],
+  orientation: string,
+  roofSlope: number = 45,
+  roofAzimut: number = 0
+): SolarPanelModel[] {
+  const solarPanelModels: SolarPanelModel[] = []
+  console.log(
+    `roofSlope: ${roofSlope}, roofAzimut: ${roofAzimut}, orientation ${orientation}`
+  )
+  console.log(solarPanelGrids)
+  solarPanelGrids.forEach((spg: SolarPanelGrid, index: number) => {
+    const center = getSolarPanelGridCenter(matrixGrid, spg)
+    const solarPanelModel: SolarPanelModel = {
+      index: index,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
+      z: 50,
+      pitch: 0,
+      roll: 0,
+      heading: 0,
+    }
+    solarPanelModels.push(solarPanelModel)
+  })
+  console.log(solarPanelModels)
+  return solarPanelModels
+}
+
+// Get the center of the SolarPanelGrid
+function getSolarPanelGridCenter(
+  gridMatrix: Matrix,
+  solarPanelGrid: SolarPanelGrid
+): Feature<Point, Properties> {
+  const positions: Position[] = []
+  solarPanelGrid.forEach((grid) => {
+    const squareGrid = gridMatrix[grid[0]][grid[1]]
+    positions.push(squareGrid.squareCenter.coordinates)
+  })
+  const features = points(positions)
+  return center(features)
 }

@@ -31,7 +31,7 @@ import {
   removeSolarPanel,
   zoomToSolarPanel,
 } from '@/services/solarPanel'
-import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
+import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
@@ -115,10 +115,13 @@ async function setupSolarPanelFixtures() {
     roofsStore.gridMatrix!
   )
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
-  console.log(result.orientation)
-  console.log(result.solarPanels)
+
   // convert solarPanels to solarPanelModel
-  const sampleSolarPanels = solarPanelFixtures()
+  const sampleSolarPanels = solarPanelGridToSolarPanelModel(
+    roofsStore.gridMatrix!,
+    result.solarPanels,
+    result.orientation
+  )
   solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
   solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
   await displaySolarPanel(rennesApp, sampleSolarPanels)
