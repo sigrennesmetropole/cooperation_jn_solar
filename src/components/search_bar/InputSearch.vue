@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 import iconMagnifyingGlass from '@/assets/icons/magnifying-glass.svg'
 import iconMultiply from '@/assets/icons/icon-multiply.svg'
 import iconFilterSearchBar from '@/assets/icons/icon-filter-searchbar.svg'
