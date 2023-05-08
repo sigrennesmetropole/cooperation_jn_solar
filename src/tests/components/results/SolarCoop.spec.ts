@@ -12,8 +12,8 @@ describe('PhotoVoltaique.vue', () => {
 
   it('calls goToSolarCoopInfo() function when the button is clicked', async () => {
     const spy = jest.spyOn(window, 'open').mockImplementation()
-    const button = wrapper.find('#solarCoopButton')
-    await button.trigger('click')
+    const img = wrapper.find('#solarCoopImg')
+    await img.trigger('click')
     expect(spy).toHaveBeenCalledWith('https://www.solarcoop.fr/', '_blank')
     spy.mockRestore()
   })

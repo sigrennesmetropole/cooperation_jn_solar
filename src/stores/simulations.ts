@@ -3,7 +3,7 @@ import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import router from '@/router'
 
-export const DEFAULT_CONSUMPTION = 6000 as const
+export const DEFAULT_CONSUMPTION = 0 as const
 export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
   const currentSubStep: Ref<number> = ref(1)
@@ -85,6 +85,11 @@ export const useSimulationStore = defineStore('simulation', () => {
     }
   }
 
+  function resetSimulation() {
+    setCurrentStep(1)
+    setCurrentSubStep(1)
+  }
+
   return {
     currentStep,
     currentSubStep,
@@ -94,5 +99,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     goToNextStep,
     isCurrentStepFinal,
     goToFinalView,
+    resetSimulation,
   }
 })

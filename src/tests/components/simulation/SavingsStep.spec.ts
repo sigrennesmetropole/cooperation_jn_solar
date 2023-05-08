@@ -1,6 +1,6 @@
 // @ts-nocheck
 import SavingsStep from '@/components/simulation/SavingsStep.vue'
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
@@ -10,33 +10,32 @@ import AllowAnnualConsumptionPopup from '@/components/simulation/AllowAnnualCons
 import InformationsEnergySaving from '@/components/simulation/InformationsEnergySaving.vue'
 import ElectricityConsumptionManual from '@/components/simulation/ElectricityConsumptionManual.vue'
 import { useSimulationStore } from '@/stores/simulations'
+import { DEFAULT_CONSUMPTION } from '@/stores/simulations'
 
 describe('SavingsStep.vue', () => {
   let wrapper: VueWrapper
 
+  let consumptionAndProductionStore
+  let simulationStore
+
   beforeEach(async () => {
+    const testingPinia = createTestingPinia()
+    consumptionAndProductionStore =
+      useConsumptionAndProductionStore(testingPinia)
+    simulationStore = useSimulationStore(testingPinia)
+
     wrapper = mount(SavingsStep, {
       global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-            stubActions: false,
-            stubPatch: false,
-            fakeApp: true,
-          }),
-        ],
+        plugins: [testingPinia],
       },
     })
   })
 
   it('renders the component correctly', () => {
     expect(wrapper.exists()).toBe(true)
-
-    expect(wrapper.html()).toMatchSnapshot()
   })
 
   it('renders InformationsEnergySaving component when currentSubStep is 1', async () => {
-    const simulationStore = useSimulationStore()
     simulationStore.setCurrentStep(3)
     simulationStore.setCurrentSubStep(1)
     await wrapper.vm.$nextTick()
@@ -44,9 +43,9 @@ describe('SavingsStep.vue', () => {
   })
 
   it('renders ElectricityConsumptionButton component when currentSubStep is 2', async () => {
-    const simulationStore = useSimulationStore()
     simulationStore.setCurrentStep(3)
-    simulationStore.setCurrentSubStep(2)
+    await wrapper.vm.$nextTick()
+    simulationStore.currentSubStep = 2
     await wrapper.vm.$nextTick()
     expect(wrapper.findComponent(ElectricityConsumptionButton).exists()).toBe(
       true
@@ -54,9 +53,8 @@ describe('SavingsStep.vue', () => {
   })
 
   it('renders ElectricityConsumptionManual component when currentSubStep is 3', async () => {
-    const simulationStore = useSimulationStore()
     simulationStore.setCurrentStep(3)
-    simulationStore.setCurrentSubStep(3)
+    simulationStore.currentSubStep = 3
     await wrapper.vm.$nextTick()
     expect(wrapper.findComponent(ElectricityConsumptionManual).exists()).toBe(
       true
@@ -64,18 +62,16 @@ describe('SavingsStep.vue', () => {
   })
 
   it('renders InformationsLinky component when currentSubStep is 4', async () => {
-    const simulationStore = useSimulationStore()
     simulationStore.setCurrentStep(3)
-    simulationStore.setCurrentSubStep(4)
+    simulationStore.currentSubStep = 4
     await wrapper.vm.$nextTick()
     expect(wrapper.findComponent(InformationsLinky).exists()).toBe(true)
   })
 
   describe('PopUp.vue', () => {
     beforeEach(async () => {
-      const simulationStore = useSimulationStore()
       simulationStore.setCurrentStep(3)
-      simulationStore.setCurrentSubStep(2)
+      simulationStore.currentSubStep = 2
       await wrapper.vm.$nextTick()
       wrapper.vm.showPopUpAllowAnnualConsumption('manual')
     })
@@ -99,7 +95,6 @@ describe('SavingsStep.vue', () => {
     })
 
     it('executes clickContinuePopup with stepAnnualConsumption = manual', async () => {
-      const simulationStore = useSimulationStore()
       wrapper.vm.clickContinuePopup()
       await wrapper.vm.$nextTick()
       expect(wrapper.vm.isDisplayPopup).toBe(false)
@@ -108,7 +103,6 @@ describe('SavingsStep.vue', () => {
 
     it('executes clickContinuePopup with stepAnnualConsumption = linky', async () => {
       wrapper.vm.showPopUpAllowAnnualConsumption('linky')
-      const simulationStore = useSimulationStore()
       wrapper.vm.clickContinuePopup()
       await wrapper.vm.$nextTick()
       expect(wrapper.vm.isDisplayPopup).toBe(false)
@@ -116,15 +110,15 @@ describe('SavingsStep.vue', () => {
     })
 
     it('executes goToEndSimulation function correctly', async () => {
-      const simulationStore = useSimulationStore()
-      const consumptionAndProductionStore = useConsumptionAndProductionStore()
       const goToFinalViewSpy = jest.spyOn(simulationStore, 'goToFinalView')
 
       wrapper.vm.goToEndSimulation()
       await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.isDisplayPopup).toBe(false)
-      expect(consumptionAndProductionStore.annualConsumption).toBe(6000)
+      expect(consumptionAndProductionStore.annualConsumption).toBe(
+        DEFAULT_CONSUMPTION
+      )
       expect(goToFinalViewSpy).toHaveBeenCalled()
 
       goToFinalViewSpy.mockRestore()

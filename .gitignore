@@ -32,3 +32,6 @@ coverage
 *.iml
 
 .env
+
+# geojson debug file
+/src/algorithm/*.geojson

@@ -10,9 +10,9 @@ import SolarCoop from '@/components/results/SolarCoop.vue'
 import SunshineInformation from '@/components/results/SunshineInformation.vue'
 import AutocalsolResult from '@/components/results/AutocalsolResult.vue'
 import { useAutocalsolStore } from '@/stores/autocalsol'
-// import autocalsolResultExample from '@/tests/stores/autocalsolResultExample.json'
-// import { useAddressStore } from '@/stores/address'
-// import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import LargeFooter from '@/components/simulation/LargeFooter.vue'
+import PdfSimulation from '@/components/results/PdfSimulation.vue'
+import { legalList } from '@/constants/legalLinks'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
@@ -28,7 +28,7 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 //TO TEST : remove comment bellow | TODO : remove for production
 // const consumptionAndProductionStore = useConsumptionAndProductionStore()
 // const addressStore = useAddressStore()
-// // @ts-ignore
+// @ts-ignore
 // autocalsolStore.setAutocalsolResult(autocalsolResultExample)
 // const autocalsolResult = autocalsolStore.autocalsolResult
 // consumptionAndProductionStore.setAnnualConsumption(6000)
@@ -45,30 +45,38 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 </script>
 
 <template>
-  <div class="bg-slate-100 w-full overflow-y-auto">
-    <div
-      class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center overflow-y-scroll"
-    >
+  <div class="bg-slate-100 w-full overflow-y-scroll">
+    <div class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center">
       <div
         class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
       >
         <SunshineInformation
           v-if="selectedRoof !== undefined"
           :selected-roof="selectedRoof"
+          :isPdf="false"
         />
-        <ConsumptionInformation />
+        <ConsumptionInformation :isPdf="false" />
       </div>
       <div
         class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
       >
+        <PdfSimulation
+          v-if="selectedRoof !== undefined && autocalsolResult !== null"
+          :selected-roof="selectedRoof"
+          :autocalsolResult="autocalsolResult"
+        />
+
         <AutocalsolResult
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"
         />
-        <GoFurther></GoFurther>
-        <SolarCoop></SolarCoop>
-        <EnergiesRennes></EnergiesRennes>
+        <GoFurther :isPdf="false"></GoFurther>
+        <SolarCoop :isPdf="false"></SolarCoop>
+        <EnergiesRennes :isPdf="false"></EnergiesRennes>
       </div>
+    </div>
+    <div class="mx-16 py-10">
+      <LargeFooter class="mt-auto" :legalList="legalList"></LargeFooter>
     </div>
   </div>
 </template>

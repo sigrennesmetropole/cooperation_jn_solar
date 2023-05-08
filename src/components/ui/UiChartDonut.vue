@@ -19,8 +19,23 @@ const chartOptions = ref({
     enabled: false, // Disable tooltip on hover
   },
   colors: props.dataGraph.colors,
+  states: {
+    hover: {
+      filter: {
+        type: 'none',
+        value: 0,
+      },
+    },
+    active: {
+      filter: {
+        type: 'none',
+        value: 0,
+      },
+    },
+  },
   plotOptions: {
     pie: {
+      expandOnClick: false,
       donut: {
         labels: {
           show: true,

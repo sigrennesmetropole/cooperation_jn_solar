@@ -15,10 +15,13 @@ import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
+import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
+
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const popUpStore = usePopUpStore()
 const districtStore = useDistrictStore()
+
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
@@ -67,6 +70,21 @@ const isPageFullScreen = computed(() => {
     null,
   ].includes(viewStore.currentView!)
 })
+
+const isAlertBoxBrowserNotDisplay = computed(() => {
+  return [viewList['home'], viewList['roof-selection'], null].includes(
+    viewStore.currentView!
+  )
+})
+
+if (isAlertBoxBrowserNotDisplay.value) {
+  window.addEventListener('beforeunload', function (e) {
+    e.preventDefault()
+    e.returnValue = WINDOW_CONFIRM_MESSAGE
+    e.cancelable
+    e.stopPropagation()
+  })
+}
 </script>
 
 <template>

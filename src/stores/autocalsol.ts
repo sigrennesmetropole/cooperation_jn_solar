@@ -10,8 +10,13 @@ export const useAutocalsolStore = defineStore('autocalsolStore', () => {
     autocalsolResult.value = result
   }
 
+  function resetAutocalsolResult() {
+    autocalsolResult.value = null
+  }
+
   return {
     autocalsolResult,
     setAutocalsolResult,
+    resetAutocalsolResult,
   }
 })

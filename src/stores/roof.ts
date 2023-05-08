@@ -58,6 +58,13 @@ export const useRoofsStore = defineStore('roofs', () => {
     })
   }
 
+  function resetRoofStore() {
+    selectedBuildingId.value = null
+    selectedRoofSurfaceId.value = null
+    roofsFeatures.value = null
+    roofSurfacesList.value = null
+  }
+
   return {
     roofsFeatures,
     selectedRoofSurfaceId,
@@ -70,5 +77,6 @@ export const useRoofsStore = defineStore('roofs', () => {
     setRoofSurfacesList,
     getFeaturesOfSelectedPanRoof,
     getRoofSurfaceModelOfSelectedPanRoof,
+    resetRoofStore,
   }
 })

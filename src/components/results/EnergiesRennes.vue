@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
 import goToAmber from '@/assets/icons/icon-external-link-amber.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
+import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+
+const props = defineProps<{
+  isPdf: boolean
+}>()
 
 const ENERGIES_LINK = 'https://energiesdupaysderennes.fr/'
 const VILAINE_LINK = 'https://soleilsurvilaine.centralesvillageoises.fr/'
@@ -18,7 +23,8 @@ function goToVilaineInfo() {
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto shadow-md"
+    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto"
+    :class="props.isPdf ? '' : 'shadow-md'"
   >
     <h2 class="font-dm-sans font-bold text-2xl">
       Contacter des associations locales
@@ -34,39 +40,37 @@ function goToVilaineInfo() {
         />
       </div>
       <div class="flex flex-col w-[50%] h-fit">
-        <p class="font-dm-sans text-base font-normal">
+        <p class="font-dm-sans text-base font-medium text-neutral-900">
           <span
-            class="underline inline-flex items-center cursor-pointer font-medium"
+            class="inline-flex items-center cursor-pointer font-medium"
             @click="goToEnergiesInfo()"
           >
-            <strong> Énergies du pays de Rennes &nbsp;</strong>
-            <img :src="goToBlack" class="w-[14px] h-[14px]" />
+            <strong class="underline"> Énergies du pays de Rennes </strong>
+            <img :src="goToBlack" class="w-[14px] h-[14px] ml-1" />
           </span>
           est une association citoyenne pour le développement du solaire
           photovoltaïque sur Rennes et sa région.
         </p>
-        <button
-          @click="goToEnergiesInfo()"
+        <ButtonVisitWebsite
           id="energiesButton"
-          class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit items-center flex flex-row justify-center mt-4"
-        >
-          <img class="w-5 h-5" :src="goToWhite" alt="" />
-          <span class="font-dm-sans text-white text-base font-bold">
-            Visiter le site</span
-          >
-        </button>
+          :link="ENERGIES_LINK"
+          :isPdf="props.isPdf"
+        />
       </div>
     </div>
-    <div>
-      <p class="font-dm-sans text-base font-normal">
+    <div
+      class="flex flex-row gap-3 border border-neutral-300 rounded-lg px-2 py-[29px]"
+    >
+      <img :src="information" class="w-[18px] h-[18px] ml-1" />
+      <p class="font-dm-sans text-sm font-medium text-slate-900">
         Pour Acigné et Brécé, il existe aussi
         <span
           id="vilaine"
-          class="underline inline-flex items-center cursor-pointer font-medium"
+          class="inline-flex items-center cursor-pointer font-medium"
           @click="goToVilaineInfo()"
         >
-          <strong>l'association Soleil sur Vilaine &nbsp;</strong>
-          <img :src="goToAmber" class="w-[14px] h-[14px]" />
+          <strong class="underline">l'association Soleil sur Vilaine</strong>
+          <img :src="goToAmber" class="w-[14px] h-[14px] ml-1" />
         </span>
       </p>
     </div>

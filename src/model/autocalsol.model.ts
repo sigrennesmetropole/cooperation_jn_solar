@@ -10,8 +10,8 @@ export type AutocalsolData = {
 export type AutocalsolResult = {
   prodByMonth: number[]
   consoByMonth: number[]
-  prodByHour: [string, number | string][]
-  consoByHour: [string, number | string][]
+  prodByHour: [string, number][]
+  consoByHour: [string, number][]
   consoAnnualInjected: number
   consoAnnualAutoConsumed: number
 }
@@ -21,10 +21,5 @@ export type AutocalsolResult = {
  * With : East = -90, West = 90, South = 0
  */
 export function azimuthForAutocalsol(azimuth: number) {
-  if (azimuth <= 180) {
-    return -azimuth
-  } else {
-    // azimuth > 180
-    return azimuth - 180
-  }
+  return azimuth - 180
 }

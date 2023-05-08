@@ -11,18 +11,7 @@ describe('PhotoVoltaique.vue', () => {
   })
 
   it('renders the photovoltaique.info link correctly', () => {
-    const link = wrapper.find('span.underline')
+    const link = wrapper.find('strong.underline')
     expect(link.text()).toContain('photovoltaique.info')
-  })
-
-  it('calls goToPhotovoltaiqueInfo() function when the button is clicked', async () => {
-    const spy = jest.spyOn(window, 'open').mockImplementation()
-    const button = wrapper.find('#photovoltaiqueButton')
-    await button.trigger('click')
-    expect(spy).toHaveBeenCalledWith(
-      'https://www.photovoltaique.info/fr/',
-      '_blank'
-    )
-    spy.mockRestore()
   })
 })

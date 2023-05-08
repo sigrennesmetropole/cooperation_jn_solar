@@ -2,6 +2,7 @@
 import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const props = defineProps<{
   isDisplayNextButton: Boolean
@@ -11,7 +12,9 @@ const router = useRouter()
 const simulationStore = useSimulationStore()
 
 function clickButtonCancel() {
-  router.push('/roof-selection')
+  if (window.confirm(WINDOW_CONFIRM_MESSAGE)) {
+    router.push('/roof-selection')
+  }
 }
 function clickButtonPrevious() {
   simulationStore.goToPreviousStep()
