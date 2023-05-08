@@ -128,8 +128,8 @@
   "viewpoints": [
     {
       "name": "rennes",
-      "groundPosition": [-1.7219, 48.09],
-      "distance": 37039,
+      "groundPosition": [-1.728699668805612, 48.089084682682405],
+      "distance": 110,
       "pitch": -90,
       "roll": 0,
       "heading": 0,
