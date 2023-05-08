@@ -20,9 +20,8 @@ export type Square = {
 
 export type Matrix = Square[][]
 
-export type SolarPanelGrid = {
-  gridIndexes: [number, number][]
-}
+// A solar panel representation that show which grid are covered by the solar panel
+export type SolarPanelGrid = [number, number][]
 
 // Helper function
 
@@ -39,24 +38,21 @@ export function writeFeature(
   }
 }
 
-function createSolarPanel(
+function createSolarPanelGrid(
   index: [number, number],
   horizontal: boolean = true
 ): SolarPanelGrid {
-  const indexes: [number, number][] = []
+  const solarPanelGrid: [number, number][] = []
 
   const length = horizontal ? 4 : 2
   const width = horizontal ? 2 : 4
 
   for (let i = 0; i < length; i++) {
     for (let j = 0; j < width; j++) {
-      indexes.push([index[0] + i, index[1] + j])
+      solarPanelGrid.push([index[0] + i, index[1] + j])
     }
   }
 
-  const solarPanelGrid: SolarPanelGrid = {
-    gridIndexes: indexes,
-  }
   return solarPanelGrid
 }
 
@@ -64,19 +60,11 @@ function isAllSolarPanelGridUsable(
   matrix: Matrix,
   solarPanelGrid: SolarPanelGrid
 ) {
-  for (let i = 0; i < solarPanelGrid.gridIndexes.length; i++) {
-    if (
-      matrix[solarPanelGrid.gridIndexes[i][0]][
-        solarPanelGrid.gridIndexes[i][1]
-      ] == undefined
-    ) {
+  for (let i = 0; i < solarPanelGrid.length; i++) {
+    if (matrix[solarPanelGrid[i][0]][solarPanelGrid[i][1]] == undefined) {
       return false
     }
-    if (
-      !matrix[solarPanelGrid.gridIndexes[i][0]][
-        solarPanelGrid.gridIndexes[i][1]
-      ].usable
-    ) {
+    if (!matrix[solarPanelGrid[i][0]][solarPanelGrid[i][1]].usable) {
       return false
     }
   }
@@ -88,9 +76,9 @@ function isAllSolarPanelGridNotCovered(
   solarPanelGrid: SolarPanelGrid,
   coverageMatrix: number[][]
 ): boolean {
-  for (let i = 0; i < solarPanelGrid.gridIndexes.length; i++) {
-    const x = solarPanelGrid.gridIndexes[i][0]
-    const y = solarPanelGrid.gridIndexes[i][1]
+  for (let i = 0; i < solarPanelGrid.length; i++) {
+    const x = solarPanelGrid[i][0]
+    const y = solarPanelGrid[i][1]
     if (coverageMatrix[x][y] > -1) {
       return false
     }
@@ -120,13 +108,13 @@ export function solarPanelPlacementAlgorithm(
   for (let i = 0; i < matrixLength; i++) {
     for (let j = 0; j < matrixWidth; j++) {
       if (matrix[i][j].usable) {
-        const solarPanel = createSolarPanel([i, j], horizontal)
+        const solarPanel = createSolarPanelGrid([i, j], horizontal)
         if (isAllSolarPanelGridUsable(matrix, solarPanel)) {
           if (isAllSolarPanelGridNotCovered(solarPanel, coverageMatrix)) {
             solarPanels.push(solarPanel)
-            for (let k = 0; k < solarPanel.gridIndexes.length; k++) {
-              const x = solarPanel.gridIndexes[k][0]
-              const y = solarPanel.gridIndexes[k][1]
+            for (let k = 0; k < solarPanel.length; k++) {
+              const x = solarPanel[k][0]
+              const y = solarPanel[k][1]
               // Set coverage matrix to the last index of the solar panel
               coverageMatrix[x][y] = solarPanels.length - 1
             }
@@ -186,8 +174,8 @@ export function matrixToGeoJSON(
 
   const coveredGrids: Record<number, number> = {}
   for (let i = 0; i < solarPanels.length; i++) {
-    solarPanels[i].gridIndexes.forEach((gridIndex) => {
-      coveredGrids[gridIndex[1] * matrix.length + gridIndex[0]] = i
+    solarPanels[i].forEach((solarPanelGrid) => {
+      coveredGrids[solarPanelGrid[1] * matrix.length + solarPanelGrid[0]] = i
     })
   }
 
