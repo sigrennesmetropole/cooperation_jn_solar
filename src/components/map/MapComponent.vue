@@ -38,6 +38,7 @@ import { useViewsStore } from '@/stores/views'
 
 import { getCenter } from 'ol/extent'
 import type { Grid } from '@/helpers/rectangleGrid'
+import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -113,6 +114,10 @@ async function setupSolarPanelFixtures() {
     'matrix for placement algo (filter by remove box): ',
     roofsStore.gridMatrix!
   )
+  const result = solarPanelPlacement(roofsStore.gridMatrix!)
+  console.log(result.orientation)
+  console.log(result.solarPanels)
+  // convert solarPanels to solarPanelModel
   const sampleSolarPanels = solarPanelFixtures()
   solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
   solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length

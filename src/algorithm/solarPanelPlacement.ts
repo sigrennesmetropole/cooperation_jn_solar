@@ -1,13 +1,12 @@
-import {
-  Feature,
+import type {
+  Properties,
   FeatureCollection,
+  Feature,
   Point,
   Polygon,
-  Properties,
-  featureCollection,
-  point,
-  polygon,
 } from '@turf/turf'
+
+import { featureCollection, point, polygon } from '@turf/helpers'
 
 import type { Matrix } from '@/services/roofInteractionHelper'
 
