@@ -3,6 +3,7 @@ import { onBeforeMount, onMounted, reactive, ref, Ref } from 'vue'
 import WaitingAnimation from '@/components/simulation/WaitingAnimation.vue'
 import FailComponent from '@/components/simulation/FailComponent.vue'
 import CertifiedInstaller from '@/components/simulation/CertifiedInstaller.vue'
+import HeaderEndSimulation from '@/components/simulation/HeaderEndSimulation.vue'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { useAddressStore } from '@/stores/address'
@@ -91,7 +92,7 @@ async function callAutocalsolApi() {
       autocalsolStore.autocalsolResult === null
     ) {
       isAutocalsolError.value = true
-    } else {
+    } else if (viewStore.currentView == 'end-simulation') {
       router.push('/simulation-results')
     }
   } catch (error) {
@@ -107,6 +108,7 @@ onMounted(async () => {
 <template>
   <div class="overflow-y-auto flex flex-row bg-slate-100 w-full">
     <div class="w-screen font-dm-sans font-medium flex flex-col gap-6">
+      <HeaderEndSimulation></HeaderEndSimulation>
       <div
         class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
       >

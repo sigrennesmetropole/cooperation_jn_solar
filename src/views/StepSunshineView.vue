@@ -30,9 +30,14 @@ const roofStore = useRoofsStore()
 const mapStore = useMapStore()
 
 onBeforeMount(() => {
+  if (simulationStore.restartEndSimulation == true) {
+    simulationStore.setCurrentStep(3)
+    simulationStore.setCurrentSubStep(2)
+  }
   viewStore.setCurrentView(viewList['step-sunshine'])
   panelsStore.setTypePanelDisplay('right')
   highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+  simulationStore.restartEndSimulation = false
 })
 
 const highlightStyle = new VectorStyleItem({
