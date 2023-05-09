@@ -28,6 +28,9 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
       olcs_modelPitch: solarPanel.pitch,
       olcs_modelRoll: solarPanel.roll,
       olcs_modelHeading: solarPanel.heading,
+      // The size of the 3d model is 1900x1000, the real solar panel is 1900x950
+      // We need to scale by 0.95 for the widht (y-axis)
+      olcs_modelScaleY: 0.95,
     },
     vcsMeta: {},
   }
@@ -122,15 +125,42 @@ export function solarPanelGridToSolarPanelModel(
   )
   console.log(solarPanelGrids)
   solarPanelGrids.forEach((spg: SolarPanelGrid, index: number) => {
+    // if (index > 5) {
+    //   return
+    // }
     const center = getSolarPanelGridCenter(matrixGrid, spg)
+    const baseHeight = 45 // Hardcoded for now, we need to compute the height based on the solar panel index
+    const heightIndex = getSolarPanelGridHeightIndex(spg)
+    // sin(a) cos(a) = 0.5 * sin(2a)
+    const height =
+      baseHeight -
+      heightIndex *
+        0.5 *
+        Math.sin(2 * Number(roofInclinaison) * (Math.PI / 180)) *
+        0.475
+
+    let pitch
+    let roll
+    let heading
+
+    if (orientation === 'vertical') {
+      pitch = 0
+      roll = -roofInclinaison
+      heading = roofAzimut
+    } else {
+      pitch = -roofInclinaison
+      roll = 0
+      heading = roofAzimut - 90
+    }
+    console.log(`Height: ${height}, heightIndex: ${heightIndex}`)
     const solarPanelModel: SolarPanelModel = {
       index: index,
       x: center.geometry.coordinates[0],
       y: center.geometry.coordinates[1],
-      z: 50,
-      pitch: 0,
-      roll: -roofInclinaison,
-      heading: roofAzimut,
+      z: height,
+      pitch: pitch,
+      roll: roll,
+      heading: heading,
     }
     solarPanelModels.push(solarPanelModel)
   })
@@ -150,4 +180,12 @@ function getSolarPanelGridCenter(
   })
   const features = points(positions)
   return center(features)
+}
+
+function getSolarPanelGridHeightIndex(solarPanelGrid: SolarPanelGrid) {
+  const heightIndexes: number[] = []
+  solarPanelGrid.forEach((grid) => {
+    heightIndexes.push(grid[0])
+  })
+  return Math.min(...heightIndexes)
 }
