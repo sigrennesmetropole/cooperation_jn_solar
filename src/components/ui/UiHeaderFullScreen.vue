@@ -22,7 +22,7 @@ function restartSimulation() {
 
 <template>
   <div
-    class="absolute top-0 left-0 flex flex-row items-center justify-between px-9 gap-12 w-[100%] h-[72px] bg-white shadow"
+    class="absolute top-0 left-0 flex flex-row items-center justify-between px-9 gap-12 w-[100%] h-[72px] bg-white shadow z-40"
   >
     <div class="flex flex-row items-center">
       <UiReturnButton
