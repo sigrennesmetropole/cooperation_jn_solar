@@ -4,7 +4,7 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
 <template>
   <div>
     <div
-      class="fixed top-0 left-0 w-full h-full z-[60]"
+      class="fixed top-0 left-0 w-full h-full z-[100]"
       style="background-color: rgba(0, 0, 0, 0.75)"
     >
       >
@@ -16,6 +16,8 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
           <h3 class="text-2xl font-bold">Conditions d’utilisation</h3>
 
           <button
+            tabindex="0"
+            @keydown.enter="$emit('close')"
             @click="$emit('close')"
             class="w-5 h-5 border border-black rounded ml-auto hover:bg-neutral-400 flex justify-center items-center"
           >
@@ -67,6 +69,7 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
             et l’orientation de la surface. Plus de détails dans la
             <a
               href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/modeling-solar-radiation.htm"
+              target="_blank"
               class="underline"
               >documentation d’aide Modélisation du rayonnement solaire</a
             >. <br /><br />
@@ -106,6 +109,7 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
             <a
               class="underline"
               href="https://cie.co.at/publications/cie-standard-overcast-sky-and-clear-sky"
+              target="_blank"
             >
               https://cie.co.at/publications/cie-standard-overcast-sky-and-clear-sky
             </a>

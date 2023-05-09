@@ -49,6 +49,7 @@ roofsStore.$subscribe(async () => {
   <div class="flex flex-col p-0 gap-6" role="radiogroup">
     <template v-for="(roofSurface, index) in roofsSorted" :key="index">
       <RoofAccordion
+        tabindex="0"
         :roof-surface="roofSurface"
         :label="'Pan de toit n°' + (index + 1)"
         :selected="isRoofSelected(roofSurface)"
@@ -57,6 +58,7 @@ roofsStore.$subscribe(async () => {
         :index="index"
         @clickRoofAccordion="changeSelectedRoof(roofSurface)"
         @click="expandItem(roofSurface)"
+        @keydown.enter="changeSelectedRoof(roofSurface)"
       ></RoofAccordion>
     </template>
   </div>
