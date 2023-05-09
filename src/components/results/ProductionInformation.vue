@@ -23,7 +23,7 @@ const currentPower = computed(() =>
 
 const addressStore = useAddressStore()
 const blob = addressStore.screenshotAddress
-let urlImg = null
+let urlImg: null | string = null
 if (blob !== null) urlImg = URL.createObjectURL(blob)
 </script>
 
