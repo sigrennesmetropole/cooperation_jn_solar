@@ -232,10 +232,17 @@ export async function createAndHandleBlob(
   const blob = await createBlob(canvas)
   console.log(blob)
 
+  runState.value = false
+  return blob
+
   const url = URL.createObjectURL(blob)
+  console.log('----- url : ')
+  console.log(url)
 
   downloadURI(url, fileName)
   // release object URL since it is no longer needed -> can't be open in new tab.
-  URL.revokeObjectURL(url)
+  // URL.revokeObjectURL(url)
   runState.value = false
+
+  return url
 }

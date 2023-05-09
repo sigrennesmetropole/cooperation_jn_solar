@@ -161,6 +161,8 @@ mapStore.$subscribe(async () => {
 })
 
 const running = ref(false)
+const urlImg = ref(null)
+
 async function testScreenshot() {
   const jpgCreateFunction = (canvas) => {
     return new Promise((resolve) => {
@@ -169,13 +171,15 @@ async function testScreenshot() {
   }
 
   const width = 500
-  await createAndHandleBlob(
+  const blob = await createAndHandleBlob(
     rennesApp,
     running,
     width,
     jpgCreateFunction,
     'map.jpg'
   )
+  urlImg.value = URL.createObjectURL(blob)
+  console.log('after screenshot')
 }
 </script>
 
@@ -185,6 +189,7 @@ async function testScreenshot() {
     @click="testScreenshot()"
   >
     test screenshot
+    <img v-if="urlImg !== null" :src="urlImg" alt="" />
   </div>
 
   <UiMap></UiMap>
