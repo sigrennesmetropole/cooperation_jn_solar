@@ -6,9 +6,11 @@ import {
 } from '@/model/solarPanel.model'
 import { computed, defineProps } from 'vue'
 import solarPanelIcon from '@/assets/icons/solar-panel.svg'
+import { useAddressStore } from '@/stores/address'
 
 const props = defineProps<{
   currentNumSolarPanel: number
+  isPdf: boolean
 }>()
 
 const currentSurface = computed(
@@ -18,11 +20,18 @@ const currentSurface = computed(
 const currentPower = computed(() =>
   (props.currentNumSolarPanel * SOLAR_PANEL_POWER).toFixed(2)
 )
+
+const addressStore = useAddressStore()
+const blob = addressStore.screenshotAddress
+console.log(blob)
+let urlImg = null
+if (blob !== null) urlImg = URL.createObjectURL(blob)
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto shadow-md font-dm-sans"
+    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto font-dm-sans"
+    :class="props.isPdf ? '' : 'shadow-md'"
   >
     <div class="flex flex-row items-center gap-2 ml-1">
       <img :src="installation" alt="" class="w-11 h-10" />
@@ -58,5 +67,12 @@ const currentPower = computed(() =>
         <span class="font-bold text-base"> {{ currentSurface }}m&sup2; </span>
       </div>
     </div>
+
+    <img
+      v-if="urlImg !== null && blob !== null"
+      :src="urlImg"
+      alt=""
+      class="h-[206px] rounded-md mt-5 object-fill"
+    />
   </div>
 </template>

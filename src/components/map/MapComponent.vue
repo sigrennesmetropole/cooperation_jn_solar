@@ -33,10 +33,9 @@ import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-import { createAndHandleBlob } from '@/services/screenshotService'
 import type { GeoJSONLayer } from '@vcmap/core'
 import { getCenter } from 'ol/extent'
-import { ref } from 'vue'
+import { saveScreenShot } from '@/services/screenshotService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -133,6 +132,13 @@ simulationStore.$subscribe(async () => {
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()
+
+    if (
+      simulationStore.currentStep === 3 &&
+      simulationStore.currentSubStep == 1
+    ) {
+      saveScreenShot(rennesApp)
+    }
   }
 })
 
@@ -159,39 +165,9 @@ mapStore.$subscribe(async () => {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
   }
 })
-
-const running = ref(false)
-const urlImg = ref(null)
-
-async function testScreenshot() {
-  const jpgCreateFunction = (canvas) => {
-    return new Promise((resolve) => {
-      canvas.toBlob(resolve, 'image/jpeg')
-    })
-  }
-
-  const width = 500
-  const blob = await createAndHandleBlob(
-    rennesApp,
-    running,
-    width,
-    jpgCreateFunction,
-    'map.jpg'
-  )
-  urlImg.value = URL.createObjectURL(blob)
-  console.log('after screenshot')
-}
 </script>
 
 <template>
-  <div
-    class="bg-white flex flex-col absolute z-20 top-[75px] right-6"
-    @click="testScreenshot()"
-  >
-    test screenshot
-    <img v-if="urlImg !== null" :src="urlImg" alt="" />
-  </div>
-
   <UiMap></UiMap>
   <NavigationButtons />
 </template>

@@ -14,6 +14,8 @@ import economies from '@/assets/icons/economies.svg'
 import AutocalsolResultGraph from '@/components/results/AutocalsolResultGraph.vue'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { ref } from 'vue'
+import { useSolarPanelStore } from '@/stores/solarPanels'
+import ProductionInformation from '@/components/results/ProductionInformation.vue'
 
 const isLoading = ref(false)
 
@@ -21,6 +23,8 @@ const props = defineProps<{
   selectedRoof: RoofSurfaceModel
   autocalsolResult: AutocalsolResultType
 }>()
+
+const solarPanelStore = useSolarPanelStore()
 
 async function exportToPDF() {
   isLoading.value = true
@@ -78,13 +82,25 @@ async function exportToPDF() {
     >
       <h1 class="font-bold text-3xl">Résultat de votre simulation</h1>
       <div class="w-[90%] flex flex-row font-medium gap-6 ml-2 mr-2 mt-10">
-        <SunshineInformation
-          v-if="props.selectedRoof !== undefined"
-          :selected-roof="props.selectedRoof"
-          :isPdf="true"
-        />
-        <ConsumptionInformation :isPdf="true" />
+        <div class="w-[50%] flex flex-col">
+          <SunshineInformation
+            v-if="props.selectedRoof !== undefined"
+            :selected-roof="props.selectedRoof"
+            :isPdf="true"
+          />
+        </div>
+        <div class="w-[50%] flex flex-col">
+          <ConsumptionInformation :isPdf="true" />
+          <ProductionInformation
+            class="mt-2"
+            :isPdf="true"
+            v-if="solarPanelStore.currentNumberSolarPanel > 0"
+            :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
+          />
+        </div>
       </div>
+
+      <div class="page-break"></div>
 
       <div
         class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"

@@ -107,11 +107,6 @@ onMounted(async () => {
 <template>
   <div class="overflow-y-auto flex flex-row bg-slate-100 w-full">
     <div class="w-screen font-dm-sans font-medium flex flex-col gap-6">
-      <div
-        class="flex flex-col gap-12 w-[640px] h-[600px] bg-white rounded-xl p-8 mx-auto mt-[104px] shadow-md"
-      >
-        {{ state.dataAutocalsol }}
-      </div>
       <WaitingAnimation v-if="isAutocalsolError === false"></WaitingAnimation>
       <FailComponent
         v-if="isAutocalsolError === true"
