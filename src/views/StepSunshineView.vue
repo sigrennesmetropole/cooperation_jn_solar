@@ -12,14 +12,13 @@ import FooterButtons from '@/components/simulation/FooterButtons.vue'
 import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { createViewpointFromRoofFeature } from '@/services/viewPointHelper'
-
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { usePanelsStore } from '@/stores/panels'
 import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
-
 import type { RennesApp } from '@/services/RennesApp'
+import { ref } from 'vue'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
@@ -29,19 +28,30 @@ const simulationStore = useSimulationStore()
 const roofStore = useRoofsStore()
 const mapStore = useMapStore()
 
+const isHighlightSelectedRoofPanCalled = ref(false)
+
 onBeforeMount(() => {
   if (simulationStore.restartEndSimulation == true) {
     simulationStore.setCurrentStep(3)
     simulationStore.setCurrentSubStep(2)
   }
   viewStore.setCurrentView(viewList['step-sunshine'])
+  panelsStore.isCompletelyHidden = false
   panelsStore.setTypePanelDisplay('right')
-  highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+  if (mapStore.isInitializeMap) {
+    highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+  }
   simulationStore.restartEndSimulation = false
 })
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(63,185,30)' },
+})
+
+mapStore.$subscribe(async () => {
+  if (mapStore.isInitializeMap && !isHighlightSelectedRoofPanCalled.value) {
+    highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+  }
 })
 
 roofStore.$subscribe(async () => {
@@ -59,6 +69,7 @@ roofStore.$subscribe(async () => {
 })
 
 async function highlightSelectedRoofPan(surfaceId: string) {
+  isHighlightSelectedRoofPanCalled.value = true
   rennesApp.clearRoofsHighlight()
   let roofLayer: CesiumTilesetLayer =
     await rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d)
