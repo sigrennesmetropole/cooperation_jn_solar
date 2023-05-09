@@ -32,8 +32,10 @@ const props = defineProps({
     >
       <UiLinkFooter
         v-for="item in props.legalList"
+        tabindex="0"
         :key="item['name']"
         @click="openLink(item['link'])"
+        @keydown.enter="openLink(item['link'])"
         :textColor="props.textColor"
         >{{ item['name'] }}</UiLinkFooter
       >

@@ -55,8 +55,10 @@ homeRouter.$subscribe(async () => {
         <span class="font-dm-sans font-normal text-base leading-6 color-black"
           >J'ai lu et j'accepte les
           <span
+            tabindex="0"
             class="underline decoration-1 cursor-pointer"
             @click="popUpStore.displayTermsOfUse()"
+            @keydown.enter="popUpStore.displayTermsOfUse()"
           >
             conditions d'utilisation.
           </span>

@@ -15,6 +15,8 @@ const displayContents = ref(false)
 
       <div
         class="ml-auto flex flex-row items-center justify-center w-11 h-full cursor-pointer"
+        tabindex="0"
+        @keydown.enter="displayContents = !displayContents"
         @click="displayContents = !displayContents"
       >
         <img v-if="!displayContents" :src="iconArrowDown" class="w-4 h-4" />
