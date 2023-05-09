@@ -19,6 +19,8 @@ export const useSimulationStore = defineStore('simulation', () => {
     { step: 3, subStep: 4, isFinal: true }, // Connect to Linky meter
   ]
 
+  const restartEndSimulation: Ref<boolean> = ref(false)
+
   function setCurrentStep(step: number) {
     currentStep.value = step
   }
@@ -93,6 +95,7 @@ export const useSimulationStore = defineStore('simulation', () => {
   return {
     currentStep,
     currentSubStep,
+    restartEndSimulation,
     setCurrentStep,
     setCurrentSubStep,
     goToPreviousStep,
