@@ -153,26 +153,26 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
             panneau).
             <br /><br />
             Cette puissance installée, ainsi que la localisation, l'orientation
-            et l'inclinaison du pan de toit sont alors utilisés par le logiciel
-            Autocalsol édité par l ’Institut National de l’Énergie Solaire pour
-            simuler la production d'énergie correspondant à l'installation
+            et l'inclinaison de la toiture sont alors utilisés par le logiciel
+            AutoCalSol, développé par l ’Institut National de l’Énergie Solaire
+            pour simuler la production d'énergie correspondant à l'installation
             testée.
             <br /><br />
-            Les paramètres de l'API Autocalsol utilisés sont les suivants :
+            Les paramètres de l'API AutoCalSol utilisés sont les suivants :
             <ul class="list-disc pl-6">
-              <li>Rendement du panneau : 0,85</li>
-              <li>Technologie utilisé : cristaux de silice</li>
-              <li>Mode d'intégration surimposé</li>
+              <li>Performance de l'installation : 0,85</li>
+              <li>Technologie utilisée : silicium cristallin</li>
+              <li>Mode d'intégration : surimposé</li>
             </ul>
             <br />
             Enfin, l'utilisateur peut, s'il le souhaite, renseigner sa
             consommation électrique annuelle en kWh (obtenue grâce à sa facture
             fournisseur ou à la connexion à son espace Enedis) et obtenir une
             simulation de la part d'énergie produite pouvant être consommée sur
-            place (auto-consommation) et la part pouvant être revendue et
-            réinjectée sur le réseau. Cette simulation réalisée par le logiciel
-            Autocalsol de l'INES s'appuie sur un profil de consommation moyen
-            (en tarif unique résidentiel) obtenu via l'open data d'Enedis.
+            place (autoconsommation) et la part pouvant être vendue et injectée
+            sur le réseau. Cette simulation réalisée par le logiciel AutoCalSol
+            de l'INES s'appuie sur un profil de consommation moyen (en tarif
+            unique résidentiel) obtenu via l'open data d'Enedis.
           </span>
 
           <li class="text-base font-bold">Téléchargement d'un rapport</li>
@@ -191,10 +191,10 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
               métropole rennaise (en kWh/m2/an)
             </li>
             <li>
-              Autocalsol, logiciel métier de l’Institut National de l’Énergie
+              AutoCalSol, logiciel métier de l’Institut National de l’Énergie
               Solaire (INES) permet de pré-dimensionner les installations
               solaires photovoltaïques en autoconsommation et de simuler les
-              niveaux d’auto-consommation et d’auto-production en lien avec les
+              niveaux d’autoconsommation et d’autoproduction en lien avec les
               niveaux de consommation des usagers
             </li>
           </ul>
