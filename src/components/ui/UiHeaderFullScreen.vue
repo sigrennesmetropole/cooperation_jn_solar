@@ -16,6 +16,7 @@ const props = defineProps<{
 }>()
 
 function restartSimulation() {
+  console.log('bouton de retour en arrière')
   simulationStore.restartEndSimulation = true
   router.push(props.urlBack)
 }

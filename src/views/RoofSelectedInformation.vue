@@ -22,23 +22,28 @@ const mapStore = useMapStore()
 const router = useRouter()
 const popUpStore = usePopUpStore()
 
+async function newViewPoint() {
+  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
+    mapStore.viewPoint = await createCustomViewpointFromExtent(
+      roofStore.roofsFeatures.bbox
+    )
+    console.log('toto')
+    mapStore.viewPointBuilding = await createCustomViewpointFromExtent(
+      roofStore.roofsFeatures.bbox
+    )
+    console.log(mapStore.viewPointBuilding)
+  }
+}
+
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
   panelsStore.isCompletelyHidden = false
-  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
-    mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.roofsFeatures.bbox
-    )
-  }
+  newViewPoint()
 })
 
 roofStore.$subscribe(async () => {
-  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
-    mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.roofsFeatures.bbox
-    )
-  }
+  newViewPoint()
 })
 </script>
 
