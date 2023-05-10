@@ -2,6 +2,12 @@ import { CesiumMap } from '@vcmap/core'
 import type { RennesApp } from '@/services/RennesApp'
 import { useAddressStore } from '@/stores/address'
 
+/**
+ * The code of this services come from this repositories:
+ * https://github.com/virtualcitySYSTEMS/map-print
+ * https://github.com/virtualcitySYSTEMS/map-print/blob/main/src/screenshot/screenshotCreator.js
+ */
+
 function prepareCesiumMap(map: CesiumMap, scale: number) {
   const viewer = map.getCesiumWidget()
   const { resolutionScale } = viewer
@@ -119,5 +125,4 @@ export async function saveScreenShot(app: RennesApp) {
   const addressStore = useAddressStore()
   // @ts-ignore
   addressStore.screenshotAddress = blob
-  console.log(addressStore.screenshotAddress)
 }
