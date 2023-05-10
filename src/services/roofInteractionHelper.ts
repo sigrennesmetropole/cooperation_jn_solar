@@ -1,6 +1,4 @@
 import { Fill, Icon, Stroke, Style } from 'ol/style'
-import { Select } from 'ol/interaction'
-import { always, click } from 'ol/events/condition'
 import {
   bbox,
   bboxPolygon,
@@ -65,7 +63,7 @@ const gridStyle = new Style({
     width: 0.5,
   }),
 })
-let selectClick: Select
+// let selectClick: Select
 let dragSquaresInteraction: OlDragSquaresInteraction
 
 /**
@@ -151,12 +149,6 @@ export function addRoofInteractionOn2dMap(rennesApp: RennesApp) {
   const olLayer: LayerOpenlayersImpl = rennesApp.layers
     .getByKey(RENNES_LAYER.roofSquaresArea)
     ?.getImplementationsForMap(rennesApp.get2DMap())[0] as LayerOpenlayersImpl
-  selectClick = new Select({
-    condition: click,
-    toggleCondition: always,
-    style: selected,
-    layers: (layer) => layer == olLayer.olLayer,
-  })
   dragSquaresInteraction = new OlDragSquaresInteraction(
     olLayer.getOLLayer() as VectorLayer<VectorSource>,
     selected
@@ -164,10 +156,21 @@ export function addRoofInteractionOn2dMap(rennesApp: RennesApp) {
   map.addInteraction(dragSquaresInteraction)
 }
 
+export function clearSquareInteractionOn2dMap(rennesApp: RennesApp) {
+  const map = rennesApp.getOpenlayerMap()
+  map.getInteractions().forEach((interaction) => {
+    if (interaction instanceof OlDragSquaresInteraction) {
+      interaction.unselectEverything()
+    }
+  })
+}
 export function removeRoofInteractionOn2dMap(rennesApp: RennesApp) {
   const map = rennesApp.getOpenlayerMap()
-  map.removeInteraction(selectClick)
-  map.removeInteraction(dragSquaresInteraction)
+  map.getInteractions().forEach((interaction) => {
+    if (interaction instanceof OlDragSquaresInteraction) {
+      map.removeInteraction(interaction)
+    }
+  })
 }
 
 export function getSquaresOfInteraction() {
@@ -180,14 +183,6 @@ export function getSquaresOfInteraction() {
     features.push(reprojFeature)
   })
   return features
-  // selectClick.getFeatures().forEach((selectFeature) => {
-  //   const reprojFeature = selectFeature
-  //   reprojFeature.setGeometry(
-  //     selectFeature.getGeometry()?.transform('EPSG:3857', 'EPSG:4326')
-  //   )
-  //   features.push(reprojFeature)
-  // })
-  // return features
 }
 
 export function unionAllRoofPan(roofPans: GeoJSONFeatureCollection) {

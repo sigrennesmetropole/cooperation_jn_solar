@@ -7,12 +7,11 @@ import type { Extent } from 'ol/extent'
 import { getUid, MapBrowserEvent } from 'ol'
 import type { Style } from 'ol/style'
 import type { StyleLike } from 'ol/style/Style'
+import { RENNES_LAYER } from '@/stores/layers'
 
 export class OlDragSquaresInteraction extends PointerInteraction {
   initialCoordinate_: Coordinate | undefined
-  cursor_: string | undefined = 'pointer'
   feature_: Feature | undefined
-  previousCursor_: string | undefined
   selected: Feature[]
   persistingSelectedMap: Map<string, Feature>
   gridFeaturesLayer: VectorLayer<VectorSource>
@@ -35,9 +34,17 @@ export class OlDragSquaresInteraction extends PointerInteraction {
   handleDownEvent(evt: MapBrowserEvent<UIEvent>) {
     const map = evt.map
 
-    const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
-      return feature
-    })
+    const feature = map.forEachFeatureAtPixel(
+      evt.pixel,
+      function (feature, layer) {
+        if (
+          // @ts-ignore
+          layer[Object.getOwnPropertySymbols(layer)[0]] ===
+          RENNES_LAYER.roofSquaresArea
+        )
+          return feature
+      }
+    )
 
     if (feature) {
       this.initialCoordinate_ = evt.coordinate
@@ -86,6 +93,16 @@ export class OlDragSquaresInteraction extends PointerInteraction {
     feature.setStyle(this.selectedStyle)
   }
 
+  unselectEverything() {
+    this.selected = []
+    this.isDragging = false
+    this.persistingSelectedMap.forEach((feature) => {
+      this.restoreOriginalStyle(feature)
+    })
+    this.persistingSelectedMap.clear()
+    this.originalFeatureStyles.clear()
+  }
+
   restoreOriginalStyle(feature: Feature) {
     const id = getUid(feature)
     feature.setStyle(this.originalFeatureStyles.get(id))
@@ -97,6 +114,7 @@ export class OlDragSquaresInteraction extends PointerInteraction {
   }
 
   handleUpEvent() {
+    // user is currently dragging, update selectedFeature list
     if (this.isDragging) {
       this.isDragging = false
       this.selected.forEach((selectedFeature) => {
