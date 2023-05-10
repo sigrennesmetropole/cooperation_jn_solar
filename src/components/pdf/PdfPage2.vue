@@ -6,8 +6,7 @@ import ConsumptionInformation from '@/components/results/ConsumptionInformation.
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import ProductionInformationText from '@/components/results/ProductionInformationText.vue'
-// import { useAddressStore } from '@/stores/address'
-import testscreen from '@/components/pdf/testscreen.png'
+import { useAddressStore } from '@/stores/address'
 
 const props = defineProps<{
   selectedRoof: RoofSurfaceModel
@@ -15,12 +14,10 @@ const props = defineProps<{
 
 const solarPanelStore = useSolarPanelStore()
 
-// const addressStore = useAddressStore()
-// const blob = addressStore.screenshotAddress
-// let urlImg: null | string = null
-// if (blob !== null) urlImg = URL.createObjectURL(blob)
-
-const urlImg = testscreen
+const addressStore = useAddressStore()
+const blob = addressStore.screenshotAddress
+let urlImg: null | string = null
+if (blob !== null) urlImg = URL.createObjectURL(blob)
 </script>
 
 <template>
@@ -45,7 +42,7 @@ const urlImg = testscreen
           <ProductionInformationText
             v-if="solarPanelStore.currentNumberSolarPanel > 0"
             :currentNumSolarPanel="solarPanelStore.currentNumberSolarPanel"
-            :isPdf="props.isPdf"
+            :isPdf="true"
           />
         </div>
       </div>

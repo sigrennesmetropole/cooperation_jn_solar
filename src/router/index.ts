@@ -9,17 +9,16 @@ const redirectToRoofSelection = (
   // @ts-ignore
   next
 ) => {
-  // if (
-  //   (from.name === undefined || from.name === null) &&
-  //   to.name !== 'home' &&
-  //   to.name !== 'roof-selection' &&
-  //   to.name !== 'legal-notice'
-  // ) {
-  //   next({ name: 'roof-selection' })
-  // } else {
-  //   next()
-  // }
-  next()
+  if (
+    (from.name === undefined || from.name === null) &&
+    to.name !== 'home' &&
+    to.name !== 'roof-selection' &&
+    to.name !== 'legal-notice'
+  ) {
+    next({ name: 'roof-selection' })
+  } else {
+    next()
+  }
 }
 
 const routes = [
