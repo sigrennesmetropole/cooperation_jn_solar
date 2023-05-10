@@ -55,4 +55,26 @@ describe('solar panel placement', () => {
     expect(result.orientation).equal('vertical')
     expect(result.solarPanels.length).equal(157)
   })
+
+  test('solar panel algorithm illustration', () => {
+    // Read GeoJSON file
+    const fileContents = fs.readFileSync(
+      path.join(
+        __dirname,
+        'grid_samples',
+        'illustration',
+        'illustration.matrix'
+      ),
+      {
+        encoding: 'utf-8',
+      }
+    )
+
+    const matrix: Matrix = JSON.parse(fileContents)
+    expect(matrix.length).greaterThan(0)
+
+    const result = solarPanelPlacement(matrix, true, 'illustration-')
+    expect(result.orientation).equal('vertical')
+    expect(result.solarPanels.length).equal(3)
+  })
 })
