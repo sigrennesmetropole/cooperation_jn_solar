@@ -51,10 +51,10 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 
 <template>
   <div class="bg-slate-100 w-full overflow-y-scroll">
-    <div class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center">
-      <HeaderEndSimulation></HeaderEndSimulation>
+    <HeaderEndSimulation></HeaderEndSimulation>
+    <div class="flex flex-row mx-auto w-full gap-6 justify-center">
       <div
-        class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
+        class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6 pt-[205px]"
       >
         <SunshineInformation
           v-if="selectedRoof !== undefined"
@@ -69,14 +69,13 @@ const autocalsolResult = autocalsolStore.autocalsolResult
         <ConsumptionInformation :isPdf="false" />
       </div>
       <div
-        class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50"
+        class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50 pt-[120px]"
       >
         <PdfSimulation
           v-if="selectedRoof !== undefined && autocalsolResult !== null"
           :selected-roof="selectedRoof"
           :autocalsolResult="autocalsolResult"
         />
-
         <AutocalsolResult
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"

@@ -50,6 +50,7 @@ async function exportToPDF() {
 @media screen {
   .pdf-container #element-to-convert {
     visibility: hidden;
+    display: none;
     position: absolute;
   }
 }

@@ -68,7 +68,7 @@ if (blob !== null) urlImg = URL.createObjectURL(blob)
     </div>
 
     <img
-      v-if="urlImg !== null && blob !== null"
+      v-if="urlImg !== null"
       :src="urlImg"
       alt=""
       class="h-[206px] rounded-md mt-5 object-fill"
