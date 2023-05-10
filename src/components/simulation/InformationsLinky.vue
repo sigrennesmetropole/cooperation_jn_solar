@@ -55,9 +55,11 @@ async function goToEnedisLogin() {
       annuelle.
     </p>
     <img
+      tabindex="0"
       :src="enedisSpace"
       class="mx-auto cursor-pointer"
       @click="goToEnedisLogin()"
+      @keydown.enter="goToEnedisLogin()"
     />
     <p class="text-center">
       Vous pourrez changer d'avis et révoquer <br />votre autorisation à tout

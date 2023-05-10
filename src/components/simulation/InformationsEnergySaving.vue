@@ -51,12 +51,14 @@ const currentInfo = ref(1)
     <div class="flex flex-row gap-3 mt-4 justify-center items-center">
       <div
         v-for="info in informations"
+        tabindex="0"
         :key="info.id"
         class="w-6 h-6 rounded-full flex justify-center items-center cursor-pointer"
         :class="
           info.id === currentInfo ? 'bg-slate-600' : 'border border-slate-300'
         "
         @click="currentInfo = info.id"
+        @keydown.enter="currentInfo = info.id"
       >
         <span
           class="font-dm-sans font-bold text-xs"
