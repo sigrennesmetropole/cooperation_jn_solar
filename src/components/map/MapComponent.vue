@@ -33,9 +33,9 @@ import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-
 import type { GeoJSONLayer } from '@vcmap/core'
 import { getCenter } from 'ol/extent'
+import { saveScreenShot } from '@/services/screenshotService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -132,6 +132,13 @@ simulationStore.$subscribe(async () => {
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()
+
+    if (
+      simulationStore.currentStep === 3 &&
+      simulationStore.currentSubStep == 1
+    ) {
+      saveScreenShot(rennesApp)
+    }
   }
 })
 
