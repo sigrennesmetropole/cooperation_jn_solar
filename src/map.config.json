@@ -82,6 +82,8 @@
         "epsg": "EPSG:4326"
       },
       "activeOnStartup": true,
+      "tileSize": [256, 256],
+      "maxLevel": 22,
       "zIndex": 1
     },
     {

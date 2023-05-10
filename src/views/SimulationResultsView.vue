@@ -15,6 +15,7 @@ import LargeFooter from '@/components/simulation/LargeFooter.vue'
 import PdfSimulation from '@/components/results/PdfSimulation.vue'
 import { legalList } from '@/constants/legalLinks'
 import { useSolarPanelStore } from '@/stores/solarPanels'
+import HeaderEndSimulation from '@/components/simulation/HeaderEndSimulation.vue'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
@@ -51,6 +52,7 @@ const autocalsolResult = autocalsolStore.autocalsolResult
 <template>
   <div class="bg-slate-100 w-full overflow-y-scroll">
     <div class="flex flex-row mx-auto pt-[184px] w-full gap-6 justify-center">
+      <HeaderEndSimulation></HeaderEndSimulation>
       <div
         class="w-[25%] max-w-[360px] font-dm-sans font-medium flex flex-col gap-6"
       >

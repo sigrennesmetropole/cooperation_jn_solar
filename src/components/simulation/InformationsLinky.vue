@@ -18,7 +18,7 @@ async function goToEnedisLogin() {
     const consumption = await apiEnedisService.getAnnualConsumption()
     if (consumption.annual_consumption !== undefined) {
       consumptionAndProductionStore.setAnnualConsumption(
-        consumption.annual_consumption
+        consumption.annual_consumption / 1000 // wh to kwh
       )
     }
     window.alert(JSON.stringify(consumption))
