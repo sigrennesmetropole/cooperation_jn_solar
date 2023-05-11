@@ -16,6 +16,7 @@ import PdfSimulation from '@/components/results/PdfSimulation.vue'
 import { legalList } from '@/constants/legalLinks'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import HeaderEndSimulation from '@/components/simulation/HeaderEndSimulation.vue'
+import { getDistrictDatas } from '@/services/districtService'
 
 const viewStore = useViewsStore()
 const roofsStore = useRoofsStore()
@@ -24,6 +25,7 @@ const solarPanelStore = useSolarPanelStore()
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['simulation-results'])
+  getDistrictDatas()
 })
 
 const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()

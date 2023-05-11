@@ -8,14 +8,14 @@ import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
 <template>
   <div class="w-[90%] font-dm-sans">
     <!-- Header -->
-    <PdfHeader />
+    <PdfHeader :numPage="6" />
 
     <!-- Content -->
     <div
-      class="font-dm-sans font-medium flex flex-col gap-8 w-[100%] bg-white rounded-xl p-6 mt-[100px]"
+      class="font-dm-sans font-medium flex flex-col gap-8 w-[100%] rounded-xl p-6 mt-[84px]"
     >
       <SolarCoop :isPdf="true"></SolarCoop>
-      <EnergiesRennes :isPdf="true"></EnergiesRennes>
+      <EnergiesRennes :isPdf="true" class="mt-4"></EnergiesRennes>
     </div>
 
     <!-- Footer -->

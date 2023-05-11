@@ -1,44 +1,13 @@
 <script setup lang="ts">
 import warning from '@/assets/icons/chat-message-warning.svg'
-import { apiIrisService } from '@/services/api-code-iris'
-import { useAddressStore } from '@/stores/address'
 import { useDistrictStore } from '@/stores/districtInformations'
-import { onBeforeMount } from 'vue'
-import { apiEnedisDistrictService } from '@/services/api-enedis-district'
 
 const districtStore = useDistrictStore()
-const addressStore = useAddressStore()
-
-async function gettingIrisCode(lat: string, lon: string) {
-  const irisCode = await apiIrisService.getCodeIris(lat, lon)
-  return irisCode
-}
-
-async function gettingDistrictDatas(codeIris: number) {
-  const districtDatas = await apiEnedisDistrictService.getDistrictDatas(
-    codeIris
-  )
-  return districtDatas
-}
 
 function keepDecimals(float: number, numberOfDecimals: number) {
   const roundFloat = float.toFixed(numberOfDecimals)
   return roundFloat
 }
-
-onBeforeMount(async () => {
-  const irisCode = await gettingIrisCode(
-    addressStore.latitude.toString(),
-    addressStore.longitude.toString()
-  )
-  districtStore.setDistrictIrisCode(irisCode)
-
-  const districtDatas = await gettingDistrictDatas(irisCode)
-  districtStore.setDistrictProduction(districtDatas.totalProduction)
-  districtStore.setDistrictNumberInstallations(
-    districtDatas.totalPhotovoltaicSites
-  )
-})
 </script>
 
 <template>

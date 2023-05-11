@@ -13,8 +13,8 @@ import homePageImg from '@/assets/illustrations/pdf-homepage-img.svg'
         <PdfDivider />
         <span class="mt-5 font-bold text-2xl"> Cadastre solaire </span>
         <span class="mt-2 font-medium text-sm">
-          Projetez-vous en tant que producteur d’électricité grâce à l’énergie
-          solaire photovoltaïque
+          Projetez-vous en tant que producteur d’électricité <br />
+          grâce à l’énergie solaire photovoltaïque
         </span>
       </div>
       <div class="ml-auto">
