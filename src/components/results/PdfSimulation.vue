@@ -3,19 +3,15 @@
 import html2pdf from 'html2pdf.js'
 import iconDownload from '@/assets/icons/icon-download-white.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
-import SunshineInformation from '@/components/results/SunshineInformation.vue'
-import ConsumptionInformation from '@/components/results/ConsumptionInformation.vue'
 import type { AutocalsolResult as AutocalsolResultType } from '@/model/autocalsol.model'
-import GoFurther from '@/components/results/GoFurther.vue'
-import SolarCoop from '@/components/results/SolarCoop.vue'
-import EnergiesRennes from '@/components/results/EnergiesRennes.vue'
-import AutocalsolResultGlobal from '@/components/results/AutocalsolResultGlobal.vue'
-import economies from '@/assets/icons/economies.svg'
-import AutocalsolResultGraph from '@/components/results/AutocalsolResultGraph.vue'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { ref } from 'vue'
-import { useSolarPanelStore } from '@/stores/solarPanels'
-import ProductionInformation from '@/components/results/ProductionInformation.vue'
+import PdfPage1 from '@/components/pdf/PdfPage1.vue'
+import PdfPage2 from '@/components/pdf/PdfPage2.vue'
+import PdfPage3 from '@/components/pdf/PdfPage3.vue'
+import PdfPage4 from '@/components/pdf/PdfPage4.vue'
+import PdfPage5 from '@/components/pdf/PdfPage5.vue'
+import PdfPage6 from '@/components/pdf/PdfPage6.vue'
 
 const isLoading = ref(false)
 
@@ -24,14 +20,13 @@ const props = defineProps<{
   autocalsolResult: AutocalsolResultType
 }>()
 
-const solarPanelStore = useSolarPanelStore()
-
 async function exportToPDF() {
   isLoading.value = true
   setTimeout(async () => {
     await html2pdf()
       .set({
         filename: 'simulation-solaire-rennes.pdf',
+        jsPDF: { unit: 'px', format: [900, 1130], orientation: 'portrait' },
       })
       .from(document.getElementById('element-to-convert'))
       .save()
@@ -45,6 +40,10 @@ async function exportToPDF() {
 <style>
 .page-break {
   page-break-before: always;
+}
+
+.page-break-after {
+  page-break-after: always;
 }
 
 @media screen {
@@ -81,85 +80,17 @@ async function exportToPDF() {
       id="element-to-convert"
       class="flex flex-col items-center h-full bg-slate-100"
     >
-      <h1 class="font-bold text-3xl">Résultat de votre simulation</h1>
-      <div class="w-[90%] flex flex-row font-medium gap-6 ml-2 mr-2 mt-10">
-        <div class="w-[50%] flex flex-col">
-          <SunshineInformation
-            v-if="props.selectedRoof !== undefined"
-            :selected-roof="props.selectedRoof"
-            :isPdf="true"
-          />
-        </div>
-        <div class="w-[50%] flex flex-col">
-          <ConsumptionInformation :isPdf="true" />
-          <ProductionInformation
-            class="mt-2"
-            :isPdf="true"
-            v-if="solarPanelStore.currentNumberSolarPanel > 0"
-            :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
-          />
-        </div>
-      </div>
-
+      <PdfPage1 />
       <div class="page-break"></div>
-
-      <div
-        class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"
-      >
-        <div class="flex flex-row items-center gap-2">
-          <img :src="economies" alt="" class="w-11 h-10" />
-          <span class="font-bold text-2xl"> Votre production d'énergie </span>
-        </div>
-
-        <AutocalsolResultGlobal
-          :injected="props.autocalsolResult.consoAnnualInjected"
-          :autoConsumed="props.autocalsolResult.consoAnnualAutoConsumed"
-          :production="
-            props.autocalsolResult.consoAnnualInjected +
-            props.autocalsolResult.consoAnnualAutoConsumed
-          "
-          :isPdf="true"
-        />
-      </div>
-
+      <PdfPage2 :selectedRoof="props.selectedRoof" />
       <div class="page-break"></div>
-
-      <div
-        class="flex flex-col gap-2 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"
-      >
-        <span class="font-bold text-xl mt-10">
-          Comment réduire au maximum sa facture d'électricité ?
-        </span>
-        <p class="font-normal text-sm">
-          Votre production solaire varie selon la course du soleil. La nuit,
-          votre consommation est intégralement soutirée au réseau. Pour réduire
-          au maximum votre facture d'électricité, il vous faut adapter vos
-          habitudes de consommation, par exemple mettre en route vos appareils
-          électriques en journée au moment de la production photovoltaïque.
-        </p>
-
-        <AutocalsolResultGraph
-          :prodByHour="props.autocalsolResult.prodByHour"
-          :consoByHour="props.autocalsolResult.consoByHour"
-        />
-      </div>
-
+      <PdfPage3 :autocalsolResult="props.autocalsolResult" />
       <div class="page-break"></div>
-
-      <div
-        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] h-fit bg-white rounded-xl p-6 mt-10"
-      >
-        <GoFurther :isPdf="true"></GoFurther>
-      </div>
-
+      <PdfPage4 :autocalsolResult="props.autocalsolResult" />
       <div class="page-break"></div>
-
-      <div
-        class="font-dm-sans font-medium flex flex-col gap-8 w-[90%] bg-white rounded-xl p-6 mt-10 mb-[300px]"
-      >
-        <SolarCoop :isPdf="true"></SolarCoop>
-        <EnergiesRennes :isPdf="true"></EnergiesRennes>
-      </div>
+      <PdfPage5 />
+      <div class="page-break"></div>
+      <PdfPage6 />
     </div>
   </div>
 </template>

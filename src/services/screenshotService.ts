@@ -121,7 +121,7 @@ export async function createAndHandleBlob(app: RennesApp, width: number) {
 }
 
 export async function saveScreenShot(app: RennesApp) {
-  const blob = await createAndHandleBlob(app, 500)
+  const blob = await createAndHandleBlob(app, 1000)
   const addressStore = useAddressStore()
   // @ts-ignore
   addressStore.screenshotAddress = blob

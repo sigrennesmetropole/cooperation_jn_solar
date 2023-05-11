@@ -4,7 +4,7 @@ import fail from '@/assets/illustrations/fail.svg'
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[640px] h-fit bg-white rounded-xl p-6 mx-auto shadow-md"
+    class="flex flex-col gap-6 w-[640px] h-fit bg-white rounded-xl p-6 mx-auto shadow-md mt-[150px]"
   >
     <div class="flex flex-col items-center gap-6">
       <img :src="fail" alt="" class="w-[354px] h-[180px]" />
