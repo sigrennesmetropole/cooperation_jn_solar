@@ -1,6 +1,6 @@
 # Cooperation Jumeau Numérique Solar
 
-Code de l'application de coopération sur le cadastre solairede Rennes Métropole basée sur un jumeau numérique
+Code de l'application de coopération sur le cadastre solairede Rennes Métropole basée sur un jumeau numérique.
 
 ## Quick start
 
