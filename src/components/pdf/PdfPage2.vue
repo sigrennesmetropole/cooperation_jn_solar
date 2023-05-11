@@ -23,7 +23,7 @@ if (blob !== null) urlImg = URL.createObjectURL(blob)
 <template>
   <div class="w-[90%] font-dm-sans">
     <!-- Header -->
-    <PdfHeader />
+    <PdfHeader :numPage="2" />
 
     <!-- Content -->
     <div class="w-[100%] flex flex-row font-medium gap-6 items-center mt-20">

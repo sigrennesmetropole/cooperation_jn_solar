@@ -7,7 +7,7 @@ import GoFurther from '@/components/results/GoFurther.vue'
 <template>
   <div class="w-[90%] font-dm-sans">
     <!-- Header -->
-    <PdfHeader />
+    <PdfHeader :numPage="5" />
 
     <!-- Content -->
     <div
