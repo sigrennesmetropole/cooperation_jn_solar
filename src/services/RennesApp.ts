@@ -12,6 +12,7 @@ import { useMapStore } from '@/stores/map'
 import type { Layer } from 'ol/layer'
 import type { RennesLayer } from '@/stores/layers'
 import { RENNES_LAYER } from '@/stores/layers'
+import { Cartographic } from '@vcmap-cesium/engine'
 export class RennesApp extends VcsApp {
   readonly mapConfig
   constructor(mapConfig: object) {
@@ -69,5 +70,28 @@ export class RennesApp extends VcsApp {
     const layer: GeoJSONLayer = this.layers.getByKey(key) as GeoJSONLayer
     await layer.fetchData()
     return layer
+  }
+
+  getHeight(x: number, y: number) {
+    const xRadian = (x * Math.PI) / 180
+    const yRadian = (y * Math.PI) / 180
+    const cartographic = new Cartographic(xRadian, yRadian)
+    const height = this.get3DMap().getScene().sampleHeight(cartographic)
+    return height
+  }
+
+  async getPositionsWithHeight(positions: number[][]) {
+    const positionsCartographic: Cartographic[] = []
+    positions.forEach((p) => {
+      const xRadian = (p[0] * Math.PI) / 180
+      const yRadian = (p[1] * Math.PI) / 180
+      const cartographic = new Cartographic(xRadian, yRadian)
+      positionsCartographic.push(cartographic)
+    })
+
+    const positionsWithHeight = await this.get3DMap()
+      .getScene()
+      .sampleHeightMostDetailed(positionsCartographic)
+    return positionsWithHeight
   }
 }

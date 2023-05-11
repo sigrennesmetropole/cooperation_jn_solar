@@ -119,16 +119,17 @@ async function setupSolarPanelFixtures() {
   const selectedRoofModel: RoofSurfaceModel =
     roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
   // convert solarPanels to solarPanelModel
-  const sampleSolarPanels = solarPanelGridToSolarPanelModel(
+  const solarPanelModels = solarPanelGridToSolarPanelModel(
+    rennesApp,
     roofsStore.gridMatrix!,
     result.solarPanels,
     result.orientation,
     selectedRoofModel.inclinaison,
     selectedRoofModel.azimuth
   )
-  solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
-  solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
-  await displaySolarPanel(rennesApp, sampleSolarPanels)
+  solarPanelStore.maxNumberSolarPanel = solarPanelModels.length
+  solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
+  await displaySolarPanel(rennesApp, solarPanelModels)
   await layerStore.enableLayer(RENNES_LAYER.solarPanel)
   // Zoom to solar panel
   await mapStore.activate3d()

@@ -113,31 +113,25 @@ export function getPeakPower() {
 }
 
 export function solarPanelGridToSolarPanelModel(
+  rennesApp: RennesApp,
   matrixGrid: Matrix,
   solarPanelGrids: SolarPanelGrid[],
   orientation: string,
   roofInclinaison: number = 45,
   roofAzimut: number = 0
-): SolarPanelModel[] {
+) {
   const solarPanelModels: SolarPanelModel[] = []
+  const heightOffset = 10
   console.log(
     `roofInclinaison: ${roofInclinaison}, roofAzimut: ${roofAzimut}, orientation ${orientation}`
   )
   console.log(solarPanelGrids)
-  solarPanelGrids.forEach((spg: SolarPanelGrid, index: number) => {
-    // if (index > 5) {
-    //   return
-    // }
+  const positions: number[][] = []
+  for (let i = 0; i < solarPanelGrids.length; i++) {
+    const spg = solarPanelGrids[i]
+    const index = i
+
     const center = getSolarPanelGridCenter(matrixGrid, spg)
-    const baseHeight = 45 // Hardcoded for now, we need to compute the height based on the solar panel index
-    const heightIndex = getSolarPanelGridHeightIndex(spg)
-    // sin(a) cos(a) = 0.5 * sin(2a)
-    const height =
-      baseHeight -
-      heightIndex *
-        0.5 *
-        Math.sin(2 * Number(roofInclinaison) * (Math.PI / 180)) *
-        0.475
 
     let pitch
     let roll
@@ -145,25 +139,42 @@ export function solarPanelGridToSolarPanelModel(
 
     if (orientation === 'vertical') {
       pitch = 0
-      roll = -roofInclinaison
+      roll = roofInclinaison
       heading = roofAzimut
     } else {
-      pitch = -roofInclinaison
+      pitch = roofInclinaison
       roll = 0
       heading = roofAzimut - 90
     }
-    console.log(`Height: ${height}, heightIndex: ${heightIndex}`)
+
+    if (roofAzimut > 90) {
+      roll = -roll
+    }
+
+    // console.log(`Height: ${positionWithHeight}`)
     const solarPanelModel: SolarPanelModel = {
       index: index,
       x: center.geometry.coordinates[0],
       y: center.geometry.coordinates[1],
-      z: height,
+      z: 40, // Will be replaced later, just for placeholder
       pitch: pitch,
       roll: roll,
       heading: heading,
     }
     solarPanelModels.push(solarPanelModel)
-  })
+    positions.push([solarPanelModel.x, solarPanelModel.y])
+  }
+  console.log(solarPanelModels)
+  // const newPositions = await rennesApp.getPositionsWithHeight(positions)
+  // console.log(newPositions)
+  for (let i = 0; i < solarPanelModels.length; i++) {
+    const newHeight = rennesApp.getHeight(
+      solarPanelModels[i].x,
+      solarPanelModels[i].y
+    )
+    solarPanelModels[i].z = newHeight + heightOffset
+  }
+
   console.log(solarPanelModels)
   return solarPanelModels
 }
