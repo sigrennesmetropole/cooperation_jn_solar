@@ -86,7 +86,9 @@ function checkBoxChange(event: boolean, type_checkbox: 'allow' | 'notallow') {
           <p class="font-medium text-sm text-neutral-700">
             Vous pouvez lire notre
             <span
+              tabindex="0"
               @click="openPrivacy()"
+              @keydown.enter="openPrivacy()"
               class="underline inline-flex items-center cursor-pointer"
             >
               <strong> Politique de confidentialité &nbsp;</strong>
