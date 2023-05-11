@@ -4,6 +4,7 @@ import UiReturnButton from '@/components/ui/UiReturnButton.vue'
 import iconChevronLeft from '@/assets/icons/chevron-left.svg'
 import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
+import { resetStores } from '@/services/resetStores'
 
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
@@ -17,6 +18,15 @@ const props = defineProps<{
 function restartSimulation() {
   simulationStore.restartEndSimulation = true
   router.push(props.urlBack)
+}
+
+function restartHome() {
+  if (viewStore.currentView == 'legal-notice') {
+    window.close()
+  } else {
+    resetStores()
+    router.push('/home')
+  }
 }
 </script>
 
@@ -36,7 +46,7 @@ function restartSimulation() {
     <slot name="mid-content"></slot>
     <div v-if="viewStore.currentView != 'end-simulation'">
       <button
-        @click="router.push('/home')"
+        @click="restartHome()"
         class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
       >
         <slot name="button-content"></slot>
