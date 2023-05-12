@@ -9,9 +9,13 @@ import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { SolarPanelGrid } from '@/algorithm/solarPanelPlacement'
 import type { Matrix } from './roofInteractionHelper'
-import { center, points } from '@turf/turf'
+import { type FeatureCollection, center, points } from '@turf/turf'
+
+import { featureCollection, point } from '@turf/helpers'
 
 import type { Feature, Properties, Point, Position } from '@turf/turf'
+
+const HeightOffset = 10
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -121,7 +125,6 @@ export function solarPanelGridToSolarPanelModel(
   roofAzimut: number = 0
 ) {
   const solarPanelModels: SolarPanelModel[] = []
-  const heightOffset = 10
   console.log(
     `roofInclinaison: ${roofInclinaison}, roofAzimut: ${roofAzimut}, orientation ${orientation}`
   )
@@ -165,17 +168,23 @@ export function solarPanelGridToSolarPanelModel(
     positions.push([solarPanelModel.x, solarPanelModel.y])
   }
   console.log(solarPanelModels)
-  // const newPositions = await rennesApp.getPositionsWithHeight(positions)
-  // console.log(newPositions)
+  rennesApp.getPositionsWithHeight(positions).then((newPositions) => {
+    console.log('Position with height using sampleHeightMostDetailed:')
+    console.log(newPositions)
+  })
+
   for (let i = 0; i < solarPanelModels.length; i++) {
     const newHeight = rennesApp.getHeight(
       solarPanelModels[i].x,
       solarPanelModels[i].y
     )
-    solarPanelModels[i].z = newHeight + heightOffset
+    solarPanelModels[i].z = newHeight + HeightOffset
   }
 
   console.log(solarPanelModels)
+  const fc = solarPanelModelsToGeoJSON(solarPanelModels)
+  // To see it visually
+  console.log(fc)
   return solarPanelModels
 }
 
@@ -193,10 +202,17 @@ function getSolarPanelGridCenter(
   return center(features)
 }
 
-function getSolarPanelGridHeightIndex(solarPanelGrid: SolarPanelGrid) {
-  const heightIndexes: number[] = []
-  solarPanelGrid.forEach((grid) => {
-    heightIndexes.push(grid[0])
+export function solarPanelModelsToGeoJSON(solarPanelModels: SolarPanelModel[]) {
+  const fc: FeatureCollection<Point, Properties> = featureCollection([])
+  solarPanelModels.forEach((spm) => {
+    const p: Feature<Point, Properties> = point([spm.x, spm.y, spm.z], {
+      index: spm.index,
+      heading: spm.heading,
+      roll: spm.roll,
+      pitch: spm.pitch,
+      height: spm.z - HeightOffset,
+    })
+    fc.features.push(p)
   })
-  return Math.min(...heightIndexes)
+  return fc
 }

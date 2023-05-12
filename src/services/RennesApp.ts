@@ -73,9 +73,7 @@ export class RennesApp extends VcsApp {
   }
 
   getHeight(x: number, y: number) {
-    const xRadian = (x * Math.PI) / 180
-    const yRadian = (y * Math.PI) / 180
-    const cartographic = new Cartographic(xRadian, yRadian)
+    const cartographic = Cartographic.fromDegrees(x, y)
     const height = this.get3DMap().getScene().sampleHeight(cartographic)
     return height
   }
@@ -83,9 +81,7 @@ export class RennesApp extends VcsApp {
   async getPositionsWithHeight(positions: number[][]) {
     const positionsCartographic: Cartographic[] = []
     positions.forEach((p) => {
-      const xRadian = (p[0] * Math.PI) / 180
-      const yRadian = (p[1] * Math.PI) / 180
-      const cartographic = new Cartographic(xRadian, yRadian)
+      const cartographic = Cartographic.fromDegrees(p[0], p[1])
       positionsCartographic.push(cartographic)
     })
 
