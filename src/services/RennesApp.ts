@@ -79,6 +79,7 @@ export class RennesApp extends VcsApp {
     return height
   }
 
+  // TODO: unused, maybe delete it ?
   async getPositionsWithHeight(positions: number[][]) {
     const positionsCartographic: Cartographic[] = []
     positions.forEach((p) => {

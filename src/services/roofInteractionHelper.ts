@@ -173,10 +173,6 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
   })
   // @ts-ignore
   grid.featureCollection = featureCollection(arrFeatures)
-  console.log(
-    'Geojson Result (non filtered by box remove)',
-    featureCollection(featureArray)
-  )
   return { grid, matrix }
 }
 
