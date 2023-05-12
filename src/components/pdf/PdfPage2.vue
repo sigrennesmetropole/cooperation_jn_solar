@@ -37,7 +37,7 @@ if (blob !== null) urlImg = URL.createObjectURL(blob)
       </div>
       <div class="w-[50%] flex flex-col">
         <div
-          class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto font-dm-sans"
+          class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl px-6 pb-6 pt-0 mx-auto font-dm-sans"
         >
           <ProductionInformationText
             v-if="solarPanelStore.currentNumberSolarPanel > 0"
@@ -48,18 +48,18 @@ if (blob !== null) urlImg = URL.createObjectURL(blob)
       </div>
     </div>
     <div
-      class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto mt-5"
+      class="flex flex-col w-fit h-fit bg-white rounded-xl px-3 pb-3 pt-3 mx-auto mt-5"
     >
       <img
         v-if="urlImg !== null"
         :src="urlImg"
         alt=""
-        class="h-[300px] rounded-md mt-5 object-fill"
+        class="h-[300px] w-[500px] rounded-md"
       />
     </div>
 
     <!-- Footer -->
-    <div class="mt-[70px]">
+    <div class="mt-[150px]">
       <PdfFooter :numPage="2"></PdfFooter>
     </div>
   </div>
