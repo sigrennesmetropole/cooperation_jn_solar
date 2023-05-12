@@ -23,7 +23,12 @@ const currentPower = computed(() =>
 
 <template>
   <div class="flex flex-row items-center gap-2 ml-1">
-    <img :src="installation" alt="" class="w-11 h-10" />
+    <img
+      :src="installation"
+      alt=""
+      class="w-11 h-10"
+      :class="props.isPdf ? 'mt-5' : ''"
+    />
     <span class="font-bold text-2xl"> Votre installation </span>
   </div>
 
