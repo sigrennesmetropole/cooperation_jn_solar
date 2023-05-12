@@ -35,11 +35,11 @@ import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-
 import { getCenter } from 'ol/extent'
 import type { Grid } from '@/helpers/rectangleGrid'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
+import { saveScreenShot } from '@/services/screenshotService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -150,6 +150,13 @@ simulationStore.$subscribe(async () => {
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()
+
+    if (
+      simulationStore.currentStep === 3 &&
+      simulationStore.currentSubStep == 1
+    ) {
+      saveScreenShot(rennesApp)
+    }
   }
 })
 

@@ -19,7 +19,7 @@ describe('LabelsProfitability', () => {
   })
 
   it('displays link', () => {
-    const photovoltaiqueLink = wrapper.find('a')
+    const photovoltaiqueLink = wrapper.find('p')
     expect(photovoltaiqueLink.exists()).toBe(true)
   })
 

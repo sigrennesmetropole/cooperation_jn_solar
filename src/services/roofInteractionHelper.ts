@@ -28,7 +28,6 @@ import type {
   Point,
   Polygon as turfPolygon,
   Properties,
-  GeometryCollection,
 } from '@turf/helpers'
 // @ts-ignore
 import { rectangleGrid } from '@/helpers/rectangleGrid'

@@ -14,11 +14,16 @@ const props = defineProps<{
 
 <template>
   <div
-    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto font-dm-sans"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl mx-auto font-dm-sans"
+    :class="props.isPdf ? 'px-6 pb-6 pt-0' : 'shadow-md p-6'"
   >
     <div class="flex flex-row items-center gap-2 ml-1">
-      <img :src="potentiel" alt="" class="w-11 h-10" />
+      <img
+        :src="potentiel"
+        alt=""
+        class="w-11 h-10"
+        :class="props.isPdf ? 'mt-5' : ''"
+      />
       <span class="font-bold text-2xl"> Votre ensoleillement </span>
     </div>
 

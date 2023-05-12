@@ -11,7 +11,6 @@ import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
 import DistrictDisplayButton from '@/components/map/DistrictDisplayButton.vue'
 import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
-import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
@@ -106,6 +105,29 @@ if (isAlertBoxBrowserNotDisplay.value) {
         <RouterView :key="$route.fullPath" />
       </div>
 
+      <SearchBar
+        v-if="isDisplaySearchBar && !popUpStore.isDisplayTermsOfUse"
+        class="absolute z-20 top-6 left-6"
+        :style="
+          viewStore.currentView === viewList.home
+            ? 'left: 480px;'
+            : 'left: 24px;'
+        "
+        :isRedirectOnSearch="viewStore.currentView !== viewList.home"
+      ></SearchBar>
+
+      <DistrictDisplayButton
+        v-if="isDisplayDistrictCheckbox && !popUpStore.isDisplayTermsOfUse"
+        class="absolute z-20"
+      ></DistrictDisplayButton>
+
+      <DistrictDataTooltip
+        v-if="districtStore.checkboxChecked === true"
+      ></DistrictDataTooltip>
+
+      <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
+      <UiExplanationsStepSunshine />
+
       <div
         class="grow"
         :style="
@@ -116,34 +138,6 @@ if (isAlertBoxBrowserNotDisplay.value) {
           v-if="isDisplayAsideAndMap || isDisplayFloatAndMap"
         ></MapComponent>
       </div>
-
-      <SearchBar
-        v-if="isDisplaySearchBar"
-        class="absolute z-20 top-6 left-6"
-        :style="
-          viewStore.currentView === viewList.home
-            ? 'left: 480px;'
-            : 'left: 24px;'
-        "
-        :isRedirectOnSearch="viewStore.currentView !== viewList.home"
-      ></SearchBar>
-
-      <UiExplanationsStepSunshine />
-
-      <DistrictDataTooltip
-        v-if="districtStore.checkboxChecked === true"
-      ></DistrictDataTooltip>
-
-      <DistrictDisplayButton
-        v-if="isDisplayDistrictCheckbox"
-        class="absolute z-20"
-      ></DistrictDisplayButton>
-
-      <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
-      <TermsOfUsePopup
-        v-if="popUpStore.isDisplayTermsOfUse"
-        @close="popUpStore.closeTermsOfUse()"
-      />
     </template>
 
     <notifications position="top left" />

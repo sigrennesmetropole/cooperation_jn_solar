@@ -72,7 +72,11 @@ const heightClass = computed(() => {
       @click="router.push('/roof-selection')"
       v-show="shouldDisplayHomeButton()"
       ariaLabelButton="Réinitialiser"
-      title-button="Réinitialiser"
+      titleButton="Réinitialiser"
+      heightTitle="30"
+      widthTitle="200"
+      positionX="-210"
+      positionY="12"
       ><IconHome />
     </UiIconButton>
     <div class="flex flex-col zoom-buttons text-2xl [&>*]:p-2" role="group">
@@ -80,20 +84,32 @@ const heightClass = computed(() => {
         class="rounded-t-lg"
         @click="() => zoom(false)"
         ariaLabelButton="Zoom vers l'avant"
-        title-button="Zoom vers l'avant"
+        titleButton="Zoom vers l'avant"
+        heightTitle="30"
+        widthTitle="200"
+        positionX="-210"
+        positionY="12"
         ><IconPlus />
       </UiIconButton>
       <UiIconButton
         @click="() => zoom(true)"
         ariaLabelButton="Zoom vers l'arrière"
-        title-button="Zoom vers l'arrière"
+        titleButton="Zoom vers l'arrière"
+        heightTitle="30"
+        widthTitle="200"
+        positionX="-210"
+        positionY="12"
         ><IconMinus />
       </UiIconButton>
       <UiIconButton
         class="rounded-b-lg"
         @click="() => resetZoom()"
         ariaLabelButton="Réinitialiser le zoom"
-        title-button="Réinitialiser le zoom"
+        titleButton="Réinitialiser le zoom"
+        heightTitle="30"
+        widthTitle="200"
+        positionX="-210"
+        positionY="12"
       >
         <IconSynchronize />
       </UiIconButton>

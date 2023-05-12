@@ -7,7 +7,7 @@ exports[`InformationsLinky.vue > renders the component correctly 1`] = `
     <p>Enedis gère le réseau d'électricité jusqu'au compteur.</p>
   </div>
   <p> Pour calculer vos économies d'énergie, nous devons accéder à vos données Linky gérées par Enedis. </p>
-  <p> En cliquant sur ce bouton, vous accéderez à votre espace client Enedis où vous pourrez autoriser Enedis à nous transmettre votre consommation annuelle. </p><img src=\\"/src/assets/illustrations/enedis-personal-space.svg\\" class=\\"mx-auto cursor-pointer\\">
+  <p> En cliquant sur ce bouton, vous accéderez à votre espace client Enedis où vous pourrez autoriser Enedis à nous transmettre votre consommation annuelle. </p><img tabindex=\\"0\\" src=\\"/src/assets/illustrations/enedis-personal-space.svg\\" class=\\"mx-auto cursor-pointer\\">
   <p class=\\"text-center\\"> Vous pourrez changer d'avis et révoquer <br>votre autorisation à tout moment. </p>
 </div>"
 `;
