@@ -119,7 +119,11 @@ window.addEventListener('beforeunload', function (e) {
       ></SearchBar>
 
       <DistrictDisplayButton
-        v-if="isDisplayDistrictCheckbox && !popUpStore.isDisplayTermsOfUse"
+        v-if="
+          isDisplayDistrictCheckbox &&
+          !popUpStore.isDisplayTermsOfUse &&
+          districtStore.canBeDisplayed
+        "
         class="absolute z-20"
       ></DistrictDisplayButton>
 

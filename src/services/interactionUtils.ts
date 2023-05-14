@@ -1,4 +1,4 @@
-import { EventType, AbstractInteraction } from '@vcmap/core'
+import type { AbstractInteraction } from '@vcmap/core'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { RENNES_LAYER } from '@/stores/layers'
@@ -7,45 +7,14 @@ import ForbidenClickInteraction from '@/interactions/forbidClickInteraction'
 import type { RennesApp } from '@/services/RennesApp'
 import SelectDistrictInteraction from '@/interactions/selectDistrictInteractions'
 import { useSimulationStore } from '@/stores/simulations'
+import { useInteractionsStore } from '@/stores/interactions'
 import { useDistrictStore } from '@/stores/districtInformations'
+import { useMapStore } from '@/stores/map'
 
 type InteractionsTypes =
   | typeof SelectRoofInteraction
   | typeof ForbidenClickInteraction
   | typeof SelectDistrictInteraction
-
-function _getSelectRoofInteraction(
-  rennesApp: RennesApp
-): SelectRoofInteraction | undefined {
-  let res = undefined
-  rennesApp.maps.eventHandler.interactions.forEach((interaction) => {
-    if (interaction instanceof SelectRoofInteraction) {
-      res = interaction
-    }
-  })
-  return res
-}
-
-export function enableSelectRoofInteraction(rennesApp: RennesApp) {
-  const res = _getSelectRoofInteraction(rennesApp)
-  if (res) {
-    res.setActive(EventType.CLICKMOVE)
-  }
-}
-
-export function disableSelectRoofInteraction(rennesApp: RennesApp) {
-  const res = _getSelectRoofInteraction(rennesApp)
-  if (res) {
-    res.setActive(false)
-  }
-}
-
-export function cleanHighlightedRoofs(rennesApp: RennesApp) {
-  const res = _getSelectRoofInteraction(rennesApp)
-  if (res) {
-    res.unhighlight()
-  }
-}
 
 export function isInteractionBuilding() {
   const viewStore = useViewsStore()
@@ -65,22 +34,7 @@ export function isInteractionPanRoof() {
   )
 }
 
-function isInteractionDistrict() {
-  const viewStore = useViewsStore()
-  const districtStore = useDistrictStore()
-  return (
-    [viewList['home'], viewList['roof-selection']].includes(
-      viewStore.currentView!
-    ) && districtStore.checkboxChecked === true
-  )
-}
-
-function isInteractionForbidClick() {
-  const viewStore = useViewsStore()
-  return viewStore.currentView === viewList.home
-}
-
-function inactiveInteractionsUnused(
+function disableUnusedInteraction(
   rennesApp: RennesApp,
   typeInteraction: InteractionsTypes
 ) {
@@ -115,19 +69,6 @@ function isInteractionExist(
   return res
 }
 
-function isInteractionToAdd(typeInteraction: InteractionsTypes) {
-  if (typeInteraction === SelectRoofInteraction) {
-    return isInteractionBuilding() || isInteractionPanRoof()
-  }
-  if (typeInteraction === ForbidenClickInteraction) {
-    return isInteractionForbidClick()
-  }
-  if (typeInteraction === SelectDistrictInteraction) {
-    return isInteractionDistrict()
-  }
-  return false
-}
-
 function newTypeInteraction(
   rennesApp: RennesApp,
   typeInteraction: InteractionsTypes
@@ -147,27 +88,91 @@ function newTypeInteraction(
   return undefined
 }
 
-export function createMapInteractions(rennesApp: RennesApp) {
-  const types_interaction = [
-    SelectRoofInteraction,
-    ForbidenClickInteraction,
-    SelectDistrictInteraction,
-  ]
+export function updateMapInteractionsAfterViewChange(rennesApp: RennesApp) {
+  const interactionsStore = useInteractionsStore()
+  const viewStore = useViewsStore()
+  const simulationStore = useSimulationStore()
 
-  types_interaction.forEach((interactionType) => {
-    if (isInteractionToAdd(interactionType)) {
-      if (!isInteractionExist(rennesApp, interactionType)) {
-        rennesApp.maps.eventHandler.featureInteraction.setActive(
-          EventType.CLICK
-        )
-        const interaction = newTypeInteraction(rennesApp, interactionType)
-        if (interaction)
-          rennesApp.maps.eventHandler.addPersistentInteraction(interaction)
-      } else {
-        activeInteraction(rennesApp, interactionType)
+  // disable ForbiddenClick elsewhere than home
+  if (viewStore.currentView === viewList.home) {
+    interactionsStore.enableInteraction(ForbidenClickInteraction)
+  } else {
+    interactionsStore.disableInteraction(ForbidenClickInteraction)
+  }
+
+  // enable selectRoofInteraction whatever the zoom is on step sunshine
+  if (
+    viewStore.currentView === viewList['step-sunshine'] &&
+    simulationStore.currentStep === 1 &&
+    simulationStore.currentSubStep === 1
+  ) {
+    interactionsStore.enableInteraction(SelectRoofInteraction)
+  }
+
+  // switch between selectRoof and Iris on first pages
+  // roof selection is block by Forbidden on home
+  if (
+    [
+      viewList['home'],
+      viewList['roof-selected-information'],
+      viewList['roof-selection'],
+    ].includes(viewStore.currentView!)
+  ) {
+    manageSelectAndIrisDependingOnZoom(rennesApp)
+  }
+  if (
+    [viewList['roof-selected-information'], viewList['step-sunshine']].includes(
+      viewStore.currentView!
+    )
+  ) {
+    interactionsStore.disableInteraction(SelectDistrictInteraction)
+  }
+}
+
+/**
+ * Disable district interaction if too close to the ground
+ * Activate selectRoofInteraction is close enough and selectable to true
+ * @param rennesApp rennesApp
+ */
+export function manageSelectAndIrisDependingOnZoom(rennesApp: RennesApp) {
+  const interactionsStore = useInteractionsStore()
+  const districtStore = useDistrictStore()
+  const mapStore = useMapStore()
+  const DISTANCE_MAX_FOR_SELECTION = 800
+
+  if (mapStore.isInitializeMap) {
+    rennesApp
+      .get3DMap()
+      .getScene()
+      .postRender.addEventListener(() => {
+        const cameraDistance = rennesApp.getCurrentDistance()!
+        if (cameraDistance > DISTANCE_MAX_FOR_SELECTION) {
+          if (interactionsStore.isActive(SelectRoofInteraction)) {
+            interactionsStore.disableInteraction(SelectRoofInteraction)
+          }
+          districtStore.setCanBeDisplayed(true)
+        } else if (
+          !interactionsStore.isActive(SelectRoofInteraction) &&
+          cameraDistance <= DISTANCE_MAX_FOR_SELECTION
+        ) {
+          interactionsStore.enableInteraction(SelectRoofInteraction)
+          districtStore.setCanBeDisplayed(false)
+        }
+      })
+  }
+}
+export function updateMapInteractions(rennesApp: RennesApp) {
+  const interactionsStore = useInteractionsStore()
+  interactionsStore.getActiveInteractions().forEach((int) => {
+    if (!isInteractionExist(rennesApp, int)) {
+      const interaction = newTypeInteraction(rennesApp, int)
+      if (interaction) {
+        rennesApp.maps.eventHandler.addPersistentInteraction(interaction)
       }
-    } else {
-      inactiveInteractionsUnused(rennesApp, interactionType)
     }
+    activeInteraction(rennesApp, int)
+  })
+  interactionsStore.getInactiveInteractions().forEach((int) => {
+    disableUnusedInteraction(rennesApp, int)
   })
 }
