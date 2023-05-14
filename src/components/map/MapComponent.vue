@@ -34,8 +34,9 @@ import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
 import type { GeoJSONLayer } from '@vcmap/core'
-import { getCenter } from 'ol/extent'
 import { saveScreenShot } from '@/services/screenshotService'
+import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
+import { getCenter } from 'ol/extent'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -97,7 +98,10 @@ async function setupGridInstallation() {
     displayGridOnMap(rennesApp, grid)
     addRoofInteractionOn2dMap(rennesApp)
     rennesApp.getOpenlayerMap().getView().setZoom(22)
-    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox!))
+    rennesApp.getOpenlayerMap().getView().setMinZoom(21)
+    if (grid.bbox) {
+      rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox))
+    }
   }
 }
 
@@ -170,4 +174,5 @@ mapStore.$subscribe(async () => {
 <template>
   <UiMap></UiMap>
   <NavigationButtons />
+  <ResetGridButton />
 </template>
