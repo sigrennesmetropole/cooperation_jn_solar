@@ -114,6 +114,9 @@ async function setupSolarPanelFixtures() {
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
   const selectedRoofModel: RoofSurfaceModel =
     roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
+  // Make sure the active map is the 3D one sot hat the height of solar panel
+  // can be computed properly
+  await rennesApp.maps.setActiveMap('cesium')
   const solarPanelModels = solarPanelGridToSolarPanelModel(
     rennesApp,
     roofsStore.gridMatrix!,
@@ -125,7 +128,7 @@ async function setupSolarPanelFixtures() {
   solarPanelStore.maxNumberSolarPanel = solarPanelModels.length
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   await displaySolarPanel(rennesApp, solarPanelModels)
-  await layerStore.enableLayer(RENNES_LAYER.solarPanel)
+  layerStore.enableLayer(RENNES_LAYER.solarPanel)
 }
 
 simulationStore.$subscribe(async () => {
@@ -136,12 +139,13 @@ simulationStore.$subscribe(async () => {
     await setupGridInstallation()
   } else {
     await disableOlInteraction()
-    await mapStore.activate3d()
+    mapStore.activate3d()
 
     if (
       simulationStore.currentStep === 2 &&
       simulationStore.currentSubStep == 2
     ) {
+      await setupSolarPanelFixtures()
       await zoomToSolarPanel(rennesApp)
     } else if (
       simulationStore.currentStep === 3 &&
@@ -170,13 +174,6 @@ viewStore.$subscribe(async () => {
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
-
-    if (
-      simulationStore.currentStep === 2 &&
-      simulationStore.currentSubStep == 2
-    ) {
-      await setupSolarPanelFixtures()
-    }
   }
   if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
