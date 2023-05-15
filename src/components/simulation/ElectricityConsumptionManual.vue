@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+// @ts-ignore : Could not find a declaration file for module 'dompurify'
+import DOMPurify from 'dompurify'
 
 const consumption = ref('')
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 const storeConsumption = () => {
+  consumption.value = DOMPurify.sanitize(consumption.value)
   consumptionAndProductionStore.setAnnualConsumption(
     parseInt(consumption.value)
   )

@@ -4,6 +4,8 @@ import expandIcon from '../../assets/icons/expand-small-bigger-retract-smaller-b
 import deleteCircle from '../../assets/icons/interface-delete-circle.svg'
 import { computed, ref } from 'vue'
 import { legalList } from '@/constants/legalLinks'
+// @ts-ignore : Could not find a declaration file for module 'dompurify'
+import DOMPurify from 'dompurify'
 
 const validEmail = ref(true)
 const isCheckBoxOnError = ref(false)
@@ -29,7 +31,7 @@ function changeError() {
 }
 
 function sendEmail() {
-  const email = userEmail.value
+  const email = DOMPurify.sanitize(userEmail.value)
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   validEmail.value = emailRegex.test(email)
@@ -97,7 +99,9 @@ const openPrivacy = () => {
         <p>
           Vous pouvez lire notre
           <span
+            tabindex="0"
             @click="openPrivacy()"
+            @keydown.enter="openPrivacy()"
             class="font-medium underline decoration-1 hover:cursor-pointer"
             data-testid="privacy-link"
           >

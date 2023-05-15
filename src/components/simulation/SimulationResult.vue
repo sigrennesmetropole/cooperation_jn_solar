@@ -50,6 +50,12 @@ const currentPower = computed(() =>
             ? 'border-neutral-300'
             : 'border-black'
         "
+        ariaLabelButton="Retirer un panneau"
+        titleButton="Retirer un panneau"
+        heightTitle="30"
+        widthTitle="200"
+        positionX="-70"
+        positionY="-80"
       >
         <svg
           width="20"
@@ -93,6 +99,12 @@ const currentPower = computed(() =>
             ? 'border-neutral-300'
             : 'border-black'
         "
+        ariaLabelButton="Ajouter un panneau"
+        titleButton="Ajouter un panneau"
+        heightTitle="30"
+        widthTitle="200"
+        positionX="-80"
+        positionY="-80"
       >
         <svg
           width="20"
@@ -147,3 +159,10 @@ const currentPower = computed(() =>
     </div>
   </div>
 </template>
+
+<style>
+[data-title]:after {
+  right: -50px;
+  top: -70px;
+}
+</style>

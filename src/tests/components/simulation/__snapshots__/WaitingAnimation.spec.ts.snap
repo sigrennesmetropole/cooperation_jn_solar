@@ -27,7 +27,7 @@ exports[`WaitingAnimation.vue > renders the component correctly 1`] = `
         </div>
       </div>
       <div class=\\"flex flex-row text-neutral-700\\">
-        <p> Vous pouvez lire notre <span class=\\"font-medium underline decoration-1 hover:cursor-pointer\\" data-testid=\\"privacy-link\\"> Politique de confidentialité </span></p><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1\\">
+        <p> Vous pouvez lire notre <span tabindex=\\"0\\" class=\\"font-medium underline decoration-1 hover:cursor-pointer\\" data-testid=\\"privacy-link\\"> Politique de confidentialité </span></p><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1\\">
       </div>
       <div class=\\"flex flex-row justify-center\\"><button class=\\"bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center w-fit\\"><span class=\\"text-white text-base font-medium\\">Recevoir mon rapport en PDF</span></button></div>
     </div>

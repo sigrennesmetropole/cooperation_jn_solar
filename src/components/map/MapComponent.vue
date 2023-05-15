@@ -33,8 +33,9 @@ import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-
 import type { GeoJSONLayer } from '@vcmap/core'
+import { saveScreenShot } from '@/services/screenshotService'
+import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import { getCenter } from 'ol/extent'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -99,7 +100,10 @@ async function setupGridInstallation() {
     displayGridOnMap(rennesApp, grid)
     addRoofInteractionOn2dMap(rennesApp)
     rennesApp.getOpenlayerMap().getView().setZoom(22)
-    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox!))
+    rennesApp.getOpenlayerMap().getView().setMinZoom(21)
+    if (grid.bbox) {
+      rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox))
+    }
   }
 }
 
@@ -134,6 +138,13 @@ simulationStore.$subscribe(async () => {
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()
+
+    if (
+      simulationStore.currentStep === 3 &&
+      simulationStore.currentSubStep == 1
+    ) {
+      saveScreenShot(rennesApp)
+    }
   }
 })
 
@@ -166,4 +177,5 @@ mapStore.$subscribe(async () => {
 <template>
   <UiMap></UiMap>
   <NavigationButtons />
+  <ResetGridButton />
 </template>

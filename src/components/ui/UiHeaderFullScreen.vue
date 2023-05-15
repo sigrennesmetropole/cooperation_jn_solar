@@ -21,8 +21,12 @@ function restartSimulation() {
 }
 
 function restartHome() {
-  resetStores()
-  router.push('/home')
+  if (viewStore.currentView == 'legal-notice') {
+    window.close()
+  } else {
+    resetStores()
+    router.push('/home')
+  }
 }
 </script>
 
@@ -34,6 +38,7 @@ function restartHome() {
       <UiReturnButton
         class="shadow-md rounded-lg p-2 flex gap-2.5 shrink-0 grow-0"
         @click="restartSimulation()"
+        v-if="viewStore.currentView != 'legal-notice'"
       >
         <img :src="iconChevronLeft" />
       </UiReturnButton>

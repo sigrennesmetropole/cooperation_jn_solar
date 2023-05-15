@@ -19,6 +19,8 @@ import AutocompletionSearch from '@/components/search_bar/AutocompletionSearch.v
 import FiltersSearch from '@/components/search_bar/FiltersSearch.vue'
 import InputSearch from '@/components/search_bar/InputSearch.vue'
 import { createVPForTypeAddress } from '@/services/searchBarService'
+// @ts-ignore : Could not find a declaration file for module 'dompurify'
+import DOMPurify from 'dompurify'
 
 const props = defineProps({
   isRedirectOnSearch: {
@@ -112,6 +114,8 @@ const resetAutocompletion = () => {
 }
 
 const inputKeyUp = async (newSearch: string) => {
+  newSearch = DOMPurify.sanitize(newSearch)
+
   if (search.value === newSearch) {
     return
   }

@@ -1,6 +1,6 @@
 # Cooperation Jumeau Numérique Solar
 
-Code de l'application de coopération sur le cadastre solairede Rennes Métropole basée sur un jumeau numérique
+Code de l'application de coopération sur le cadastre solairede Rennes Métropole basée sur un jumeau numérique.
 
 ## Quick start
 
@@ -88,7 +88,7 @@ The repository for this image can be found here: https://github.com/sigrennesmet
 
 #### On _pull request_
 
-- An image is created, it is tag with 'pr-#' where # is the id of the pull request.
+- An image is created, it is tag with 'pr-#' where # is the id of the pull request
 
 #### On push to the _main_ branch (after a pull request is merge)
 

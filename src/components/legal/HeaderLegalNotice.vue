@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import UiHeaderFullScreen from '@/components/ui/UiHeaderFullScreen.vue'
 import logoRennes from '@/assets/illustrations/logoRennes.png'
 import iconMultiplyBlack from '@/assets/icons/icon-multiply-black.svg'
 import { legalList } from '@/constants/legalLinks'
 
+const router = useRouter()
 const { params } = useRoute()
 const routeParams = ref(params)
 const legalLink = routeParams.value.legallink
+
+function goTo(link: string) {
+  router.push(link)
+}
 </script>
 
 <template>
@@ -24,9 +29,14 @@ const legalLink = routeParams.value.legallink
           class="flex flex-row align-center pt-2 pb-4 px-2"
           :class="legalLink == item.slug ? 'border-black border-b-2' : ''"
         >
-          <a :href="item.link">
-            <h4 class="text-[18px] leading-6 bold">{{ item.name }}</h4>
-          </a>
+          <h4
+            tabindex="0"
+            class="text-[18px] leading-6 bold"
+            @click="goTo(item.link)"
+            @keydown.enter="goTo(item.link)"
+          >
+            {{ item.name }}
+          </h4>
         </div>
       </div>
     </template>

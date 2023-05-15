@@ -18,7 +18,7 @@ async function goToEnedisLogin() {
     const consumption = await apiEnedisService.getAnnualConsumption()
     if (consumption.annual_consumption !== undefined) {
       consumptionAndProductionStore.setAnnualConsumption(
-        consumption.annual_consumption
+        consumption.annual_consumption / 1000 // wh to kwh
       )
     }
     window.alert(JSON.stringify(consumption))
@@ -55,9 +55,11 @@ async function goToEnedisLogin() {
       annuelle.
     </p>
     <img
+      tabindex="0"
       :src="enedisSpace"
       class="mx-auto cursor-pointer"
       @click="goToEnedisLogin()"
+      @keydown.enter="goToEnedisLogin()"
     />
     <p class="text-center">
       Vous pourrez changer d'avis et révoquer <br />votre autorisation à tout
