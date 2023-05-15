@@ -14,7 +14,6 @@ import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
-import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
@@ -80,26 +79,11 @@ const isAlertBoxBrowserNotDisplay = computed(() => {
 })
 
 // Affichage du message d'alerte à la fermeture ET au rafraîchissement de la page
-if (isAlertBoxBrowserNotDisplay.value) {
-  window.addEventListener('beforeunload', function (e) {
+window.addEventListener('beforeunload', function (e) {
+  if (!isAlertBoxBrowserNotDisplay.value) {
     e.preventDefault()
-    e.returnValue = WINDOW_CONFIRM_MESSAGE
-    e.cancelable
-    e.stopPropagation()
-  })
-}
-
-//Affichage du message d'alerte après le chargement de la page précédente
-window.addEventListener('popstate', function (e) {
-  e.preventDefault()
-  e.cancelable
-  e.stopPropagation()
-  if (
-    window.confirm(
-      "L'utilisation des boutons de navigation n'est pas recommandée dans cette application."
-    )
-  ) {
-    console.log('confirmation de la pop up')
+    /* In modern browsers, including Chrome, Firefox, and Safari, you can't customize the message shown in the dialog. The browser will provide its own message. This is to prevent malicious sites from tricking users with custom messages. */
+    e.returnValue = ''
   }
 })
 </script>
