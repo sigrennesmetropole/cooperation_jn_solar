@@ -136,16 +136,12 @@ export function solarPanelGridToSolarPanelModel(
 
     if (orientation === 'vertical') {
       pitch = 0
-      roll = roofInclinaison
+      roll = -roofInclinaison
       heading = roofAzimut
     } else {
       pitch = -roofInclinaison
       roll = 0
       heading = roofAzimut - 90
-    }
-
-    if (roofAzimut > 90) {
-      roll = -roll
     }
 
     const solarPanelModel: SolarPanelModel = {
