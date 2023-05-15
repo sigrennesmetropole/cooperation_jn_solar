@@ -7,6 +7,13 @@ import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper
 import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
 import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
+import type { SolarPanelGrid } from '@/algorithm/solarPanelPlacement'
+import type { Matrix } from './roofInteractionHelper'
+import { center, points } from '@turf/turf'
+
+import type { Feature, Properties, Point, Position } from '@turf/turf'
+
+const HeightOffset = 0.2
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -23,6 +30,9 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
       olcs_modelPitch: solarPanel.pitch,
       olcs_modelRoll: solarPanel.roll,
       olcs_modelHeading: solarPanel.heading,
+      // The size of the 3d model is 1900x1000, the real solar panel is 1900x950
+      // We need to scale by 0.95 for the widht (y-axis)
+      olcs_modelScaleY: 0.95,
     },
     vcsMeta: {},
   }
@@ -102,4 +112,72 @@ export function getPeakPower() {
   const solarPanelStore = useSolarPanelStore()
   const peakPower = solarPanelStore.currentNumberSolarPanel * SOLAR_PANEL_POWER
   return Math.round(peakPower * 100) / 100
+}
+
+export function solarPanelGridToSolarPanelModel(
+  rennesApp: RennesApp,
+  matrixGrid: Matrix,
+  solarPanelGrids: SolarPanelGrid[],
+  orientation: string,
+  roofInclinaison: number = 45,
+  roofAzimut: number = 0
+) {
+  const solarPanelModels: SolarPanelModel[] = []
+  const positions: number[][] = []
+  for (let i = 0; i < solarPanelGrids.length; i++) {
+    const spg = solarPanelGrids[i]
+    const index = i
+
+    const center = getSolarPanelGridCenter(matrixGrid, spg)
+
+    let pitch
+    let roll
+    let heading
+
+    if (orientation === 'vertical') {
+      pitch = 0
+      roll = -roofInclinaison
+      heading = roofAzimut
+    } else {
+      pitch = -roofInclinaison
+      roll = 0
+      heading = roofAzimut - 90
+    }
+
+    const solarPanelModel: SolarPanelModel = {
+      index: index,
+      x: center.geometry.coordinates[0],
+      y: center.geometry.coordinates[1],
+      z: 40, // Will be replaced later, just for placeholder
+      pitch: pitch,
+      roll: roll,
+      heading: heading,
+    }
+    solarPanelModels.push(solarPanelModel)
+    positions.push([solarPanelModel.x, solarPanelModel.y])
+  }
+
+  for (let i = 0; i < solarPanelModels.length; i++) {
+    const newHeight = rennesApp.getHeight(
+      solarPanelModels[i].x,
+      solarPanelModels[i].y
+    )
+    solarPanelModels[i].z = newHeight + HeightOffset
+  }
+
+  return solarPanelModels
+}
+
+// Get the center of the SolarPanelGrid
+function getSolarPanelGridCenter(
+  gridMatrix: Matrix,
+  solarPanelGrid: SolarPanelGrid
+): Feature<Point, Properties> {
+  const positions: Position[] = []
+  solarPanelGrid.forEach((grid) => {
+    const squareGrid = gridMatrix[grid[0]][grid[1]]
+    positions.push(squareGrid.squareCenter.coordinates)
+  })
+  const features = points(positions)
+  return center(features)
 }

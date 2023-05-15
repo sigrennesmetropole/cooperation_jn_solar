@@ -1,11 +1,13 @@
 import { afterAll, vi } from 'vitest'
 import CanvasRenderingContext2D from 'jest-canvas-mock/lib/classes/CanvasRenderingContext2D.js'
 import Path2D from 'jest-canvas-mock/lib/classes/Path2D.js'
+import ResizeObserver from 'resize-observer-polyfill'
 global.jest = vi
 
 import getCanvasWindow from 'jest-canvas-mock/lib/window'
 global.CanvasRenderingContext2D = CanvasRenderingContext2D
 global.Path2D = Path2D
+global.ResizeObserver = ResizeObserver
 
 const canvasWindow = getCanvasWindow({ document: window.document })
 

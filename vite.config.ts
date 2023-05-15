@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import rollupPluginStripPragma from 'rollup-plugin-strip-pragma'
 import path from 'path'
 import fs from 'fs'
+import { determineHostFromArgv } from './build/determineHost.js'
 
 type stripPragmas = (options: { pragmas: string[] }) => Plugin
 
@@ -32,7 +33,7 @@ export default defineConfig(({ command }) => {
             transform(source, sid) {
               if (/src[/\\]main.ts/.test(sid)) {
                 return source.replace(
-                  '/node_modules/@vcmap/cesium/Build/CesiumUnminified/',
+                  '/node_modules/@vcmap-cesium/engine/Build',
                   './assets/cesium/'
                 )
               }
@@ -45,10 +46,8 @@ export default defineConfig(({ command }) => {
               const cesiumPath = path.join(
                 process.cwd(),
                 'node_modules',
-                '@vcmap',
-                'cesium',
-                'Build',
-                'Cesium'
+                '@vcmap-cesium',
+                'engine'
               )
               const buildPath = path.join(
                 process.cwd(),
@@ -58,14 +57,14 @@ export default defineConfig(({ command }) => {
               )
               await Promise.all([
                 fs.promises.cp(
-                  path.join(cesiumPath, 'Assets'),
+                  path.join(cesiumPath, 'Source', 'Assets'),
                   path.join(buildPath, 'Assets'),
                   {
                     recursive: true,
                   }
                 ),
                 fs.promises.cp(
-                  path.join(cesiumPath, 'Workers'),
+                  path.join(cesiumPath, 'Build', 'Workers'),
                   path.join(buildPath, 'Workers'),
                   {
                     recursive: true,
@@ -75,6 +74,22 @@ export default defineConfig(({ command }) => {
             },
           },
         ],
+      },
+    }
+  }
+
+  // Heavily inspired from https://github.com/virtualcitySYSTEMS/map-ui/blob/main/vite.config.js
+  const dev = command === 'serve'
+  const https = false
+  const port = dev ? 5173 : 8080
+  const fullHost = determineHostFromArgv(port, https)
+  if (dev) {
+    base.server = {
+      proxy: {
+        '/node_modules/@vcmap-cesium/engine/Build/Assets': {
+          target: fullHost,
+          rewrite: (path) => path.replace(/Build/, 'Source'),
+        },
       },
     }
   }

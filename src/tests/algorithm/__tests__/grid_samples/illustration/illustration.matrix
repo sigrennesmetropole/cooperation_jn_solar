@@ -1,0 +1,5570 @@
+[
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391160293336725,
+                    48.08404253291489
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391119190357927,
+                    48.08403926054996
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391078087383676,
+                    48.084035988185036
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391036984410562,
+                    48.0840327158201
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390995881441427,
+                    48.084029443455165
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390954778473429,
+                    48.08402617109023
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739091367550941,
+                    48.084022898725294
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390872572547096,
+                    48.08401962636036
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390831469588193,
+                    48.08401635399542
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390790366631563,
+                    48.084013081630495
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390749263677776,
+                    48.08400980926555
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390708160725694,
+                    48.08400653690062
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390667057777023,
+                    48.08400326453569
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390625954830625,
+                    48.08399999217076
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390584851887638,
+                    48.083996719805825
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390543748946357,
+                    48.08399344744089
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390502646007917,
+                    48.083990175075954
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390461543072888,
+                    48.08398690271102
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390420440139565,
+                    48.08398363034609
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391111338575342,
+                    48.08404527708292
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391070235599386,
+                    48.08404200471812
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391029132625135,
+                    48.08403873235332
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390988029655432,
+                    48.08403545998853
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390946926687434,
+                    48.084032187623734
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390905823722846,
+                    48.084028915258926
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390864720759964,
+                    48.08402564289413
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390823617800493,
+                    48.08402237052933
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390782514843295,
+                    48.08401909816454
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739074141188894,
+                    48.08401582579974
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390700308936857,
+                    48.08401255343493
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390659205988186,
+                    48.084009281070145
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739061810304122,
+                    48.084006008705344
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390577000097096,
+                    48.084002736340544
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390535897155814,
+                    48.08399946397574
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390494794216806,
+                    48.08399619161095
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739045369128121,
+                    48.08399291924614
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390412588347317,
+                    48.08398964688135
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390371485416836,
+                    48.083986374516556
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391062383814528,
+                    48.084048021250936
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391021280836867,
+                    48.084044748886285
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390980177865458,
+                    48.08404147652162
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390939074896892,
+                    48.084038204156954
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390897971931167,
+                    48.08403493179229
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390856868968854,
+                    48.08403165942764
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390815766008814,
+                    48.084028387062965
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390774663051047,
+                    48.084025114698306
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390733560096123,
+                    48.08402184233364
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390692457144041,
+                    48.084018569968975
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390651354194233,
+                    48.084015297604324
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390610251247267,
+                    48.08401202523966
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390569148302575,
+                    48.08400875287499
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390528045361293,
+                    48.08400548051033
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390486942421717,
+                    48.08400220814566
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739044583948555,
+                    48.083998935781004
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739040473655109,
+                    48.083995663416346
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739036363362004,
+                    48.08399239105168
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390322530691265,
+                    48.08398911868702
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7391013429066788,
+                    48.084050765418965
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739097232607378,
+                    48.08404749305444
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739093122310294,
+                    48.08404422068992
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390890120136646,
+                    48.08404094832539
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390849017173764,
+                    48.08403767596086
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390807914212019,
+                    48.084034403596334
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739076681125482,
+                    48.08403113123181
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390725708299328,
+                    48.08402785886727
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739068460534611,
+                    48.08402458650275
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390643502396301,
+                    48.084021314138226
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390602399448767,
+                    48.0840180417737
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390561296504075,
+                    48.08401476940917
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390520193561656,
+                    48.08401149704465
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390479090621511,
+                    48.08400822468012
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390437987685345,
+                    48.084004952315595
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390396884750317,
+                    48.084001679951065
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390355781818698,
+                    48.08399840758654
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390314678889354,
+                    48.08399513522201
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390273575962851,
+                    48.08399186285749
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390964474269595,
+                    48.084053509586994
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390923371309555,
+                    48.0840502372226
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390882268338146,
+                    48.08404696485821
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390841165374127,
+                    48.08404369249382
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390800062412382,
+                    48.084040420129426
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390758959454047,
+                    48.08403714776504
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390717856497417,
+                    48.08403387540064
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390676753544767,
+                    48.084030603036254
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739063565059439,
+                    48.08402733067186
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739059454764572,
+                    48.08402405830748
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390553444700458,
+                    48.08402078594308
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739051234175804,
+                    48.084017513578694
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390471238817895,
+                    48.0840142412143
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390430135880024,
+                    48.08401096884991
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390389032944995,
+                    48.084007696485514
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390347930013377,
+                    48.08400442412113
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390306827083464,
+                    48.08400115175674
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390265724156393,
+                    48.08399787939234
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390224621231596,
+                    48.083994607027954
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390915519496843,
+                    48.08405625375501
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739087441653112,
+                    48.08405298139076
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390833313569942,
+                    48.08404970902651
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390792210608765,
+                    48.08404643666225
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390751107648725,
+                    48.084043164297995
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390710004692664,
+                    48.08403989193374
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390668901738309,
+                    48.084036619569474
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390627798787364,
+                    48.08403334720523
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390586695838692,
+                    48.084030074840975
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390545592893432,
+                    48.084026802476714
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390504489949876,
+                    48.08402353011246
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390463387009163,
+                    48.08402025774821
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739042228407186,
+                    48.084016985383954
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390381181135695,
+                    48.0840137130197
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390340078203508,
+                    48.08401044065545
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390298975273026,
+                    48.08400716829118
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390257872345956,
+                    48.08400389592693
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390216769421158,
+                    48.08400062356267
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390175666498635,
+                    48.08399735119842
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390866564722387,
+                    48.084058997923044
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390825461756663,
+                    48.084055725558926
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390784358788665,
+                    48.0840524531948
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390743255839993,
+                    48.08404918083069
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390702152883364,
+                    48.084045908466564
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390661049927871,
+                    48.08404263610244
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390619946976926,
+                    48.08403936373833
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390578844027687,
+                    48.0840360913742
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739053774108129,
+                    48.08403281901009
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390496638137165,
+                    48.084029546645965
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390455535196452,
+                    48.084026274281854
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390414432258012,
+                    48.08402300191773
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390373329322415,
+                    48.08401972955361
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739033222638966,
+                    48.08401645718949
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739029112345861,
+                    48.08401318482536
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739025002053097,
+                    48.08400991246124
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390208917605605,
+                    48.08400664009713
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390167814682513,
+                    48.084003367733004
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390126711762832,
+                    48.08400009536889
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390817609945657,
+                    48.084061742091066
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390776506983912,
+                    48.08405846972708
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390735404021598,
+                    48.0840551973631
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739069430102461,
+                    48.084051924999116
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390653198114023,
+                    48.08404865263513
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390612095161941,
+                    48.08404538027115
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390570992212133,
+                    48.08404210790716
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390529889265167,
+                    48.08403883554318
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390488786321043,
+                    48.08403556317919
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390447683379762,
+                    48.084032290815216
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390406580440185,
+                    48.084029018451226
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739036547750402,
+                    48.08402574608725
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390324374570696,
+                    48.084022473723266
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390283271639646,
+                    48.08401920135927
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390242168711438,
+                    48.084015928995285
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390201065786073,
+                    48.0840126566313
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390159962862413,
+                    48.08400938426732
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390118859942163,
+                    48.08400611190334
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390077757023619,
+                    48.08400283953935
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390768655165516,
+                    48.08406448625908
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390727552205476,
+                    48.084061213895225
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390686449248278,
+                    48.084057941531384
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390645346289375,
+                    48.08405466916754
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390604243325924,
+                    48.08405139680369
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739056314039317,
+                    48.08404812443984
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390522037445066,
+                    48.08404485207599
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390480934500943,
+                    48.08404157971215
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390439831557956,
+                    48.08403830734831
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739039872861838,
+                    48.08403503498445
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390357625682213,
+                    48.08403176262061
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390316522747753,
+                    48.084028490256756
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390275419816135,
+                    48.084025217892915
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390234316887927,
+                    48.084021945529074
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390193213961425,
+                    48.08401867316522
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390152111037764,
+                    48.08401540080138
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390111008117515,
+                    48.084012128437536
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390069905198402,
+                    48.08400885607368
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.73900288022827,
+                    48.08400558370984
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390719700382533,
+                    48.084067230427095
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390678597424767,
+                    48.08406395806339
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390637494469274,
+                    48.084060685699676
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390596391516056,
+                    48.08405741333597
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390555288563974,
+                    48.084054140972256
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390514185642587,
+                    48.08405086860854
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390473082675726,
+                    48.08404759624483
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739043197973274,
+                    48.08404432388112
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390390876793163,
+                    48.0840410515174
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390349773855291,
+                    48.084037779153704
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739030867092083,
+                    48.08403450678999
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390267567989213,
+                    48.08403123442628
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390226465059868,
+                    48.08402796206258
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390185362132797,
+                    48.084024689698865
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390144259209137,
+                    48.08402141733515
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739010315628775,
+                    48.08401814497144
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390062053368638,
+                    48.084014872607725
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390020950452936,
+                    48.084011600244025
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389979847538939,
+                    48.08400832788031
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390670745597276,
+                    48.08406997459514
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390629642641784,
+                    48.08406670223156
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390588539688565,
+                    48.08406342986799
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390547436738188,
+                    48.08406015750441
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390506333788949,
+                    48.08405688514084
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739046523084312,
+                    48.084053612777254
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390424127906954,
+                    48.084050340413675
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739038302496283,
+                    48.0840470680501
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739034192202439,
+                    48.084043795686526
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390300819089362,
+                    48.08404052332295
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390259716157175,
+                    48.08403725095937
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390218613227262,
+                    48.0840339785958
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739017751030019,
+                    48.08403070623221
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390136407375962,
+                    48.08402743386864
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390095304454007,
+                    48.084024161505056
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390054201534326,
+                    48.084020889141485
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390013098618056,
+                    48.08401761677791
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738997199570349,
+                    48.08401434441433
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389930892792336,
+                    48.08401107205076
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390621790809746,
+                    48.08407271876315
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739058068785539,
+                    48.08406944639971
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390539584905014,
+                    48.08406617403627
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390498481956342,
+                    48.08406290167284
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390457379010513,
+                    48.084059629309394
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739041627606639,
+                    48.08405635694595
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739037517312454,
+                    48.084053084582514
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390334070190647,
+                    48.08404981221908
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390292967253913,
+                    48.084046539855635
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739025186432059,
+                    48.08404326749219
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390210761390676,
+                    48.08403999512875
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390169658463037,
+                    48.08403672276531
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390128555537672,
+                    48.084033450401876
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390087452615717,
+                    48.08403017803843
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390046349696036,
+                    48.084026905674996
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390005246779197,
+                    48.08402363331155
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389964143864063,
+                    48.08402036094811
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389923040952908,
+                    48.08401708858467
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389881938043459,
+                    48.08401381622123
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390572836018237,
+                    48.08407546293112
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390531733066723,
+                    48.084072190567824
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390490630117483,
+                    48.08406891820452
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390449527172223,
+                    48.08406564584122
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390408424228099,
+                    48.084062373477934
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390367321286817,
+                    48.08405910111463
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390326218348378,
+                    48.08405582875133
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390285115411075,
+                    48.08405255638803
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739024401248173,
+                    48.084049284024736
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390202909549544,
+                    48.084046011661435
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390161806621336,
+                    48.08404273929814
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390120703696539,
+                    48.08403946693484
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390079600773447,
+                    48.08403619457154
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390038497853197,
+                    48.084032922208245
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389997394936358,
+                    48.08402964984494
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389956292021225,
+                    48.08402637748165
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389915189108933,
+                    48.08402310511835
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389874086199484,
+                    48.08401983275505
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389832983292308,
+                    48.084016560391746
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390523881224453,
+                    48.08407820709912
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390482778275782,
+                    48.08407493473596
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390441675328816,
+                    48.0840716623728
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390400572384692,
+                    48.08406839000964
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739035946944341,
+                    48.08406511764649
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390318366504403,
+                    48.084061845283316
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390277263568237,
+                    48.084058572920156
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390236160634913,
+                    48.084055300557
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390195057702726,
+                    48.084052028193845
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390153954776224,
+                    48.084048755830686
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739011285185029,
+                    48.08404548346752
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739007174892663,
+                    48.08404221110436
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739003064600638,
+                    48.0840389387412
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389989543088404,
+                    48.08403566637804
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738994844017327,
+                    48.08403239401488
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738990733726098,
+                    48.08402912165173
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389866234350961,
+                    48.084025849288565
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389825131443217,
+                    48.084022576925406
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389784028538884,
+                    48.08401930456225
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390474926431239,
+                    48.084080951267325
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390433823483704,
+                    48.084077678904286
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390392720539012,
+                    48.084074406541234
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390351617597162,
+                    48.084071134178195
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390310514657585,
+                    48.08406786181515
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390269411720283,
+                    48.08406458945211
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739022830878639,
+                    48.084061317089066
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390187205854772,
+                    48.08405804472602
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390146102925996,
+                    48.084054772362975
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739010499999722,
+                    48.08405149999994
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390063897075265,
+                    48.08404822763689
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390022794154447,
+                    48.08404495527385
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389981691235334,
+                    48.08404168291081
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389940588319632,
+                    48.08403841054776
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389899485406204,
+                    48.084035138184724
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389858382495618,
+                    48.084031865821686
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389817279587874,
+                    48.08402859345864
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389776176682403,
+                    48.084025321095595
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389735073779207,
+                    48.08402204873255
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390425971634045,
+                    48.08408369543544
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390384868688784,
+                    48.084080423072514
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390343765746366,
+                    48.08407715070959
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390302662805652,
+                    48.08407387834668
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739026155986835,
+                    48.08407060598377
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739022045693389,
+                    48.08406733362085
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390179354001134,
+                    48.08406406125792
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739013825107179,
+                    48.084060788895
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390097148145287,
+                    48.084057516532084
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390056045221058,
+                    48.08405424416917
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739001494229683,
+                    48.08405097180625
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389973839379422,
+                    48.08404769944333
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389932736462583,
+                    48.084044427080414
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389891633548586,
+                    48.0840411547175
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389850530638,
+                    48.08403788235458
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738980942772855,
+                    48.084034609991654
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389768324822512,
+                    48.08403133762874
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389727221919316,
+                    48.08402806526582
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389686119018393,
+                    48.0840247929029
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390377016831735,
+                    48.08408643960336
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390335913888748,
+                    48.084083167240586
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390294810948035,
+                    48.08407989487782
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390253708010732,
+                    48.08407662251505
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390212605075135,
+                    48.08407335015228
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739017150214238,
+                    48.084070077789505
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390130399213035,
+                    48.08406680542673
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390089296285396,
+                    48.08406353306396
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390048193360599,
+                    48.08406026070118
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390007090439212,
+                    48.08405698833842
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389965987520668,
+                    48.08405371597564
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389924884600987,
+                    48.084050443612874
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389883781687558,
+                    48.084047171250106
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389842678775835,
+                    48.08404389888733
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389801575867523,
+                    48.084040626524555
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389760472961484,
+                    48.084037354161794
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738971937005715,
+                    48.08403408179902
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738967826715566,
+                    48.08403080943624
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389637164257579,
+                    48.08402753707347
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390328062027152,
+                    48.084089183771326
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390286959086438,
+                    48.0840859114087
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390245856148567,
+                    48.08408263904607
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739020475321297,
+                    48.08407936668344
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390163650280215,
+                    48.08407609432081
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390122547349733,
+                    48.08407282195819
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390081444421526,
+                    48.084069549595554
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390040341496729,
+                    48.08406627723292
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389999238574774,
+                    48.08406300487029
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389958135654524,
+                    48.08405973250767
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389917032737685,
+                    48.084056460145035
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389875929825962,
+                    48.0840531877824
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389834826909123,
+                    48.08404991541977
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738979372400081,
+                    48.08404664305715
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389752621094203,
+                    48.084043370694516
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389711518190438,
+                    48.08404009833188
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389670415288947,
+                    48.08403682596926
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389629312390298,
+                    48.08403355360663
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389588209492786,
+                    48.084030281244
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390279107220294,
+                    48.084091927939355
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390238004281855,
+                    48.08408865557685
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390196901346258,
+                    48.08408538321437
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390155798412934,
+                    48.08408211085187
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390114695482453,
+                    48.084078838489376
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390073592554245,
+                    48.084075566126884
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739003248962888,
+                    48.08407229376439
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389991386705788,
+                    48.084069021401895
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389950283785538,
+                    48.08406574903941
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738990918086813,
+                    48.08406247667691
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389868077952428,
+                    48.084059204314414
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389826975040705,
+                    48.08405593195192
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389785872134667,
+                    48.08405265958943
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738974476922067,
+                    48.08404938722694
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738970366631861,
+                    48.08404611486445
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389662563415982,
+                    48.08404284250195
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389621460517333,
+                    48.08403957013946
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738958035762039,
+                    48.08403629777697
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389539254726287,
+                    48.08403302541447
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.73902301524123,
+                    48.08409467210738
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390189049475566,
+                    48.084091399745034
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390147946541674,
+                    48.08408812738266
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390106843610624,
+                    48.0840848550203
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390065740681848,
+                    48.08408158265796
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390024637755914,
+                    48.084078310295595
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389983534832822,
+                    48.08407503793323
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389942431912004,
+                    48.084071765570876
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389901328994029,
+                    48.08406849320852
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389860226078895,
+                    48.084065220846156
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389819123166035,
+                    48.08406194848379
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389778020255449,
+                    48.08405867612144
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389736917348273,
+                    48.08405540375908
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389695814457014,
+                    48.084052131396724
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389654711536764,
+                    48.08404885903437
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738961360863982,
+                    48.084045586672005
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389572505742308,
+                    48.08404231430964
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389531402848206,
+                    48.084039041947285
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738949029995581,
+                    48.08403576958493
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390181197600327,
+                    48.0840974162754
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390140094666435,
+                    48.08409414391316
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390098991734817,
+                    48.08409087155094
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390057888805472,
+                    48.084087599188734
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739001678587897,
+                    48.08408432682651
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738997568295531,
+                    48.084081054464285
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389934580033923,
+                    48.084077782102064
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389893477115947,
+                    48.08407450973985
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389852374199677,
+                    48.08407123737762
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389811271286248,
+                    48.0840679650154
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738977016837623,
+                    48.08406469265317
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389729065468487,
+                    48.08406142029095
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389687962562448,
+                    48.084058147928744
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738964685965982,
+                    48.084054875566515
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389605756757192,
+                    48.08405160320429
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738956465385911,
+                    48.08404833084207
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389523550965578,
+                    48.084045058479845
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738948244807375,
+                    48.08404178611762
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389441345183059,
+                    48.0840385137554
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739013224278608,
+                    48.084100160443406
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390091139853894,
+                    48.08409688808132
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.739005003692455,
+                    48.08409361571924
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390008933998047,
+                    48.08409034335716
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738996783107325,
+                    48.08408707099507
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389926728151863,
+                    48.08408379863298
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738988562523275,
+                    48.0840805262709
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738984452231648,
+                    48.084077253908816
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389803419403052,
+                    48.08407398154674
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389762316491897,
+                    48.084070709184644
+                ]
+            }
+        },
+        {
+            "usable": true,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389721213583016,
+                    48.084067436822565
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389680110678114,
+                    48.08406416446048
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389639007774917,
+                    48.08406089209839
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389597904873995,
+                    48.084057619736306
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389556801975345,
+                    48.08405434737423
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389515699059643,
+                    48.08405107501214
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389474596183732,
+                    48.084047802650055
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389433493295314,
+                    48.08404453028797
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389392390408602,
+                    48.08404125792589
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390083287968991,
+                    48.08410290461143
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390042185039647,
+                    48.084099632249476
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390001082112008,
+                    48.08409635988753
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738995997918721,
+                    48.08409308752558
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389918876265824,
+                    48.08408981516364
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389877773346143,
+                    48.084086542801685
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389836670429304,
+                    48.084083270439734
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389795567514739,
+                    48.08407999807779
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389754464603584,
+                    48.084076725715846
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389713361694703,
+                    48.084073453353895
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389672258788096,
+                    48.084070180991944
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738963115588433,
+                    48.08406690862999
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389590052983976,
+                    48.08406363626804
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389548950085327,
+                    48.084060363906104
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389507847191794,
+                    48.084057091544146
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389466744299398,
+                    48.0840538191822
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738942564139336,
+                    48.08405054682025
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389384538513468,
+                    48.084047274458314
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389343435629598,
+                    48.08404400209636
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7390034333149629,
+                    48.08410564877945
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738999323022199,
+                    48.08410237641763
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389952127297192,
+                    48.084099104055824
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738991102437467,
+                    48.084095831694015
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738986992145442,
+                    48.0840925593322
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738982881853758,
+                    48.08408928697039
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389787715623015,
+                    48.08408601460857
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389746612711292,
+                    48.084082742246764
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389705509801274,
+                    48.084079469884955
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389664406894667,
+                    48.08407619752314
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389623303990334,
+                    48.08407292516132
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389582201088842,
+                    48.08406965279951
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389541098190193,
+                    48.084066380437704
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389499995293818,
+                    48.08406310807589
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389458892400285,
+                    48.08405983571407
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738941778951073,
+                    48.08405656335226
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389376686630271,
+                    48.084053290990454
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389335583727643,
+                    48.08405001862864
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389294480849458,
+                    48.08404674626683
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389985378327992,
+                    48.08410839294747
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389944275402058,
+                    48.0841051205858
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389903172479535,
+                    48.08410184822412
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389862069559285,
+                    48.08409857586244
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738982096664131,
+                    48.084095303500774
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389779863726176,
+                    48.084092031139086
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389738760813884,
+                    48.08408875877741
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389697657903866,
+                    48.08408548641574
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738965655499726,
+                    48.084082214054064
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738961545209179,
+                    48.08407894169239
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389574349190298,
+                    48.0840756693307
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389533246290512,
+                    48.084072396969034
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389492143394136,
+                    48.08406912460735
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389451040500035,
+                    48.08406585224567
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389409937608775,
+                    48.084062579884
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738936883471979,
+                    48.084059307522324
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389327731834214,
+                    48.08405603516065
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389286628956597,
+                    48.084052762798976
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389245526063632,
+                    48.084049490437295
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389936423502945,
+                    48.0841111371155
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389895320579853,
+                    48.08410786475396
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389854217659035,
+                    48.084104592392414
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738981311474106,
+                    48.08410132003087
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389772011825357,
+                    48.08409804766933
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389730908912497,
+                    48.08409477530779
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738968980600248,
+                    48.08409150294625
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389648703094736,
+                    48.08408823058471
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389607600189265,
+                    48.08408495822317
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389566497287205,
+                    48.08408168586163
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738952539438742,
+                    48.08407841350008
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389484291490476,
+                    48.08407514113854
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389443188595237,
+                    48.08407186877701
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738940208570341,
+                    48.08406859641546
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389360982814424,
+                    48.084065324053924
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389319879928848,
+                    48.084062051692385
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389278777044979,
+                    48.084058779330846
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389237674165656,
+                    48.08405550696931
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389196571302818,
+                    48.08405223460776
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389887468675624,
+                    48.08411388128352
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389846365754806,
+                    48.08411060892212
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389805262835694,
+                    48.084107336560706
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389764159919991,
+                    48.0841040641993
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389723057006563,
+                    48.0841007918379
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389681954095977,
+                    48.084097519476494
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389640851188233,
+                    48.08409424711509
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389599748282762,
+                    48.084090974753686
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389558645379566,
+                    48.08408770239228
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389517542479211,
+                    48.08408443003087
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.73894764395817,
+                    48.08408115766947
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738943533668703,
+                    48.08407788530806
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389394233794064,
+                    48.08407461294666
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738935313090451,
+                    48.084071340585254
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738931202801723,
+                    48.08406806822385
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738927092513336,
+                    48.084064795862446
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389229822252332,
+                    48.08406152350105
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738918871937301,
+                    48.08405825113964
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389147616497667,
+                    48.08405497877823
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389838513846598,
+                    48.08411662545154
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389797410926917,
+                    48.08411335309028
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389756308010647,
+                    48.084110080729005
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738971520509665,
+                    48.08410680836774
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389674102185495,
+                    48.08410353600647
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389632999276614,
+                    48.0841002636452
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389591896371144,
+                    48.08409699128393
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389550793467947,
+                    48.08409371892266
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389509690567593,
+                    48.08409044656139
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389468587668944,
+                    48.08408717420012
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389427484773705,
+                    48.08408390183885
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738938638188074,
+                    48.08408062947758
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389345278990618,
+                    48.084077357116314
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.73893041761022,
+                    48.084074084755045
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738926307321833,
+                    48.084070812393776
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389221970335598,
+                    48.08406754003251
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389180867456275,
+                    48.08406426767124
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389139764579227,
+                    48.08406099530996
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738909866170502,
+                    48.0840577229487
+                ]
+            }
+        }
+    ],
+    [
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389789559014162,
+                    48.08411936961957
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389748456097323,
+                    48.08411609725843
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389707353182757,
+                    48.0841128248973
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389666250271034,
+                    48.08410955253617
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389625147362153,
+                    48.084106280175035
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389584044455546,
+                    48.084103007813894
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389542941551213,
+                    48.08409973545277
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738950183865029,
+                    48.084096463091626
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738946073575164,
+                    48.0840931907305
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389419632856402,
+                    48.084089918369365
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738937852996287,
+                    48.08408664600823
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389337427072178,
+                    48.0840833736471
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738929632418376,
+                    48.08408010128596
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389255221298754,
+                    48.084076828924836
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738921411841602,
+                    48.084073556563695
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.738917301553613,
+                    48.08407028420257
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389131912658513,
+                    48.08406701184143
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389090809783738,
+                    48.0840637394803
+                ]
+            }
+        },
+        {
+            "usable": false,
+            "squareCenter": {
+                "type": "Point",
+                "coordinates": [
+                    -1.7389049706911237,
+                    48.08406046711916
+                ]
+            }
+        }
+    ]
+]

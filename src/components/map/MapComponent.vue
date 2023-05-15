@@ -15,13 +15,15 @@ import { useAddressStore } from '@/stores/address'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
+  bboxRoof,
   displayGridOnMap,
   displayRoofShape,
+  filterGrid,
   generateRectangleGrid,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
-  substractSelectedSquares,
+  substractSelectedSquaresFromGrid,
 } from '@/services/roofInteractionHelper'
 import {
   displaySolarPanel,
@@ -29,14 +31,16 @@ import {
   removeSolarPanel,
   zoomToSolarPanel,
 } from '@/services/solarPanel'
-import { solarPanelFixtures } from '@/model/solarPanel.fixtures'
+import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-import type { GeoJSONLayer } from '@vcmap/core'
+import { getCenter } from 'ol/extent'
+import type { Grid } from '@/helpers/rectangleGrid'
+import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
+import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
-import { getCenter } from 'ol/extent'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -46,8 +50,6 @@ const solarPanelStore = useSolarPanelStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
 const viewStore = useViewsStore()
-
-let grid
 
 onMounted(async () => {
   await rennesApp.initializeMap()
@@ -94,32 +96,42 @@ async function setupGridInstallation() {
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
     let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
     displayRoofShape(rennesApp, roofShape)
-    grid = generateRectangleGrid(roofShape)
-    displayGridOnMap(rennesApp, grid)
+    let bboxOnRoof = bboxRoof(roofShape)
+    let grid: Grid = generateRectangleGrid(roofShape, bboxOnRoof)
+    let { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
+      roofShape,
+      grid
+    )
+    roofsStore.gridMatrix = gridMatrix
+    displayGridOnMap(rennesApp, filterGeomGrid.featureCollection)
     addRoofInteractionOn2dMap(rennesApp)
     rennesApp.getOpenlayerMap().getView().setZoom(22)
     rennesApp.getOpenlayerMap().getView().setMinZoom(21)
-    if (grid.bbox) {
-      rennesApp.getOpenlayerMap().getView().setCenter(getCenter(grid.bbox))
-    }
+    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(bboxOnRoof))
   }
 }
 
 async function setupSolarPanelFixtures() {
-  const allSquares: GeoJSONLayer = await rennesApp.getLayerByKey(
-    RENNES_LAYER.roofSquaresArea
+  substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
+  const result = solarPanelPlacement(roofsStore.gridMatrix!)
+  const selectedRoofModel: RoofSurfaceModel =
+    roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
+  // Make sure the active map is the 3D one sot hat the height of solar panel
+  // can be computed properly
+  await rennesApp.maps.setActiveMap('cesium')
+  mapStore.activate3d()
+  const solarPanelModels = solarPanelGridToSolarPanelModel(
+    rennesApp,
+    roofsStore.gridMatrix!,
+    result.solarPanels,
+    result.orientation,
+    selectedRoofModel.inclinaison,
+    selectedRoofModel.azimuth
   )
-  // substractedRoofArea: the result polygon on which compute solar panels
-  let substractedRoofArea = substractSelectedSquares(allSquares.getFeatures())
-  console.log('Grid of roof area', substractedRoofArea)
-  const sampleSolarPanels = solarPanelFixtures()
-  solarPanelStore.maxNumberSolarPanel = sampleSolarPanels.length
-  solarPanelStore.currentNumberSolarPanel = sampleSolarPanels.length
-  await displaySolarPanel(rennesApp, sampleSolarPanels)
-  await layerStore.enableLayer(RENNES_LAYER.solarPanel)
-  // Zoom to solar panel
-  await mapStore.activate3d()
-  await zoomToSolarPanel(rennesApp)
+  solarPanelStore.maxNumberSolarPanel = solarPanelModels.length
+  solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
+  await displaySolarPanel(rennesApp, solarPanelModels)
+  layerStore.enableLayer(RENNES_LAYER.solarPanel)
 }
 
 simulationStore.$subscribe(async () => {
@@ -128,22 +140,28 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentSubStep == 1
   ) {
     await setupGridInstallation()
-  } else if (
-    simulationStore.currentStep === 2 &&
-    simulationStore.currentSubStep == 2
-  ) {
-    await setupSolarPanelFixtures()
   } else {
     await disableOlInteraction()
-    await mapStore.activate3d()
+    mapStore.activate3d()
 
     if (
+      simulationStore.currentStep === 2 &&
+      simulationStore.currentSubStep == 2
+    ) {
+      await setupSolarPanelFixtures()
+      await zoomToSolarPanel(rennesApp)
+    } else if (
       simulationStore.currentStep === 3 &&
       simulationStore.currentSubStep == 1
     ) {
       saveScreenShot(rennesApp)
     }
   }
+
+  layerStore.setLayerVisibility(
+    RENNES_LAYER.solarPanel,
+    simulationStore.shouldShowSolarPanelLayer()
+  )
 })
 
 solarPanelStore.$subscribe(async () => {

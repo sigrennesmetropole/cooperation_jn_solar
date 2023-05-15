@@ -27,8 +27,8 @@ const updateCurrentNumSolarPanel = (solarPanelChanges: number) => {
   }
 }
 
-const currentSurface = computed(
-  () => props.currentNumSolarPanel * SOLAR_PANEL_SURFACE
+const currentSurface = computed(() =>
+  (props.currentNumSolarPanel * SOLAR_PANEL_SURFACE).toFixed(2)
 )
 
 const currentPower = computed(() =>
