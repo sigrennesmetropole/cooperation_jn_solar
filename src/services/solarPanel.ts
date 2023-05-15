@@ -9,9 +9,7 @@ import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { SolarPanelGrid } from '@/algorithm/solarPanelPlacement'
 import type { Matrix } from './roofInteractionHelper'
-import { type FeatureCollection, center, points } from '@turf/turf'
-
-import { featureCollection, point } from '@turf/helpers'
+import { center, points } from '@turf/turf'
 
 import type { Feature, Properties, Point, Position } from '@turf/turf'
 

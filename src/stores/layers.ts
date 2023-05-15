@@ -54,9 +54,17 @@ export const useLayersStore = defineStore('layers', () => {
     }
   }
 
+  function setLayerVisibility(name: RennesLayer, visibility: boolean) {
+    visibilities.value = {
+      ...visibilities.value,
+      [name]: visibility,
+    }
+  }
+
   return {
     visibilities,
     enableLayer,
     disableLayer,
+    setLayerVisibility,
   }
 })

@@ -154,6 +154,11 @@ simulationStore.$subscribe(async () => {
       saveScreenShot(rennesApp)
     }
   }
+
+  layerStore.setLayerVisibility(
+    RENNES_LAYER.solarPanel,
+    simulationStore.shouldShowSolarPanelLayer()
+  )
 })
 
 solarPanelStore.$subscribe(async () => {

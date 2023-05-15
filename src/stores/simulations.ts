@@ -92,6 +92,16 @@ export const useSimulationStore = defineStore('simulation', () => {
     setCurrentSubStep(1)
   }
 
+  function shouldShowSolarPanelLayer(): boolean {
+    if (currentStep.value === 3) {
+      return true
+    }
+    if (currentStep.value === 2 && currentSubStep.value === 2) {
+      return true
+    }
+    return false
+  }
+
   return {
     currentStep,
     currentSubStep,
@@ -103,5 +113,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     isCurrentStepFinal,
     goToFinalView,
     resetSimulation,
+    shouldShowSolarPanelLayer,
   }
 })
