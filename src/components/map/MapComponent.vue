@@ -49,7 +49,9 @@ const viewStore = useViewsStore()
 let grid
 
 onMounted(async () => {
-  await rennesApp.initializeMap()
+  if (viewStore.currentView !== 'step-sunshine') {
+    await rennesApp.initializeMap()
+  }
   await updateActiveMap()
   await updateLayersVisibility()
   createMapInteractions(rennesApp)
@@ -156,6 +158,7 @@ mapStore.$subscribe(async () => {
   }
   if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
+    ////////////////////////////////////////////////////////////////////////////////////////////
   }
 })
 </script>

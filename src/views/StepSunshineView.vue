@@ -19,7 +19,6 @@ import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
 import type { RennesApp } from '@/services/RennesApp'
 import { ref } from 'vue'
-import type { Viewpoint } from '@vcmap/core'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
@@ -32,11 +31,7 @@ const mapStore = useMapStore()
 const isHighlightSelectedRoofPanCalled = ref(false)
 
 onBeforeMount(async () => {
-  console.log('ligne35')
   if (simulationStore.restartEndSimulation == true) {
-    // uniquement au rechargement de la page
-    console.log('ligne38')
-
     simulationStore.setCurrentStep(3)
     simulationStore.setCurrentSubStep(2)
   }
@@ -45,11 +40,6 @@ onBeforeMount(async () => {
   panelsStore.setTypePanelDisplay('right')
   if (mapStore.isInitializeMap) {
     highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
-    console.log('ligne48')
-
-    //ajouter le focus sur le viewpoint
-    // const newVp = mapStore.viewPoint as Viewpoint
-    // await rennesApp.maps?.activeMap.gotoViewpoint(newVp)
   }
   simulationStore.restartEndSimulation = false
 })
@@ -59,14 +49,7 @@ const highlightStyle = new VectorStyleItem({
 })
 
 mapStore.$subscribe(async () => {
-  console.log('ligne62')
-
   if (mapStore.isInitializeMap) {
-    console.log('ligne69')
-    const newVp = mapStore.viewPointBuilding as Viewpoint
-    console.log(newVp)
-    await rennesApp.maps?.activeMap.gotoViewpoint(newVp)
-
     highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
   }
 })
@@ -77,12 +60,9 @@ roofStore.$subscribe(async () => {
   roofStore.roofsFeatures?.features?.forEach((f) => {
     if (f.properties?.surface_id == roofStore.selectedRoofSurfaceId) {
       feature = f
-      // au premier chargement de la page uniquement
-      console.log('ligne82')
     }
   })
   if (feature !== null) {
-    console.log('ligne90')
     const vp = await createViewpointFromRoofFeature(feature)
     if (vp !== undefined) mapStore.viewPoint = vp
   }

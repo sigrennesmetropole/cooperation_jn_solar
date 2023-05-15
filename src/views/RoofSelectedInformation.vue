@@ -27,11 +27,9 @@ async function newViewPoint() {
     mapStore.viewPoint = await createCustomViewpointFromExtent(
       roofStore.roofsFeatures.bbox
     )
-    console.log('toto')
     mapStore.viewPointBuilding = await createCustomViewpointFromExtent(
       roofStore.roofsFeatures.bbox
     )
-    console.log(mapStore.viewPointBuilding)
   }
 }
 
