@@ -35,11 +35,11 @@ import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-
 import { getCenter } from 'ol/extent'
 import type { Grid } from '@/helpers/rectangleGrid'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
+import { saveScreenShot } from '@/services/screenshotService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -111,14 +111,9 @@ async function setupGridInstallation() {
 
 async function setupSolarPanelFixtures() {
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
-  console.log(
-    'matrix for placement algo (filter by remove box): ',
-    roofsStore.gridMatrix!
-  )
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
   const selectedRoofModel: RoofSurfaceModel =
     roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
-  // convert solarPanels to solarPanelModel
   const solarPanelModels = solarPanelGridToSolarPanelModel(
     rennesApp,
     roofsStore.gridMatrix!,
@@ -131,9 +126,6 @@ async function setupSolarPanelFixtures() {
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   await displaySolarPanel(rennesApp, solarPanelModels)
   await layerStore.enableLayer(RENNES_LAYER.solarPanel)
-  // Zoom to solar panel
-  await mapStore.activate3d()
-  await zoomToSolarPanel(rennesApp)
 }
 
 simulationStore.$subscribe(async () => {
@@ -142,14 +134,21 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentSubStep == 1
   ) {
     await setupGridInstallation()
-  } else if (
-    simulationStore.currentStep === 2 &&
-    simulationStore.currentSubStep == 2
-  ) {
-    await setupSolarPanelFixtures()
   } else {
     await disableOlInteraction()
     await mapStore.activate3d()
+
+    if (
+      simulationStore.currentStep === 2 &&
+      simulationStore.currentSubStep == 2
+    ) {
+      await zoomToSolarPanel(rennesApp)
+    } else if (
+      simulationStore.currentStep === 3 &&
+      simulationStore.currentSubStep == 1
+    ) {
+      saveScreenShot(rennesApp)
+    }
   }
 })
 
@@ -171,6 +170,13 @@ viewStore.$subscribe(async () => {
 mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
+
+    if (
+      simulationStore.currentStep === 2 &&
+      simulationStore.currentSubStep == 2
+    ) {
+      await setupSolarPanelFixtures()
+    }
   }
   if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)

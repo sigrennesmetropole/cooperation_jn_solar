@@ -9,8 +9,8 @@ const props = defineProps<{
 
 <template>
   <div
-    class="flex flex-col gap-2 w-[100%] h-fit bg-white rounded-xl p-6 mx-auto"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-2 w-[100%] h-fit bg-white rounded-xl mx-auto"
+    :class="props.isPdf ? 'px-6 pb-6 pt-2' : 'shadow-md p-6'"
   >
     <p class="font-dm-sans font-bold text-base">Votre consommation actuelle</p>
     <p id="consumptionValue" class="font-dm-sans font-medium text-sm">

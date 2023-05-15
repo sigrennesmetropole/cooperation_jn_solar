@@ -6,9 +6,9 @@ exports[`InformationsEnergySaving.vue > renders the component correctly 1`] = `
   <!--v-if-->
   <!--v-if-->
   <div class=\\"flex flex-row gap-3 mt-4 justify-center items-center\\">
-    <div class=\\"w-6 h-6 rounded-full flex justify-center items-center cursor-pointer bg-slate-600\\"><span class=\\"font-dm-sans font-bold text-xs text-white\\">1</span></div>
-    <div class=\\"w-6 h-6 rounded-full flex justify-center items-center cursor-pointer border border-slate-300\\"><span class=\\"font-dm-sans font-bold text-xs text-slate-500\\">2</span></div>
-    <div class=\\"w-6 h-6 rounded-full flex justify-center items-center cursor-pointer border border-slate-300\\"><span class=\\"font-dm-sans font-bold text-xs text-slate-500\\">3</span></div>
+    <div tabindex=\\"0\\" class=\\"w-6 h-6 rounded-full flex justify-center items-center cursor-pointer bg-slate-600\\"><span class=\\"font-dm-sans font-bold text-xs text-white\\">1</span></div>
+    <div tabindex=\\"0\\" class=\\"w-6 h-6 rounded-full flex justify-center items-center cursor-pointer border border-slate-300\\"><span class=\\"font-dm-sans font-bold text-xs text-slate-500\\">2</span></div>
+    <div tabindex=\\"0\\" class=\\"w-6 h-6 rounded-full flex justify-center items-center cursor-pointer border border-slate-300\\"><span class=\\"font-dm-sans font-bold text-xs text-slate-500\\">3</span></div>
   </div>
 </div>"
 `;

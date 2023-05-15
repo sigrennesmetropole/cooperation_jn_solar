@@ -28,7 +28,6 @@ import type {
   Point,
   Polygon as turfPolygon,
   Properties,
-  GeometryCollection,
 } from '@turf/helpers'
 // @ts-ignore
 import { rectangleGrid } from '@/helpers/rectangleGrid'
@@ -174,10 +173,6 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
   })
   // @ts-ignore
   grid.featureCollection = featureCollection(arrFeatures)
-  console.log(
-    'Geojson Result (non filtered by box remove)',
-    featureCollection(featureArray)
-  )
   return { grid, matrix }
 }
 

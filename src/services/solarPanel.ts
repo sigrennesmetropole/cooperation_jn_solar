@@ -15,7 +15,7 @@ import { featureCollection, point } from '@turf/helpers'
 
 import type { Feature, Properties, Point, Position } from '@turf/turf'
 
-const HeightOffset = 10
+const HeightOffset = 0.2
 
 function solarPanelModelToDict(solarPanel: SolarPanelModel) {
   return {
@@ -125,10 +125,6 @@ export function solarPanelGridToSolarPanelModel(
   roofAzimut: number = 0
 ) {
   const solarPanelModels: SolarPanelModel[] = []
-  console.log(
-    `roofInclinaison: ${roofInclinaison}, roofAzimut: ${roofAzimut}, orientation ${orientation}`
-  )
-  console.log(solarPanelGrids)
   const positions: number[][] = []
   for (let i = 0; i < solarPanelGrids.length; i++) {
     const spg = solarPanelGrids[i]
@@ -145,7 +141,7 @@ export function solarPanelGridToSolarPanelModel(
       roll = roofInclinaison
       heading = roofAzimut
     } else {
-      pitch = roofInclinaison
+      pitch = -roofInclinaison
       roll = 0
       heading = roofAzimut - 90
     }
@@ -154,7 +150,6 @@ export function solarPanelGridToSolarPanelModel(
       roll = -roll
     }
 
-    // console.log(`Height: ${positionWithHeight}`)
     const solarPanelModel: SolarPanelModel = {
       index: index,
       x: center.geometry.coordinates[0],
@@ -167,11 +162,6 @@ export function solarPanelGridToSolarPanelModel(
     solarPanelModels.push(solarPanelModel)
     positions.push([solarPanelModel.x, solarPanelModel.y])
   }
-  console.log(solarPanelModels)
-  rennesApp.getPositionsWithHeight(positions).then((newPositions) => {
-    console.log('Position with height using sampleHeightMostDetailed:')
-    console.log(newPositions)
-  })
 
   for (let i = 0; i < solarPanelModels.length; i++) {
     const newHeight = rennesApp.getHeight(
@@ -181,10 +171,6 @@ export function solarPanelGridToSolarPanelModel(
     solarPanelModels[i].z = newHeight + HeightOffset
   }
 
-  console.log(solarPanelModels)
-  const fc = solarPanelModelsToGeoJSON(solarPanelModels)
-  // To see it visually
-  console.log(fc)
   return solarPanelModels
 }
 
@@ -202,6 +188,7 @@ function getSolarPanelGridCenter(
   return center(features)
 }
 
+//TODO: unused, maybe delete it ?
 export function solarPanelModelsToGeoJSON(solarPanelModels: SolarPanelModel[]) {
   const fc: FeatureCollection<Point, Properties> = featureCollection([])
   solarPanelModels.forEach((spm) => {

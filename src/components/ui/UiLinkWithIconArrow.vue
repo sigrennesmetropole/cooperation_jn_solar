@@ -5,19 +5,26 @@ const props = defineProps<{
   link: string
   isPdf: boolean
 }>()
+
+function goTo() {
+  window.open(props.link, '_blank')
+}
 </script>
 
 <template>
-  <div class="flex flex-row">
+  <div
+    class="flex flex-row cursor-pointer w-fit"
+    tabindex="0"
+    @keydown.enter="goTo()"
+    @click="goTo()"
+  >
     <p class="underline decoration-1 font-medium text-base">
-      <a :href="props.link" target="_blank"> Accéder à la page </a>
+      Accéder à la page
     </p>
-    <a :href="props.link" target="_blank">
-      <img
-        :src="expandIcon"
-        class="w-3.5 h-3.5 ml-2 mt-1"
-        :class="props.isPdf ? 'mt-4' : 'mt-1'"
-      />
-    </a>
+    <img
+      :src="expandIcon"
+      class="w-3.5 h-3.5 ml-2 mt-1"
+      :class="props.isPdf ? 'mt-4' : 'mt-1'"
+    />
   </div>
 </template>

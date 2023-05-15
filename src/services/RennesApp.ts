@@ -1,6 +1,6 @@
 import {
   VcsApp,
-  Context,
+  VcsModule,
   CesiumMap,
   Viewpoint,
   OpenlayersMap,
@@ -13,6 +13,7 @@ import type { Layer } from 'ol/layer'
 import type { RennesLayer } from '@/stores/layers'
 import { RENNES_LAYER } from '@/stores/layers'
 import { Cartographic } from '@vcmap-cesium/engine'
+
 export class RennesApp extends VcsApp {
   readonly mapConfig
   constructor(mapConfig: object) {
@@ -22,8 +23,8 @@ export class RennesApp extends VcsApp {
 
   async initializeMap() {
     const mapStore = useMapStore()
-    const context = new Context(this.mapConfig)
-    await this.addContext(context)
+    const context = new VcsModule(this.mapConfig)
+    await this.addModule(context)
 
     const cesiumMap = this.get3DMap()
     await cesiumMap?.initialize()
@@ -78,6 +79,7 @@ export class RennesApp extends VcsApp {
     return height
   }
 
+  // TODO: unused, maybe delete it ?
   async getPositionsWithHeight(positions: number[][]) {
     const positionsCartographic: Cartographic[] = []
     positions.forEach((p) => {

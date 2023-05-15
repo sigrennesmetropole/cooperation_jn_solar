@@ -6,6 +6,7 @@ export const useAddressStore = defineStore('address', () => {
   const latitude: Ref<number> = ref(0)
   const longitude: Ref<number> = ref(0)
   const address: Ref<string> = ref('')
+  const screenshotAddress: Ref<Blob | null> = ref(null)
 
   function setLatitudeAndLongitude(
     new_latitude: number,
@@ -30,5 +31,6 @@ export const useAddressStore = defineStore('address', () => {
     address,
     setAddress,
     resetAddress,
+    screenshotAddress,
   }
 })
