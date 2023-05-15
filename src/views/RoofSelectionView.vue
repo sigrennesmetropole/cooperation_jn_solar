@@ -21,6 +21,7 @@ const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
 const mapStore = useMapStore()
+
 let isOpen = ref(true)
 let isBuildingSelectionActive = ref(false)
 let addressClosedByUser = ref(false)
@@ -36,6 +37,7 @@ onMounted(() => {
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true
 })
+
 mapStore.$subscribe(async () => {
   if (mapStore.isInitializeMap) {
     rennesApp.clearRoofsHighlight()

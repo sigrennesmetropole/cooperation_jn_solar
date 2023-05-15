@@ -18,6 +18,7 @@ export function resetStores() {
 
   simulationStore.resetSimulation()
   addressStore.resetAddress()
+  addressStore.resetLatitureAndLongitude()
   roofStore.resetRoofStore()
   consumptionAndProductionStore.resetAnnualConsumption()
   autocalsolStore.resetAutocalsolResult()

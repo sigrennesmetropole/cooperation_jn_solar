@@ -25,6 +25,7 @@ const popUpStore = usePopUpStore()
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
+  mapStore.activate3d()
   panelsStore.isCompletelyHidden = false
   if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
     mapStore.viewPoint = await createCustomViewpointFromExtent(
