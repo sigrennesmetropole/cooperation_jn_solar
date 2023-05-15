@@ -71,11 +71,15 @@ const isPageFullScreen = computed(() => {
 })
 
 const isAlertBoxBrowserNotDisplay = computed(() => {
-  return [viewList['home'], viewList['roof-selection'], null].includes(
-    viewStore.currentView!
-  )
+  return [
+    viewList['home'],
+    viewList['roof-selection'],
+    viewList['legal-notice'],
+    null,
+  ].includes(viewStore.currentView!)
 })
 
+// Affichage du message d'alerte à la fermeture ET au rafraîchissement de la page
 if (isAlertBoxBrowserNotDisplay.value) {
   window.addEventListener('beforeunload', function (e) {
     e.preventDefault()
@@ -84,6 +88,20 @@ if (isAlertBoxBrowserNotDisplay.value) {
     e.stopPropagation()
   })
 }
+
+//Affichage du message d'alerte après le chargement de la page précédente
+window.addEventListener('popstate', function (e) {
+  e.preventDefault()
+  e.cancelable
+  e.stopPropagation()
+  if (
+    window.confirm(
+      "L'utilisation des boutons de navigation n'est pas recommandée dans cette application."
+    )
+  ) {
+    console.log('confirmation de la pop up')
+  }
+})
 </script>
 
 <template>
