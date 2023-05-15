@@ -187,19 +187,3 @@ function getSolarPanelGridCenter(
   const features = points(positions)
   return center(features)
 }
-
-//TODO: unused, maybe delete it ?
-export function solarPanelModelsToGeoJSON(solarPanelModels: SolarPanelModel[]) {
-  const fc: FeatureCollection<Point, Properties> = featureCollection([])
-  solarPanelModels.forEach((spm) => {
-    const p: Feature<Point, Properties> = point([spm.x, spm.y, spm.z], {
-      index: spm.index,
-      heading: spm.heading,
-      roll: spm.roll,
-      pitch: spm.pitch,
-      height: spm.z - HeightOffset,
-    })
-    fc.features.push(p)
-  })
-  return fc
-}

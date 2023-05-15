@@ -78,18 +78,4 @@ export class RennesApp extends VcsApp {
     const height = this.get3DMap().getScene().sampleHeight(cartographic)
     return height
   }
-
-  // TODO: unused, maybe delete it ?
-  async getPositionsWithHeight(positions: number[][]) {
-    const positionsCartographic: Cartographic[] = []
-    positions.forEach((p) => {
-      const cartographic = Cartographic.fromDegrees(p[0], p[1])
-      positionsCartographic.push(cartographic)
-    })
-
-    const positionsWithHeight = await this.get3DMap()
-      .getScene()
-      .sampleHeightMostDetailed(positionsCartographic)
-    return positionsWithHeight
-  }
 }
