@@ -7,7 +7,6 @@ import {
   buffer,
   center,
   difference,
-  feature,
   featureCollection,
   point,
   polygon,
@@ -133,14 +132,12 @@ export type Square = {
 export type Matrix = Square[][]
 
 export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
-  //TODO: remove featureArray, for test
-  const featureArray: Feature[] = []
   let x = 0,
     y = 0
   const matrix: Matrix = []
   const arrFeatures: Array<Feature<Geometry, Properties>> = []
   // @ts-ignore
-  grid.featureCollection.features.forEach((f, index: number) => {
+  grid.featureCollection.features.forEach((f) => {
     let isInside: boolean = false
     const centerGridCase = center(f as AllGeoJSON)
     if (x == 0) {
@@ -159,11 +156,7 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
     if (isInside) {
       arrFeatures.push(f as Feature<Geometry, Properties>)
     }
-    featureArray[index] = feature(centerGridCase.geometry, {
-      usable: isInside,
-      rowIndex: y,
-      colIndex: x,
-    })
+
     matrix[y][x] = {
       usable: isInside,
       squareCenter: centerGridCase.geometry,

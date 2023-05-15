@@ -106,6 +106,7 @@ async function setupGridInstallation() {
     displayGridOnMap(rennesApp, filterGeomGrid.featureCollection)
     addRoofInteractionOn2dMap(rennesApp)
     rennesApp.getOpenlayerMap().getView().setZoom(22)
+    rennesApp.getOpenlayerMap().getView().setMinZoom(21)
     rennesApp.getOpenlayerMap().getView().setCenter(getCenter(bboxOnRoof))
   }
 }
@@ -118,6 +119,7 @@ async function setupSolarPanelFixtures() {
   // Make sure the active map is the 3D one sot hat the height of solar panel
   // can be computed properly
   await rennesApp.maps.setActiveMap('cesium')
+  mapStore.activate3d()
   const solarPanelModels = solarPanelGridToSolarPanelModel(
     rennesApp,
     roofsStore.gridMatrix!,
