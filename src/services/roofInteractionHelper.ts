@@ -1,6 +1,4 @@
 import { Fill, Icon, Stroke, Style } from 'ol/style'
-import { Select } from 'ol/interaction'
-import { always, click } from 'ol/events/condition'
 import {
   bbox,
   bboxPolygon,
@@ -45,6 +43,9 @@ import { useRoofsStore } from '@/stores/roof'
 import type { Polygon } from 'ol/geom'
 
 import checkIcon from '@/assets/icons/checkicon.png'
+import { OlDragSquaresInteraction } from '@/interactions/olDragSquaresInteraction'
+import type { Vector as VectorLayer } from 'ol/layer'
+import type { Vector as VectorSource } from 'ol/source'
 
 const selected = new Style({
   geometry: function (feature) {
@@ -73,7 +74,8 @@ const gridStyle = new Style({
     width: 0.5,
   }),
 })
-let selectClick: Select
+// let selectClick: Select
+let dragSquaresInteraction: OlDragSquaresInteraction
 
 /**
  * Mock of the future function, which will return the shape of the roof in the right format
@@ -206,23 +208,33 @@ export function addRoofInteractionOn2dMap(rennesApp: RennesApp) {
   const olLayer: LayerOpenlayersImpl = rennesApp.layers
     .getByKey(RENNES_LAYER.roofSquaresArea)
     ?.getImplementationsForMap(rennesApp.get2DMap())[0] as LayerOpenlayersImpl
-  selectClick = new Select({
-    condition: click,
-    toggleCondition: always,
-    style: selected,
-    layers: (layer) => layer == olLayer.olLayer,
-  })
-  map.addInteraction(selectClick)
+  dragSquaresInteraction = new OlDragSquaresInteraction(
+    olLayer.getOLLayer() as VectorLayer<VectorSource>,
+    selected
+  )
+  map.addInteraction(dragSquaresInteraction)
 }
 
+export function clearSquareInteractionOn2dMap(rennesApp: RennesApp) {
+  const map = rennesApp.getOpenlayerMap()
+  map.getInteractions().forEach((interaction) => {
+    if (interaction instanceof OlDragSquaresInteraction) {
+      interaction.unselectEverything()
+    }
+  })
+}
 export function removeRoofInteractionOn2dMap(rennesApp: RennesApp) {
   const map = rennesApp.getOpenlayerMap()
-  map.removeInteraction(selectClick)
+  map.getInteractions().forEach((interaction) => {
+    if (interaction instanceof OlDragSquaresInteraction) {
+      map.removeInteraction(interaction)
+    }
+  })
 }
 
 export function getSquaresOfInteraction() {
   const features: olFeature[] = []
-  selectClick.getFeatures().forEach((selectFeature) => {
+  dragSquaresInteraction.getSelected().forEach((selectFeature) => {
     const reprojFeature = selectFeature
     reprojFeature.setGeometry(
       selectFeature.getGeometry()?.transform('EPSG:3857', 'EPSG:4326')

@@ -40,6 +40,7 @@ import type { Grid } from '@/helpers/rectangleGrid'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
+import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -189,4 +190,5 @@ mapStore.$subscribe(async () => {
 <template>
   <UiMap></UiMap>
   <NavigationButtons />
+  <ResetGridButton />
 </template>
