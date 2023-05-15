@@ -93,6 +93,9 @@ export const useSimulationStore = defineStore('simulation', () => {
   }
 
   function shouldShowSolarPanelLayer(): boolean {
+    // NOTE(IS): If you want to debug visually the location of solar panel,
+    // you set solar panel is shown in the Select obstacle step (step: 2, subStep: 1)
+    // Then use back button after generating the solar panel
     if (currentStep.value === 3) {
       return true
     }
