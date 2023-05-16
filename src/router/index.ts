@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { _paq } from '@/matomo.js'
+import { useViewsStore } from '@/stores/views'
 
 const redirectToRoofSelection = (
   // @ts-ignore
@@ -103,12 +104,18 @@ if (router !== undefined) {
   router.afterEach(
     (
       // @ts-ignore
-      to
+      to,
+      // @ts-ignore
+      from
     ) => {
       // Track the page view after navigation is confirmed
       _paq.push(['setCustomUrl', to.fullPath])
       _paq.push(['setDocumentTitle', to.meta.title || 'My New Title'])
       _paq.push(['trackPageView'])
+
+      //Store the previous route
+      const viewStore = useViewsStore()
+      viewStore.previousRoute = from.name as string
     }
   )
 }
