@@ -16,7 +16,6 @@ const isCheckboxChecked = ref(false)
 
 function clickButtonBegin() {
   changeError()
-
   if (!isCheckboxChecked.value) {
     displayError.value = true
     return
