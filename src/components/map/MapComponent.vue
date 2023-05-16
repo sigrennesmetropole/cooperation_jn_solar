@@ -52,7 +52,9 @@ const mapStore = useMapStore()
 const viewStore = useViewsStore()
 
 onMounted(async () => {
-  await rennesApp.initializeMap()
+  if (viewStore.currentView !== 'step-sunshine') {
+    await rennesApp.initializeMap()
+  }
   await updateActiveMap()
   await updateLayersVisibility()
   createMapInteractions(rennesApp)
