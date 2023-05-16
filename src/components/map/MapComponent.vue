@@ -8,8 +8,8 @@ import {
   useLayersStore,
 } from '@/stores/layers'
 import {
-  updateMapInteractions,
-  updateMapInteractionsAfterViewChange,
+  updateInteractionsOnMap,
+  updateInteractionsStoreAfterViewChange,
 } from '@/services/interactionUtils'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
@@ -61,8 +61,8 @@ onMounted(async () => {
   await updateActiveMap()
   await updateLayersVisibility()
   // force initialization of the interaction on init page
-  updateMapInteractionsAfterViewChange(rennesApp)
-  updateMapInteractions(rennesApp)
+  updateInteractionsStoreAfterViewChange(rennesApp)
+  updateInteractionsOnMap(rennesApp)
 })
 
 async function updateActiveMap() {
@@ -184,7 +184,7 @@ layerStore.$subscribe(async () => {
 
 viewStore.$subscribe(async () => {
   // triger mandatory store change after changing view
-  updateMapInteractionsAfterViewChange(rennesApp)
+  updateInteractionsStoreAfterViewChange(rennesApp)
 })
 
 mapStore.$subscribe(async () => {
@@ -200,7 +200,7 @@ mapStore.$subscribe(async () => {
 
 interactionsStore.$subscribe(async () => {
   // update map interactions on the mapobject
-  updateMapInteractions(rennesApp)
+  updateInteractionsOnMap(rennesApp)
 })
 </script>
 

@@ -88,7 +88,7 @@ function newTypeInteraction(
   return undefined
 }
 
-export function updateMapInteractionsAfterViewChange(rennesApp: RennesApp) {
+export function updateInteractionsStoreAfterViewChange(rennesApp: RennesApp) {
   const interactionsStore = useInteractionsStore()
   const viewStore = useViewsStore()
   const simulationStore = useSimulationStore()
@@ -161,7 +161,7 @@ export function manageSelectAndIrisDependingOnZoom(rennesApp: RennesApp) {
       })
   }
 }
-export function updateMapInteractions(rennesApp: RennesApp) {
+export function updateInteractionsOnMap(rennesApp: RennesApp) {
   const interactionsStore = useInteractionsStore()
   interactionsStore.getActiveInteractions().forEach((int) => {
     if (!isInteractionExist(rennesApp, int)) {
