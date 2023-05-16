@@ -27,7 +27,6 @@ const routes = [
     redirect: '/home',
     meta: {
       title: 'Page Home',
-      order: 1,
     },
   },
   {
@@ -36,7 +35,6 @@ const routes = [
     component: () => import('../views/HomeView.vue'),
     meta: {
       title: 'Page Home',
-      order: 1,
     },
   },
   {
@@ -45,7 +43,6 @@ const routes = [
     component: () => import('../views/RoofSelectionView.vue'),
     meta: {
       title: 'Page Roof Selection',
-      order: 2,
     },
   },
   {
@@ -55,7 +52,6 @@ const routes = [
     beforeEnter: redirectToRoofSelection,
     meta: {
       title: 'Page Roof Selected Information',
-      order: 3,
     },
   },
   {
@@ -65,7 +61,6 @@ const routes = [
     beforeEnter: redirectToRoofSelection,
     meta: {
       title: 'Page Step Sunshine',
-      order: 4,
     },
   },
   {
@@ -75,7 +70,6 @@ const routes = [
     beforeEnter: redirectToRoofSelection,
     meta: {
       title: 'Page Legal Notice',
-      order: 7,
     },
   },
   {
@@ -85,7 +79,6 @@ const routes = [
     beforeEnter: redirectToRoofSelection,
     meta: {
       title: 'Page End Simulation',
-      order: 5,
     },
   },
   {
@@ -95,7 +88,6 @@ const routes = [
     beforeEnter: redirectToRoofSelection,
     meta: {
       title: 'Page Simulation Results',
-      order: 6,
     },
   },
 
@@ -108,19 +100,6 @@ const router = createRouter({
 })
 
 if (router !== undefined) {
-  router.beforeEach((to, from, next) => {
-    // @ts-ignore
-    if (to.meta.order < from.meta.order) {
-      if (window.confirm('Are you sure you want to leave this page?')) {
-        next()
-      } else {
-        next(false)
-      }
-    } else {
-      next()
-    }
-  })
-
   router.afterEach(
     (
       // @ts-ignore
