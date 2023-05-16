@@ -8,6 +8,8 @@ import { getUid, MapBrowserEvent } from 'ol'
 import type { Style } from 'ol/style'
 import type { StyleLike } from 'ol/style/Style'
 import { RENNES_LAYER } from '@/stores/layers'
+import type olFeature from 'ol/Feature'
+import type olGeometry from 'ol/geom/Geometry'
 
 export class OlDragSquaresInteraction extends PointerInteraction {
   initialCoordinate_: Coordinate | undefined
@@ -19,7 +21,11 @@ export class OlDragSquaresInteraction extends PointerInteraction {
   selectedStyle: Style
   isDragging: boolean
 
-  constructor(gridFeaturesLayer: VectorLayer<VectorSource>, style: Style) {
+  constructor(
+    gridFeaturesLayer: VectorLayer<VectorSource>,
+    previouslySelected: olFeature<olGeometry>[],
+    style: Style
+  ) {
     super()
     this.initialCoordinate_ = undefined
     this.feature_ = undefined
@@ -29,6 +35,17 @@ export class OlDragSquaresInteraction extends PointerInteraction {
     this.originalFeatureStyles = new Map<string, StyleLike>()
     this.selectedStyle = style
     this.isDragging = false
+    previouslySelected.forEach((feature) => {
+      gridFeaturesLayer
+        .getSource()
+        ?.getFeatures()
+        .forEach((f) => {
+          if (feature.getProperty('center') === f.getProperty('center')) {
+            this.persistingSelectedMap.set(getUid(f), f)
+            this.applySelectedStyle_(f)
+          }
+        })
+    })
   }
 
   handleDownEvent(evt: MapBrowserEvent<UIEvent>) {

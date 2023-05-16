@@ -20,7 +20,6 @@ import {
   addRoofInteractionOn2dMap,
   bboxRoof,
   displayGridOnMap,
-  displayRoofShape,
   filterGrid,
   generateRectangleGrid,
   removeRoof2dShape,
@@ -38,7 +37,6 @@ import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-import { getCenter } from 'ol/extent'
 import type { Grid } from '@/helpers/rectangleGrid'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
@@ -103,24 +101,32 @@ async function setupGridInstallation() {
   if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
     await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
-    let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
-    displayRoofShape(rennesApp, roofShape)
-    let bboxOnRoof = bboxRoof(roofShape)
-    let grid: Grid = generateRectangleGrid(roofShape, bboxOnRoof)
-    let { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
-      roofShape,
-      grid
+    // avoid recompute everything when came back from solar placement
+    if (!roofsStore.gridMatrix) {
+      let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
+      let bboxOnRoof = bboxRoof(roofShape)
+      let grid: Grid = generateRectangleGrid(roofShape, bboxOnRoof)
+      let { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
+        roofShape,
+        grid
+      )
+      roofsStore.gridGeom = filterGeomGrid
+      roofsStore.gridMatrix = gridMatrix
+    } else {
+      roofsStore.restoreMatrixToClean()
+    }
+    displayGridOnMap(rennesApp, roofsStore.gridGeom!.featureCollection)
+    addRoofInteractionOn2dMap(
+      rennesApp,
+      roofsStore.getPreviouslySelected() ?? []
     )
-    roofsStore.gridMatrix = gridMatrix
-    displayGridOnMap(rennesApp, filterGeomGrid.featureCollection)
-    addRoofInteractionOn2dMap(rennesApp)
     rennesApp.getOpenlayerMap().getView().setZoom(22)
     rennesApp.getOpenlayerMap().getView().setMinZoom(21)
-    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(bboxOnRoof))
   }
 }
 
 async function setupSolarPanelFixtures() {
+  roofsStore.saveCleanMatrix()
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
   const selectedRoofModel: RoofSurfaceModel =
@@ -145,6 +151,12 @@ async function setupSolarPanelFixtures() {
 
 simulationStore.$subscribe(async () => {
   if (
+    simulationStore.currentStep === 1 &&
+    simulationStore.currentSubStep == 1
+  ) {
+    roofsStore.resetGridAndMatrix()
+  }
+  if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
@@ -163,7 +175,7 @@ simulationStore.$subscribe(async () => {
       simulationStore.currentStep === 3 &&
       simulationStore.currentSubStep == 1
     ) {
-      saveScreenShot(rennesApp)
+      await saveScreenShot(rennesApp)
     }
   }
 
