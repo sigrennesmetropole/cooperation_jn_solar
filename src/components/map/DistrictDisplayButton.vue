@@ -1,27 +1,15 @@
 <script lang="ts" setup>
 import CheckBox from '@/components/simulation/CheckBox.vue'
-import { createMapInteractions } from '@/services/interactionUtils'
 import { useDistrictStore } from '@/stores/districtInformations'
-import { useLayersStore, RENNES_LAYER } from '@/stores/layers'
-import { ref, inject } from 'vue'
-import type { RennesApp } from '@/services/RennesApp'
+import { ref } from 'vue'
 
-const layerStore = useLayersStore()
-const rennesApp = inject('rennesApp') as RennesApp
 const isCheckBoxOnError = ref(false)
 const isCheckboxChecked = ref(false)
 const districtStore = useDistrictStore()
 
-async function checkboxChange(event: boolean) {
-  isCheckboxChecked.value = event
-  districtStore.setCheckboxChecked(event)
-  if (districtStore.checkboxChecked === true) {
-    await layerStore.enableLayer(RENNES_LAYER.iris)
-  } else {
-    await layerStore.disableLayer(RENNES_LAYER.iris)
-  }
-  createMapInteractions(rennesApp)
-}
+districtStore.$subscribe(async () => {
+  isCheckboxChecked.value = districtStore.checkboxChecked
+})
 </script>
 
 <template>
@@ -31,7 +19,7 @@ async function checkboxChange(event: boolean) {
     <CheckBox
       :isOnError="isCheckBoxOnError"
       :isChecked="isCheckboxChecked"
-      @checkBoxChange="checkboxChange($event)"
+      @checkBoxChange="districtStore.setCheckboxChecked($event)"
     >
       <template v-slot:text>
         <p class="font-dm-sans text-sm text-slate-900 mt-[3px]">

@@ -3,8 +3,14 @@ import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Viewpoint } from '@vcmap/core'
 import type { Feature } from 'ol'
+import { useInteractionsStore } from '@/stores/interactions'
+import SelectDistrictInteraction from '@/interactions/selectDistrictInteractions'
+import { RENNES_LAYER, useLayersStore } from '@/stores/layers'
 
 export const useDistrictStore = defineStore('districtInformations', () => {
+  const interactionsStore = useInteractionsStore()
+  const layerStore = useLayersStore()
+
   const districtCode: Ref<number> = ref(0)
   const districtName: Ref<string> = ref('')
   const districtConsumption: Ref<number> = ref(0)
@@ -15,7 +21,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
   const newPointAbscissa: Ref<number> = ref(0)
   const newPointOrdinate: Ref<number> = ref(0)
   const checkboxChecked: Ref<boolean> = ref(false)
-
+  const canBeDisplayed: Ref<boolean> = ref(true)
   function setDistrictIrisCode(newDistrictCode: number) {
     districtCode.value = newDistrictCode
   }
@@ -63,6 +69,20 @@ export const useDistrictStore = defineStore('districtInformations', () => {
 
   function setCheckboxChecked(newAction: boolean) {
     checkboxChecked.value = newAction
+    if (newAction && canBeDisplayed) {
+      layerStore.enableLayer(RENNES_LAYER.iris)
+      interactionsStore.enableInteraction(SelectDistrictInteraction)
+    } else {
+      layerStore.disableLayer(RENNES_LAYER.iris)
+      interactionsStore.disableInteraction(SelectDistrictInteraction)
+    }
+  }
+
+  function setCanBeDisplayed(isFarEnough: boolean) {
+    canBeDisplayed.value = isFarEnough
+    if (!isFarEnough) {
+      setCheckboxChecked(false)
+    }
   }
 
   function resetDistrictStore() {
@@ -80,6 +100,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
     newPointAbscissa,
     newPointOrdinate,
     checkboxChecked,
+    canBeDisplayed,
     setDistrictIrisCode,
     setDistrictName,
     setDistrictConsumption,
@@ -89,6 +110,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
     setNewPointFeatureOnSelectedDistrict,
     setNewCoordinates,
     setCheckboxChecked,
+    setCanBeDisplayed,
     resetDistrictStore,
   }
 })

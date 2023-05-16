@@ -7,7 +7,10 @@ import {
   RENNES_LAYERNAMES,
   useLayersStore,
 } from '@/stores/layers'
-import { createMapInteractions } from '@/services/interactionUtils'
+import {
+  updateInteractionsOnMap,
+  updateInteractionsStoreAfterViewChange,
+} from '@/services/interactionUtils'
 import type { Layer } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
@@ -41,6 +44,7 @@ import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
+import { useInteractionsStore } from '@/stores/interactions'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -50,6 +54,7 @@ const solarPanelStore = useSolarPanelStore()
 const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
 const viewStore = useViewsStore()
+const interactionsStore = useInteractionsStore()
 
 onMounted(async () => {
   if (viewStore.currentView !== 'step-sunshine') {
@@ -57,7 +62,9 @@ onMounted(async () => {
   }
   await updateActiveMap()
   await updateLayersVisibility()
-  createMapInteractions(rennesApp)
+  // force initialization of the interaction on init page
+  updateInteractionsStoreAfterViewChange(rennesApp)
+  updateInteractionsOnMap(rennesApp)
 })
 
 async function updateActiveMap() {
@@ -178,7 +185,8 @@ layerStore.$subscribe(async () => {
 })
 
 viewStore.$subscribe(async () => {
-  createMapInteractions(rennesApp)
+  // triger mandatory store change after changing view
+  updateInteractionsStoreAfterViewChange(rennesApp)
 })
 
 mapStore.$subscribe(async () => {
@@ -186,8 +194,15 @@ mapStore.$subscribe(async () => {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
   }
   if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
-    await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
+    if (mapStore.isInitializeMap) {
+      await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
+    }
   }
+})
+
+interactionsStore.$subscribe(async () => {
+  // update map interactions on the mapobject
+  updateInteractionsOnMap(rennesApp)
 })
 </script>
 
