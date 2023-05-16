@@ -14,11 +14,14 @@ import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
+import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
+import { useMapStore } from '@/stores/map'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const popUpStore = usePopUpStore()
 const districtStore = useDistrictStore()
+const mapStore = useMapStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -146,6 +149,12 @@ window.addEventListener('beforeunload', function (e) {
       </div>
     </template>
 
+    <div
+      class="h-full w-full bg-slate-600/75 absolute z-[1000] flex items-center justify-center"
+      v-if="mapStore.isLoadingMap"
+    >
+      <UiSpinnerLoading width="50" height="50" />
+    </div>
     <notifications position="top left" />
   </main>
 </template>
