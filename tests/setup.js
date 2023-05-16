@@ -9,6 +9,21 @@ global.CanvasRenderingContext2D = CanvasRenderingContext2D
 global.Path2D = Path2D
 global.ResizeObserver = ResizeObserver
 
+class Worker {
+  constructor(stringUrl) {
+    this.url = stringUrl
+    this.onmessage = () => {}
+  }
+
+  postMessage(msg) {
+    this.onmessage(msg)
+  }
+
+  addEventListener() {}
+}
+
+window.Worker = Worker
+
 const canvasWindow = getCanvasWindow({ document: window.document })
 
 const apis = [
