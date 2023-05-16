@@ -37,7 +37,7 @@ import { GeoJSON } from 'ol/format'
 import type { Coordinate } from 'ol/coordinate'
 import type { RennesApp } from '@/services/RennesApp'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
-import type { GeoJsonProperties, Geometry } from 'geojson'
+import type { Geometry } from 'geojson'
 import { useRoofsStore } from '@/stores/roof'
 import type { Polygon } from 'ol/geom'
 
@@ -196,13 +196,17 @@ export function displayRoofShape(
   roofLayer.addFeatures(marker)
 }
 
-export function addRoofInteractionOn2dMap(rennesApp: RennesApp) {
+export function addRoofInteractionOn2dMap(
+  rennesApp: RennesApp,
+  previouslySelected: olFeature<olGeometry>[]
+) {
   const map = rennesApp.getOpenlayerMap()
   const olLayer: LayerOpenlayersImpl = rennesApp.layers
     .getByKey(RENNES_LAYER.roofSquaresArea)
     ?.getImplementationsForMap(rennesApp.get2DMap())[0] as LayerOpenlayersImpl
   dragSquaresInteraction = new OlDragSquaresInteraction(
     olLayer.getOLLayer() as VectorLayer<VectorSource>,
+    previouslySelected,
     selected
   )
   map.addInteraction(dragSquaresInteraction)
@@ -264,15 +268,12 @@ export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
   return res
 }
 
-export function substractSelectedSquares(squareGrid: olFeature<olGeometry>[]) {
-  // @ts-ignore
-  const selectedSquares = getSquaresOfInteraction()
-  return squareGrid.filter((square) => !selectedSquares.includes(square))
-}
-
 export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
   // @ts-ignore
   const selectedSquares = getSquaresOfInteraction()
+  const roofsStore = useRoofsStore()
+  roofsStore.previouslySelected = selectedSquares
+
   let x, y
   for (x = 0; x < squareGrid.length; x++) {
     for (y = 0; y < squareGrid[x].length; y++) {
@@ -285,18 +286,6 @@ export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
       }
     }
   }
-}
-
-export function getSubstractedRoofArea(
-  roofsPans: FeatureCollection<Geometry, GeoJsonProperties>
-) {
-  // @ts-ignore
-  const union: Feature<Geometry, Properties> | null = unionAllRoofPan(roofsPans)
-  let res
-  if (union) {
-    res = substractSquareFromRoofPanUnion(union)
-  }
-  return res
 }
 
 export function removeRoofGrid(rennesApp: RennesApp) {
