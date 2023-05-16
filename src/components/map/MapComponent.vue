@@ -169,7 +169,6 @@ mapStore.$subscribe(async () => {
   }
   if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
     await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
-    ////////////////////////////////////////////////////////////////////////////////////////////
   }
 })
 </script>
