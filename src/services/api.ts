@@ -1,5 +1,6 @@
 import { RennesNotification } from '@/services/notification'
 import { getUrlBackOffice } from '@/services/env'
+import { useMapStore } from '@/stores/map'
 
 class ApiService {
   async callApiPost(url: string, dataPost: {}, headers: {}) {
@@ -23,6 +24,8 @@ class ApiService {
         'Une erreur est survenue, veuillez réessayer.'
       )
       notif.displayNotification()
+      const mapStore = useMapStore()
+      mapStore.isLoadingMap = false
       throw error
     }
   }
@@ -46,6 +49,8 @@ class ApiService {
         'Une erreur est survenue, veuillez réessayer.'
       )
       notif.displayNotification()
+      const mapStore = useMapStore()
+      mapStore.isLoadingMap = false
       throw error
     }
   }

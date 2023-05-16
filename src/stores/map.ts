@@ -5,6 +5,7 @@ import type { Viewpoint } from '@vcmap/core'
 
 export const useMapStore = defineStore('map', () => {
   const isInitializeMap: Ref<boolean> = ref(false)
+  const isLoadingMap: Ref<boolean> = ref(false)
   const viewPoint: Ref<Viewpoint | null> = ref(null)
   // Map state
   const activeMap: Ref<string> = ref('cesium') // Map: 'ol', 'cesium'
@@ -25,6 +26,7 @@ export const useMapStore = defineStore('map', () => {
     isInitializeMap,
     viewPoint,
     activeMap,
+    isLoadingMap,
     is3D,
     activate2d,
     activate3d,

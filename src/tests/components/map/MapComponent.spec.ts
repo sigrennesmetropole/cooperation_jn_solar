@@ -8,9 +8,9 @@ import ForbidenClickInteraction from '@/interactions/forbidClickInteraction'
 import SelectDistrictInteraction from '@/interactions/selectDistrictInteractions'
 import { RENNES_LAYER } from '@/stores/layers'
 import { viewList } from '@/model/views.model'
-import { useRoofsStore } from '@/stores/roof'
+// import { useRoofsStore } from '@/stores/roof'
 import { VcsModule, GeoJSONLayer, OpenlayersMap } from '@vcmap/core'
-import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+// import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 
 vi.mock('vue-router')
 vi.mock('@/services/roofInteractionHelper')
@@ -54,7 +54,7 @@ describe('#MapComponent', async () => {
       },
     },
   })
-  const roofStore = useRoofsStore()
+  // const roofStore = useRoofsStore()
 
   it('renders', () => {
     expect(wrapper.exists()).toBe(true)
@@ -82,34 +82,32 @@ describe('#MapComponent', async () => {
 
   // Skip failed test for now
   describe.skip('setupGridInstallation', async () => {
-    it('set up the interaction, initialize grid, change the zoom, set center', async () => {
-      const geojsonObject: GeoJSONFeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      }
-      roofStore.getFeaturesOfSelectedPanRoof = () => geojsonObject
-      const roofInteractionHelper = await import(
-        '@/services/roofInteractionHelper'
-      )
-      roofInteractionHelper.displayGridOnMap = vi.fn()
-      roofInteractionHelper.displayRoofShape = vi.fn()
-      roofInteractionHelper.generateRectangleGrid = vi
-        .fn()
-        .mockReturnValue({ bbox: [1, 1.5, 1, 2.5] })
-      //roofInteractionHelper.addRoofInteractionOn2dMap = vi.fn()
-
-      await (wrapper.vm as any).setupGridInstallation() //eslint-disable-line
-
-      expect(roofInteractionHelper.displayRoofShape).toHaveBeenCalledOnce()
-      expect(roofInteractionHelper.generateRectangleGrid).toHaveBeenCalledOnce()
-      expect(roofInteractionHelper.generateRectangleGrid).toHaveBeenCalledOnce()
-      expect(
-        roofInteractionHelper.addRoofInteractionOn2dMap
-      ).toHaveBeenCalledOnce()
-      expect(app.getOpenlayerMap().getView().getZoom()).toBe(22)
-      //set center the the middle of the bbox
-      expect(app.getOpenlayerMap().getView().getCenter()![0]).toBe(1)
-      expect(app.getOpenlayerMap().getView().getCenter()![1]).toBe(2)
-    })
+    // it('set up the interaction, initialize grid, change the zoom, set center', async () => {
+    //   const geojsonObject: GeoJSONFeatureCollection = {
+    //     type: 'FeatureCollection',
+    //     features: [],
+    //   }
+    //   roofStore.getFeaturesOfSelectedPanRoof = () => geojsonObject
+    //   const roofInteractionHelper = await import(
+    //     '@/services/roofInteractionHelper'
+    //   )
+    //   roofInteractionHelper.displayGridOnMap = vi.fn()
+    //   roofInteractionHelper.displayRoofShape = vi.fn()
+    //   roofInteractionHelper.generateRectangleGrid = vi
+    //     .fn()
+    //     .mockReturnValue({ bbox: [1, 1.5, 1, 2.5] })
+    //   //roofInteractionHelper.addRoofInteractionOn2dMap = vi.fn()
+    //   await (wrapper.vm as any).setupGridInstallation() //eslint-disable-line
+    //   expect(roofInteractionHelper.displayRoofShape).toHaveBeenCalledOnce()
+    //   expect(roofInteractionHelper.generateRectangleGrid).toHaveBeenCalledOnce()
+    //   expect(roofInteractionHelper.generateRectangleGrid).toHaveBeenCalledOnce()
+    //   expect(
+    //     roofInteractionHelper.addRoofInteractionOn2dMap
+    //   ).toHaveBeenCalledOnce()
+    //   expect(app.getOpenlayerMap().getView().getZoom()).toBe(22)
+    //   //set center the the middle of the bbox
+    //   expect(app.getOpenlayerMap().getView().getCenter()![0]).toBe(1)
+    //   expect(app.getOpenlayerMap().getView().getCenter()![1]).toBe(2)
+    // })
   })
 })

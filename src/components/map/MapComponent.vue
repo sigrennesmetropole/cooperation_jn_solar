@@ -15,11 +15,8 @@ import { useAddressStore } from '@/stores/address'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
-  bboxRoof,
   displayGridOnMap,
   displayRoofShape,
-  filterGrid,
-  generateRectangleGrid,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
@@ -36,11 +33,11 @@ import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
 import { getCenter } from 'ol/extent'
-import type { Grid } from '@/helpers/rectangleGrid'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
+import { apiGridService } from '@/services/api-grid'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -88,7 +85,8 @@ async function disableOlInteraction() {
 }
 
 async function setupGridInstallation() {
-  //force synchrone switch for adding openlayer interaction, update the store
+  mapStore.isLoadingMap = true
+
   await rennesApp.maps.setActiveMap('ol')
   await mapStore.activate2d()
   if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
@@ -96,18 +94,29 @@ async function setupGridInstallation() {
     await layerStore.enableLayer(RENNES_LAYER.roofShape)
     let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
     displayRoofShape(rennesApp, roofShape)
-    let bboxOnRoof = bboxRoof(roofShape)
-    let grid: Grid = generateRectangleGrid(roofShape, bboxOnRoof)
-    let { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
-      roofShape,
-      grid
-    )
-    roofsStore.gridMatrix = gridMatrix
-    displayGridOnMap(rennesApp, filterGeomGrid.featureCollection)
-    addRoofInteractionOn2dMap(rennesApp)
-    rennesApp.getOpenlayerMap().getView().setZoom(22)
-    rennesApp.getOpenlayerMap().getView().setMinZoom(21)
-    rennesApp.getOpenlayerMap().getView().setCenter(getCenter(bboxOnRoof))
+
+    let roofSlope =
+      useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+    if (roofSlope === undefined) {
+      roofSlope = 0
+    }
+    apiGridService
+      .getGrid(roofShape, roofSlope)
+      .then((data) => {
+        const filterGeomGrid = data.grid
+        const gridMatrix = data.matrix
+        const bboxOnRoof = data.bboxOnRoof
+
+        roofsStore.gridMatrix = gridMatrix
+        displayGridOnMap(rennesApp, filterGeomGrid.featureCollection)
+        addRoofInteractionOn2dMap(rennesApp)
+        rennesApp.getOpenlayerMap().getView().setCenter(getCenter(bboxOnRoof))
+        mapStore.isLoadingMap = false
+      })
+      .catch((error) => {
+        console.log(error)
+        mapStore.isLoadingMap = false
+      })
   }
 }
 
@@ -139,6 +148,8 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
+    console.log('setup grid installation')
+
     await setupGridInstallation()
   } else {
     await disableOlInteraction()
