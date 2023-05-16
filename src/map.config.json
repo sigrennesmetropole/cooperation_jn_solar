@@ -131,10 +131,10 @@
     {
       "name": "rennes",
       "groundPosition": [-1.7219, 48.09],
-      "distance": 37039,
-      "pitch": -90,
+      "distance": 29000,
+      "pitch": -45,
       "roll": 0,
-      "heading": 0,
+      "heading": -10,
       "animate": true,
       "type": "Viewpoint",
       "duration": 0.5,
