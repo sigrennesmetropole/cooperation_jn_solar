@@ -43,6 +43,10 @@ If you want to work by changing the project .npmrc, the easiest way is probably 
 git update-index --skip-worktree .npmrc
 ```
 
+### Configure .env file
+
+For local development (with local [Back End](https://github.com/sigrennesmetropole/cooperation_jn_backend)), please use `.env.local.dev` to create `.env`
+
 #### Upgrade
 
 The [@sigrennesmetropole/cooperation_jn_common_ui](https://github.com/sigrennesmetropole/cooperation_jn_common_ui/pkgs/npm/cooperation_jn_common_ui) package is frequently patch.
