@@ -128,8 +128,8 @@ async function setupSolarPanelFixtures() {
     selectedRoofModel.inclinaison,
     selectedRoofModel.azimuth
   )
-  solarPanelStore.maxNumberSolarPanel = solarPanelModels.length
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
+  solarPanelStore.solarPanels = solarPanelModels
   await displaySolarPanel(rennesApp, solarPanelModels)
   layerStore.enableLayer(RENNES_LAYER.solarPanel)
 }

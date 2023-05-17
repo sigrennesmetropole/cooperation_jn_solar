@@ -35,7 +35,7 @@ const updateCurrentNumSolarPanel = (changes: number) => {
     "
   >
     <SimulationResult
-      :max-num-solar-panel="solarPanelStore.maxNumberSolarPanel"
+      :max-num-solar-panel="solarPanelStore.maxNumberSolarPanel()"
       :roof-surface="roofsStore.getRoofSurfaceModelOfSelectedPanRoof()"
       :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
       @solarPanelChanges="updateCurrentNumSolarPanel"
