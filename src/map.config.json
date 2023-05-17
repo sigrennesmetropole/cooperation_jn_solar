@@ -134,7 +134,7 @@
       "distance": 29000,
       "pitch": -45,
       "roll": 0,
-      "heading": -10,
+      "heading": 0,
       "animate": true,
       "type": "Viewpoint",
       "duration": 0.5,
