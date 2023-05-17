@@ -69,7 +69,10 @@ export class RennesApp extends VcsApp {
 
   async getLayerByKey(key: RennesLayer) {
     const layer: GeoJSONLayer = this.layers.getByKey(key) as GeoJSONLayer
-    await layer.fetchData()
+    if (layer) {
+      await layer.fetchData()
+    }
+
     return layer
   }
 

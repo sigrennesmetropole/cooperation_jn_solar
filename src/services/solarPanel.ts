@@ -98,14 +98,16 @@ export async function filterSolarPanelByMaxSolarPanel(
   const solarPanel: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.solarPanel
   )
-  solarPanel.setGlobalHider(new GlobalHider())
-  solarPanel.featureVisibility.clearHiddenObjects()
-  // Note(IS): We use 0-th index for the solar panel
-  const featuresToHide = solarPanel
-    .getFeatures()
-    .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
-    .map((f) => f.getId()!)
-  solarPanel.featureVisibility.hideObjects(featuresToHide)
+  if (solarPanel) {
+    solarPanel.setGlobalHider(new GlobalHider())
+    solarPanel.featureVisibility.clearHiddenObjects()
+    // Note(IS): We use 0-th index for the solar panel
+    const featuresToHide = solarPanel
+      .getFeatures()
+      .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
+      .map((f) => f.getId()!)
+    solarPanel.featureVisibility.hideObjects(featuresToHide)
+  }
 }
 
 export function getPeakPower() {
