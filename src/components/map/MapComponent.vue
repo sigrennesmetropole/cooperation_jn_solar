@@ -27,7 +27,7 @@ import {
 } from '@/services/roofInteractionHelper'
 import {
   displaySolarPanel,
-  filterSolarPanelByMaxSolarPanel as filterSolarPanelBySolarPanelNumber,
+  filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
 } from '@/services/solarPanel'
@@ -165,7 +165,7 @@ simulationStore.$subscribe(async () => {
 })
 
 solarPanelStore.$subscribe(async () => {
-  await filterSolarPanelBySolarPanelNumber(
+  await filterSolarPanelByMaxSolarPanel(
     rennesApp,
     solarPanelStore.currentNumberSolarPanel
   )

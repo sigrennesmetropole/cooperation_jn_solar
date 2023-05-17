@@ -67,7 +67,7 @@ export async function displaySolarPanel(
   const solarPanel: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.solarPanel
   )
-
+  solarPanel.removeAllFeatures()
   solarPanel.addFeatures(generateSolarPanel(solarPanels))
 }
 
