@@ -57,6 +57,9 @@ onMounted(async () => {
   await updateActiveMap()
   await updateLayersVisibility()
   createMapInteractions(rennesApp)
+  if (simulationStore.shouldShowSolarPanelLayer()) {
+    await displaySolarPanelLayer()
+  }
 })
 
 async function updateActiveMap() {
@@ -131,7 +134,6 @@ async function setupSolarPanel() {
   )
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
-  await displaySolarPanelLayer()
 }
 
 async function displaySolarPanelLayer() {
@@ -148,6 +150,7 @@ async function displaySolarPanelLayer() {
     )
   }
   layerStore.enableLayer(RENNES_LAYER.solarPanel)
+  await zoomToSolarPanel(rennesApp)
 }
 
 simulationStore.$subscribe(async () => {
@@ -165,7 +168,7 @@ simulationStore.$subscribe(async () => {
       simulationStore.currentSubStep == 2
     ) {
       await setupSolarPanel()
-      await zoomToSolarPanel(rennesApp)
+      await displaySolarPanelLayer()
     } else if (
       simulationStore.currentStep === 3 &&
       simulationStore.currentSubStep == 1
