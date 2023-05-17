@@ -60,7 +60,7 @@ export function generateSolarPanel(solarPanels: SolarPanelModel[]) {
   return geojson
 }
 
-export async function displaySolarPanel(
+export async function initializeSolarPanelLayer(
   rennesApp: RennesApp,
   solarPanels: SolarPanelModel[]
 ) {

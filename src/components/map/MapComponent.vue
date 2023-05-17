@@ -26,7 +26,7 @@ import {
   substractSelectedSquaresFromGrid,
 } from '@/services/roofInteractionHelper'
 import {
-  displaySolarPanel,
+  initializeSolarPanelLayer,
   filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
@@ -41,6 +41,7 @@ import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
+import { viewList } from '@/model/views.model'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -134,11 +135,18 @@ async function setupSolarPanel() {
 }
 
 async function displaySolarPanelLayer() {
-  await displaySolarPanel(rennesApp, solarPanelStore.solarPanels)
-  await filterSolarPanelByMaxSolarPanel(
-    rennesApp,
-    solarPanelStore.currentNumberSolarPanel
-  )
+  const solarPanelLayer = await rennesApp.getLayerByKey(RENNES_LAYER.solarPanel)
+  // Make sure that the solar panel layer has features
+  if (
+    solarPanelStore.maxNumberSolarPanel() > 0 &&
+    solarPanelLayer.getFeatures().length == 0
+  ) {
+    await initializeSolarPanelLayer(rennesApp, solarPanelStore.solarPanels)
+    await filterSolarPanelByMaxSolarPanel(
+      rennesApp,
+      solarPanelStore.currentNumberSolarPanel
+    )
+  }
   layerStore.enableLayer(RENNES_LAYER.solarPanel)
 }
 
