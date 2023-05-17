@@ -1,8 +1,8 @@
 import PromiseWorker from 'promise-worker'
-import MyWorker from './worker?worker'
+import GridWorker from './worker?worker'
 
-const worker = new MyWorker()
-const promiseWorker = new PromiseWorker(worker)
+const gridWorker = new GridWorker()
+const promiseWorker = new PromiseWorker(gridWorker)
 
 const send = (message: any) =>
   promiseWorker.postMessage({

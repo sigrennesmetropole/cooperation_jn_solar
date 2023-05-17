@@ -1,4 +1,3 @@
-// Handle messages received from the main thread
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import {
   bboxRoof,
@@ -11,7 +10,6 @@ registerPromiseWorker(function ({ message }) {
   const roofShape = JSON.parse(message.roofShape) as GeoJSONFeatureCollection
   const roofSlope = message.roofSlope
   const bboxOnRoof = bboxRoof(roofShape)
-  // Perform the heavy computation
   const grid = generateRectangleGrid(roofShape, roofSlope, bboxOnRoof)
   const { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
     roofShape,
