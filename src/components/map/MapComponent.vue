@@ -111,7 +111,7 @@ async function setupGridInstallation() {
   }
 }
 
-async function setupSolarPanelFixtures() {
+async function setupSolarPanel() {
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
   const selectedRoofModel: RoofSurfaceModel =
@@ -130,7 +130,15 @@ async function setupSolarPanelFixtures() {
   )
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
-  await displaySolarPanel(rennesApp, solarPanelModels)
+  await displaySolarPanelLayer()
+}
+
+async function displaySolarPanelLayer() {
+  await displaySolarPanel(rennesApp, solarPanelStore.solarPanels)
+  await filterSolarPanelByMaxSolarPanel(
+    rennesApp,
+    solarPanelStore.currentNumberSolarPanel
+  )
   layerStore.enableLayer(RENNES_LAYER.solarPanel)
 }
 
@@ -148,7 +156,7 @@ simulationStore.$subscribe(async () => {
       simulationStore.currentStep === 2 &&
       simulationStore.currentSubStep == 2
     ) {
-      await setupSolarPanelFixtures()
+      await setupSolarPanel()
       await zoomToSolarPanel(rennesApp)
     } else if (
       simulationStore.currentStep === 3 &&
