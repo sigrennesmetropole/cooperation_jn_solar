@@ -14,7 +14,6 @@ import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
-import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
@@ -71,19 +70,22 @@ const isPageFullScreen = computed(() => {
 })
 
 const isAlertBoxBrowserNotDisplay = computed(() => {
-  return [viewList['home'], viewList['roof-selection'], null].includes(
-    viewStore.currentView!
-  )
+  return [
+    viewList['home'],
+    viewList['roof-selection'],
+    viewList['legal-notice'],
+    null,
+  ].includes(viewStore.currentView!)
 })
 
-if (isAlertBoxBrowserNotDisplay.value) {
-  window.addEventListener('beforeunload', function (e) {
+// Affichage du message d'alerte à la fermeture ET au rafraîchissement de la page
+window.addEventListener('beforeunload', function (e) {
+  if (!isAlertBoxBrowserNotDisplay.value) {
     e.preventDefault()
-    e.returnValue = WINDOW_CONFIRM_MESSAGE
-    e.cancelable
-    e.stopPropagation()
-  })
-}
+    /* In modern browsers, including Chrome, Firefox, and Safari, you can't customize the message shown in the dialog. The browser will provide its own message. This is to prevent malicious sites from tricking users with custom messages. */
+    e.returnValue = ''
+  }
+})
 </script>
 
 <template>
@@ -117,7 +119,11 @@ if (isAlertBoxBrowserNotDisplay.value) {
       ></SearchBar>
 
       <DistrictDisplayButton
-        v-if="isDisplayDistrictCheckbox && !popUpStore.isDisplayTermsOfUse"
+        v-if="
+          isDisplayDistrictCheckbox &&
+          !popUpStore.isDisplayTermsOfUse &&
+          districtStore.canBeDisplayed
+        "
         class="absolute z-20"
       ></DistrictDisplayButton>
 

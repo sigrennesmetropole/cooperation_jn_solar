@@ -35,7 +35,7 @@ describe('#MapComponent', async () => {
       plugins: [
         createTestingPinia({
           createSpy: vi.fn,
-          stubActions: true,
+          stubActions: false,
           stubPatch: false,
           fakeApp: true,
           initialState: {
@@ -45,6 +45,9 @@ describe('#MapComponent', async () => {
             address: {
               latitude: 10,
               longitude: 10,
+            },
+            interactions: {
+              _activeInteractions: [],
             },
           },
         }),
@@ -60,8 +63,8 @@ describe('#MapComponent', async () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  describe('initialize right home interactions', () => {
-    it('start without SelectRoofInteraction on home', () => {
+  describe('initialize right home interactions', async () => {
+    it('start without SelectRoofInteraction on home', async () => {
       app.maps.eventHandler.interactions.forEach((interaction) => {
         expect(interaction).not.toBeInstanceOf(SelectRoofInteraction)
       })
@@ -71,7 +74,7 @@ describe('#MapComponent', async () => {
         expect(interaction).not.toBeInstanceOf(SelectDistrictInteraction)
       })
     })
-    it('start with forbiden click interaction on home', () => {
+    it('start with forbiden click interaction on home', async () => {
       expect(
         app.maps.eventHandler.interactions.find(
           (interaction) => interaction instanceof ForbidenClickInteraction

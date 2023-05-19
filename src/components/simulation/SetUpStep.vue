@@ -31,7 +31,8 @@ const updateCurrentNumSolarPanel = (changes: number) => {
   <template
     v-else-if="
       simulationStore.currentSubStep == 2 &&
-      roofsStore.getRoofSurfaceModelOfSelectedPanRoof() !== undefined
+      roofsStore.getRoofSurfaceModelOfSelectedPanRoof() !== undefined &&
+      solarPanelStore.currentNumberSolarPanel !== 0
     "
   >
     <SimulationResult
@@ -69,7 +70,7 @@ const updateCurrentNumSolarPanel = (changes: number) => {
       </template>
     </BoxStep>
   </template>
-  <template v-else-if="simulationStore.currentSubStep == 3">
+  <template v-else-if="solarPanelStore.currentNumberSolarPanel === 0">
     <NoPanelOnRoof></NoPanelOnRoof>
   </template>
 </template>

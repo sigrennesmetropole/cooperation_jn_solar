@@ -131,8 +131,8 @@
     {
       "name": "rennes",
       "groundPosition": [-1.7219, 48.09],
-      "distance": 37039,
-      "pitch": -90,
+      "distance": 29000,
+      "pitch": -45,
       "roll": 0,
       "heading": 0,
       "animate": true,

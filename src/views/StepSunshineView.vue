@@ -30,10 +30,13 @@ const mapStore = useMapStore()
 
 const isHighlightSelectedRoofPanCalled = ref(false)
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   if (simulationStore.restartEndSimulation == true) {
     simulationStore.setCurrentStep(3)
     simulationStore.setCurrentSubStep(2)
+  } else {
+    simulationStore.setCurrentStep(1)
+    simulationStore.setCurrentSubStep(1)
   }
   viewStore.setCurrentView(viewList['step-sunshine'])
   panelsStore.isCompletelyHidden = false
@@ -49,7 +52,7 @@ const highlightStyle = new VectorStyleItem({
 })
 
 mapStore.$subscribe(async () => {
-  if (mapStore.isInitializeMap && !isHighlightSelectedRoofPanCalled.value) {
+  if (mapStore.isInitializeMap) {
     highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
   }
 })

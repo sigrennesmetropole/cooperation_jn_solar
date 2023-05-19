@@ -6,6 +6,7 @@ import { useSimulationStore } from '@/stores/simulations'
 import { useRoofsStore } from '@/stores/roof'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from '@/router'
+import { useSolarPanelStore } from '@/stores/solarPanels'
 const routerWrapper = createRouter({
   history: createWebHistory(),
   routes: routes,
@@ -25,6 +26,7 @@ const wrapper = mount(SetUpStep, {
 })
 const simulationStore = useSimulationStore()
 const roofsStore = useRoofsStore()
+const solarPanelStore = useSolarPanelStore()
 describe('SetUpStep', () => {
   it('renders the component correctly', () => {
     expect(wrapper.html()).toMatchSnapshot()
@@ -54,6 +56,7 @@ describe('SetUpStep', () => {
         },
       ]
       roofsStore.selectedRoofSurfaceId = '53291'
+      solarPanelStore.currentNumberSolarPanel = 2
     })
     // BoxStep Component
     it('test if boxStep exists', async () => {

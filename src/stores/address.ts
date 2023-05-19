@@ -20,8 +20,12 @@ export const useAddressStore = defineStore('address', () => {
     address.value = new_address
   }
 
+  function resetLatitureAndLongitude() {
+    setLatitudeAndLongitude(0, 0)
+  }
+
   function resetAddress() {
-    setLatitudeAndLongitude(0, 0), setAddress('')
+    setAddress('')
   }
 
   return {
@@ -31,6 +35,7 @@ export const useAddressStore = defineStore('address', () => {
     address,
     setAddress,
     resetAddress,
+    resetLatitureAndLongitude,
     screenshotAddress,
   }
 })
