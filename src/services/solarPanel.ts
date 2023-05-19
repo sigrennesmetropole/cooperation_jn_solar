@@ -1,6 +1,6 @@
 import { GeoJSON } from 'ol/format'
 import type { RennesApp } from '@/services/RennesApp'
-import { GeoJSONLayer, GlobalHider, Viewpoint } from '@vcmap/core'
+import { GeoJSONLayer, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
@@ -99,30 +99,21 @@ export async function filterSolarPanelByMaxSolarPanel(
     RENNES_LAYER.solarPanel
   )
   if (solarPanel) {
-    const current_num_solar_panel = solarPanel.getFeatures().length
-    const solarPanelStore = useSolarPanelStore()
-    if (current_num_solar_panel < maxSolarPanel) {
-      const newSolarPanels = solarPanelStore.solarPanels.slice(
-        current_num_solar_panel,
-        maxSolarPanel
-      )
-      const newSolarPanelsGeoJSON = generateSolarPanel(newSolarPanels)
-      solarPanel.addFeatures(newSolarPanelsGeoJSON)
-    } else if (current_num_solar_panel > maxSolarPanel) {
-      const deleted_indexes: (string | number)[] = []
-      solarPanel.getFeatures().forEach((f) => {
-        const index = f.getProperties()['index']
+    const hidden_indexes: (string | number)[] = []
+    const shown_indexes: (string | number)[] = []
+    solarPanel.getFeatures().forEach((f) => {
+      const index = f.getProperties()['index']
+      const fid = f.getId()
+      if (fid != undefined) {
         if (index >= maxSolarPanel) {
-          const index = f.getId()
-          if (index != undefined) {
-            deleted_indexes.push(index)
-          }
+          hidden_indexes.push(fid)
+        } else {
+          shown_indexes.push(fid)
         }
-      })
-      solarPanel.removeFeaturesById(deleted_indexes)
-    } else {
-      // do nothing
-    }
+      }
+    })
+    solarPanel.featureVisibility.hideObjects(hidden_indexes)
+    solarPanel.featureVisibility.showObjects(shown_indexes)
   }
 }
 
