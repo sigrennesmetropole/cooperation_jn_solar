@@ -99,14 +99,30 @@ export async function filterSolarPanelByMaxSolarPanel(
     RENNES_LAYER.solarPanel
   )
   if (solarPanel) {
-    solarPanel.setGlobalHider(new GlobalHider())
-    solarPanel.featureVisibility.clearHiddenObjects()
-    // Note(IS): We use 0-th index for the solar panel
-    const featuresToHide = solarPanel
-      .getFeatures()
-      .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
-      .map((f) => f.getId()!)
-    solarPanel.featureVisibility.hideObjects(featuresToHide)
+    const current_num_solar_panel = solarPanel.getFeatures().length
+    const solarPanelStore = useSolarPanelStore()
+    if (current_num_solar_panel < maxSolarPanel) {
+      const newSolarPanels = solarPanelStore.solarPanels.slice(
+        current_num_solar_panel,
+        maxSolarPanel
+      )
+      const newSolarPanelsGeoJSON = generateSolarPanel(newSolarPanels)
+      solarPanel.addFeatures(newSolarPanelsGeoJSON)
+    } else if (current_num_solar_panel > maxSolarPanel) {
+      const deleted_indexes: (string | number)[] = []
+      solarPanel.getFeatures().forEach((f) => {
+        const index = f.getProperties()['index']
+        if (index >= maxSolarPanel) {
+          const index = f.getId()
+          if (index != undefined) {
+            deleted_indexes.push(index)
+          }
+        }
+      })
+      solarPanel.removeFeaturesById(deleted_indexes)
+    } else {
+      // do nothing
+    }
   }
 }
 
