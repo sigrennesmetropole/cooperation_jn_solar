@@ -100,12 +100,11 @@ export function bboxRoof(roofShape: GeoJSONFeatureCollection): BBox {
  */
 export function generateRectangleGrid(
   roofShape: GeoJSONFeatureCollection,
+  roofSlope: number,
   bboxOnRoof: BBox
 ): Grid {
   const roofAzimut = roofShape.features[0].properties?.azimuth
   const squareSize = 475
-  const roofSlope =
-    useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
   const cellWidth = squareSize
   const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
 

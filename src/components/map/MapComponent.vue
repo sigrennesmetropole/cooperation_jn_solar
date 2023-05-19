@@ -18,10 +18,7 @@ import { useAddressStore } from '@/stores/address'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
-  bboxRoof,
   displayGridOnMap,
-  filterGrid,
-  generateRectangleGrid,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
@@ -37,12 +34,12 @@ import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
-import type { Grid } from '@/helpers/rectangleGrid'
+import { useInteractionsStore } from '@/stores/interactions'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
-import { useInteractionsStore } from '@/stores/interactions'
+import worker from '@/worker'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -94,6 +91,13 @@ async function disableOlInteraction() {
   }
 }
 
+function displayGridAndAddInteractions() {
+  displayGridOnMap(rennesApp, roofsStore.gridGeom!.featureCollection)
+  addRoofInteractionOn2dMap(rennesApp, roofsStore.getPreviouslySelected() ?? [])
+  rennesApp.getOpenlayerMap().getView().setZoom(22)
+  rennesApp.getOpenlayerMap().getView().setMinZoom(21)
+}
+
 async function setupGridInstallation() {
   //force synchrone switch for adding openlayer interaction, update the store
   await rennesApp.maps.setActiveMap('ol')
@@ -104,24 +108,23 @@ async function setupGridInstallation() {
     // avoid recompute everything when came back from solar placement
     if (!roofsStore.gridMatrix) {
       let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
-      let bboxOnRoof = bboxRoof(roofShape)
-      let grid: Grid = generateRectangleGrid(roofShape, bboxOnRoof)
-      let { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
-        roofShape,
-        grid
-      )
-      roofsStore.gridGeom = filterGeomGrid
-      roofsStore.gridMatrix = gridMatrix
+      // Handle web worker messages
+      // Create a promise to handle the asynchronous behavior
+      let roofSlope =
+        useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+      mapStore.isLoadingMap = true
+      worker
+        .send({ roofShape: JSON.stringify(roofShape), roofSlope: roofSlope })
+        .then((reply) => {
+          mapStore.isLoadingMap = false
+          roofsStore.gridGeom = reply.grid
+          roofsStore.gridMatrix = reply.matrix
+          displayGridAndAddInteractions()
+        })
     } else {
       roofsStore.restoreMatrixToClean()
+      displayGridAndAddInteractions()
     }
-    displayGridOnMap(rennesApp, roofsStore.gridGeom!.featureCollection)
-    addRoofInteractionOn2dMap(
-      rennesApp,
-      roofsStore.getPreviouslySelected() ?? []
-    )
-    rennesApp.getOpenlayerMap().getView().setZoom(22)
-    rennesApp.getOpenlayerMap().getView().setMinZoom(21)
   }
 }
 
