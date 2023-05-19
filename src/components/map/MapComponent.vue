@@ -25,8 +25,8 @@ import {
   substractSelectedSquaresFromGrid,
 } from '@/services/roofInteractionHelper'
 import {
-  displaySolarPanel,
-  filterSolarPanelByMaxSolarPanel as filterSolarPanelBySolarPanelNumber,
+  initializeSolarPanelLayer,
+  filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
 } from '@/services/solarPanel'
@@ -60,6 +60,9 @@ onMounted(async () => {
   // force initialization of the interaction on init page
   updateInteractionsStoreAfterViewChange(rennesApp)
   updateInteractionsOnMap(rennesApp)
+  if (simulationStore.shouldShowSolarPanelLayer()) {
+    await displaySolarPanelLayer()
+  }
 })
 
 async function updateActiveMap() {
@@ -128,7 +131,7 @@ async function setupGridInstallation() {
   }
 }
 
-async function setupSolarPanelFixtures() {
+async function setupSolarPanel() {
   roofsStore.saveCleanMatrix()
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
@@ -146,10 +149,25 @@ async function setupSolarPanelFixtures() {
     selectedRoofModel.inclinaison,
     selectedRoofModel.azimuth
   )
-  solarPanelStore.maxNumberSolarPanel = solarPanelModels.length
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
-  await displaySolarPanel(rennesApp, solarPanelModels)
+  solarPanelStore.solarPanels = solarPanelModels
+}
+
+async function displaySolarPanelLayer() {
+  const solarPanelLayer = await rennesApp.getLayerByKey(RENNES_LAYER.solarPanel)
+  // Make sure that the solar panel layer has features
+  if (
+    solarPanelStore.maxNumberSolarPanel() > 0 &&
+    solarPanelLayer.getFeatures().length == 0
+  ) {
+    await initializeSolarPanelLayer(rennesApp, solarPanelStore.solarPanels)
+    await filterSolarPanelByMaxSolarPanel(
+      rennesApp,
+      solarPanelStore.currentNumberSolarPanel
+    )
+  }
   layerStore.enableLayer(RENNES_LAYER.solarPanel)
+  await zoomToSolarPanel(rennesApp)
 }
 
 simulationStore.$subscribe(async () => {
@@ -172,8 +190,8 @@ simulationStore.$subscribe(async () => {
       simulationStore.currentStep === 2 &&
       simulationStore.currentSubStep == 2
     ) {
-      await setupSolarPanelFixtures()
-      await zoomToSolarPanel(rennesApp)
+      await setupSolarPanel()
+      await displaySolarPanelLayer()
     } else if (
       simulationStore.currentStep === 3 &&
       simulationStore.currentSubStep == 1
@@ -189,7 +207,7 @@ simulationStore.$subscribe(async () => {
 })
 
 solarPanelStore.$subscribe(async () => {
-  await filterSolarPanelBySolarPanelNumber(
+  await filterSolarPanelByMaxSolarPanel(
     rennesApp,
     solarPanelStore.currentNumberSolarPanel
   )
