@@ -4,6 +4,8 @@ import expandIcon from '../../assets/icons/expand-small-bigger-retract-smaller-b
 import deleteCircle from '../../assets/icons/interface-delete-circle.svg'
 import { computed, ref } from 'vue'
 import { legalList } from '@/constants/legalLinks'
+import { apiPdfService } from '@/services/api-pdf'
+
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
 
@@ -39,7 +41,7 @@ function sendEmail() {
   changeError()
 
   if (validEmail.value && !isCheckBoxOnError.value) {
-    console.log('send consumption by email')
+    apiPdfService.getPdf()
   }
 }
 
