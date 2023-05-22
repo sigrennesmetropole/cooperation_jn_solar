@@ -39,8 +39,8 @@ jobs:
           tags: |
             # branch event
             type=ref,enable=true,priority=600,prefix=,suffix=,event=branch
-            # tag event
-            type=ref,enable=true,priority=600,prefix=,suffix=,event=tag
+            # tag event, prio
+            type=ref,enable=true,priority=700,prefix=,suffix=,event=tag,value={{tag}}
             # pull request event
             type=ref,enable=true,priority=600,prefix=pr-,suffix=,event=pr
             # set latest tag for default branch
