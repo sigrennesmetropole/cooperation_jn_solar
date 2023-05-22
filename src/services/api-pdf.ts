@@ -89,6 +89,25 @@ class ApiPdfService {
     )
     return data
   }
+
+  async sendPdfByEmail(
+    email: string,
+    autocalsolResult: AutocalsolResultType | null = null
+  ) {
+    let params = await this.getParams(autocalsolResult)
+    if (params === null) {
+      return null
+    }
+
+    params = { ...params, ...{ email: email } }
+
+    const data = await apiService.callApiPost(`/api/email-pdf`, params, {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+    })
+    console.log(data)
+    return data
+  }
 }
 
 export const apiPdfService = new ApiPdfService()
