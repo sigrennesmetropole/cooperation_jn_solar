@@ -11,11 +11,13 @@ import RoofSelectionTooltip from '@/components/roof_selection/RoofSelectionToolt
 import { useAddressStore } from '@/stores/address'
 import { useMapStore } from '@/stores/map'
 import { resetStores } from '@/services/resetStores'
+import { useSimulationStore } from '@/stores/simulations'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
+const simulationStore = useSimulationStore()
 
 const mapStore = useMapStore()
 
@@ -31,6 +33,7 @@ onMounted(() => {
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true
+  simulationStore.restartEndSimulation = false
 })
 
 const tooltipToDisplay = computed(() => {
