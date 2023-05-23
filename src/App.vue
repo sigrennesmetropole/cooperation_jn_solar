@@ -16,12 +16,14 @@ import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshi
 import { useDistrictStore } from './stores/districtInformations'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { useMapStore } from '@/stores/map'
+import { useEnedisStore } from '@/stores/enedis'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const popUpStore = usePopUpStore()
 const districtStore = useDistrictStore()
 const mapStore = useMapStore()
+const enedisStore = useEnedisStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
@@ -68,17 +70,19 @@ const isPageFullScreen = computed(() => {
     viewList['legal-notice'],
     viewList['end-simulation'],
     viewList['simulation-results'],
+    viewList['redirection-enedis'],
     null,
   ].includes(viewStore.currentView!)
 })
 
 const isAlertBoxBrowserNotDisplay = computed(() => {
-  return [
+  const isViewNotDisplayAlertBox = [
     viewList['home'],
     viewList['roof-selection'],
     viewList['legal-notice'],
     null,
   ].includes(viewStore.currentView!)
+  return isViewNotDisplayAlertBox || enedisStore.isEnedisRedirection
 })
 
 // Affichage du message d'alerte à la fermeture ET au rafraîchissement de la page

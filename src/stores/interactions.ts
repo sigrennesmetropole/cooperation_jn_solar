@@ -49,6 +49,7 @@ export const useInteractionsStore = defineStore('interactions', () => {
 
   return {
     _activeInteractions,
+    _trigger,
     isActive,
     enableInteraction,
     disableInteraction,

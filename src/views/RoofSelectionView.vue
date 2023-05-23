@@ -12,6 +12,7 @@ import { useAddressStore } from '@/stores/address'
 import { useMapStore } from '@/stores/map'
 import { resetStores } from '@/services/resetStores'
 import { useSimulationStore } from '@/stores/simulations'
+import { resetDataForEnedis } from '@/services/enedisService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
@@ -30,6 +31,7 @@ onMounted(() => {
     rennesApp.clearRoofsHighlight()
   }
   resetStores()
+  resetDataForEnedis()
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true

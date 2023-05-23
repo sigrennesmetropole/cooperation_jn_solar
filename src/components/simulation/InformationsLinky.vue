@@ -2,37 +2,23 @@
 import enedisSignature from '@/assets/illustrations/enedis-signature.svg'
 import enedisSpace from '@/assets/illustrations/enedis-personal-space.svg'
 import { apiEnedisService } from '@/services/api-enedis-dataconnect'
-import { getEnedisSandboxPrm, isDev, isProd } from '@/services/env'
-import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
+import { useEnedisStore } from '@/stores/enedis'
+import { storeDataForEnedis } from '@/services/enedisService'
 
-const consumptionAndProductionStore = useConsumptionAndProductionStore()
+const enedisStore = useEnedisStore()
 
-// async function goToEnedisWebSite() {
-//   const url = await apiEnedisService.getUrlUserAuthorization()
-//   window.location.href = url
-// }
+async function goToEnedisWebSite() {
+  enedisStore.setIsEnedisRedirection(true)
+  await storeDataForEnedis()
+  const url = await apiEnedisService.getUrlUserAuthorization()
+  console.log(url)
+  window.location.href = url
+
+  // http://localhost:5173/redirection-enedis?state=XYZ&usage_points_id=25110853795840&code=134567281
+}
 
 async function goToEnedisLogin() {
-  if (isDev() || isProd()) {
-    await apiEnedisService.setPRMUser(getEnedisSandboxPrm())
-    const consumption = await apiEnedisService.getAnnualConsumption()
-    if (consumption.annual_consumption !== undefined) {
-      consumptionAndProductionStore.setAnnualConsumption(
-        consumption.annual_consumption / 1000 // wh to kwh
-      )
-    }
-    window.alert(JSON.stringify(consumption))
-  }
-  // TODO: set up prod when we have prod url
-  // else if (getEnv() == 'prod') {
-  // const prm = await apiEnedisService.getPRMUser()
-  // if (prm === undefined) {
-  //   await goToEnedisWebSite()
-  //   return
-  // }
-  // const consumption = await apiEnedisService.getAnnualConsumption()
-  // window.alert(JSON.stringify(consumption))
-  // }
+  await goToEnedisWebSite()
 }
 </script>
 

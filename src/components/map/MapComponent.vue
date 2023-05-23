@@ -40,6 +40,7 @@ import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
+import { useEnedisStore } from '@/stores/enedis'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -50,9 +51,14 @@ const roofsStore = useRoofsStore()
 const mapStore = useMapStore()
 const viewStore = useViewsStore()
 const interactionsStore = useInteractionsStore()
+const enedisStore = useEnedisStore()
 
 onMounted(async () => {
-  if (viewStore.currentView !== 'step-sunshine') {
+  if (
+    viewStore.currentView !== 'step-sunshine' ||
+    (viewStore.currentView === 'step-sunshine' &&
+      enedisStore.isEnedisRedirection)
+  ) {
     await rennesApp.initializeMap()
   }
   await updateActiveMap()

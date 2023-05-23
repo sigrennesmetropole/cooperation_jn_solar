@@ -19,6 +19,7 @@ import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
 import type { RennesApp } from '@/services/RennesApp'
 import { ref } from 'vue'
+import { useEnedisStore } from '@/stores/enedis'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
@@ -29,11 +30,15 @@ const roofStore = useRoofsStore()
 const mapStore = useMapStore()
 
 const isHighlightSelectedRoofPanCalled = ref(false)
+const enedisStore = useEnedisStore()
 
 onBeforeMount(async () => {
   if (simulationStore.restartEndSimulation == true) {
     simulationStore.setCurrentStep(3)
     simulationStore.setCurrentSubStep(2)
+  } else if (enedisStore.isEnedisRedirection) {
+    simulationStore.setCurrentStep(3)
+    simulationStore.setCurrentSubStep(3)
   } else {
     simulationStore.setCurrentStep(1)
     simulationStore.setCurrentSubStep(1)
