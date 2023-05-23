@@ -13,10 +13,13 @@ const enedisStore = useEnedisStore()
 const router = useRouter()
 
 onBeforeMount(async () => {
-  const prm = route.query.usage_points_id
+  let prm = route.query.usage_points_id
   getDataFromLocalStorage()
   if (prm !== undefined && prm !== null) {
-    await apiEnedisService.setPRMUser(prm)
+    if (Array.isArray(prm)) {
+      prm = prm[0]
+    }
+    await apiEnedisService.setPRMUser(prm as string)
     const consumption = await apiEnedisService.getAnnualConsumption()
     console.log(consumption)
     if (consumption.annual_consumption !== undefined) {
