@@ -97,7 +97,7 @@ describe('solar panel placement', () => {
 
   test('solar panel algorithm big roof obstacles', () => {
     // Read GeoJSON file
-    const fileContents = fs.readFileSync(
+    const fileContentsWithObstacles = fs.readFileSync(
       path.join(
         __dirname,
         'grid_samples',
@@ -109,17 +109,7 @@ describe('solar panel placement', () => {
       }
     )
 
-    const matrix: Matrix = JSON.parse(fileContents)
-    expect(matrix.length).greaterThan(0)
-
-    const result = solarPanelPlacement(matrix, true, 'big-roof-obstacles-')
-    expect(result.orientation).equal('vertical')
-    expect(result.solarPanels.length).equal(113)
-  })
-
-  test('solar panel algorithm big roof no obstacles', () => {
-    // Read GeoJSON file
-    const fileContents = fs.readFileSync(
+    const fileContentsNoObstacles = fs.readFileSync(
       path.join(
         __dirname,
         'grid_samples',
@@ -131,11 +121,36 @@ describe('solar panel placement', () => {
       }
     )
 
-    const matrix: Matrix = JSON.parse(fileContents)
-    expect(matrix.length).greaterThan(0)
+    const matrixWithObstacles: Matrix = JSON.parse(fileContentsWithObstacles)
+    expect(matrixWithObstacles.length).greaterThan(0)
 
-    const result = solarPanelPlacement(matrix, true, 'big-roof-no-obstacles-')
-    expect(result.orientation).equal('vertical')
-    expect(result.solarPanels.length).equal(142)
+    const matrixNoObstacles: Matrix = JSON.parse(fileContentsNoObstacles)
+    expect(matrixNoObstacles.length).greaterThan(0)
+
+    const startWithObstacles = performance.now()
+    const resultWithObstacles = solarPanelPlacement(
+      matrixWithObstacles,
+      true,
+      'big-roof-obstacles-'
+    )
+    const timeTakenWithObstacles = performance.now() - startWithObstacles
+
+    const startNoObstacles = performance.now()
+    const resultNoObstacles = solarPanelPlacement(
+      matrixNoObstacles,
+      true,
+      'big-roof-no-obstacles-'
+    )
+    const timeTakenNoObstacles = performance.now() - startNoObstacles
+
+    expect(timeTakenNoObstacles).lessThan(3000) // less than 3 seconds
+    expect(timeTakenWithObstacles).lessThan(3000) // less than 3 seconds
+
+    expect(timeTakenWithObstacles).approximately(timeTakenNoObstacles, 500)
+
+    expect(resultWithObstacles.orientation).equal('vertical')
+    expect(resultWithObstacles.solarPanels.length).equal(113)
+    expect(resultNoObstacles.orientation).equal('vertical')
+    expect(resultNoObstacles.solarPanels.length).equal(142)
   })
 })
