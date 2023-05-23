@@ -68,7 +68,7 @@ homeRouter.$subscribe(async () => {
 
     <div class="flex p-0 gap-3 mt-4">
       <UiButton
-        class="ui-btn-primary shadow-md rounded-lg gap-3 px-4 py-3 shrink-0 grow-0 visible"
+        class="ui-btn-primary rounded-lg gap-3 px-4 py-3 shrink-0 grow-0 visible"
         @click="clickButtonBegin()"
       >
         <span class="font-dm-sans text-white text-base font-bold">

@@ -137,7 +137,7 @@ function checkBoxChange(event: boolean, type_checkbox: 'allow' | 'notallow') {
           </div>
           <div class="flex flex-row items-center mt-4">
             <UiButton
-              class="ui-btn-primary shadow-md gap-3 px-4 py-3 h-12"
+              class="ui-btn-primary gap-3 px-4 py-3 h-12"
               :icon="IconArrowRight"
               @click="clickButtonNext()"
               id="nextButtonPopup"

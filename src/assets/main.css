@@ -1,1 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import '@sigrennesmetropole/cooperation_jn_common_ui/dist/style.css';

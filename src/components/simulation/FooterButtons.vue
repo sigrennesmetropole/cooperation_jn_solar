@@ -40,7 +40,7 @@ const textNextButton = computed(() => {
   <div class="border-b border-neutral-200 -mx-6"></div>
   <div class="flex flex-row justify-between mb-4">
     <UiButton
-      class="ui-btn-secondary shadow-md rounded-lg gap-3 px-4 py-3 h-12"
+      class="ui-btn-secondary gap-3 px-4 py-3 h-12"
       v-if="simulationStore.currentStep == 1"
       @click="clickButtonCancel()"
       id="cancelButton"
@@ -48,7 +48,7 @@ const textNextButton = computed(() => {
       <span class="font-dm-sans text-base font-medium"> Annuler </span>
     </UiButton>
     <UiButton
-      class="ui-btn-secondary shadow-md gap-3 px-4 py-3 h-12"
+      class="ui-btn-secondary gap-3 px-4 py-3 h-12"
       v-else-if="simulationStore.currentStep != 1"
       @click="clickButtonPrevious()"
       id="previousButton"
@@ -56,9 +56,10 @@ const textNextButton = computed(() => {
       <span class="font-dm-sans text-base font-medium"> Précédent </span>
     </UiButton>
     <UiButton
-      class="ui-btn-primary shadow-md gap-3 px-4 py-3 h-12"
+      class="ui-btn-primary gap-3 px-4 py-3 h-12"
       v-if="props.isDisplayNextButton"
       :icon="IconArrowRight"
+      id="nextButton"
       @click="clickButtonNext()"
     >
       <span class="font-dm-sans text-white text-base font-medium">

@@ -17,11 +17,9 @@ export default defineConfig(({ command }) => {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+      dedupe: ['vue'],
     },
     assetsInclude: ['**/*.glb'],
-    optimizeDeps: {
-      exclude: ['@sigrennesmetropole/cooperation_jn_common_ui'],
-    },
   }
 
   if (command === 'build') {

@@ -17,7 +17,7 @@ function skipStep() {
 <template>
   <div class="flex flex-col gap-2.5 py-6 font-dm-sans">
     <UiButton
-      class="ui-btn-primary shadow-md gap-3 px-4 py-3 shrink-0 grow-0 visible"
+      class="ui-btn-primary gap-3 px-4 py-3 shrink-0 grow-0 visible"
       @click="$emit('clickAnnualConsumption', 'manual')"
       id="button-manual-input"
     >
@@ -31,7 +31,7 @@ function skipStep() {
       <img :src="rectangle" />
     </div>
     <UiButton
-      class="ui-btn-secondary shadow-md gap-3 px-4 py-3 shrink-0 grow-0 visible"
+      class="ui-btn-secondary gap-3 px-4 py-3 shrink-0 grow-0 visible"
       @click="$emit('clickAnnualConsumption', 'linky')"
       :icon="ExpandArrow"
       id="button-linky"

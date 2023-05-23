@@ -17,9 +17,8 @@ import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
         </p>
       </div>
       <UiButton
-        class="ui-btn-primary shadow-md gap-3 px-4 py-3 shrink-0 grow-0 visible w-fit"
+        class="ui-btn-primary gap-3 px-4 py-3 shrink-0 grow-0 visible w-fit"
         @click="$emit('retry-end-simulation')"
-        id="button-linky"
       >
         <span class="text-white text-base font-medium">Réessayer</span>
       </UiButton>

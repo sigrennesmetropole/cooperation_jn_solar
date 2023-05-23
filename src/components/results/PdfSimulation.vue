@@ -35,7 +35,7 @@ async function exportToPDF() {
 <template>
   <div ref="document" class="pdf-container">
     <UiButton
-      class="ui-btn-primary shadow-md gap-3 px-4 py-3 h-12 w-fit items-center ml-auto"
+      class="ui-btn-primary gap-3 px-4 py-3 h-12 w-fit items-center ml-auto"
       :icon="IconDownload"
       :disabled="isLoading"
       @click="exportToPDF()"

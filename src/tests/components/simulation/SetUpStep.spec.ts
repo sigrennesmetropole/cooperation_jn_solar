@@ -71,12 +71,14 @@ describe('SetUpStep', () => {
     it('test title component', async () => {
       const boxStep = wrapper.find('#savingsCalculation')
       const span = boxStep.findAll('span')
-      expect(span).toHaveLength(3)
+      expect(span).toHaveLength(4)
       expect(span[0].text()).toBe('Étape 3')
       expect(span[1].text()).toBe(
         "Quelles économies d'énergie  grâce à cette installation ?"
       )
+      // double span because use of UiButton which already span content
       expect(span[2].text()).toBe("Calculer mes économies d'énergie")
+      expect(span[3].text()).toBe("Calculer mes économies d'énergie")
     })
     it('test emit function when button is clicked', async () => {
       const boxStep = wrapper.find('#savingsCalculation')
