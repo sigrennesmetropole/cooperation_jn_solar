@@ -21,7 +21,6 @@ class ApiPdfService {
         selectedRoof?.inclinaison === undefined ||
         selectedRoof?.azimuth === undefined
       ) {
-        console.log('roof undefined')
         return true
       }
       if (
@@ -30,11 +29,9 @@ class ApiPdfService {
         addressStore.address === '' ||
         addressStore.screenshotAddress === null
       ) {
-        console.log('address undefined')
         return true
       }
       if (solarPanelStore.currentNumberSolarPanel <= 0) {
-        console.log('solar panel undefined')
         return false
       }
       return false
@@ -105,7 +102,6 @@ class ApiPdfService {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
     })
-    console.log(data)
     return data
   }
 }

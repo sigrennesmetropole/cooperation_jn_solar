@@ -48,7 +48,6 @@ async function sendEmail() {
     isErrorSendEmail.value = false
     isLoading.value = true
     const result = await apiPdfService.sendPdfByEmail(email)
-    console.log(result)
     if (
       result !== undefined &&
       result !== null &&
