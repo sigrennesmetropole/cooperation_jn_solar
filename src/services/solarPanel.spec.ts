@@ -39,14 +39,23 @@ describe('SolarPanel', () => {
   })
   describe('#filterSolarPanelByMaxSolarPanel', () => {
     it('apply filter on filtered solar panel', async () => {
-      const spy = vi.spyOn(mockSolarPanelLayer, 'setGlobalHider')
       const spyHidenFeature = vi.spyOn(
         mockSolarPanelLayer.featureVisibility,
         'hideObjects'
       )
       await filterSolarPanelByMaxSolarPanel(rennesApp, 1)
-      expect(spy).toHaveBeenCalled()
       expect(spyHidenFeature).toHaveBeenCalledWith([expect.any(String)])
+      expect(mockSolarPanelLayer.featureVisibility.hiddenObjects).toBeDefined()
+
+      const spyShownFeature = vi.spyOn(
+        mockSolarPanelLayer.featureVisibility,
+        'showObjects'
+      )
+      await filterSolarPanelByMaxSolarPanel(rennesApp, 2)
+      expect(spyShownFeature).toHaveBeenCalledWith([
+        expect.any(String),
+        expect.any(String),
+      ])
       expect(mockSolarPanelLayer.featureVisibility.hiddenObjects).toBeDefined()
     })
   })

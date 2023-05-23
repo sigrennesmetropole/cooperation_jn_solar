@@ -42,7 +42,10 @@ onBeforeMount(async () => {
   panelsStore.isCompletelyHidden = false
   panelsStore.setTypePanelDisplay('right')
   if (mapStore.isInitializeMap) {
-    highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+    highlightSelectedRoofPan(
+      roofStore.selectedRoofSurfaceId!,
+      simulationStore.shouldShowSolarPanelLayer()
+    )
   }
 })
 
@@ -52,12 +55,18 @@ const highlightStyle = new VectorStyleItem({
 
 mapStore.$subscribe(async () => {
   if (mapStore.isInitializeMap) {
-    highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+    highlightSelectedRoofPan(
+      roofStore.selectedRoofSurfaceId!,
+      simulationStore.shouldShowSolarPanelLayer()
+    )
   }
 })
 
 roofStore.$subscribe(async () => {
-  await highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
+  await highlightSelectedRoofPan(
+    roofStore.selectedRoofSurfaceId!,
+    simulationStore.shouldShowSolarPanelLayer()
+  )
   let feature = null
   roofStore.roofsFeatures?.features?.forEach((f) => {
     if (f.properties?.surface_id == roofStore.selectedRoofSurfaceId) {
@@ -70,14 +79,19 @@ roofStore.$subscribe(async () => {
   }
 })
 
-async function highlightSelectedRoofPan(surfaceId: string) {
+async function highlightSelectedRoofPan(
+  surfaceId: string,
+  solarPanelShown: boolean = false
+) {
   isHighlightSelectedRoofPanCalled.value = true
   rennesApp.clearRoofsHighlight()
-  let roofLayer: CesiumTilesetLayer =
-    await rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d)
-  roofLayer.featureVisibility.highlight({
-    [surfaceId]: highlightStyle,
-  })
+  if (!solarPanelShown) {
+    let roofLayer: CesiumTilesetLayer =
+      await rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d)
+    roofLayer.featureVisibility.highlight({
+      [surfaceId]: highlightStyle,
+    })
+  }
 }
 
 function isDisplayNextButton() {

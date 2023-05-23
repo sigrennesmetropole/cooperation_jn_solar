@@ -1,6 +1,6 @@
 import { GeoJSON } from 'ol/format'
 import type { RennesApp } from '@/services/RennesApp'
-import { GeoJSONLayer, GlobalHider, Viewpoint } from '@vcmap/core'
+import { GeoJSONLayer, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
@@ -99,14 +99,21 @@ export async function filterSolarPanelByMaxSolarPanel(
     RENNES_LAYER.solarPanel
   )
   if (solarPanel) {
-    solarPanel.setGlobalHider(new GlobalHider())
-    solarPanel.featureVisibility.clearHiddenObjects()
-    // Note(IS): We use 0-th index for the solar panel
-    const featuresToHide = solarPanel
-      .getFeatures()
-      .filter((f) => f.getProperties()['index'] >= maxSolarPanel)
-      .map((f) => f.getId()!)
-    solarPanel.featureVisibility.hideObjects(featuresToHide)
+    const hidden_indexes: (string | number)[] = []
+    const shown_indexes: (string | number)[] = []
+    solarPanel.getFeatures().forEach((f) => {
+      const index = f.getProperties()['index']
+      const fid = f.getId()
+      if (fid != undefined) {
+        if (index >= maxSolarPanel) {
+          hidden_indexes.push(fid)
+        } else {
+          shown_indexes.push(fid)
+        }
+      }
+    })
+    solarPanel.featureVisibility.hideObjects(hidden_indexes)
+    solarPanel.featureVisibility.showObjects(shown_indexes)
   }
 }
 
