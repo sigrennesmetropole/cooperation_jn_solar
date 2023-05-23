@@ -94,4 +94,48 @@ describe('solar panel placement', () => {
     expect(result.orientation).equal('vertical')
     expect(result.solarPanels.length).equal(36)
   })
+
+  test('solar panel algorithm big roof obstacles', () => {
+    // Read GeoJSON file
+    const fileContents = fs.readFileSync(
+      path.join(
+        __dirname,
+        'grid_samples',
+        'big_roof_obstacles',
+        'big_roof_obstacles.matrix'
+      ),
+      {
+        encoding: 'utf-8',
+      }
+    )
+
+    const matrix: Matrix = JSON.parse(fileContents)
+    expect(matrix.length).greaterThan(0)
+
+    const result = solarPanelPlacement(matrix, true, 'big-roof-obstacles-')
+    expect(result.orientation).equal('vertical')
+    expect(result.solarPanels.length).equal(113)
+  })
+
+  test('solar panel algorithm big roof no obstacles', () => {
+    // Read GeoJSON file
+    const fileContents = fs.readFileSync(
+      path.join(
+        __dirname,
+        'grid_samples',
+        'big_roof_obstacles',
+        'big_roof_no_obstacles.matrix'
+      ),
+      {
+        encoding: 'utf-8',
+      }
+    )
+
+    const matrix: Matrix = JSON.parse(fileContents)
+    expect(matrix.length).greaterThan(0)
+
+    const result = solarPanelPlacement(matrix, true, 'big-roof-no-obstacles-')
+    expect(result.orientation).equal('vertical')
+    expect(result.solarPanels.length).equal(142)
+  })
 })
