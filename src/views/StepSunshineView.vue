@@ -44,7 +44,6 @@ onBeforeMount(async () => {
   if (mapStore.isInitializeMap) {
     highlightSelectedRoofPan(roofStore.selectedRoofSurfaceId!)
   }
-  simulationStore.restartEndSimulation = false
 })
 
 const highlightStyle = new VectorStyleItem({
