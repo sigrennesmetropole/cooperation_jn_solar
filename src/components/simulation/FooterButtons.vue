@@ -3,6 +3,8 @@ import { useSimulationStore } from '@/stores/simulations'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import { WINDOW_CONFIRM_MESSAGE } from '@/services/resetStores'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import IconArrowRight from '@/assets/icons/components/IconArrowRight.vue'
 
 const props = defineProps<{
   isDisplayNextButton: Boolean
@@ -37,40 +39,31 @@ const textNextButton = computed(() => {
 <template>
   <div class="border-b border-neutral-200 -mx-6"></div>
   <div class="flex flex-row justify-between mb-4">
-    <button
+    <UiButton
+      class="ui-btn-secondary shadow-md rounded-lg gap-3 px-4 py-3 h-12"
       v-if="simulationStore.currentStep == 1"
       @click="clickButtonCancel()"
       id="cancelButton"
-      class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="font-dm-sans text-black text-base font-medium">
-        Annuler
-      </span>
-    </button>
-    <button
+      <span class="font-dm-sans text-base font-medium"> Annuler </span>
+    </UiButton>
+    <UiButton
+      class="ui-btn-secondary shadow-md gap-3 px-4 py-3 h-12"
       v-else-if="simulationStore.currentStep != 1"
       @click="clickButtonPrevious()"
       id="previousButton"
-      class="bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <span class="font-dm-sans text-black text-base font-medium">
-        Précédent
-      </span>
-    </button>
-    <button
+      <span class="font-dm-sans text-base font-medium"> Précédent </span>
+    </UiButton>
+    <UiButton
+      class="ui-btn-primary shadow-md gap-3 px-4 py-3 h-12"
       v-if="props.isDisplayNextButton"
+      :icon="IconArrowRight"
       @click="clickButtonNext()"
-      id="nextButton"
-      class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
     >
-      <img
-        class=""
-        src="../../assets/icons/interface-arrows-button-right--arrow-right-keyboard.svg"
-        alt=""
-      />
       <span class="font-dm-sans text-white text-base font-medium">
-        {{ textNextButton }}</span
-      >
-    </button>
+        {{ textNextButton }}
+      </span>
+    </UiButton>
   </div>
 </template>

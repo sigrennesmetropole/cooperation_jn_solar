@@ -11,18 +11,20 @@ import RoofSelectionTooltip from '@/components/roof_selection/RoofSelectionToolt
 import { useAddressStore } from '@/stores/address'
 import { useMapStore } from '@/stores/map'
 import { resetStores } from '@/services/resetStores'
+import { useInteractionsStore } from '@/stores/interactions'
+import SelectRoofInteraction from '@/interactions/selectRoofInteraction'
 import { useSimulationStore } from '@/stores/simulations'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
+const interactionsStore = useInteractionsStore()
 const simulationStore = useSimulationStore()
 
 const mapStore = useMapStore()
 
 let isOpen = ref(true)
-let isBuildingSelectionActive = ref(false)
 let addressClosedByUser = ref(false)
 
 onMounted(() => {
@@ -37,7 +39,7 @@ onMounted(() => {
 })
 
 const tooltipToDisplay = computed(() => {
-  if (isBuildingSelectionActive.value) {
+  if (interactionsStore.isActive(SelectRoofInteraction)) {
     return 'roof-selection'
   } else if (addressStore.address || addressClosedByUser.value) {
     return 'none'

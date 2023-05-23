@@ -19,6 +19,9 @@ export default defineConfig(({ command }) => {
       },
     },
     assetsInclude: ['**/*.glb'],
+    optimizeDeps: {
+      exclude: ['@sigrennesmetropole/cooperation_jn_common_ui'],
+    },
   }
 
   if (command === 'build') {

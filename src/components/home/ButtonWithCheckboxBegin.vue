@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import CheckBox from '@/components/simulation/CheckBox.vue'
 import { useHomeStore } from '@/stores/home'
 import { usePopUpStore } from '@/stores/popUpStore'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 const checked = ref(false)
 const displayError = ref(false)
@@ -66,15 +67,14 @@ homeRouter.$subscribe(async () => {
     </CheckBox>
 
     <div class="flex p-0 gap-3 mt-4">
-      <button
+      <UiButton
+        class="ui-btn-primary shadow-md rounded-lg gap-3 px-4 py-3 shrink-0 grow-0 visible"
         @click="clickButtonBegin()"
-        class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
       >
         <span class="font-dm-sans text-white text-base font-bold">
           Commencer
         </span>
-      </button>
-
+      </UiButton>
       <span v-if="displayError && !checked" class="text-sm font-normal">
         Veuillez cocher la case ci-dessus pour accepter les conditions
       </span>

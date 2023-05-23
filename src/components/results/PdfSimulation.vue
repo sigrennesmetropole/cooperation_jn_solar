@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import iconDownload from '@/assets/icons/icon-download-white.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import type { AutocalsolResult as AutocalsolResultType } from '@/model/autocalsol.model'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { ref } from 'vue'
 import { apiPdfService } from '@/services/api-pdf'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import IconDownload from '@/assets/icons/components/IconDownload.vue'
 
 const isLoading = ref(false)
 
@@ -33,16 +34,17 @@ async function exportToPDF() {
 
 <template>
   <div ref="document" class="pdf-container">
-    <button
-      class="bg-black text-white rounded-lg py-4 px-3 flex flex-row gap-3 w-fit items-center ml-auto"
-      @click="exportToPDF()"
+    <UiButton
+      class="ui-btn-primary shadow-md gap-3 px-4 py-3 h-12 w-fit items-center ml-auto"
+      :icon="IconDownload"
       :disabled="isLoading"
+      @click="exportToPDF()"
+      id="nextButtonPopup"
     >
-      <img :src="iconDownload" alt="" />
       <span class="font-dm-sans font-medium text-base">
         Télécharger en PDF
       </span>
       <UiSpinnerLoading v-if="isLoading" />
-    </button>
+    </UiButton>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 const props = defineProps({
   title: String,
@@ -25,14 +26,14 @@ const height = computed(() => {
       {{ props.content }}
     </div>
     <div v-if="props.displayCloseButton" class="mx-6 mb-6">
-      <button
+      <UiButton
+        class="ui-btn-primary shadow-md rounded-lg gap-3 px-4 py-3 shrink-0 grow-0 visible"
         @click="$emit('close')"
-        class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center hover:bg-slate-800"
       >
         <span class="font-dm-sans text-white text-base font-bold">
           {{ contentCloseButton }}
         </span>
-      </button>
+      </UiButton>
     </div>
   </div>
 </template>

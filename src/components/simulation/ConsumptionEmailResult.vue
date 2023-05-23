@@ -9,6 +9,7 @@ import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 const validEmail = ref(true)
 const isCheckBoxOnError = ref(false)
@@ -132,15 +133,15 @@ const openPrivacy = () => {
         <img :src="expandIcon" class="w-3.5 h-3.5 ml-2 mt-1" />
       </div>
       <div class="flex flex-row justify-center">
-        <button
-          class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center w-fit"
+        <UiButton
+          class="ui-btn-primary gap-3 px-4 py-3 h-12 justify-center w-fit"
           @click="sendEmail()"
         >
           <span class="text-white text-base font-medium"
             >Recevoir mon rapport en PDF</span
           >
           <UiSpinnerLoading v-if="isLoading" />
-        </button>
+        </UiButton>
       </div>
 
       <div

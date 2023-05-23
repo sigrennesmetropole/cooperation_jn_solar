@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import fail from '@/assets/illustrations/fail.svg'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 </script>
 
 <template>
@@ -15,12 +16,13 @@ import fail from '@/assets/illustrations/fail.svg'
           Merci de réessayer dans quelques instants...
         </p>
       </div>
-      <button
-        class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center w-fit"
+      <UiButton
+        class="ui-btn-primary shadow-md gap-3 px-4 py-3 shrink-0 grow-0 visible w-fit"
         @click="$emit('retry-end-simulation')"
+        id="button-linky"
       >
         <span class="text-white text-base font-medium">Réessayer</span>
-      </button>
+      </UiButton>
     </div>
   </div>
 </template>
