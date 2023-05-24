@@ -24,14 +24,22 @@ class ApiEnedisService {
         'Content-Type': 'application/json',
       }
     )
-    return data.prm
+    if (data !== undefined && data.prm !== undefined) {
+      return data.prm
+    } else {
+      return null
+    }
   }
 
   async getAnnualConsumption() {
     const data = await apiService.callApiGet(
       `${this.baseUrlApi}/annual-consumption`
     )
-    return data.consumption
+    if (data !== undefined && data.consumption !== undefined) {
+      return data.consumption
+    } else {
+      return null
+    }
   }
 }
 

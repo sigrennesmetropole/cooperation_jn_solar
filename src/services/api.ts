@@ -23,7 +23,6 @@ class ApiService {
         'Une erreur est survenue, veuillez réessayer.'
       )
       notif.displayNotification()
-      throw error
     }
   }
 
@@ -46,7 +45,6 @@ class ApiService {
         'Une erreur est survenue, veuillez réessayer.'
       )
       notif.displayNotification()
-      throw error
     }
   }
 }
