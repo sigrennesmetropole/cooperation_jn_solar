@@ -271,11 +271,6 @@ export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
   // @ts-ignore
   const selectedSquares = getSquaresOfInteraction()
   console.log(`Number of selectedSquares: ${selectedSquares.length}`)
-  const selectedPoints: Point[] = []
-  for (const selectedSquare of selectedSquares) {
-    const center = selectedSquare.getProperty('center') as Point
-    selectedPoints.push(center)
-  }
   const roofsStore = useRoofsStore()
   roofsStore.previouslySelected = selectedSquares
 
@@ -286,11 +281,13 @@ export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
     }
     for (y = 0; y < squareGrid[x].length; y++) {
       for (const selectedSquare of selectedSquares) {
+        // Only check if the square is usable because we want to set the
+        // usable to false if it equals
         if (squareGrid[x][y].usable) {
           const center = selectedSquare.getProperty('center') as Point
           if (booleanEqual(center, squareGrid[x][y].squareCenter as Point)) {
             squareGrid[x][y].usable = false
-            // Remove the already matched to save some comparison
+            // Remove the already equals to save some comparison
             const index = selectedSquares.indexOf(selectedSquare)
             selectedSquares.splice(index, 1)
             break
