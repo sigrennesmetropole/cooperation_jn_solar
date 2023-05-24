@@ -4,6 +4,9 @@ import expandIcon from '../../assets/icons/expand-small-bigger-retract-smaller-b
 import deleteCircle from '../../assets/icons/interface-delete-circle.svg'
 import { computed, ref } from 'vue'
 import { legalList } from '@/constants/legalLinks'
+import { apiPdfService } from '@/services/api-pdf'
+import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
+
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
 
@@ -12,6 +15,9 @@ const isCheckBoxOnError = ref(false)
 
 const userEmail = ref('')
 const isCheckboxChecked = ref(false)
+const isLoading = ref(false)
+const isErrorSendEmail = ref(false)
+const isEmailSendOnce = ref(false)
 
 const errorPicto = computed(() => {
   if (validEmail.value) {
@@ -30,7 +36,7 @@ function changeError() {
   isCheckBoxOnError.value = !isCheckboxChecked.value
 }
 
-function sendEmail() {
+async function sendEmail() {
   const email = DOMPurify.sanitize(userEmail.value)
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -39,7 +45,21 @@ function sendEmail() {
   changeError()
 
   if (validEmail.value && !isCheckBoxOnError.value) {
-    console.log('send consumption by email')
+    isErrorSendEmail.value = false
+    isLoading.value = true
+    const result = await apiPdfService.sendPdfByEmail(email)
+    if (
+      result !== undefined &&
+      result !== null &&
+      result.etat !== undefined &&
+      result.etat !== null &&
+      result.etat != 'OK'
+    ) {
+      isEmailSendOnce.value = true
+    } else {
+      isErrorSendEmail.value = true
+    }
+    isLoading.value = false
   }
 }
 
@@ -72,6 +92,7 @@ const openPrivacy = () => {
           type="email"
           v-model="userEmail"
           class="border border-neutral-400 rounded"
+          :disabled="isLoading"
         />
         <div
           id="errorEmail"
@@ -118,7 +139,22 @@ const openPrivacy = () => {
           <span class="text-white text-base font-medium"
             >Recevoir mon rapport en PDF</span
           >
+          <UiSpinnerLoading v-if="isLoading" />
         </button>
+      </div>
+
+      <div
+        class="flex flex-row justify-center"
+        v-if="!isErrorSendEmail && isEmailSendOnce"
+      >
+        <span class="text-green-500 text-base font-medium">
+          Vous recevrez vos résultats par mail dans les minutes à venir.
+        </span>
+      </div>
+      <div class="flex flex-row justify-center" v-else-if="isErrorSendEmail">
+        <span class="text-red-500 text-base font-medium">
+          Une erreur est survenue, veuillez réessayer.
+        </span>
       </div>
     </div>
   </div>

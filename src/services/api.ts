@@ -2,7 +2,12 @@ import { RennesNotification } from '@/services/notification'
 import { getUrlBackOffice } from '@/services/env'
 
 class ApiService {
-  async callApiPost(url: string, dataPost: {}, headers: {}) {
+  async callApiPost(
+    url: string,
+    dataPost: {},
+    headers: {},
+    type: string = 'json'
+  ) {
     try {
       const response = await fetch(getUrlBackOffice() + url, {
         method: 'POST',
@@ -15,8 +20,13 @@ class ApiService {
         throw new Error(`HTTP error status: ${response.status}`)
       }
 
-      const data = await response.json()
-      return data
+      if (type == 'buffer') {
+        const arrayBuffer = await response.arrayBuffer() // get array buffer
+        return arrayBuffer
+      } else {
+        const data = await response.json()
+        return data
+      }
     } catch (error) {
       const notif = new RennesNotification(
         'error',
