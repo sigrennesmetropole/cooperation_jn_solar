@@ -277,10 +277,12 @@ export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
   for (x = 0; x < squareGrid.length; x++) {
     for (y = 0; y < squareGrid[x].length; y++) {
       for (const selectedSquare of selectedSquares) {
-        const center = selectedSquare.getProperty('center') as Point
-        if (booleanEqual(center, squareGrid[x][y].squareCenter as Point)) {
-          squareGrid[x][y].usable = false
-          break
+        if (squareGrid[x][y].usable) {
+          const center = selectedSquare.getProperty('center') as Point
+          if (booleanEqual(center, squareGrid[x][y].squareCenter as Point)) {
+            squareGrid[x][y].usable = false
+            break
+          }
         }
       }
     }
