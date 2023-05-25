@@ -14,7 +14,8 @@ const redirectToRoofSelection = (
     (from.name === undefined || from.name === null) &&
     to.name !== 'home' &&
     to.name !== 'roof-selection' &&
-    to.name !== 'legal-notice'
+    to.name !== 'legal-notice' &&
+    to.name !== 'redirection-enedis'
   ) {
     next({ name: 'roof-selection' })
   } else {
@@ -89,6 +90,15 @@ const routes = [
     beforeEnter: redirectToRoofSelection,
     meta: {
       title: 'Page Simulation Results',
+    },
+  },
+  {
+    path: '/redirection-enedis',
+    name: 'redirection-enedis',
+    component: () => import('../views/RedirectionEnedisView.vue'),
+    beforeEnter: redirectToRoofSelection,
+    meta: {
+      title: 'Page Redirection Enedis',
     },
   },
 

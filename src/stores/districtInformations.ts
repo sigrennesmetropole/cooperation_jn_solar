@@ -10,7 +10,6 @@ import { RENNES_LAYER, useLayersStore } from '@/stores/layers'
 export const useDistrictStore = defineStore('districtInformations', () => {
   const interactionsStore = useInteractionsStore()
   const layerStore = useLayersStore()
-
   const districtCode: Ref<number> = ref(0)
   const districtName: Ref<string> = ref('')
   const districtConsumption: Ref<number> = ref(0)
@@ -22,6 +21,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
   const newPointOrdinate: Ref<number> = ref(0)
   const checkboxChecked: Ref<boolean> = ref(false)
   const canBeDisplayed: Ref<boolean> = ref(true)
+
   function setDistrictIrisCode(newDistrictCode: number) {
     districtCode.value = newDistrictCode
   }

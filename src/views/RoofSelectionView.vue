@@ -14,6 +14,7 @@ import { resetStores } from '@/services/resetStores'
 import { useInteractionsStore } from '@/stores/interactions'
 import SelectRoofInteraction from '@/interactions/selectRoofInteraction'
 import { useSimulationStore } from '@/stores/simulations'
+import { resetDataForEnedis } from '@/services/enedisService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
@@ -32,6 +33,7 @@ onMounted(() => {
     rennesApp.clearRoofsHighlight()
   }
   resetStores()
+  resetDataForEnedis()
   viewStore.setCurrentView(viewList['roof-selection'])
   panelsStore.setTypePanelDisplay('float-left')
   panelsStore.isCompletelyHidden = true

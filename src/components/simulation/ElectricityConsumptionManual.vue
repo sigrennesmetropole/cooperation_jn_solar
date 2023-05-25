@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
+import { useEnedisStore } from '@/stores/enedis'
 
 const consumption = ref('')
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
+const enedisStore = useEnedisStore()
 
 const storeConsumption = () => {
   consumption.value = DOMPurify.sanitize(consumption.value)
@@ -22,6 +24,15 @@ function inputIsCompleted() {
     return true
   }
 }
+
+onBeforeMount(() => {
+  if (enedisStore.isEnedisRedirection) {
+    const annual_consumption = Math.round(
+      consumptionAndProductionStore.annualConsumption
+    )
+    consumption.value = annual_consumption.toString()
+  }
+})
 </script>
 
 <template>
