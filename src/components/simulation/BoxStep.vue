@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+</script>
 
 <template>
   <div
@@ -7,11 +9,11 @@
     <slot name="nameOfStep"></slot>
     <slot name="image"></slot>
     <slot name="text"></slot>
-    <button
-      class="mt-4 mb-6 bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center w-full"
+    <UiButton
+      class="mt-4 mb-6 ui-btn-primary gap-3 px-4 py-3 h-12 w-full"
       @click="$emit('buttonBoxAction')"
     >
       <slot name="buttonContent"></slot>
-    </button>
+    </UiButton>
   </div>
 </template>

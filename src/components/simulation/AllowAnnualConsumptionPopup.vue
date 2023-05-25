@@ -3,6 +3,8 @@ import iconExternalLink from '@/assets/icons/icon-external-link.svg'
 import { legalList } from '@/constants/legalLinks'
 import { ref } from 'vue'
 import CheckBox from '@/components/simulation/CheckBox.vue'
+import IconArrowRight from '@/assets/icons/components/IconArrowRight.vue'
+import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
 const isAllowCheckBoxOnError = ref(false)
 const isAllowCheckboxChecked = ref(false)
@@ -134,21 +136,16 @@ function checkBoxChange(event: boolean, type_checkbox: 'allow' | 'notallow') {
             </CheckBox>
           </div>
           <div class="flex flex-row items-center mt-4">
-            <button
+            <UiButton
+              class="ui-btn-primary gap-3 px-4 py-3 h-12"
+              :icon="IconArrowRight"
               @click="clickButtonNext()"
               id="nextButtonPopup"
-              class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center"
             >
-              <img
-                class=""
-                src="../../assets/icons/interface-arrows-button-right--arrow-right-keyboard.svg"
-                alt=""
-              />
               <span class="font-dm-sans text-white text-base font-medium">
                 Continuer
               </span>
-            </button>
-
+            </UiButton>
             <span
               class="ml-4 font-normal text-base"
               :class="{

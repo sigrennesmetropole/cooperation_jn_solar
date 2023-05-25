@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import FailComponent from '@/components/simulation/FailComponent.vue'
 
 describe('MyComponent', () => {
@@ -8,7 +8,7 @@ describe('MyComponent', () => {
   })
 
   it('emits the correct event on button click', () => {
-    const wrapper = shallowMount(FailComponent)
+    const wrapper = mount(FailComponent)
     wrapper.find('button').trigger('click')
     expect(wrapper.emitted('retry-end-simulation')).toBeTruthy()
   })

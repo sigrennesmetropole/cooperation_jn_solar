@@ -11,6 +11,7 @@ const configTest = defineConfig({
         replacement: fileURLToPath(new URL('./src', import.meta.url)),
       },
     ],
+    dedupe: ['vue'],
   },
   assetsInclude: ['**/*.glb'],
   test: {

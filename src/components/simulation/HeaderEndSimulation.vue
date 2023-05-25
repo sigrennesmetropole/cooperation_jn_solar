@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import UiSolarPanelLogo from '@/components/ui/UiSolarPanelLogo.vue'
 import UiHeaderFullScreen from '@/components/ui/UiHeaderFullScreen.vue'
-import iconHome from '@/assets/icons/icon-home.svg'
 </script>
 
 <template>
@@ -15,7 +14,6 @@ import iconHome from '@/assets/icons/icon-home.svg'
       </div>
     </template>
     <template v-slot:button-content>
-      <img :src="iconHome" />
       <span class="text-base font-medium">Retour à l'accueil</span>
     </template>
   </UiHeaderFullScreen>

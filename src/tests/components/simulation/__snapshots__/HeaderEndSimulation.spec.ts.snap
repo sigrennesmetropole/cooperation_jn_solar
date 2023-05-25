@@ -10,6 +10,11 @@ exports[`HeaderEndSimulation.vue > renders the component correctly 1`] = `
       <h1 class=\\"font-dm-sans font-bold text-2xl text-center\\"> Cadastre Solaire </h1>
     </div>
   </div>
-  <div><button class=\\"bg-white border border-black shadow-sm rounded-lg gap-3 px-4 py-3 items-center flex flex-row justify-center\\"><img src=\\"/src/assets/icons/icon-home.svg\\"><span class=\\"text-base font-medium\\">Retour à l'accueil</span></button></div>
+  <div><button class=\\"ui-btn-secondary ui-btn-regular-size justify-center\\"><svg width=\\"20\\" height=\\"20\\" viewBox=\\"0 0 20 20\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\" role=\\"img\\" class=\\"m-auto mr-2\\">
+        <path d=\\"M19.2858 0.714294L0.714355 19.2857\\" stroke=\\"#262626\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"></path>
+        <path d=\\"M0.714355 0.714294L19.2858 19.2857\\" stroke=\\"#262626\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"></path>
+      </svg><span class=\\"m-auto font-semibold\\"><span class=\\"text-base font-medium\\">Retour à l'accueil</span></span>
+      <!---->
+    </button></div>
 </div>"
 `;

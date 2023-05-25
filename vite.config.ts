@@ -17,6 +17,7 @@ export default defineConfig(({ command }) => {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
+      dedupe: ['vue'],
     },
     assetsInclude: ['**/*.glb'],
   }
