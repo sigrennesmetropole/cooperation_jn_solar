@@ -16,7 +16,7 @@ const mapStore = useMapStore()
 
 onBeforeMount(async () => {
   mapStore.isLoadingMap = true
-  let prm = route.query.usage_points_id
+  let prm = route.query.usage_points_id // PRM is the name of customer id in enedis
   getDataFromLocalStorage()
   if (prm !== undefined && prm !== null) {
     if (Array.isArray(prm)) {
