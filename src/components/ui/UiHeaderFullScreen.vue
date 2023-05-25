@@ -5,8 +5,8 @@ import iconChevronLeft from '@/assets/icons/chevron-left.svg'
 import { useViewsStore } from '@/stores/views'
 import { useSimulationStore } from '@/stores/simulations'
 import { resetStores } from '@/services/resetStores'
-import { IconHome } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import IconCrossClose from '@/assets/icons/components/IconCrossClose.vue'
 
 const viewStore = useViewsStore()
 const simulationStore = useSimulationStore()
@@ -49,8 +49,8 @@ function restartHome() {
     <slot name="mid-content"></slot>
     <div v-if="viewStore.currentView != 'end-simulation'">
       <UiButton
-        class="ui-btn-regular-size ui-btn-secondary"
-        :icon="IconHome"
+        class="ui-btn-secondary ui-btn-regular-size justify-center"
+        :icon="IconCrossClose"
         @click="restartHome()"
       >
         <slot name="button-content"></slot>

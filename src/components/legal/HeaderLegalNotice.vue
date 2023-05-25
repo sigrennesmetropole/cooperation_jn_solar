@@ -3,7 +3,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import UiHeaderFullScreen from '@/components/ui/UiHeaderFullScreen.vue'
 import logoRennes from '@/assets/illustrations/logoRennes.png'
-import iconMultiplyBlack from '@/assets/icons/icon-multiply-black.svg'
 import { legalList } from '@/constants/legalLinks'
 
 const router = useRouter()
@@ -41,7 +40,6 @@ function goTo(link: string) {
       </div>
     </template>
     <template v-slot:button-content>
-      <img :src="iconMultiplyBlack" />
       <span class="text-base font-medium">Fermer</span>
     </template>
   </UiHeaderFullScreen>

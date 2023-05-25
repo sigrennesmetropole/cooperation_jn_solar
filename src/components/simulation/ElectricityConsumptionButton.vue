@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import rectangle from '@/assets/icons/rectangle.svg'
+import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { useSimulationStore, DEFAULT_CONSUMPTION } from '@/stores/simulations'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
-import ExpandArrow from '@/assets/icons/components/ExpandArrow.vue'
 
 const simulationStore = useSimulationStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
@@ -17,7 +17,7 @@ function skipStep() {
 <template>
   <div class="flex flex-col gap-2.5 py-6 font-dm-sans">
     <UiButton
-      class="ui-btn-primary gap-3 px-4 py-3 shrink-0 grow-0 visible"
+      class="ui-btn-primary gap-3 px-4 py-3 justify-center"
       @click="$emit('clickAnnualConsumption', 'manual')"
       id="button-manual-input"
     >
@@ -31,14 +31,14 @@ function skipStep() {
       <img :src="rectangle" />
     </div>
     <UiButton
-      class="ui-btn-secondary gap-3 px-4 py-3 shrink-0 grow-0 visible"
+      class="ui-btn-secondary mb-6 gap-3 px-4 py-3 justify-center flex flex-row"
       @click="$emit('clickAnnualConsumption', 'linky')"
-      :icon="ExpandArrow"
       id="button-linky"
     >
-      <span class="text-black text-base font-medium"
-        >Connecter mon compteur Linky</span
-      >
+      <div class="text-black text-base font-medium flex flex-row gap-3">
+        <img :src="expandArrow" class="h-5 w-5" />
+        Connecter mon compteur Linky
+      </div>
     </UiButton>
     <p class="text-xs font-dm-sans font-normal text-neutral-600">
       Ma consommation n'est traitée que le temps de la simulation et n' est pas

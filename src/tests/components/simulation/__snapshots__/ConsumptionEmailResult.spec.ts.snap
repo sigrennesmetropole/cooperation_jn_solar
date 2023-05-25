@@ -23,9 +23,11 @@ exports[`ConsumptionEmailResult > renders correctly 1`] = `
       <p> Vous pouvez lire notre <span tabindex=\\"0\\" class=\\"font-medium underline decoration-1 hover:cursor-pointer\\" data-testid=\\"privacy-link\\"> Politique de confidentialité </span></p><img src=\\"/src/assets/icons/expand-small-bigger-retract-smaller-big.svg\\" class=\\"w-3.5 h-3.5 ml-2 mt-1\\">
     </div>
     <div class=\\"flex flex-row justify-center\\"><button class=\\"ui-btn-primary gap-3 px-4 py-3 h-12 justify-center w-fit\\">
-        <!----><span class=\\"m-auto font-semibold\\"><span class=\\"text-white text-base font-medium\\">Recevoir mon rapport en PDF</span></span>
+        <!----><span class=\\"m-auto font-semibold\\"><span class=\\"text-white text-base font-medium\\">Recevoir mon rapport en PDF</span>
+        <!--v-if--></span>
         <!---->
       </button></div>
+    <!--v-if-->
   </div>
 </div>"
 `;
