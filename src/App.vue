@@ -17,6 +17,7 @@ import { useDistrictStore } from './stores/districtInformations'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { useMapStore } from '@/stores/map'
 import { useEnedisStore } from '@/stores/enedis'
+import { apiConfigService } from '@/services/api-config'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
@@ -28,7 +29,9 @@ const enedisStore = useEnedisStore()
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
+  apiConfigService.getConfig()
 })
+
 function isLeftPanelRetractable() {
   const retractableList = viewList['roof-selection']
   return retractableList.includes(viewStore.currentView!)
