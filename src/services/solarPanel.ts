@@ -5,12 +5,11 @@ import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
 import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
-import { SOLAR_PANEL_POWER } from '@/model/solarPanel.model'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { SolarPanelGrid } from '@/algorithm/solarPanelPlacement'
 import type { Matrix } from './roofInteractionHelper'
 import { center, points } from '@turf/turf'
-
+import { getConfigFromKey } from '@/services/configService'
 import type { Feature, Properties, Point, Position } from '@turf/turf'
 
 const HeightOffset = 0.2
@@ -119,7 +118,10 @@ export async function filterSolarPanelByMaxSolarPanel(
 
 export function getPeakPower() {
   const solarPanelStore = useSolarPanelStore()
-  const peakPower = solarPanelStore.currentNumberSolarPanel * SOLAR_PANEL_POWER
+  // @ts-ignore
+  const peakPower =
+    solarPanelStore.currentNumberSolarPanel *
+    getConfigFromKey('solar_panel.solar_panel_power')
   return Math.round(peakPower * 100) / 100
 }
 
