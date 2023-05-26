@@ -132,20 +132,15 @@ async function setupGridInstallation() {
 }
 
 async function setupSolarPanel() {
-  const x1 = performance.now()
   roofsStore.saveCleanMatrix()
-  const x2 = performance.now()
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
-  const x3 = performance.now()
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
-  const x4 = performance.now()
   const selectedRoofModel: RoofSurfaceModel =
     roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
   // Make sure the active map is the 3D one sot hat the height of solar panel
   // can be computed properly
   await rennesApp.maps.setActiveMap('cesium')
   mapStore.activate3d()
-  const x5 = performance.now()
   const solarPanelModels = solarPanelGridToSolarPanelModel(
     rennesApp,
     roofsStore.gridMatrix!,
@@ -154,18 +149,8 @@ async function setupSolarPanel() {
     selectedRoofModel.inclinaison,
     selectedRoofModel.azimuth
   )
-  const x6 = performance.now()
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
-  const x7 = performance.now()
-  console.log(`roofsStore.saveCleanMatrix(): ${x2 - x1}`)
-  console.log(
-    `substractSelectedSquaresFromGrid(roofsStore.gridMatrix!): ${x3 - x2}`
-  )
-  console.log(`solarPanelPlacement(roofsStore.gridMatrix!): ${x4 - x3}`)
-  console.log(`mapStore.activate3d(): ${x5 - x4}`)
-  console.log(`solarPanelGridToSolarPanelModel: ${x6 - x5}`)
-  console.log(`Full setupSolarPanel: ${x7 - x1}`)
 }
 
 async function displaySolarPanelLayer() {
@@ -205,14 +190,8 @@ simulationStore.$subscribe(async () => {
       simulationStore.currentStep === 2 &&
       simulationStore.currentSubStep == 2
     ) {
-      let x = performance.now()
       await setupSolarPanel()
-      let y = performance.now()
       await displaySolarPanelLayer()
-      let z = performance.now()
-      console.log(`setupSolarPanel: ${z - x}`)
-      console.log(`displaySolarPanelLayer: ${z - y}`)
-      console.log(`setupSolarPanel + displaySolarPanelLayer: ${y - x}`)
     } else if (
       simulationStore.currentStep === 3 &&
       simulationStore.currentSubStep == 1

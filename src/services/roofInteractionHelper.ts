@@ -270,7 +270,6 @@ export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
 export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
   // @ts-ignore
   const selectedSquares = getSquaresOfInteraction()
-  console.log(`Number of selectedSquares: ${selectedSquares.length}`)
   const roofsStore = useRoofsStore()
   roofsStore.previouslySelected = selectedSquares
 
