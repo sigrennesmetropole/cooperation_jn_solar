@@ -280,10 +280,10 @@ export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
       break
     }
     for (y = 0; y < squareGrid[x].length; y++) {
-      for (const selectedSquare of selectedSquares) {
-        // Only check if the square is usable because we want to set the
-        // usable to false if it equals
-        if (squareGrid[x][y].usable) {
+      // Only check if the square is usable because we want to set the
+      // usable to false if it equals
+      if (squareGrid[x][y].usable) {
+        for (const selectedSquare of selectedSquares) {
           const center = selectedSquare.getProperty('center') as Point
           if (booleanEqual(center, squareGrid[x][y].squareCenter as Point)) {
             squareGrid[x][y].usable = false
