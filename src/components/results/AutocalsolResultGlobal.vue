@@ -7,7 +7,6 @@ const props = defineProps<{
   injected: number
   autoConsumed: number
   production: number
-  isPdf: boolean
 }>()
 </script>
 
@@ -26,8 +25,7 @@ const props = defineProps<{
 
       <div class="mt-8 font-dm-sans relative mr-12">
         <div
-          class="bg-amber-500 px-3 rounded-full w-fit absolute left-[26%] -top-3"
-          :class="isPdf ? 'pb-4' : 'py-1'"
+          class="bg-amber-500 px-3 rounded-full w-fit absolute left-[26%] -top-3 py-1"
         >
           <span class="text-white text-base font-bold"> Production </span>
         </div>
@@ -51,8 +49,7 @@ const props = defineProps<{
 
       <div class="mt-8 font-dm-sans relative">
         <div
-          class="bg-emerald-500 px-3 rounded-full w-fit absolute left-[12%] -top-3"
-          :class="isPdf ? 'pb-4' : 'py-1'"
+          class="bg-emerald-500 px-3 rounded-full w-fit absolute left-[12%] -top-3 py-1"
         >
           <span class="text-white text-base font-bold"> Autoconsommation </span>
         </div>
@@ -78,8 +75,7 @@ const props = defineProps<{
 
       <div class="mt-8 font-dm-sans relative">
         <div
-          class="bg-indigo-600 px-3 rounded-full w-fit absolute left-[26%] -top-3"
-          :class="isPdf ? 'pb-4' : 'py-1'"
+          class="bg-indigo-600 px-3 rounded-full w-fit absolute left-[26%] -top-3 py-1"
         >
           <span class="text-white text-base font-bold"> Revente </span>
         </div>
@@ -102,8 +98,7 @@ const props = defineProps<{
       </div>
 
       <div
-        class="bg-black px-3 text-center rounded-full absolute right-0 top-[265px] w-[418px]"
-        :class="isPdf ? 'pb-4' : 'py-1'"
+        class="bg-black px-3 text-center rounded-full absolute right-0 top-[265px] w-[418px] py-1"
       >
         <span class="text-white text-base font-bold"> Vos économies </span>
       </div>

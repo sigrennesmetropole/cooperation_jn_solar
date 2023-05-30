@@ -3,10 +3,6 @@ import solarCoop from '@/assets/illustrations/solar-coop.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
 import { getStringFromConfig } from '@/services/configService'
 
-const props = defineProps<{
-  isPdf: boolean
-}>()
-
 const solar_coop_link = getStringFromConfig('link.solar_coop_link')
 
 function goToSolarCoopInfo() {
@@ -16,8 +12,7 @@ function goToSolarCoopInfo() {
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto shadow-md"
   >
     <h2 class="font-dm-sans font-bold text-2xl">
       Être accompagné dans mon projet
@@ -39,7 +34,7 @@ function goToSolarCoopInfo() {
           Solarcoop qui vous aidera à trouver la meilleure installation.
         </p>
 
-        <ButtonVisitWebsite :link="solar_coop_link" :isPdf="props.isPdf" />
+        <ButtonVisitWebsite :link="solar_coop_link" />
       </div>
     </div>
   </div>

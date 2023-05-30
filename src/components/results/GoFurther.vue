@@ -6,25 +6,19 @@ import qualitenr from '@/assets/illustrations/qualitEnR.png'
 import qualibat from '@/assets/illustrations/qualibat.avif'
 import qualifelec from '@/assets/illustrations/qualifelec.png'
 import profitability from '@/assets/illustrations/profitability.svg'
-
-const props = defineProps<{
-  isPdf: boolean
-}>()
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto shadow-md"
   >
     <h2 class="font-dm-sans font-bold text-2xl">
       Plus d'informations pour concrétiser votre projet
     </h2>
-    <PhotoVoltaique :isPdf="props.isPdf"></PhotoVoltaique>
+    <PhotoVoltaique></PhotoVoltaique>
     <div class="flex flex-row gap-8">
       <LabelsProfitability
         link="https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite"
-        :isPdf="props.isPdf"
       >
         <template v-slot:img>
           <img :src="qualiLabels" />
@@ -47,7 +41,6 @@ const props = defineProps<{
       </LabelsProfitability>
       <LabelsProfitability
         link="https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/"
-        :isPdf="props.isPdf"
       >
         <template v-slot:img>
           <img :src="profitability" />

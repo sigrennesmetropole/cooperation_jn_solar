@@ -4,10 +4,6 @@ import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.sv
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
 import { getStringFromConfig } from '@/services/configService'
 
-const props = defineProps<{
-  isPdf: boolean
-}>()
-
 const photovoltaique_link = getStringFromConfig('link.photovoltaique_link')
 
 function goToPhotovoltaiqueInfo() {
@@ -28,7 +24,6 @@ function goToPhotovoltaiqueInfo() {
         <span
           tabindex="0"
           class="inline-flex items-center cursor-pointer font-medium"
-          :class="props.isPdf ? 'mt-4' : ''"
           @click="goToPhotovoltaiqueInfo()"
           @keydown.enter="goToPhotovoltaiqueInfo()"
         >
@@ -39,7 +34,7 @@ function goToPhotovoltaiqueInfo() {
         le photovoltaïque.
       </p>
 
-      <ButtonVisitWebsite :link="photovoltaique_link" :isPdf="props.isPdf" />
+      <ButtonVisitWebsite :link="photovoltaique_link" />
     </div>
   </div>
 </template>

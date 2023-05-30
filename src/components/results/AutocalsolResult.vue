@@ -24,7 +24,6 @@ const props = defineProps<{ autocalsolResult: AutocalsolResult }>()
         props.autocalsolResult.consoAnnualInjected +
         props.autocalsolResult.consoAnnualAutoConsumed
       "
-      :isPdf="false"
     />
     <span class="font-bold text-xl mt-10">
       Comment réduire au maximum sa facture d'électricité ?

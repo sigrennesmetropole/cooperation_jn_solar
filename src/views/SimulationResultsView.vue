@@ -42,14 +42,12 @@ const autocalsolResult = autocalsolStore.autocalsolResult
         <SunshineInformation
           v-if="selectedRoof !== undefined"
           :selected-roof="selectedRoof"
-          :isPdf="false"
         />
         <ProductionInformation
-          :isPdf="false"
           v-if="solarPanelStore.currentNumberSolarPanel > 0"
           :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
         />
-        <ConsumptionInformation :isPdf="false" />
+        <ConsumptionInformation />
       </div>
       <div
         class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50 pt-[120px]"
@@ -63,9 +61,9 @@ const autocalsolResult = autocalsolStore.autocalsolResult
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"
         />
-        <GoFurther :isPdf="false"></GoFurther>
-        <SolarCoop :isPdf="false"></SolarCoop>
-        <EnergiesRennes :isPdf="false"></EnergiesRennes>
+        <GoFurther></GoFurther>
+        <SolarCoop></SolarCoop>
+        <EnergiesRennes></EnergiesRennes>
       </div>
     </div>
     <div class="mx-16 py-10">
