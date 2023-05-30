@@ -2,10 +2,10 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import router from '@/router'
-import { getConfigFromKey } from '@/services/configService'
+import { getNumberFromConfig } from '@/services/configService'
 
 export function getDefaultConsumption() {
-  return getConfigFromKey('consumption.default_consumption')
+  return getNumberFromConfig('consumption.default_consumption')
 }
 
 export const useSimulationStore = defineStore('simulation', () => {

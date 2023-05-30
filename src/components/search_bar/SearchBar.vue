@@ -21,7 +21,7 @@ import InputSearch from '@/components/search_bar/InputSearch.vue'
 import { createVPForTypeAddress } from '@/services/searchBarService'
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
-import { getConfigFromKey } from '@/services/configService'
+import { getNumberFromConfig } from '@/services/configService'
 
 const props = defineProps({
   isRedirectOnSearch: {
@@ -64,13 +64,15 @@ const filters = ref([
   },
 ])
 
-const size_begin_search = getConfigFromKey('address.size_begin_search')
-const nb_addresses_rva = getConfigFromKey('address.nb_addresses_rva')
-const nb_addresses_organization = getConfigFromKey(
+const size_begin_search = getNumberFromConfig('address.size_begin_search')
+const nb_addresses_rva = getNumberFromConfig('address.nb_addresses_rva')
+const nb_addresses_organization = getNumberFromConfig(
   'address.nb_addresses_organization'
 )
-const nb_addresses_communes = getConfigFromKey('address.nb_addresses_communes')
-const nb_addresses_streets = getConfigFromKey('address.nb_addresses_streets')
+const nb_addresses_communes = getNumberFromConfig(
+  'address.nb_addresses_communes'
+)
+const nb_addresses_streets = getNumberFromConfig('address.nb_addresses_streets')
 
 onMounted(() => {
   if (addressStore.address !== '') {

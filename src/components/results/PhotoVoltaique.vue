@@ -2,13 +2,13 @@
 import photoVoltaique from '@/assets/illustrations/photo_voltaique.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
-import { getConfigFromKey } from '@/services/configService'
+import { getStringFromConfig } from '@/services/configService'
 
 const props = defineProps<{
   isPdf: boolean
 }>()
 
-const photovoltaique_link = getConfigFromKey('link.photovoltaique_link')
+const photovoltaique_link = getStringFromConfig('link.photovoltaique_link')
 
 function goToPhotovoltaiqueInfo() {
   window.open(photovoltaique_link, '_blank')

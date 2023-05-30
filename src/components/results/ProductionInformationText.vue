@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import installation from '@/assets/icons/installation.svg'
-import { getConfigFromKey } from '@/services/configService'
+import { getNumberFromConfig } from '@/services/configService'
 import { computed, defineProps } from 'vue'
 import solarPanelIcon from '@/assets/icons/solar-panel.svg'
 
@@ -12,13 +12,13 @@ const props = defineProps<{
 const currentSurface = computed(
   () =>
     props.currentNumSolarPanel *
-    getConfigFromKey('solar_panel.solar_panel_surface')
+    getNumberFromConfig('solar_panel.solar_panel_surface')
 )
 
 const currentPower = computed(() =>
   (
     props.currentNumSolarPanel *
-    getConfigFromKey('solar_panel.solar_panel_power')
+    getNumberFromConfig('solar_panel.solar_panel_power')
   ).toFixed(2)
 )
 </script>

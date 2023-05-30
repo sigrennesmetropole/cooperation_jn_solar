@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import solarCoop from '@/assets/illustrations/solar-coop.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
-import { getConfigFromKey } from '@/services/configService'
+import { getStringFromConfig } from '@/services/configService'
 
 const props = defineProps<{
   isPdf: boolean
 }>()
 
-const solar_coop_link = getConfigFromKey('link.solar_coop_link')
+const solar_coop_link = getStringFromConfig('link.solar_coop_link')
 
 function goToSolarCoopInfo() {
   window.open(solar_coop_link, '_blank')

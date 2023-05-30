@@ -4,14 +4,14 @@ import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.sv
 import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
-import { getConfigFromKey } from '@/services/configService'
+import { getStringFromConfig } from '@/services/configService'
 
 const props = defineProps<{
   isPdf: boolean
 }>()
 
-const energies_link = getConfigFromKey('link.energies_link')
-const vilaine_link = getConfigFromKey('link.vilaine_link')
+const energies_link = getStringFromConfig('link.energies_link')
+const vilaine_link = getStringFromConfig('link.vilaine_link')
 
 function goToEnergiesInfo() {
   window.open(energies_link, '_blank')

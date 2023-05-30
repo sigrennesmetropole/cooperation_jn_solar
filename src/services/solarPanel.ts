@@ -9,7 +9,7 @@ import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { SolarPanelGrid } from '@/algorithm/solarPanelPlacement'
 import type { Matrix } from './roofInteractionHelper'
 import { center, points } from '@turf/turf'
-import { getConfigFromKey } from '@/services/configService'
+import { getNumberFromConfig } from '@/services/configService'
 import type { Feature, Properties, Point, Position } from '@turf/turf'
 
 const HeightOffset = 0.2
@@ -121,7 +121,7 @@ export function getPeakPower() {
   // @ts-ignore
   const peakPower =
     solarPanelStore.currentNumberSolarPanel *
-    getConfigFromKey('solar_panel.solar_panel_power')
+    getNumberFromConfig('solar_panel.solar_panel_power')
   return Math.round(peakPower * 100) / 100
 }
 

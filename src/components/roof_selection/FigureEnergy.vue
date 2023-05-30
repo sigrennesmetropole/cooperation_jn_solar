@@ -3,9 +3,7 @@ import FigureKeyNumber from '@/components/roof_selection/FigureKeyNumber.vue'
 import HourGlass from '@/assets/illustrations/hour-glass.svg'
 import SolarPanel from '@/assets/illustrations/solar-panel.svg'
 import HousePlant from '@/assets/illustrations/house-plant.svg'
-import { getConfigFromKey } from '@/services/configService'
-
-const config = getConfigFromKey('statistics')
+import { getNumberFromConfig } from '@/services/configService'
 </script>
 
 <template>
@@ -20,7 +18,7 @@ const config = getConfigFromKey('statistics')
         <template v-slot:text>
           <p class="font-dm-sans text-xs font-bold">À l’horizon</p>
           <p class="font-dm-sans text-[44px] leading-10 font-bold">
-            {{ config.diduknow_year }}
+            {{ getNumberFromConfig('statistics.diduknow_year') }}
           </p>
         </template>
       </FigureKeyNumber>
@@ -30,7 +28,7 @@ const config = getConfigFromKey('statistics')
         </template>
         <template v-slot:text>
           <p class="font-dm-sans text-3xl font-bold">
-            {{ config.diduknow_more_energy }}x
+            {{ getNumberFromConfig('statistics.diduknow_more_energy') }}x
           </p>
           <p class="font-dm-sans text-xs font-bold">
             plus d’énergies renouvelables
@@ -43,7 +41,7 @@ const config = getConfigFromKey('statistics')
         </template>
         <template v-slot:text>
           <p class="font-dm-sans text-3xl font-bold">
-            {{ config.diduknow_more_power }}x
+            {{ getNumberFromConfig('statistics.diduknow_more_power') }}x
           </p>
           <p class="font-dm-sans text-xs font-bold">
             plus de puissance photovoltaïque
