@@ -21,6 +21,7 @@ import InputSearch from '@/components/search_bar/InputSearch.vue'
 import { createVPForTypeAddress } from '@/services/searchBarService'
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
+import { getConfigFromKey } from '@/services/configService'
 
 const props = defineProps({
   isRedirectOnSearch: {
@@ -63,11 +64,13 @@ const filters = ref([
   },
 ])
 
-const SIZE_BEGIN_SEARCH = 4
-const NB_ADDRESSES_RVA = 5
-const NB_ADDRESSES_ORGANIZATION = 3
-const NB_ADDRESSES_COMMUNES = 2
-const NB_ADDRESSES_STREETS = 5
+const size_begin_search = getConfigFromKey('address.size_begin_search')
+const nb_addresses_rva = getConfigFromKey('address.nb_addresses_rva')
+const nb_addresses_organization = getConfigFromKey(
+  'address.nb_addresses_organization'
+)
+const nb_addresses_communes = getConfigFromKey('address.nb_addresses_communes')
+const nb_addresses_streets = getConfigFromKey('address.nb_addresses_streets')
 
 onMounted(() => {
   if (addressStore.address !== '') {
@@ -81,23 +84,23 @@ function searchFiltered() {
 
 const searchAddresses = async () => {
   let addresses = await apiRvaService.fetchFullAddresses(searchFiltered())
-  autocompletion.value.addressRva = addresses.splice(0, NB_ADDRESSES_RVA)
+  autocompletion.value.addressRva = addresses.splice(0, nb_addresses_rva)
 }
 
 const searchCommunes = async () => {
   let communes = await apiRvaService.fetchCommunes(searchFiltered())
-  autocompletion.value.communes = communes.splice(0, NB_ADDRESSES_COMMUNES)
+  autocompletion.value.communes = communes.splice(0, nb_addresses_communes)
 }
 
 const searchStreets = async () => {
   let streets = await apiRvaService.fetchStreets(searchFiltered())
-  autocompletion.value.streets = streets.splice(0, NB_ADDRESSES_STREETS)
+  autocompletion.value.streets = streets.splice(0, nb_addresses_streets)
 }
 
 const searchOrganizations = async () => {
   let data = await apiSitesorgService.fetchOrganizations(searchFiltered())
   let organizations = []
-  for (let i = 0; i < data.length && i < NB_ADDRESSES_ORGANIZATION; i++) {
+  for (let i = 0; i < data.length && i < nb_addresses_organization; i++) {
     organizations.push({
       id: data[i].id,
       addr: data[i].nom,
@@ -120,7 +123,7 @@ const inputKeyUp = async (newSearch: string) => {
     return
   }
   search.value = newSearch
-  if (search.value.length < SIZE_BEGIN_SEARCH) {
+  if (search.value.length < size_begin_search) {
     resetAutocompletion()
     return
   }
@@ -175,7 +178,7 @@ function emptySearch() {
 
 const isEmptySearch = computed(() => {
   if (
-    search.value.length >= SIZE_BEGIN_SEARCH &&
+    search.value.length >= size_begin_search &&
     addressStore.address === '' &&
     autocompletion.value.addressRva.length === 0 &&
     autocompletion.value.addressOrganization.length === 0 &&
@@ -248,7 +251,7 @@ function filterChange(event: {
     }
     return filter
   })
-  if (search.value.length < SIZE_BEGIN_SEARCH) {
+  if (search.value.length < size_begin_search) {
     resetAutocompletion()
     return
   }
@@ -285,7 +288,7 @@ function filterChange(event: {
     <InputSearch
       :isDisplayAutocompletion="isDisplayAutocompletion"
       :isEmptySearch="isEmptySearch"
-      :sizeBeginSearch="SIZE_BEGIN_SEARCH"
+      :sizeBeginSearch="size_begin_search"
       @inputKeyUp="inputKeyUp($event)"
       @emptySearch="emptySearch()"
       @toggleFilters="isDisplayFilters = !isDisplayFilters"

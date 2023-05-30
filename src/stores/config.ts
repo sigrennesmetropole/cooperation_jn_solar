@@ -26,6 +26,13 @@ type ConfigType = {
     energies_link: string
     vilaine_link: string
   }
+  address: {
+    size_begin_search: number
+    nb_addresses_rva: number
+    nb_addresses_organization: number
+    nb_addresses_communes: number
+    nb_addresses_streets: number
+  }
 }
 
 export const useConfigStore = defineStore('configStore', () => {
