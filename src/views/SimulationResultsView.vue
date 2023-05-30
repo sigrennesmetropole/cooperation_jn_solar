@@ -30,25 +30,6 @@ onBeforeMount(async () => {
 
 const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
 const autocalsolResult = autocalsolStore.autocalsolResult
-
-//TO TEST : remove comment bellow | TODO : remove for production
-// const consumptionAndProductionStore = useConsumptionAndProductionStore()
-// const addressStore = useAddressStore()
-// // @ts-ignore
-// autocalsolStore.setAutocalsolResult(autocalsolResultExample)
-// const autocalsolResult = autocalsolStore.autocalsolResult
-// consumptionAndProductionStore.setAnnualConsumption(6000)
-// addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
-// const selectedRoof = {
-//   surface_id: '53123',
-//   values: [13.832112, 74.012886, 12.155002, 0],
-//   favorable: 10,
-//   total: 87,
-//   orientation: 'EST',
-//   azimuth: 80,
-//   inclinaison: 1,
-// }
-// solarPanelStore.currentNumberSolarPanel = 6
 </script>
 
 <template>

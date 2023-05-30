@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { createTestingPinia } from '@pinia/testing'
-import { DEFAULT_CONSUMPTION } from '@/stores/simulations'
+import { getDefaultConsumption } from '@/stores/simulations'
 
 describe('ElectricityConsumptionButton.vue', () => {
   let wrapper: VueWrapper
@@ -48,7 +48,7 @@ describe('ElectricityConsumptionButton.vue', () => {
     await skipText.trigger('click')
     // @ts-ignore
     expect(consumptionAndProductionStore.annualConsumption).toBe(
-      DEFAULT_CONSUMPTION
+      getDefaultConsumption()
     )
   })
 })

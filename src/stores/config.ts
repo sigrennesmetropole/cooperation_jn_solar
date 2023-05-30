@@ -33,6 +33,12 @@ type ConfigType = {
     nb_addresses_communes: number
     nb_addresses_streets: number
   }
+  distance: {
+    distance_max_for_selection: number
+  }
+  consumption: {
+    default_consumption: number
+  }
 }
 
 export const useConfigStore = defineStore('configStore', () => {
