@@ -4,20 +4,21 @@ import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.sv
 import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+import { getConfigFromKey } from '@/services/configService'
 
 const props = defineProps<{
   isPdf: boolean
 }>()
 
-const ENERGIES_LINK = 'https://energiesdupaysderennes.fr/'
-const VILAINE_LINK = 'https://soleilsurvilaine.centralesvillageoises.fr/'
+const energies_link = getConfigFromKey('link.energies_link')
+const vilaine_link = getConfigFromKey('link.vilaine_link')
 
 function goToEnergiesInfo() {
-  window.open(ENERGIES_LINK, '_blank')
+  window.open(energies_link, '_blank')
 }
 
 function goToVilaineInfo() {
-  window.open(VILAINE_LINK, '_blank')
+  window.open(vilaine_link, '_blank')
 }
 </script>
 
@@ -55,7 +56,7 @@ function goToVilaineInfo() {
         </p>
         <ButtonVisitWebsite
           id="energiesButton"
-          :link="ENERGIES_LINK"
+          :link="energies_link"
           :isPdf="props.isPdf"
         />
       </div>

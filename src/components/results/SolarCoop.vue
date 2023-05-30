@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import solarCoop from '@/assets/illustrations/solar-coop.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+import { getConfigFromKey } from '@/services/configService'
 
 const props = defineProps<{
   isPdf: boolean
 }>()
 
-const SOLAR_COOP_LINK = 'https://www.solarcoop.fr/'
+const solar_coop_link = getConfigFromKey('link.solar_coop_link')
 
 function goToSolarCoopInfo() {
-  window.open(SOLAR_COOP_LINK, '_blank')
+  window.open(solar_coop_link, '_blank')
 }
 </script>
 
@@ -38,7 +39,7 @@ function goToSolarCoopInfo() {
           Solarcoop qui vous aidera à trouver la meilleure installation.
         </p>
 
-        <ButtonVisitWebsite :link="SOLAR_COOP_LINK" :isPdf="props.isPdf" />
+        <ButtonVisitWebsite :link="solar_coop_link" :isPdf="props.isPdf" />
       </div>
     </div>
   </div>

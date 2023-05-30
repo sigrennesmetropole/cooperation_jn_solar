@@ -2,15 +2,16 @@
 import photoVoltaique from '@/assets/illustrations/photo_voltaique.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+import { getConfigFromKey } from '@/services/configService'
 
 const props = defineProps<{
   isPdf: boolean
 }>()
 
-const PHOTOVOLTAIQUE_LINK = 'https://www.photovoltaique.info/fr/'
+const photovoltaique_link = getConfigFromKey('link.photovoltaique_link')
 
 function goToPhotovoltaiqueInfo() {
-  window.open(PHOTOVOLTAIQUE_LINK, '_blank')
+  window.open(photovoltaique_link, '_blank')
 }
 </script>
 
@@ -38,7 +39,7 @@ function goToPhotovoltaiqueInfo() {
         le photovoltaïque.
       </p>
 
-      <ButtonVisitWebsite :link="PHOTOVOLTAIQUE_LINK" :isPdf="props.isPdf" />
+      <ButtonVisitWebsite :link="photovoltaique_link" :isPdf="props.isPdf" />
     </div>
   </div>
 </template>

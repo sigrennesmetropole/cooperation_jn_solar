@@ -8,6 +8,24 @@ type ConfigType = {
     diduknow_more_energy: number
     diduknow_more_power: number
   }
+  autocalsol: {
+    pr: number
+    tech: string
+    integration: string
+    typeConsommateur: string
+    typeCompteur: number
+    tarifVente: number
+  }
+  solar_panel: {
+    solar_panel_surface: number
+    solar_panel_power: number
+  }
+  link: {
+    photovoltaique_link: string
+    solar_coop_link: string
+    energies_link: string
+    vilaine_link: string
+  }
 }
 
 export const useConfigStore = defineStore('configStore', () => {
@@ -17,19 +35,8 @@ export const useConfigStore = defineStore('configStore', () => {
     config.value = newConfig
   }
 
-  function setDefaultConfig() {
-    config.value = {
-      statistics: {
-        diduknow_year: 2030,
-        diduknow_more_energy: 3,
-        diduknow_more_power: 6,
-      },
-    }
-  }
-
   return {
     config,
     setConfig,
-    setDefaultConfig,
   }
 })
