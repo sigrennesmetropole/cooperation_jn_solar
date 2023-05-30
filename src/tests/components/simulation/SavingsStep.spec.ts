@@ -11,6 +11,8 @@ import InformationsEnergySaving from '@/components/simulation/InformationsEnergy
 import ElectricityConsumptionManual from '@/components/simulation/ElectricityConsumptionManual.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import { getDefaultConsumption } from '@/stores/simulations'
+import { useConfigStore } from '@/stores/config'
+import configuration from '@/tests/config/configuration_test.json'
 
 describe('SavingsStep.vue', () => {
   let wrapper: VueWrapper
@@ -23,6 +25,9 @@ describe('SavingsStep.vue', () => {
     consumptionAndProductionStore =
       useConsumptionAndProductionStore(testingPinia)
     simulationStore = useSimulationStore(testingPinia)
+
+    const configStore = useConfigStore(testingPinia)
+    configStore.config = configuration
 
     wrapper = mount(SavingsStep, {
       global: {

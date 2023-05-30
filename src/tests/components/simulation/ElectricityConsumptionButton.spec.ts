@@ -4,6 +4,8 @@ import { mount, VueWrapper } from '@vue/test-utils'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { createTestingPinia } from '@pinia/testing'
 import { getDefaultConsumption } from '@/stores/simulations'
+import { useConfigStore } from '@/stores/config'
+import configuration from '@/tests/config/configuration_test.json'
 
 describe('ElectricityConsumptionButton.vue', () => {
   let wrapper: VueWrapper
@@ -15,6 +17,9 @@ describe('ElectricityConsumptionButton.vue', () => {
     const testingPinia = createTestingPinia()
     consumptionAndProductionStore =
       useConsumptionAndProductionStore(testingPinia)
+
+    const configStore = useConfigStore(testingPinia)
+    configStore.config = configuration
 
     wrapper = mount(ElectricityConsumptionButton, {
       global: {
