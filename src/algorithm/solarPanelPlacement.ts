@@ -161,11 +161,13 @@ export function solarPanelPlacement(
   debug: boolean = false,
   prefix: string = ''
 ) {
-  const matrixGeoJSON = matrixToGeoJSON(matrix)
-  writeFeature(`${prefix}matrix.geojson`, matrixGeoJSON, debug)
+  if (debug) {
+    const matrixGeoJSON = matrixToGeoJSON(matrix)
+    writeFeature(`${prefix}matrix.geojson`, matrixGeoJSON, debug)
 
-  const centroidGeoJSON = matrixCentroidToGeoJSON(matrix)
-  writeFeature(`${prefix}centroids.geojson`, centroidGeoJSON, debug)
+    const centroidGeoJSON = matrixCentroidToGeoJSON(matrix)
+    writeFeature(`${prefix}centroids.geojson`, centroidGeoJSON, debug)
+  }
 
   const verticalSolarPanels = solarPanelPlacementAlgorithm(matrix, false)
   const horizontalSolarPanels = solarPanelPlacementAlgorithm(matrix, true)
@@ -180,8 +182,10 @@ export function solarPanelPlacement(
     orientation = 'vertical'
   }
 
-  const matrixGeoJSONCovered = matrixToGeoJSON(matrix, solarPanels)
-  writeFeature(`${prefix}matrix-covered.geojson`, matrixGeoJSONCovered, debug)
+  if (debug) {
+    const matrixGeoJSONCovered = matrixToGeoJSON(matrix, solarPanels)
+    writeFeature(`${prefix}matrix-covered.geojson`, matrixGeoJSONCovered, debug)
+  }
 
   return { solarPanels: solarPanels, orientation: orientation }
 }
