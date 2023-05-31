@@ -6,6 +6,10 @@ import qualitenr from '@/assets/illustrations/qualitEnR.png'
 import qualibat from '@/assets/illustrations/qualibat.avif'
 import qualifelec from '@/assets/illustrations/qualifelec.png'
 import profitability from '@/assets/illustrations/profitability.svg'
+import { getStringFromConfig } from '@/services/configService'
+
+const url_signe_qualite = getStringFromConfig('link.url_signe_qualite')
+const url_choisir_modele_eco = getStringFromConfig('link.choisir_modele_eco')
 </script>
 
 <template>
@@ -17,9 +21,7 @@ import profitability from '@/assets/illustrations/profitability.svg'
     </h2>
     <PhotoVoltaique></PhotoVoltaique>
     <div class="flex flex-row gap-8">
-      <LabelsProfitability
-        link="https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite"
-      >
+      <LabelsProfitability :link="url_signe_qualite">
         <template v-slot:img>
           <img :src="qualiLabels" />
         </template>
@@ -39,9 +41,7 @@ import profitability from '@/assets/illustrations/profitability.svg'
           </div>
         </template>
       </LabelsProfitability>
-      <LabelsProfitability
-        link="https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/"
-      >
+      <LabelsProfitability :link="url_choisir_modele_eco">
         <template v-slot:img>
           <img :src="profitability" />
         </template>

@@ -48,6 +48,7 @@ const DEFAULT_CONFIGURATION = {
     typeConsommateur: 'res1',
     typeCompteur: 1,
     tarifVente: 0.15,
+    date_prod_conso: '05-28',
   },
   solar_panel: {
     solar_panel_surface: 1.8,
@@ -58,6 +59,10 @@ const DEFAULT_CONFIGURATION = {
     solar_coop_link: 'https://www.solarcoop.fr/',
     energies_link: 'https://energiesdupaysderennes.fr/',
     vilaine_link: 'https://soleilsurvilaine.centralesvillageoises.fr/',
+    url_signe_qualite:
+      'https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite',
+    choisir_modele_eco:
+      'https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/',
   },
   address: {
     size_begin_search: 4,

@@ -15,6 +15,7 @@ type ConfigType = {
     typeConsommateur: string
     typeCompteur: number
     tarifVente: number
+    date_prod_conso: string
   }
   solar_panel: {
     solar_panel_surface: number
@@ -25,6 +26,8 @@ type ConfigType = {
     solar_coop_link: string
     energies_link: string
     vilaine_link: string
+    url_signe_qualite: string
+    choisir_modele_eco: string
   }
   address: {
     size_begin_search: number
