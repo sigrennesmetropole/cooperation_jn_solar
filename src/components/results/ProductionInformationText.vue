@@ -1,34 +1,30 @@
 <script setup lang="ts">
 import installation from '@/assets/icons/installation.svg'
-import {
-  SOLAR_PANEL_SURFACE,
-  SOLAR_PANEL_POWER,
-} from '@/model/solarPanel.model'
+import { getNumberFromConfig } from '@/services/configService'
 import { computed, defineProps } from 'vue'
 import solarPanelIcon from '@/assets/icons/solar-panel.svg'
 
 const props = defineProps<{
   currentNumSolarPanel: number
-  isPdf: boolean
 }>()
 
 const currentSurface = computed(
-  () => props.currentNumSolarPanel * SOLAR_PANEL_SURFACE
+  () =>
+    props.currentNumSolarPanel *
+    getNumberFromConfig('solar_panel.solar_panel_surface')
 )
 
 const currentPower = computed(() =>
-  (props.currentNumSolarPanel * SOLAR_PANEL_POWER).toFixed(2)
+  (
+    props.currentNumSolarPanel *
+    getNumberFromConfig('solar_panel.solar_panel_power')
+  ).toFixed(2)
 )
 </script>
 
 <template>
   <div class="flex flex-row items-center gap-2 ml-1">
-    <img
-      :src="installation"
-      alt=""
-      class="w-11 h-10"
-      :class="props.isPdf ? 'mt-5' : ''"
-    />
+    <img :src="installation" alt="" class="w-11 h-10" />
     <span class="font-bold text-2xl"> Votre installation </span>
   </div>
 

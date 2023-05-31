@@ -6,14 +6,14 @@ describe('UiLinkWithIconArrow.vue', () => {
 
   it('renders the component correctly', () => {
     const wrapper = mount(UiLinkWithIconArrow, {
-      props: { link, isPdf: false },
+      props: { link },
     })
     expect(wrapper.exists()).toBe(true)
   })
 
   it('sets the correct href and target attributes for both anchor tags', () => {
     const wrapper = mount(UiLinkWithIconArrow, {
-      props: { link, isPdf: false },
+      props: { link },
     })
 
     const anchorTags = wrapper.findAll('a')
@@ -22,17 +22,5 @@ describe('UiLinkWithIconArrow.vue', () => {
       expect(anchor.attributes('href')).toBe(link)
       expect(anchor.attributes('target')).toBe('_blank')
     })
-  })
-
-  it('applies the correct class based on the isPdf prop', async () => {
-    const wrapper = mount(UiLinkWithIconArrow, {
-      props: { link, isPdf: false },
-    })
-
-    const img = wrapper.find('img')
-    expect(img.classes()).toContain('mt-1')
-
-    await wrapper.setProps({ isPdf: true })
-    expect(img.classes()).toContain('mt-4')
   })
 })

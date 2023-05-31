@@ -3,7 +3,6 @@ import goToWhite from '@/assets/icons/icon-external-link-white-thin.svg'
 
 const props = defineProps<{
   link: string
-  isPdf: boolean
 }>()
 </script>
 
@@ -14,10 +13,7 @@ const props = defineProps<{
     class="bg-black shadow-sm rounded-lg gap-3 px-4 py-3 w-fit flex flex-row items-center justify-center mt-4"
   >
     <img class="w-5 h-5" :src="goToWhite" alt="" />
-    <span
-      class="font-dm-sans text-white text-base font-bold"
-      :class="isPdf ? 'pb-4' : ''"
-    >
+    <span class="font-dm-sans text-white text-base font-bold">
       Visiter le site
     </span>
   </a>

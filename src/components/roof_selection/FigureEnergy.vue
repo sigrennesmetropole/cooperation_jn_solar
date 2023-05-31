@@ -3,6 +3,7 @@ import FigureKeyNumber from '@/components/roof_selection/FigureKeyNumber.vue'
 import HourGlass from '@/assets/illustrations/hour-glass.svg'
 import SolarPanel from '@/assets/illustrations/solar-panel.svg'
 import HousePlant from '@/assets/illustrations/house-plant.svg'
+import { getNumberFromConfig } from '@/services/configService'
 </script>
 
 <template>
@@ -16,7 +17,9 @@ import HousePlant from '@/assets/illustrations/house-plant.svg'
         </template>
         <template v-slot:text>
           <p class="font-dm-sans text-xs font-bold">À l’horizon</p>
-          <p class="font-dm-sans text-[44px] leading-10 font-bold">2030</p>
+          <p class="font-dm-sans text-[44px] leading-10 font-bold">
+            {{ getNumberFromConfig('statistics.diduknow_year') }}
+          </p>
         </template>
       </FigureKeyNumber>
       <FigureKeyNumber>
@@ -24,7 +27,9 @@ import HousePlant from '@/assets/illustrations/house-plant.svg'
           <img class="w-32 h-16 max-w-none" :src="HousePlant" alt="" />
         </template>
         <template v-slot:text>
-          <p class="font-dm-sans text-3xl font-bold">3x</p>
+          <p class="font-dm-sans text-3xl font-bold">
+            {{ getNumberFromConfig('statistics.diduknow_more_energy') }}x
+          </p>
           <p class="font-dm-sans text-xs font-bold">
             plus d’énergies renouvelables
           </p>
@@ -35,7 +40,9 @@ import HousePlant from '@/assets/illustrations/house-plant.svg'
           <img class="w-32 h-16 max-w-none" :src="SolarPanel" alt="" />
         </template>
         <template v-slot:text>
-          <p class="font-dm-sans text-3xl font-bold">6x</p>
+          <p class="font-dm-sans text-3xl font-bold">
+            {{ getNumberFromConfig('statistics.diduknow_more_power') }}x
+          </p>
           <p class="font-dm-sans text-xs font-bold">
             plus de puissance photovoltaïque
           </p>

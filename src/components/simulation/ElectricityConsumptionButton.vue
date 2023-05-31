@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import rectangle from '@/assets/icons/rectangle.svg'
 import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
-import { useSimulationStore, DEFAULT_CONSUMPTION } from '@/stores/simulations'
+import { useSimulationStore, getDefaultConsumption } from '@/stores/simulations'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 
@@ -9,7 +9,7 @@ const simulationStore = useSimulationStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
 
 function skipStep() {
-  consumptionAndProductionStore.setAnnualConsumption(DEFAULT_CONSUMPTION)
+  consumptionAndProductionStore.setAnnualConsumption(getDefaultConsumption())
   simulationStore.goToFinalView()
 }
 </script>

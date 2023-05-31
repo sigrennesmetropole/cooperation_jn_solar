@@ -10,6 +10,7 @@ import { useSimulationStore } from '@/stores/simulations'
 import { useInteractionsStore } from '@/stores/interactions'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { useMapStore } from '@/stores/map'
+import { getNumberFromConfig } from '@/services/configService'
 
 type InteractionsTypes =
   | typeof SelectRoofInteraction
@@ -138,7 +139,9 @@ export function manageSelectAndIrisDependingOnZoom(rennesApp: RennesApp) {
   const interactionsStore = useInteractionsStore()
   const districtStore = useDistrictStore()
   const mapStore = useMapStore()
-  const DISTANCE_MAX_FOR_SELECTION = 800
+  const distance_max_for_selection = getNumberFromConfig(
+    'distance.distance_max_for_selection'
+  )
 
   if (mapStore.isInitializeMap) {
     rennesApp
@@ -146,14 +149,16 @@ export function manageSelectAndIrisDependingOnZoom(rennesApp: RennesApp) {
       .getScene()
       .postRender.addEventListener(() => {
         const cameraDistance = rennesApp.getCurrentDistance()!
-        if (cameraDistance > DISTANCE_MAX_FOR_SELECTION) {
+        // @ts-ignore
+        if (cameraDistance > distance_max_for_selection) {
           if (interactionsStore.isActive(SelectRoofInteraction)) {
             interactionsStore.disableInteraction(SelectRoofInteraction)
           }
           districtStore.setCanBeDisplayed(true)
         } else if (
           !interactionsStore.isActive(SelectRoofInteraction) &&
-          cameraDistance <= DISTANCE_MAX_FOR_SELECTION
+          // @ts-ignore
+          cameraDistance <= distance_max_for_selection
         ) {
           interactionsStore.enableInteraction(SelectRoofInteraction)
           districtStore.setCanBeDisplayed(false)

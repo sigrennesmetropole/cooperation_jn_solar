@@ -30,25 +30,6 @@ onBeforeMount(async () => {
 
 const selectedRoof = roofsStore.getRoofSurfaceModelOfSelectedPanRoof()
 const autocalsolResult = autocalsolStore.autocalsolResult
-
-//TO TEST : remove comment bellow | TODO : remove for production
-// const consumptionAndProductionStore = useConsumptionAndProductionStore()
-// const addressStore = useAddressStore()
-// // @ts-ignore
-// autocalsolStore.setAutocalsolResult(autocalsolResultExample)
-// const autocalsolResult = autocalsolStore.autocalsolResult
-// consumptionAndProductionStore.setAnnualConsumption(6000)
-// addressStore.setAddress('17, rue de la Finlande, 35000 Rennes')
-// const selectedRoof = {
-//   surface_id: '53123',
-//   values: [13.832112, 74.012886, 12.155002, 0],
-//   favorable: 10,
-//   total: 87,
-//   orientation: 'EST',
-//   azimuth: 80,
-//   inclinaison: 1,
-// }
-// solarPanelStore.currentNumberSolarPanel = 6
 </script>
 
 <template>
@@ -61,14 +42,12 @@ const autocalsolResult = autocalsolStore.autocalsolResult
         <SunshineInformation
           v-if="selectedRoof !== undefined"
           :selected-roof="selectedRoof"
-          :isPdf="false"
         />
         <ProductionInformation
-          :isPdf="false"
           v-if="solarPanelStore.currentNumberSolarPanel > 0"
           :current-num-solar-panel="solarPanelStore.currentNumberSolarPanel"
         />
-        <ConsumptionInformation :isPdf="false" />
+        <ConsumptionInformation />
       </div>
       <div
         class="w-[55%] max-w-[800px] font-dm-sans font-medium flex flex-col gap-8 bg-blue-50 pt-[120px]"
@@ -82,9 +61,9 @@ const autocalsolResult = autocalsolStore.autocalsolResult
           v-if="autocalsolResult !== null"
           :autocalsolResult="autocalsolResult"
         />
-        <GoFurther :isPdf="false"></GoFurther>
-        <SolarCoop :isPdf="false"></SolarCoop>
-        <EnergiesRennes :isPdf="false"></EnergiesRennes>
+        <GoFurther></GoFurther>
+        <SolarCoop></SolarCoop>
+        <EnergiesRennes></EnergiesRennes>
       </div>
     </div>
     <div class="mx-16 py-10">

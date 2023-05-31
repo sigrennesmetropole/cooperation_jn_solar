@@ -2,8 +2,12 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import router from '@/router'
+import { getNumberFromConfig } from '@/services/configService'
 
-export const DEFAULT_CONSUMPTION = 0 as const
+export function getDefaultConsumption() {
+  return getNumberFromConfig('consumption.default_consumption')
+}
+
 export const useSimulationStore = defineStore('simulation', () => {
   const currentStep: Ref<number> = ref(1)
   const currentSubStep: Ref<number> = ref(1)

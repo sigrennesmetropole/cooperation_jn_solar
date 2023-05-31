@@ -3,7 +3,6 @@ import expandIcon from '@/assets/icons/expand-small-bigger-retract-smaller-big.s
 
 const props = defineProps<{
   link: string
-  isPdf: boolean
 }>()
 
 function goTo() {
@@ -21,10 +20,6 @@ function goTo() {
     <p class="underline decoration-1 font-medium text-base">
       Accéder à la page
     </p>
-    <img
-      :src="expandIcon"
-      class="w-3.5 h-3.5 ml-2 mt-1"
-      :class="props.isPdf ? 'mt-4' : 'mt-1'"
-    />
+    <img :src="expandIcon" class="w-3.5 h-3.5 ml-2 mt-1" />
   </div>
 </template>

@@ -4,27 +4,23 @@ import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.sv
 import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+import { getStringFromConfig } from '@/services/configService'
 
-const props = defineProps<{
-  isPdf: boolean
-}>()
-
-const ENERGIES_LINK = 'https://energiesdupaysderennes.fr/'
-const VILAINE_LINK = 'https://soleilsurvilaine.centralesvillageoises.fr/'
+const energies_link = getStringFromConfig('link.energies_link')
+const vilaine_link = getStringFromConfig('link.vilaine_link')
 
 function goToEnergiesInfo() {
-  window.open(ENERGIES_LINK, '_blank')
+  window.open(energies_link, '_blank')
 }
 
 function goToVilaineInfo() {
-  window.open(VILAINE_LINK, '_blank')
+  window.open(vilaine_link, '_blank')
 }
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto shadow-md"
   >
     <h2 class="font-dm-sans font-bold text-2xl">
       Contacter des associations locales
@@ -53,11 +49,7 @@ function goToVilaineInfo() {
           est une association citoyenne pour le développement du solaire
           photovoltaïque sur Rennes et sa région.
         </p>
-        <ButtonVisitWebsite
-          id="energiesButton"
-          :link="ENERGIES_LINK"
-          :isPdf="props.isPdf"
-        />
+        <ButtonVisitWebsite id="energiesButton" :link="energies_link" />
       </div>
     </div>
     <div

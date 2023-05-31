@@ -11,7 +11,6 @@ async function goToEnedisWebSite() {
   enedisStore.setIsEnedisRedirection(true)
   await storeDataForEnedis()
   const url = await apiEnedisService.getUrlUserAuthorization()
-  console.log(url)
   window.location.href = url
 
   // http://localhost:5173/redirection-enedis?state=XYZ&usage_points_id=25110853795840&code=134567281

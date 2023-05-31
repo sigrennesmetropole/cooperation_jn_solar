@@ -3,7 +3,6 @@ import UiLinkWithIconArrow from '@/components/ui/UiLinkWithIconArrow.vue'
 
 const props = defineProps<{
   link: string
-  isPdf: boolean
 }>()
 </script>
 
@@ -12,6 +11,6 @@ const props = defineProps<{
     <slot name="img" class="rounded-xl"></slot>
     <slot name="title"></slot>
     <slot name="icon"></slot>
-    <UiLinkWithIconArrow :link="props.link" :isPdf="props.isPdf" />
+    <UiLinkWithIconArrow :link="props.link" />
   </div>
 </template>

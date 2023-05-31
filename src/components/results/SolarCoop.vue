@@ -1,22 +1,18 @@
 <script setup lang="ts">
 import solarCoop from '@/assets/illustrations/solar-coop.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
+import { getStringFromConfig } from '@/services/configService'
 
-const props = defineProps<{
-  isPdf: boolean
-}>()
-
-const SOLAR_COOP_LINK = 'https://www.solarcoop.fr/'
+const solar_coop_link = getStringFromConfig('link.solar_coop_link')
 
 function goToSolarCoopInfo() {
-  window.open(SOLAR_COOP_LINK, '_blank')
+  window.open(solar_coop_link, '_blank')
 }
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-6 w-[100%] h-fit bg-white rounded-xl py-6 px-8 mx-auto shadow-md"
   >
     <h2 class="font-dm-sans font-bold text-2xl">
       Être accompagné dans mon projet
@@ -38,7 +34,7 @@ function goToSolarCoopInfo() {
           Solarcoop qui vous aidera à trouver la meilleure installation.
         </p>
 
-        <ButtonVisitWebsite :link="SOLAR_COOP_LINK" :isPdf="props.isPdf" />
+        <ButtonVisitWebsite :link="solar_coop_link" />
       </div>
     </div>
   </div>

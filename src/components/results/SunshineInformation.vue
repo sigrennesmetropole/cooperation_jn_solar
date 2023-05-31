@@ -8,22 +8,15 @@ const addressStore = useAddressStore()
 
 const props = defineProps<{
   selectedRoof: RoofSurfaceModel
-  isPdf: boolean
 }>()
 </script>
 
 <template>
   <div
-    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl mx-auto font-dm-sans"
-    :class="props.isPdf ? 'px-6 pb-6 pt-0' : 'shadow-md p-6'"
+    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl mx-auto font-dm-sans shadow-md p-6"
   >
     <div class="flex flex-row items-center gap-2 ml-1">
-      <img
-        :src="potentiel"
-        alt=""
-        class="w-11 h-10"
-        :class="props.isPdf ? 'mt-5' : ''"
-      />
+      <img :src="potentiel" alt="" class="w-11 h-10" />
       <span class="font-bold text-2xl"> Votre ensoleillement </span>
     </div>
 

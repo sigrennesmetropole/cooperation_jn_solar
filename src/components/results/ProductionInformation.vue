@@ -5,7 +5,6 @@ import ProductionInformationText from '@/components/results/ProductionInformatio
 
 const props = defineProps<{
   currentNumSolarPanel: number
-  isPdf: boolean
 }>()
 
 const addressStore = useAddressStore()
@@ -16,12 +15,10 @@ if (blob !== null) urlImg = URL.createObjectURL(blob)
 
 <template>
   <div
-    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto font-dm-sans"
-    :class="props.isPdf ? '' : 'shadow-md'"
+    class="flex flex-col gap-3 w-full h-fit bg-white rounded-xl p-6 mx-auto font-dm-sans shadow-md"
   >
     <ProductionInformationText
       :currentNumSolarPanel="props.currentNumSolarPanel"
-      :isPdf="props.isPdf"
     />
 
     <img

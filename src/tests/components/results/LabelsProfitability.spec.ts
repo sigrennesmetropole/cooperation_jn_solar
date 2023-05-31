@@ -10,7 +10,6 @@ describe('LabelsProfitability', () => {
     },
     props: {
       link: 'https://www.photovoltaique.info/fr',
-      isPdf: false,
     },
   })
 
@@ -26,7 +25,7 @@ describe('LabelsProfitability', () => {
   it('renders a link with the correct href', () => {
     const link = 'https://www.photovoltaique.info/fr/'
     const wrapper = mount(LabelsProfitability, {
-      props: { link, isPdf: false },
+      props: { link },
       slots: {
         img: '<img src="test-image.jpg" alt="Test Image">',
         title: '<div>Title test</div>',
