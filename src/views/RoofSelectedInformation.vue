@@ -44,7 +44,9 @@ roofStore.$subscribe(async () => {
 </script>
 
 <template>
-  <div class="mt-12 bg-white border border-slate-100 rounded relative">
+  <div
+    class="mt-12 bg-white border border-slate-100 rounded relative font-dm-sans"
+  >
     <UiButtonWithTooltip
       widthButton="4"
       heightButton="4"

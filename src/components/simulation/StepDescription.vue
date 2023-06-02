@@ -31,7 +31,7 @@ const descriptions: Record<number, Record<number, string>> = {
 </script>
 <template>
   <p
-    class="font-dm-sans text-base text-center"
+    class="font-dm-sans text-base text-center px-1"
     :class="props.step == 3 ? 'font-normal' : 'font-medium'"
   >
     {{ descriptions[props.step][props.substep] }}

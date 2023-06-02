@@ -38,7 +38,7 @@ const currentInfo = ref(1)
         class="flex flex-col justify-center items-center"
       >
         <img class="w-[354px] h-[160px]" :src="info.img" alt="" />
-        <span class="font-dm-sans font-bold text-base mt-2">
+        <span class="font-dm-sans font-bold text-base mt-4">
           {{ info.title }}
         </span>
         <span

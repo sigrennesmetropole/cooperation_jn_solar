@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import imgFinancePar from '@/assets/icons/finance-par.png'
+import deleteSquare from '@/assets/icons/delete-square.svg'
 </script>
 <template>
   <div>
@@ -19,9 +20,9 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
             tabindex="0"
             @keydown.enter="$emit('close')"
             @click="$emit('close')"
-            class="w-5 h-5 border border-black rounded ml-auto hover:bg-neutral-400 flex justify-center items-center"
+            class="w-4 h-4 ml-auto hover:bg-neutral-400 flex justify-center items-center"
           >
-            x
+            <img :src="deleteSquare" />
           </button>
         </div>
         <div
