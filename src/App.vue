@@ -11,7 +11,6 @@ import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
 import DistrictDisplayButton from '@/components/map/DistrictDisplayButton.vue'
 import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
-import { usePopUpStore } from '@/stores/popUpStore'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
 import { useDistrictStore } from './stores/districtInformations'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
@@ -21,7 +20,6 @@ import { apiConfigService } from '@/services/api-config'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
-const popUpStore = usePopUpStore()
 const districtStore = useDistrictStore()
 const mapStore = useMapStore()
 const enedisStore = useEnedisStore()
@@ -105,7 +103,7 @@ window.addEventListener('beforeunload', function (e) {
     </template>
     <template v-else>
       <aside
-        class="z-10 absolute"
+        class="z-8 absolute"
         :class="panelAlignment"
         v-if="isDisplayAsideAndMap"
       >
@@ -118,8 +116,8 @@ window.addEventListener('beforeunload', function (e) {
       </div>
 
       <SearchBar
-        v-if="isDisplaySearchBar && !popUpStore.isDisplayTermsOfUse"
-        class="absolute z-20 top-6 left-6"
+        v-if="isDisplaySearchBar"
+        class="absolute z-9 top-6 left-6"
         :style="
           viewStore.currentView === viewList.home
             ? 'left: 480px;'
@@ -129,12 +127,8 @@ window.addEventListener('beforeunload', function (e) {
       ></SearchBar>
 
       <DistrictDisplayButton
-        v-if="
-          isDisplayDistrictCheckbox &&
-          !popUpStore.isDisplayTermsOfUse &&
-          districtStore.canBeDisplayed
-        "
-        class="absolute z-20"
+        v-if="isDisplayDistrictCheckbox && districtStore.canBeDisplayed"
+        class="absolute z-9"
       ></DistrictDisplayButton>
 
       <DistrictDataTooltip
