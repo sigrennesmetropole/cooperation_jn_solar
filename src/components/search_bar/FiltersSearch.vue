@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CheckBox from '@/components/simulation/CheckBox.vue'
-import iconMultiplyBlack2 from '@/assets/icons/icon-multiply-black2.svg'
+import deleteSquare from '@/assets/icons/delete-square.svg'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
@@ -17,15 +17,15 @@ const buttonIsFocus: Ref<boolean> = ref(false)
 
 <template>
   <div
-    class="flex flex-col rounded mt-1 shadow-lg bg-white w-[402px] py-7 px-3"
+    class="flex flex-col rounded-lg mt-1 shadow-lg bg-white w-[402px] px-6 py-[42px]"
     v-if="props.isDisplayFilters"
   >
-    <div class="flex flex-row items-center justify-between">
-      <span class="font-dm-sans font-bold text-2xl px-3">
+    <div class="flex flex-row items-start justify-between">
+      <span class="font-dm-sans font-bold text-2xl mb-8">
         Paramètres de recherche
       </span>
       <button
-        class="flex items-center justify-between border-2 border-black rounded p-1 cursor-pointer"
+        class="flex items-center justify-between rounded p-1 cursor-pointer"
         :class="{
           'bg-neutral-600': buttonIsFocus,
         }"
@@ -34,13 +34,13 @@ const buttonIsFocus: Ref<boolean> = ref(false)
         @focus="buttonIsFocus = true"
         @blur="buttonIsFocus = false"
       >
-        <img class="w-3 h-3" :src="iconMultiplyBlack2" />
+        <img class="w-4 h-4" :src="deleteSquare" />
       </button>
     </div>
 
-    <div class="flex flex-col gap-1 ml-5 mt-3">
+    <div class="flex flex-col gap-1 ml-4">
       <div
-        class="flex flex-row"
+        class="flex flex-row items-end font-dm-sans font-normal text-sm color-black"
         v-for="(filter, index) in props.filters"
         :key="index"
       >
@@ -55,9 +55,7 @@ const buttonIsFocus: Ref<boolean> = ref(false)
             })
           "
         >
-          <template v-slot:text>
-            <span class="font-dm-sans font-normal text-sm color-black"> </span>
-          </template>
+          <template v-slot:text> </template>
         </CheckBox>
         <label :for="filter.name">{{ filter.name }}</label>
       </div>

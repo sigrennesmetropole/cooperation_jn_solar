@@ -28,7 +28,10 @@ const props = defineProps<{
           sur {{ props.roofSurface.total }} m&sup2;
         </p>
       </div>
-      <div class="relative flex flex-col p-2 gap-2.5" @click.stop="">
+      <div
+        class="relative flex flex-col p-2 gap-2.5 font-dm-sans"
+        @click.stop=""
+      >
         <UiButtonWithTooltip
           text="La surface favorable est celle recevant suffisamment d'ensoleillement pour accueillir des panneaux solaires soit, dans notre simulation, un ensoleillement supérieur à 1 000 kWh/m2/an. La surface affichée ici est calculée sur le pan de toit sélectionné."
           widthButton="5"

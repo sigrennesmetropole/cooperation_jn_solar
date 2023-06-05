@@ -2,7 +2,7 @@
 
 exports[`InformationsEnergySaving.vue > renders the component correctly 1`] = `
 "<div class=\\"rounded-lg bg-slate-100 h-[402px] w-full px-6 py-8\\">
-  <div class=\\"flex flex-col justify-center items-center\\"><img class=\\"w-[354px] h-[160px]\\" src=\\"/src/assets/illustrations/energy_saving_1.svg\\" alt=\\"\\"><span class=\\"font-dm-sans font-bold text-base mt-2\\">Qu’est-ce que l’autoconsommation ?</span><span class=\\"font-dm-sans font-normal text-sm mt-2 text-center h-[80px]\\">Consommer chez vous l’électricité que vous avez produite et vendre le surplus sur le réseau public, c’est ce qu’on appelle l’autoconsommation.</span></div>
+  <div class=\\"flex flex-col justify-center items-center\\"><img class=\\"w-[354px] h-[160px]\\" src=\\"/src/assets/illustrations/energy_saving_1.svg\\" alt=\\"\\"><span class=\\"font-dm-sans font-bold text-base mt-4\\">Qu’est-ce que l’autoconsommation ?</span><span class=\\"font-dm-sans font-normal text-sm mt-2 text-center h-[80px]\\">Consommer chez vous l’électricité que vous avez produite et vendre le surplus sur le réseau public, c’est ce qu’on appelle l’autoconsommation.</span></div>
   <!--v-if-->
   <!--v-if-->
   <div class=\\"flex flex-row gap-3 mt-4 justify-center items-center\\">
