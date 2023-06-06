@@ -29,11 +29,12 @@ const mapStore = useMapStore()
 async function zoom(out = false, zoomFactor = 2): Promise<void> {
   const activeMap = rennesApp.maps.activeMap
   const viewpoint = await activeMap?.getViewpoint()
-
+  const maxZoom = rennesApp.get3DMap().getScene()
+    .screenSpaceCameraController.maximumZoomDistance
   if (activeMap && viewpoint) {
     let distance = viewpoint.distance / zoomFactor
     if (out) {
-      distance = viewpoint.distance * zoomFactor
+      distance = Math.min(viewpoint.distance * zoomFactor, maxZoom)
     }
 
     const newVp = cloneViewPointAndResetCameraPosition(viewpoint, distance)
