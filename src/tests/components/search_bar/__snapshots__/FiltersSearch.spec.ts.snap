@@ -1,8 +1,8 @@
 // Vitest Snapshot v1
 
 exports[`FiltersSearch.vue > renders correctly 1`] = `
-"<div class=\\"flex flex-col rounded-lg mt-1 shadow-lg bg-white w-[402px] px-6 py-[42px]\\">
-  <div class=\\"flex flex-row items-start justify-between\\"><span class=\\"font-dm-sans font-bold text-2xl mb-8\\"> Paramètres de recherche </span><button class=\\"flex items-center justify-between rounded p-1 cursor-pointer\\"><img class=\\"w-4 h-4\\" src=\\"/src/assets/icons/delete-square.svg\\"></button></div>
+"<div class=\\"flex flex-col rounded-lg mt-1 shadow-lg bg-white w-[402px] px-6 py-6\\">
+  <div class=\\"flex flex-row items-start justify-between\\"><span class=\\"font-dm-sans font-bold text-2xl mb-6\\"> Paramètres de recherche </span><button class=\\"flex items-center justify-between rounded p-1 cursor-pointer\\"><img class=\\"w-4 h-4\\" src=\\"/src/assets/icons/delete-square.svg\\"></button></div>
   <div class=\\"flex flex-col gap-1 ml-4\\">
     <div class=\\"flex flex-row items-end font-dm-sans font-normal text-sm color-black\\">
       <div class=\\"flex p-0 gap-3 items-top\\">
