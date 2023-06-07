@@ -17,11 +17,11 @@ const buttonIsFocus: Ref<boolean> = ref(false)
 
 <template>
   <div
-    class="flex flex-col rounded-lg mt-1 shadow-lg bg-white w-[402px] px-6 py-[42px]"
+    class="flex flex-col rounded-lg mt-1 shadow-lg bg-white w-[402px] px-6 py-6"
     v-if="props.isDisplayFilters"
   >
     <div class="flex flex-row items-start justify-between">
-      <span class="font-dm-sans font-bold text-2xl mb-8">
+      <span class="font-dm-sans font-bold text-2xl mb-6">
         Paramètres de recherche
       </span>
       <button
