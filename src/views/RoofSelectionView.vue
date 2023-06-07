@@ -15,6 +15,8 @@ import { useInteractionsStore } from '@/stores/interactions'
 import SelectRoofInteraction from '@/interactions/selectRoofInteraction'
 import { useSimulationStore } from '@/stores/simulations'
 import { resetDataForEnedis } from '@/services/enedisService'
+import { usePopUpStore } from '@/stores/popUpStore'
+import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const panelsStore = usePanelsStore()
@@ -22,6 +24,7 @@ const viewStore = useViewsStore()
 const addressStore = useAddressStore()
 const interactionsStore = useInteractionsStore()
 const simulationStore = useSimulationStore()
+const popUpStore = usePopUpStore()
 
 const mapStore = useMapStore()
 
@@ -68,4 +71,8 @@ const tooltipToDisplay = computed(() => {
     <TextDidYouKnow class="mt-4 mx-6" @close="isOpen = false"></TextDidYouKnow>
     <FigureEnergy></FigureEnergy>
   </div>
+  <TermsOfUsePopup
+    v-if="popUpStore.isDisplayTermsOfUse"
+    @close="popUpStore.closeTermsOfUse()"
+  />
 </template>

@@ -14,6 +14,7 @@ import { useMapStore } from '@/stores/map'
 import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { usePopUpStore } from '@/stores/popUpStore'
+import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
@@ -50,6 +51,7 @@ roofStore.$subscribe(async () => {
     <UiButtonWithTooltip
       widthButton="4"
       heightButton="4"
+      zIndex="z-10"
       text="La surface favorable correspond à un potentiel supérieur à 1200 kWh/m2/an."
       widthBoxText="w-[300px]"
     ></UiButtonWithTooltip>
@@ -115,4 +117,8 @@ roofStore.$subscribe(async () => {
       </span>
     </template>
   </BoxStep>
+  <TermsOfUsePopup
+    v-if="popUpStore.isDisplayTermsOfUse"
+    @close="popUpStore.closeTermsOfUse()"
+  />
 </template>
