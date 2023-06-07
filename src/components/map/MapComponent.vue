@@ -109,6 +109,7 @@ function displayGridAndAddInteractions() {
 
 async function setupGridInstallation() {
   //force synchrone switch for adding openlayer interaction, update the store
+  mapStore.viewPointPrevious = mapStore.viewPoint
   await rennesApp.maps.setActiveMap('ol')
   await mapStore.activate2d()
   if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {

@@ -38,6 +38,10 @@ export class RennesApp extends VcsApp {
     }
   }
 
+  getHomeViewpoint() {
+    return this.viewpoints.getByKey('rennes') as Viewpoint
+  }
+
   get3DMap(): CesiumMap {
     return this.maps.getByKey('cesium') as CesiumMap
   }
