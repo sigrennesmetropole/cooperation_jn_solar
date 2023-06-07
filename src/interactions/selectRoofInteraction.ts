@@ -19,6 +19,7 @@ import {
   isInteractionBuilding,
   isInteractionPanRoof,
 } from '@/services/interactionUtils'
+import { useMapStore } from '@/stores/map'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(74,222,128)' },
@@ -102,9 +103,12 @@ class SelectRoofInteraction extends AbstractInteraction {
         selectedBuilding?.getProperty('attributes')['BUILDINGID']
 
       if (isInteractionBuilding()) {
+        const mapStore = useMapStore()
+        mapStore.isLoadingMap = true
         const buildingRoofs: GeoJSONFeatureCollection =
           await roofWfsService.fetchRoofs(selectedBuildingId)
         this._highglightRoofsOfTheBuilding(buildingRoofs)
+        mapStore.isLoadingMap = false
         await this._setLatitudeAndLongitude(event)
         this._goToNextStep(buildingRoofs, selectedBuildingId)
       } else if (isInteractionPanRoof()) {
