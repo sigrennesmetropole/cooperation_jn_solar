@@ -43,7 +43,21 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
 }
 
 async function resetZoom() {
-  const newVp = mapStore.viewPoint as Viewpoint
+  let newVp
+  if (
+    [
+      viewList['home'],
+      viewList['roof-selection'],
+      viewList['roof-selected-information'],
+    ].includes(viewStore.currentView!)
+  ) {
+    newVp = rennesApp.getHomeViewpoint()
+  } else {
+    newVp = mapStore.viewPoint as Viewpoint
+    if (mapStore.viewPointPrevious !== null && !newVp.groundPosition[2]) {
+      newVp = mapStore.viewPointPrevious
+    }
+  }
   await rennesApp.maps?.activeMap.gotoViewpoint(newVp)
 }
 
