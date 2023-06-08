@@ -109,6 +109,10 @@ export const useSimulationStore = defineStore('simulation', () => {
     return false
   }
 
+  function isSelectObstacleStep() {
+    return currentStep.value === 2 && currentSubStep.value === 1
+  }
+
   return {
     currentStep,
     currentSubStep,
@@ -121,5 +125,6 @@ export const useSimulationStore = defineStore('simulation', () => {
     goToFinalView,
     resetSimulation,
     shouldShowSolarPanelLayer,
+    isSelectObstacleStep,
   }
 })

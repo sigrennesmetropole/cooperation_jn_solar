@@ -19,12 +19,14 @@ import { useRouter } from 'vue-router'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useMapStore } from '@/stores/map'
 import type { Viewpoint } from '@vcmap/core'
+import { useSimulationStore } from '@/stores/simulations'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const viewStore = useViewsStore()
 const router = useRouter()
 const panelStore = usePanelsStore()
 const mapStore = useMapStore()
+const simulationStore = useSimulationStore()
 
 async function zoom(out = false, zoomFactor = 2): Promise<void> {
   const activeMap = rennesApp.maps.activeMap
@@ -68,7 +70,9 @@ const shouldDisplayHomeButton = () => {
 }
 
 const heightClass = computed(() => {
-  if (!shouldDisplayHomeButton()) {
+  if (simulationStore.isSelectObstacleStep()) {
+    return ['h-[10rem]']
+  } else if (!shouldDisplayHomeButton()) {
     return ['h-[16rem]']
   } else {
     return ['h-[20rem]']
@@ -129,7 +133,9 @@ const heightClass = computed(() => {
         <IconSynchronize />
       </UiIconButton>
     </div>
-    <CompassComponent v-if="mapStore.is3D()" />
+    <CompassComponent
+      v-if="mapStore.is3D() && !simulationStore.isSelectObstacleStep()"
+    />
   </div>
 
   <div
