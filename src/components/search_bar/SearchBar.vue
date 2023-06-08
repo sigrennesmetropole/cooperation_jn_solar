@@ -103,9 +103,16 @@ const searchOrganizations = async () => {
   let data = await apiSitesorgService.fetchOrganizations(searchFiltered())
   let organizations = []
   for (let i = 0; i < data.length && i < nb_addresses_organization; i++) {
+    let commune = ''
+    for (let autre of data[i].autres) {
+      if (autre.match(/Localisation/) != null) {
+        const autre_split = autre.split(':')
+        commune = autre_split[autre_split.length - 1].trim()
+      }
+    }
     organizations.push({
       id: data[i].id,
-      addr: data[i].nom,
+      addr: data[i].nom + ', ' + commune,
     })
   }
   autocompletion.value.addressOrganization = organizations

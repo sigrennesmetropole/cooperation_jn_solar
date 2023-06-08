@@ -23,7 +23,7 @@ describe('ApiSitesorgService', () => {
     // Assert
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(fetch).toHaveBeenCalledWith(
-      'https://api-sitesorg.sig.rennesmetropole.fr/v1/recherche?termes=some-search&termes_op=AND&type=organisme&offset=0&limit=3',
+      'https://api-sitesorg.sig.rennesmetropole.fr/v1/recherche?termes=some-search&termes_op=AND&types[]=organisme&offset=0&limit=3',
       {
         method: 'GET',
         headers: {

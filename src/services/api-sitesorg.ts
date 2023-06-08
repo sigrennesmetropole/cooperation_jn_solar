@@ -19,7 +19,7 @@ class ApiSitesorgService {
     const baseUrl = this.baseUrl + 'recherche'
     const url =
       baseUrl +
-      `?termes=${search}&termes_op=AND&type=organisme&offset=0&limit=3`
+      `?termes=${search}&termes_op=AND&types[]=organisme&offset=0&limit=3`
     return await this.sendRequest(url)
   }
 
