@@ -16,6 +16,7 @@ export default defineConfig(({ command }) => {
   if (command === 'build') {
     transformMode = 'runtime'
   }
+
   const base: UserConfig = {
     plugins: [
       vue(),
