@@ -16,8 +16,9 @@ describe('ApiEnedisDistrictService', () => {
     fetchMock.mockResponseOnce(JSON.stringify(mockDistrictData))
     const result = await apiEnedisDistrictService.getDistrictDatas(codeIris)
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
     expect(fetch).toHaveBeenCalledWith(
-      `${getUrlBackOffice()}/api/enedis/district/${codeIris}`,
+      `${urlBackOffice}/api/enedis/district/${codeIris}`,
       {
         method: 'GET',
         credentials: 'include',

@@ -17,8 +17,9 @@ describe('ApiIrisService', () => {
     fetchMock.mockResponseOnce(JSON.stringify(mockCodeIrisData))
     const result = await apiIrisService.getCodeIris(lat, lon)
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
     expect(fetch).toHaveBeenCalledWith(
-      `${getUrlBackOffice()}/api/codeiris/${lat}/${lon}`,
+      `${urlBackOffice}/api/codeiris/${lat}/${lon}`,
       {
         method: 'GET',
         credentials: 'include',

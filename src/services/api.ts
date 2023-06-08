@@ -9,7 +9,8 @@ class ApiService {
     type: string = 'json'
   ) {
     try {
-      const response = await fetch(getUrlBackOffice() + url, {
+      const urlBack = await getUrlBackOffice()
+      const response = await fetch(urlBack + url, {
         method: 'POST',
         headers: headers,
         credentials: 'include',
@@ -38,7 +39,8 @@ class ApiService {
 
   async callApiGet(url: string) {
     try {
-      const response = await fetch(getUrlBackOffice() + url, {
+      const urlBack = await getUrlBackOffice()
+      const response = await fetch(urlBack + url, {
         method: 'GET',
         credentials: 'include',
       })
