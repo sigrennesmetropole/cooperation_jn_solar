@@ -138,6 +138,7 @@ async function setupGridInstallation() {
 }
 
 async function setupSolarPanel() {
+  mapStore.isLoadingMap = true
   roofsStore.saveCleanMatrix()
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
   const result = solarPanelPlacement(roofsStore.gridMatrix!)
@@ -157,6 +158,7 @@ async function setupSolarPanel() {
   )
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
+  mapStore.isLoadingMap = false
 }
 
 async function displaySolarPanelLayer() {
@@ -182,8 +184,7 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentSubStep == 1
   ) {
     roofsStore.resetGridAndMatrix()
-  }
-  if (
+  } else if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1
   ) {
