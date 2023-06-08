@@ -37,34 +37,37 @@ const textNextButton = computed(() => {
 </script>
 
 <template>
-  <div class="border-b border-neutral-200 -mx-6"></div>
-  <div class="flex flex-row justify-between mb-4">
-    <UiButton
-      class="ui-btn-secondary gap-3 px-4 py-3 h-12"
-      v-if="simulationStore.currentStep == 1"
-      @click="clickButtonCancel()"
-      id="cancelButton"
-    >
-      <span class="font-dm-sans text-base font-medium"> Annuler </span>
-    </UiButton>
-    <UiButton
-      class="ui-btn-secondary gap-3 px-4 py-3 h-12"
-      v-else-if="simulationStore.currentStep != 1"
-      @click="clickButtonPrevious()"
-      id="previousButton"
-    >
-      <span class="font-dm-sans text-base font-medium"> Précédent </span>
-    </UiButton>
-    <UiButton
-      class="ui-btn-primary gap-3 px-4 py-3 h-12"
-      v-if="props.isDisplayNextButton"
-      :icon="IconArrowRight"
-      id="nextButton"
-      @click="clickButtonNext()"
-    >
-      <span class="font-dm-sans text-white text-base font-medium">
-        {{ textNextButton }}
-      </span>
-    </UiButton>
+  <div
+    class="absolute right-0 bottom-0 bg-white w-full border-t border-neutral-200"
+  >
+    <div class="flex flex-row justify-between p-6">
+      <UiButton
+        class="ui-btn-secondary gap-3 px-4 py-3 h-12"
+        v-if="simulationStore.currentStep == 1"
+        @click="clickButtonCancel()"
+        id="cancelButton"
+      >
+        <span class="font-dm-sans text-base font-medium"> Annuler </span>
+      </UiButton>
+      <UiButton
+        class="ui-btn-secondary gap-3 px-4 py-3 h-12"
+        v-else-if="simulationStore.currentStep != 1"
+        @click="clickButtonPrevious()"
+        id="previousButton"
+      >
+        <span class="font-dm-sans text-base font-medium"> Précédent </span>
+      </UiButton>
+      <UiButton
+        class="ui-btn-primary gap-3 px-4 py-3 h-12"
+        v-if="props.isDisplayNextButton"
+        :icon="IconArrowRight"
+        id="nextButton"
+        @click="clickButtonNext()"
+      >
+        <span class="font-dm-sans text-white text-base font-medium">
+          {{ textNextButton }}
+        </span>
+      </UiButton>
+    </div>
   </div>
 </template>

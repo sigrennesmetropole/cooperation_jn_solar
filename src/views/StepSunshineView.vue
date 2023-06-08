@@ -129,5 +129,6 @@ function isDisplayNextButton() {
   <!-- SavingsStep contain all the substep for step 3 -->
   <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
   <div class="h-full"></div>
+  <div class="mb-[70px]"></div>
   <FooterButtons :isDisplayNextButton="isDisplayNextButton()"></FooterButtons>
 </template>
