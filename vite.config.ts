@@ -17,7 +17,7 @@ export default defineConfig(({ command }) => {
       vue(),
       importMetaEnv.vite({
         example: '.env.example',
-        transformMode: 'runtime',
+        transformMode: command === 'build' ? 'runtime' : 'compile-time',
       }),
     ],
     resolve: {
