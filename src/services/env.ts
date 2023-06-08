@@ -1,19 +1,29 @@
-export function getEnv() {
-  return import.meta.env.VITE_ENV
+export async function getEnv() {
+  const envVar = await import.meta.env
+  const name = envVar.VITE_ENV
+  return name
 }
 
-export function isDev() {
-  return import.meta.env.DEV
+export async function isDev() {
+  const envVar = await import.meta.env
+  const dev = envVar.DEV
+  return dev
 }
 
-export function isProd() {
-  return import.meta.env.PROD
+export async function isProd() {
+  const envVar = await import.meta.env
+  const prod = envVar.PROD
+  return prod
 }
 
-export function getUrlBackOffice() {
-  return import.meta.env.VITE_URL_BACKOFFICE
+export async function getUrlBackOffice() {
+  const envVar = await import.meta.env
+  const url = envVar.VITE_URL_BACKOFFICE
+  return url
 }
 
-export function getEnedisSandboxPrm() {
-  return import.meta.env.VITE_ENEDIS_SANDBOX_PRM
+export async function getEnedisSandboxPrm() {
+  const envVar = await import.meta.env
+  const prm = envVar.VITE_ENEDIS_SANDBOX_PRM
+  return prm
 }
