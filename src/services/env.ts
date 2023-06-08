@@ -1,7 +1,7 @@
 export function getUrlBackOffice() {
-  return import.meta.env.VITE_URL_BACKOFFICE
+  return import.meta.env.URL_BACKOFFICE
 }
 
 export function getEnedisSandboxPrm() {
-  return import.meta.env.VITE_ENEDIS_SANDBOX_PRM
+  return import.meta.env.ENEDIS_SANDBOX_PRM
 }

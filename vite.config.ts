@@ -12,12 +12,18 @@ type stripPragmas = (options: { pragmas: string[] }) => Plugin
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
+  let transformMode: 'compile-time' | 'runtime' = 'compile-time'
+  if (command === 'build') {
+    transformMode = 'runtime'
+  }
+
   const base: UserConfig = {
     plugins: [
       vue(),
       importMetaEnv.vite({
+        env: '.env',
         example: '.env.example',
-        transformMode: command === 'build' ? 'runtime' : 'compile-time',
+        transformMode: transformMode,
       }),
     ],
     resolve: {
