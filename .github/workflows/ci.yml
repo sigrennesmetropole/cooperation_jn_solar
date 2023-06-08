@@ -36,54 +36,53 @@ jobs:
       - run: npm run lint
       - run: npm run build
       - run: npm run test:unit:ci
-
-  histoire-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-      - uses: jgierer12/npm-auth-gpr@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm ci
-
-      - name: Get branch name (merge)
-        if: github.event_name != 'pull_request'
-        shell: bash
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-
-      - name: Get branch name (pull request)
-        if: github.event_name == 'pull_request'
-        shell: bash
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
-
-      - name: Set HISTOIRE_BASE ENV
-        shell: bash
-        run: echo "HISTOIRE_BASE=$(echo /cooperation_jn_solar/${BRANCH_NAME}/)" >> $GITHUB_ENV
-
-      - run: npm run story:build
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-
-      - name: deploy to gh pages
-        run: |
-          echo "Deploying to directory: ${{env.BRANCH_NAME}}"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist .histoire/dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --dotfiles true --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
-
-      - name: add PR comment
-        uses: thollander/actions-comment-pull-request@v1
-        if: github.event_name == 'pull_request'
-        with:
-          message: 'GitHub Pages links:
-
-            * Histoires: https://sigrennesmetropole.github.io/cooperation_jn_solar/${{env.BRANCH_NAME}}/'
-          comment_includes: 'GitHub Pages links:'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#  histoire-deploy:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#        with:
+#          persist-credentials: false
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: 16
+#          cache: 'npm'
+#      - uses: jgierer12/npm-auth-gpr@v1
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#      - run: npm ci
+#
+#      - name: Get branch name (merge)
+#        if: github.event_name != 'pull_request'
+#        shell: bash
+#        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+#
+#      - name: Get branch name (pull request)
+#        if: github.event_name == 'pull_request'
+#        shell: bash
+#        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+#
+#      - name: Set HISTOIRE_BASE ENV
+#        shell: bash
+#        run: echo "HISTOIRE_BASE=$(echo /cooperation_jn_solar/${BRANCH_NAME}/)" >> $GITHUB_ENV
+#
+#      - run: npm run story:build
+#        env:
+#          NODE_OPTIONS: '--max_old_space_size=4096'
+#
+#      - name: deploy to gh pages
+#        run: |
+#          echo "Deploying to directory: ${{env.BRANCH_NAME}}"
+#          git config --global user.name "github-actions[bot]"
+#          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+#          npx gh-pages --dist .histoire/dist/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --dotfiles true --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
+#
+#      - name: add PR comment
+#        uses: thollander/actions-comment-pull-request@v1
+#        if: github.event_name == 'pull_request'
+#        with:
+#          message: 'GitHub Pages links:
+#
+#            * Histoires: https://sigrennesmetropole.github.io/cooperation_jn_solar/${{env.BRANCH_NAME}}/'
+#          comment_includes: 'GitHub Pages links:'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
