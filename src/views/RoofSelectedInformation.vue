@@ -52,7 +52,7 @@ roofStore.$subscribe(async () => {
       widthButton="4"
       heightButton="4"
       zIndex="z-10"
-      text="La surface favorable correspond à un potentiel supérieur à 1200 kWh/m2/an."
+      text="La surface favorable correspond à un potentiel supérieur à 1000 kWh/m2/an."
       widthBoxText="w-[300px]"
     ></UiButtonWithTooltip>
     <SurfaceNumber></SurfaceNumber>
