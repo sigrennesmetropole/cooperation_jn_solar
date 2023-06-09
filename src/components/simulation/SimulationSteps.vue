@@ -16,7 +16,8 @@ defineProps({
 </script>
 <template>
   <div
-    class="box-border flex items-center p-0s bg-slate-50 border-[1px] border-slate-100 rounded-lg"
+    class="box-border flex items-center p-0s bg-slate-50 border-b border-slate-200 rounded-lg mt-2"
+    style="border-bottom-width: 4px"
   >
     <StepIllustration
       :image="potentiel"

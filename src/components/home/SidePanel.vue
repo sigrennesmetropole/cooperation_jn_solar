@@ -29,7 +29,7 @@ const leftAlignment = computed(() =>
     v-show="!panelStore.isCompletelyHidden"
   >
     <div
-      class="px-6 pt-8 pb-4 bg-white flex flex-col gap-6 max-h-screen overflow-y-auto scrollbar-hide"
+      class="px-6 pt-8 pb-4 bg-white flex flex-col gap-6 max-h-screen overflow-y-auto scrollbar-thin scrollbar-w-[5px] scrollbar-thumb-red-600 scrollbar-track-neutral-400"
       :class="`w-[${PANEL_WIDTH}]`"
       v-show="panelStore.isInformationPanelShown"
     >

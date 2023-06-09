@@ -111,11 +111,16 @@ function isDisplayNextButton() {
 </script>
 
 <template>
-  <LeaveButton></LeaveButton>
-  <SimulationSteps
-    class="h-[76px]"
-    :selected-step="simulationStore.currentStep"
-  ></SimulationSteps>
+  <div class="absolute right-0 top-0 bg-white w-full z-[50]">
+    <div class="flex flex-col">
+      <LeaveButton></LeaveButton>
+      <SimulationSteps
+        class="h-[76px]"
+        :selected-step="simulationStore.currentStep"
+      ></SimulationSteps>
+    </div>
+  </div>
+  <div class="mb-[120px]"></div>
   <StepTitle :step="simulationStore.currentStep"></StepTitle>
   <StepDescription
     :step="simulationStore.currentStep"
@@ -129,5 +134,6 @@ function isDisplayNextButton() {
   <!-- SavingsStep contain all the substep for step 3 -->
   <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
   <div class="h-full"></div>
+  <div class="mb-[70px]"></div>
   <FooterButtons :isDisplayNextButton="isDisplayNextButton()"></FooterButtons>
 </template>
