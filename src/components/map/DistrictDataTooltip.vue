@@ -6,15 +6,31 @@ const districtStore = useDistrictStore()
 
 const positionStyle = computed(() => {
   let style: string = ''
+  const tooltipWidth = 440
+  const tooltipHeight = 180
+  let leftPosition = null
+  let topPosition = null
+  if (districtStore.newPointAbscissa + tooltipWidth > window.innerWidth) {
+    leftPosition = districtStore.newPointAbscissa - tooltipWidth
+  } else {
+    leftPosition = districtStore.newPointAbscissa
+  }
+
+  if (districtStore.newPointOrdinate + tooltipHeight > window.innerHeight) {
+    topPosition = districtStore.newPointOrdinate - tooltipHeight
+  } else {
+    topPosition = districtStore.newPointOrdinate
+  }
+
   if (
-    districtStore.newPointAbscissa + 440 > window.innerWidth ||
-    districtStore.newPointOrdinate + 70 > window.innerHeight
+    leftPosition + tooltipWidth > window.innerWidth ||
+    topPosition + tooltipHeight > window.innerHeight
   ) {
     style = 'display: none;'
-  } else {
-    style += 'left: ' + districtStore.newPointAbscissa + 'px; '
-    style += 'top: ' + districtStore.newPointOrdinate + 'px; '
+  } else if (leftPosition !== null && topPosition !== null) {
+    style = `left: ${leftPosition}px; top: ${topPosition}px;`
   }
+
   return style
 })
 
@@ -43,7 +59,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
 
 <template>
   <div
-    class="min-w-[440px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
+    class="min-w-[440px] h-[180px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
     :style="positionStyle"
     v-if="districtStore.districtName !== ''"
   >
