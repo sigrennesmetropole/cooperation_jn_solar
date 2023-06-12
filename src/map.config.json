@@ -90,7 +90,7 @@
       "name": "customLayerSearchAddress",
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
-      "zIndex": 4
+      "zIndex": 100
     },
     {
       "name": "roofSquaresArea",

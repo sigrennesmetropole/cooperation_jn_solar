@@ -7,6 +7,7 @@ import {
   Projection,
   VcsEvent,
   VectorStyleItem,
+  GeoJSONLayer,
 } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
 import type { RennesApp } from '@/services/RennesApp'
@@ -20,6 +21,11 @@ import {
   isInteractionPanRoof,
 } from '@/services/interactionUtils'
 import { useMapStore } from '@/stores/map'
+import { RENNES_LAYER } from '@/stores/layers'
+import { Feature } from 'ol'
+import { Point } from 'ol/geom'
+import { Style, Icon } from 'ol/style'
+import pinIconWhite from '@/assets/icons/pin-white.svg'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(74,222,128)' },
@@ -93,6 +99,38 @@ class SelectRoofInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
+    console.log(event.position)
+
+    if (event.position !== undefined) {
+      const customLayer: GeoJSONLayer = await this._rennesApp.getLayerByKey(
+        RENNES_LAYER.customLayerSearchAddress
+      )
+      const new_feature = new Feature()
+      event.position[2] = 150
+      const point = new Point(event.position)
+      new_feature.setGeometry(point.transform('EPSG:3857', 'EPSG:4326'))
+
+      // const vectorStyleItem = new VectorStyleItem({
+      //   image: {
+      //     src: pinIconWhite,
+      //     scale: 1,
+      //   },
+      // })
+
+      new_feature.setStyle(
+        new Style({
+          image: new Icon({
+            opacity: 1,
+            src: pinIconWhite,
+            scale: 1,
+          }),
+          zIndex: 10,
+        })
+      )
+      customLayer.removeAllFeatures()
+      customLayer.addFeatures([new_feature])
+    }
+
     if (event.type == EventType.CLICK) {
       const selectedBuilding = event.feature
       if (!selectedBuilding) {

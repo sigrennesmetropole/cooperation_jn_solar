@@ -53,6 +53,32 @@ export async function createVPForTypeAddress(
       +itemFormatted.x,
       +itemFormatted.y,
     ])
+
+    // const customLayer: GeoJSONLayer = await rennesApp.getLayerByKey(
+    //   RENNES_LAYER.customLayerSearchAddress
+    // )
+    // await customLayer?.activate()
+
+    // const longitude = +itemFormatted.x
+    // const latitude = +itemFormatted.y
+    // const pointInEPSG4326 = new Point([longitude, latitude]);
+    // const point = pointInEPSG4326.transform('EPSG:4326', 'EPSG:3857')
+
+    // const new_feature = new Feature()
+    // new_feature.setGeometry(point)
+
+    // console.log(new_feature.getGeometry())
+    // const vectorStyleItem = new VectorStyleItem({
+    //   image: {
+    //     src: pinIconWhite,
+    //     scale: 1,
+    //   },
+    // })
+    // new_feature.setStyle(vectorStyleItem.style)
+    // customLayer.removeAllFeatures()
+    // customLayer.addFeatures([new_feature])
+
+    console.log('ici')
   } else if (type === 'organization') {
     const itemFormatted = item as AddressOrganization
 
