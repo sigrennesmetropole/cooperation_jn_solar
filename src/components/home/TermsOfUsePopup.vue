@@ -280,8 +280,12 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             Traitement des données personnelles
           </h4>
           <p>
-            Voir la
-            <a href="#" class="underline">
+            Voir la politique
+            <a
+              href="/legalnotice/confidentialite"
+              target="_blank"
+              class="underline"
+            >
               de protection des données personnelles</a
             >
             du présent site.
