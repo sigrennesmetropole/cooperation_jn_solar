@@ -18,7 +18,7 @@ import { useMapStore } from '@/stores/map'
 import AutocompletionSearch from '@/components/search_bar/AutocompletionSearch.vue'
 import FiltersSearch from '@/components/search_bar/FiltersSearch.vue'
 import InputSearch from '@/components/search_bar/InputSearch.vue'
-import { createVPForTypeAddress } from '@/services/searchBarService'
+import { createVPForTypeAddress, addPin } from '@/services/searchBarService'
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
 import { getNumberFromConfig } from '@/services/configService'
@@ -172,6 +172,11 @@ const goToAddress = async (event: {
   if (newVp) {
     resetAutocompletion()
     mapStore.viewPoint = newVp
+
+    setTimeout(() => {
+      console.log('time out after 3 s')
+      addPin(rennesApp, event.type, event.item)
+    }, 3000)
   }
 }
 
