@@ -90,7 +90,10 @@ export async function addPin(
   const customLayer: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.customLayerSearchAddress
   )
-  const new_feature = new Feature()
+  const new_feature = new Feature({
+    olcs_altitudeMode: 'relativeToGround',
+    olcs_heightAboveGround: 10,
+  })
   new_feature.setGeometry(point)
   new_feature.setStyle(
     new Style({
@@ -103,8 +106,6 @@ export async function addPin(
   )
   customLayer.removeAllFeatures()
   customLayer.addFeatures([new_feature])
-  await customLayer.deactivate()
-  await customLayer.activate()
 }
 
 export async function createVPForTypeAddress(

@@ -173,10 +173,7 @@ const goToAddress = async (event: {
     resetAutocompletion()
     mapStore.viewPoint = newVp
 
-    setTimeout(() => {
-      console.log('time out after 3 s')
-      addPin(rennesApp, event.type, event.item)
-    }, 3000)
+    addPin(rennesApp, event.type, event.item)
   }
 }
 

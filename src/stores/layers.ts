@@ -38,6 +38,7 @@ export const useLayersStore = defineStore('layers', () => {
     roof3d: true,
     iris: false,
     customLayerDistrict: false,
+    customLayerSearchAddress: true,
   })
 
   function enableLayer(name: RennesLayer) {
