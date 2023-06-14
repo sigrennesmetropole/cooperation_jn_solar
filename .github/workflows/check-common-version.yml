@@ -1,0 +1,32 @@
+name: Check Common Ui Package Version
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Check for latest version of @sigrennesmetropole/cooperation_jn_common_ui
+        run: |
+          CURRENT_VERSION=$(cat package.json | jq -r '.dependencies["@sigrennesmetropole/cooperation_jn_common_ui"]')
+          LATEST_VERSION=$(curl -s "https://raw.githubusercontent.com/sigrennesmetropole/cooperation_jn_common_ui/main/package.json" | jq -r '.version')
+
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            echo "Error: Current version of @sigrennesmetropole/cooperation_jn_common_ui ($CURRENT_VERSION) is not the latest version ($LATEST_VERSION)"
+            exit 1
+          else
+            echo "Current version of @sigrennesmetropole/cooperation_jn_common_ui is up to date ($CURRENT_VERSION)"
+          fi
