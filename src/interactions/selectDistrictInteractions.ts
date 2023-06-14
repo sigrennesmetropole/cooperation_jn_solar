@@ -17,6 +17,7 @@ import {
   updateDistrictPointCoordinates,
 } from '../services/AboveMapService'
 import { selectedDistrict } from '@/services/viewStyles'
+import { useInstallationsStore } from '@/stores/installations'
 
 class SelectDistrictInteraction extends AbstractInteraction {
   _rennesApp: RennesApp
@@ -88,6 +89,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
   async pipe(event: InteractionEvent) {
     const districtStore = useDistrictStore()
+    const installationsStore = useInstallationsStore()
     const selectedDistrict = event.feature
 
     if (
@@ -104,6 +106,7 @@ class SelectDistrictInteraction extends AbstractInteraction {
       this._highlight(selectedDistrict.getId()!)
       await this._interactionDistrict(event)
       updateDistrictPointCoordinates(this._rennesApp)
+      installationsStore.resetInstallationStore()
       await this.getDistrictDatas(irisCode)
       addGenericListenerForUpdatePositions(this._rennesApp)
       event.stopPropagation = true
