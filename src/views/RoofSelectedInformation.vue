@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useViewsStore } from '@/stores/views'
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, inject } from 'vue'
 import { viewList } from '@/model/views.model'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import UiDisclosure from '@/components/ui/UiDisclosure.vue'
@@ -15,6 +15,8 @@ import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { usePopUpStore } from '@/stores/popUpStore'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
+import { hiddePin } from '@/services/searchBarService'
+import type { RennesApp } from '@/services/RennesApp'
 
 const viewStore = useViewsStore()
 const panelsStore = usePanelsStore()
@@ -22,6 +24,8 @@ const roofStore = useRoofsStore()
 const mapStore = useMapStore()
 const router = useRouter()
 const popUpStore = usePopUpStore()
+
+const rennesApp = inject('rennesApp') as RennesApp
 
 async function newViewPoint() {
   if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
@@ -37,6 +41,7 @@ onBeforeMount(async () => {
   mapStore.activate3d()
   panelsStore.isCompletelyHidden = false
   newViewPoint()
+  hiddePin(rennesApp)
 })
 
 roofStore.$subscribe(async () => {

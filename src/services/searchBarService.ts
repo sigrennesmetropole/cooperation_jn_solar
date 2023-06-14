@@ -56,6 +56,13 @@ function calculateBboxCenter(item: AddressCommune | AddressStreet) {
   return coordinates
 }
 
+export async function hiddePin(rennesApp: RennesApp) {
+  const customLayer: GeoJSONLayer = await rennesApp.getLayerByKey(
+    RENNES_LAYER.customLayerSearchAddress
+  )
+  customLayer.removeAllFeatures()
+}
+
 export async function addPin(
   rennesApp: RennesApp,
   type: string,
