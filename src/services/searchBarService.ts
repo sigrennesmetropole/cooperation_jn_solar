@@ -92,7 +92,7 @@ export async function addPin(
   )
   const new_feature = new Feature({
     olcs_altitudeMode: 'relativeToGround',
-    olcs_heightAboveGround: 10,
+    olcs_heightAboveGround: 15,
   })
   new_feature.setGeometry(point)
   new_feature.setStyle(

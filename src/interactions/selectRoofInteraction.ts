@@ -108,8 +108,8 @@ class SelectRoofInteraction extends AbstractInteraction {
         const buildingRoofs: GeoJSONFeatureCollection =
           await roofWfsService.fetchRoofs(selectedBuildingId)
         this._highglightRoofsOfTheBuilding(buildingRoofs)
-        mapStore.isLoadingMap = false
         await this._setLatitudeAndLongitude(event)
+        mapStore.isLoadingMap = false
         this._goToNextStep(buildingRoofs, selectedBuildingId)
       } else if (isInteractionPanRoof()) {
         const roofStore = useRoofsStore()
