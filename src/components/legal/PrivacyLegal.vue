@@ -9,12 +9,15 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
     <h1 class="text-[44px] leading-[48px] lmb-12 font-bold">
       Politique de protection des données personnelles
     </h1>
-    <p>Dernière mise à jour : date</p>
+    <p>Dernière mise à jour : 13 juin 2023</p>
     <div class="bg-neutral-50 p-8 border border-neutral-200">
       <p class="text-base font-normal">
         Bienvenue sur lien
-        <a class="underline decoration-1 font-medium" href="" target="_blank"
-          >https://...</a
+        <a
+          class="underline decoration-1 font-medium"
+          href="https://solaire.coopterr.rennesmetrople.fr/"
+          target="_blank"
+          >https://solaire.coopterr.rennesmetrople.fr/</a
         >
       </p>
       <p class="text-base font-normal">
@@ -32,7 +35,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
       <p>
         <a
           class="test-base underline decoration-1 font-medium"
-          href=""
+          href="/legalnotice/mentions-legales"
           target="_blank"
           >Voir les mentions légales</a
         >
@@ -213,7 +216,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
       </p>
       <p>
         Les demandes d'exercice de vos droits peuvent être adressées au
-        responsable de traitement par voie postale :
+        responsable de traitement par voie postale&nbsp;:
       </p>
       <p>Rennes Métropole</p>
       <p>Service Protection de la donnée</p>

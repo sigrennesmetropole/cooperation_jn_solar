@@ -30,7 +30,7 @@ function goTo(link: string) {
         >
           <h4
             tabindex="0"
-            class="text-[18px] leading-6 bold"
+            class="text-[18px] leading-6 bold cursor-pointer"
             @click="goTo(item.link)"
             @keydown.enter="goTo(item.link)"
           >
