@@ -14,15 +14,13 @@ export function installationStyle() {
 }
 
 export async function applyInstallationStyle(rennesApp: RennesApp) {
-  console.log('applyInstallationStyle')
   const installationLayer: GeoJSONLayer = await rennesApp.getLayerByKey(
     'installations'
   )
+  await installationLayer.activate()
   if (installationLayer) {
-    console.log(installationLayer)
     installationLayer.clearStyle()
     if (installationStyle()) {
-      console.log('installationLayer 3')
       installationLayer.setStyle(installationStyle())
     }
   }

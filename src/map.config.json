@@ -54,7 +54,7 @@
       "name": "installations",
       "url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=nrj_prod:photovoltaique_installations_publiques&outputFormat=application/json&srsName=EPSG:4326",
       "type": "GeoJSONLayer",
-      "activeOnStartup": true,
+      "activeOnStartup": false,
       "zIndex": 4,
       "vectorProperties": {
         "altitudeMode": "relativeToGround",

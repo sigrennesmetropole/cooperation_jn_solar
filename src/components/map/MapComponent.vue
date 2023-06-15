@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, inject } from 'vue'
-import type { RennesApp } from '@/services/RennesApp'
+import { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import {
   RENNES_LAYER,
@@ -41,6 +41,7 @@ import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
 import { useEnedisStore } from '@/stores/enedis'
+import { applyInstallationStyle } from '@/services/installationService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -238,6 +239,15 @@ mapStore.$subscribe(async () => {
     if (mapStore.isInitializeMap) {
       await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
     }
+  }
+  if (
+    viewStore.currentView === 'home' ||
+    viewStore.currentView === 'roof-selection'
+  ) {
+    await applyInstallationStyle(rennesApp)
+  } else {
+    const installationLayer = await rennesApp.getLayerByKey('installations')
+    await installationLayer.deactivate()
   }
 })
 
