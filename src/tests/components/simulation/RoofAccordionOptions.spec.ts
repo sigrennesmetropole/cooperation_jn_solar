@@ -13,6 +13,7 @@ const surfacesModelStub: RoofSurfaceModel[] = [
     total: 90,
     orientation: 'Sud',
     inclinaison: 47.9,
+    total_building: 100,
   },
   {
     surface_id: '2',
@@ -21,6 +22,7 @@ const surfacesModelStub: RoofSurfaceModel[] = [
     total: 90,
     orientation: 'Nord',
     inclinaison: 20,
+    total_building: 100,
   },
   {
     surface_id: '3',
@@ -29,6 +31,7 @@ const surfacesModelStub: RoofSurfaceModel[] = [
     total: 90,
     orientation: 'Est',
     inclinaison: 20,
+    total_building: 100,
   },
 ]
 

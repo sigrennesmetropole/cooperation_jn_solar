@@ -11,6 +11,7 @@ const roofSurface: RoofSurfaceModel = {
   orientation: 'EST',
   azimuth: 80,
   inclinaison: 1,
+  total_building: 87,
 }
 
 describe('RoofInformationsBox.vue', () => {

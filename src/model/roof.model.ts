@@ -12,6 +12,7 @@ export type RoofSurfaceModel = {
   orientation?: string
   azimuth?: number
   inclinaison: number
+  total_building: number
 }
 
 export type BuildingSurfaceModel = {
@@ -57,6 +58,7 @@ export function oppositeAzimuth(azimuth: number) {
 }
 
 export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
+  console.log(geojson)
   const geoJSONFormat = new GeoJSON()
   const feature = geoJSONFormat.readFeature(geojson)
   return {
@@ -72,16 +74,21 @@ export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
     orientation: azimuthToOrientation(feature.getProperty('azimuth')),
     azimuth: feature.getProperty('azimuth'),
     inclinaison: feature.getProperty('slope'),
+    total_building: roundResult(feature.getProperty('all_area')),
   }
 }
 
 export function getDataBuilding() {
-  let all_area = 0
+  let all_area_building = 0
+  let all_area_roof = 0
   let all_area_favorable = 0
   const all_values = [0, 0, 0, 0]
   const roofsStore = useRoofsStore()
   roofsStore.roofSurfacesList?.forEach((surface: RoofSurfaceModel) => {
-    all_area += surface.total
+    if (all_area_building === 0) {
+      all_area_building = surface.total_building
+    }
+    all_area_roof += surface.total
     all_area_favorable += surface.favorable
 
     for (let i = 0; i < 4; i++) {
@@ -89,10 +96,16 @@ export function getDataBuilding() {
     }
   })
   for (let i = 0; i < 4; i++) {
-    all_values[i] = (all_values[i] * 100) / all_area
+    if (all_area_building == all_area_roof) {
+      all_values[i] = (all_values[i] * 100) / all_area_building
+    } else {
+      const ratio = all_area_roof / all_area_building
+      all_values[i] = (all_values[i] * ratio * 100) / all_area_building
+    }
   }
+
   return {
-    total: roundResult(all_area),
+    total: roundResult(all_area_building),
     favorable: roundResult(all_area_favorable),
     values: all_values,
   }

@@ -10,6 +10,7 @@ const buildingData = ref(getDataBuilding())
 
 roofsStore.$subscribe(async () => {
   buildingData.value = getDataBuilding()
+  console.log('buildingData 1', buildingData.value)
 })
 </script>
 
