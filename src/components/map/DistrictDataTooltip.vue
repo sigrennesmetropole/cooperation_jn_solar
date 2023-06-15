@@ -2,7 +2,9 @@
 import iconDelete from '../../assets/icons/icon-delete.svg'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { computed } from 'vue'
+import { useInstallationsStore } from '@/stores/installations'
 const districtStore = useDistrictStore()
+const installationsStore = useInstallationsStore()
 
 const positionStyle = computed(() => {
   let style: string = ''
@@ -61,7 +63,10 @@ function keepDecimals(float: number, numberOfDecimals: number) {
   <div
     class="min-w-[440px] h-[180px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
     :style="positionStyle"
-    v-if="districtStore.districtName !== ''"
+    v-if="
+      districtStore.districtName !== '' &&
+      installationsStore.installationName == ''
+    "
   >
     <div class="flex flex-row justify-between">
       <h2 class="font-dm-sans font-bold text-2xl max-w-[420px]">

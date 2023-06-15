@@ -9,6 +9,7 @@ import SearchBar from '@/components/search_bar/SearchBar.vue'
 import { viewList } from '@/model/views.model'
 import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import DistrictDataTooltip from '@/components/map/DistrictDataTooltip.vue'
+import InstallationDataTooltip from './components/map/InstallationDataTooltip.vue'
 import DistrictDisplayButton from '@/components/map/DistrictDisplayButton.vue'
 import UiTooltipSunshine from '@/components/ui/UiTooltipSunshine.vue'
 import UiExplanationsStepSunshine from '@/components/ui/UiExplanationsStepSunshine.vue'
@@ -17,18 +18,31 @@ import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { useMapStore } from '@/stores/map'
 import { useEnedisStore } from '@/stores/enedis'
 import { apiConfigService } from '@/services/api-config'
+import { useInstallationsStore } from './stores/installations'
 
 const viewStore = useViewsStore()
 const panelStore = usePanelsStore()
 const districtStore = useDistrictStore()
 const mapStore = useMapStore()
 const enedisStore = useEnedisStore()
+const installationsStore = useInstallationsStore()
 
 onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
   apiConfigService.getConfig()
+
+  // While waiting to have the data dynamically
+  installationsStore.setInstallationInformations(
+    'Chaufferie Baud Chardonnet',
+    2017,
+    9,
+    3
+  )
 })
+
+// Just for display the component waiting the dynamic data.
+installationsStore.canBeDisplayed = false
 
 function isLeftPanelRetractable() {
   const retractableList = viewList['roof-selection']
@@ -134,6 +148,10 @@ window.addEventListener('beforeunload', function (e) {
       <DistrictDataTooltip
         v-if="districtStore.checkboxChecked === true"
       ></DistrictDataTooltip>
+
+      <InstallationDataTooltip
+        v-if="isDisplayDistrictCheckbox && installationsStore.canBeDisplayed"
+      ></InstallationDataTooltip>
 
       <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>
       <UiExplanationsStepSunshine />
