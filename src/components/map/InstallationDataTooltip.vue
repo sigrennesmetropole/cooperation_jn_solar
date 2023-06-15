@@ -4,6 +4,8 @@ import iconSun from '@/assets/icons/solarPanelLogo.svg'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { useInstallationsStore } from '@/stores/installations'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
+import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+
 const installationsStore = useInstallationsStore()
 const districtStore = useDistrictStore()
 
@@ -14,13 +16,13 @@ function closeTooltip() {
 
 <template>
   <div
-    class="min-w-[478px] h-[224px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg right-40 top-40"
+    class="min-w-[478px] h-[230px] transition-[height] absolute bg-white flex flex-col p-5 rounded-lg right-40 top-40"
     v-if="
       installationsStore.installationName !== '' &&
       districtStore.districtName == ''
     "
   >
-    <div class="flex flex-row justify-between gap-4 items-center">
+    <div class="flex flex-row justify-between gap-4 items-center mb-3">
       <img :src="iconSun" alt="icone de soleil" class="w-16 h-16" />
       <div class="flex flex-col gap-1">
         <h2 class="font-dm-sans font-bold text-2xl max-w-[420px]">
@@ -38,7 +40,7 @@ function closeTooltip() {
       />
     </div>
     <div
-      class="bg-slate-50 border border-slate-200 rounded-lg p-3 flex flex-row gap-4 font-dm-sans justify-around relative"
+      class="bg-slate-50 border border-slate-200 rounded-lg p-3 flex flex-row gap-4 font-dm-sans justify-around relative mb-1"
     >
       <div class="flex flex-col justify-between">
         <p class="font-medium text-xs">Date de mise<br />en service</p>
@@ -82,5 +84,15 @@ function closeTooltip() {
         </div>
       </div>
     </div>
+    <a
+      class="font-dm-sans text-xs font-normal underline"
+      href="https://public.sig.rennesmetropole.fr/geonetwork/srv/fre/catalog.search#/metadata/03fe4803-4199-4723-be7e-d4d0ed6d17de"
+      target="_blank"
+    >
+      Source Rennes Métropole<img
+        :src="expand"
+        class="inline-block ml-1 w-2 h-2"
+      />
+    </a>
   </div>
 </template>
