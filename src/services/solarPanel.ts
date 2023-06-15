@@ -38,6 +38,7 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
 }
 
 export function generateSolarPanel(solarPanels: SolarPanelModel[]) {
+  console.log('generateSolarPanel')
   const solarPanelJSON = {
     type: 'FeatureCollection',
     vcsMeta: {
@@ -63,11 +64,13 @@ export async function initializeSolarPanelLayer(
   rennesApp: RennesApp,
   solarPanels: SolarPanelModel[]
 ) {
+  console.log('initializeSolarPanelLayer')
   const solarPanel: GeoJSONLayer = await rennesApp.getLayerByKey(
     RENNES_LAYER.solarPanel
   )
   solarPanel.removeAllFeatures()
   solarPanel.addFeatures(generateSolarPanel(solarPanels))
+  console.log('solar panel features', solarPanel.getFeatures())
 }
 
 export function removeSolarPanel(rennesApp: RennesApp) {
@@ -133,6 +136,7 @@ export function solarPanelGridToSolarPanelModel(
   roofInclinaison: number = 45,
   roofAzimut: number = 0
 ) {
+  console.log('solarPanelGridToSolarPanelModel')
   const solarPanelModels: SolarPanelModel[] = []
   const positions: number[][] = []
   for (let i = 0; i < solarPanelGrids.length; i++) {
@@ -172,6 +176,14 @@ export function solarPanelGridToSolarPanelModel(
     const newHeight = rennesApp.getHeight(
       solarPanelModels[i].x,
       solarPanelModels[i].y
+    )
+    console.log(
+      'x= ',
+      solarPanelModels[i].x,
+      'y=',
+      solarPanelModels[i].y,
+      ' newHeight=',
+      newHeight
     )
     solarPanelModels[i].z = newHeight + HeightOffset
   }

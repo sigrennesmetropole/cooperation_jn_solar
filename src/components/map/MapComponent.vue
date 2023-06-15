@@ -139,6 +139,7 @@ async function setupGridInstallation() {
 }
 
 async function setupSolarPanel() {
+  console.log('set up solar panel')
   mapStore.isLoadingMap = true
   roofsStore.saveCleanMatrix()
   substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
@@ -148,8 +149,16 @@ async function setupSolarPanel() {
   // Make sure the active map is the 3D one sot hat the height of solar panel
   // can be computed properly
   await rennesApp.maps.setActiveMap('cesium')
-  mapStore.activate3d()
-  const solarPanelModels = solarPanelGridToSolarPanelModel(
+
+  await rennesApp.maps.setActiveMap('cesium')
+  const cesiumMap = rennesApp.get3DMap()
+  await cesiumMap?.initialize()
+  const layer = rennesApp.layers.getByKey('terrain')
+  await layer.activate()
+
+  // await new Promise(r => setTimeout(r, 3000));
+
+  let solarPanelModels = solarPanelGridToSolarPanelModel(
     rennesApp,
     roofsStore.gridMatrix!,
     result.solarPanels,
@@ -157,18 +166,40 @@ async function setupSolarPanel() {
     selectedRoofModel.inclinaison,
     selectedRoofModel.azimuth
   )
+  let flag_bad_zindex = false
+  solarPanelModels.forEach((solarPanelModel) => {
+    if (solarPanelModel.z < 0) {
+      flag_bad_zindex = true
+    }
+  })
+  if (flag_bad_zindex) {
+    await new Promise((r) => setTimeout(r, 3000))
+    solarPanelModels = solarPanelGridToSolarPanelModel(
+      rennesApp,
+      roofsStore.gridMatrix!,
+      result.solarPanels,
+      result.orientation,
+      selectedRoofModel.inclinaison,
+      selectedRoofModel.azimuth
+    )
+  }
+
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
+  console.log('solarpanelModels', solarPanelModels)
+
   mapStore.isLoadingMap = false
 }
 
 async function displaySolarPanelLayer() {
+  console.log('display solar panel layer')
   const solarPanelLayer = await rennesApp.getLayerByKey(RENNES_LAYER.solarPanel)
   // Make sure that the solar panel layer has features
   if (
     solarPanelStore.maxNumberSolarPanel() > 0 &&
     solarPanelLayer.getFeatures().length == 0
   ) {
+    console.log('dans le if')
     await initializeSolarPanelLayer(rennesApp, solarPanelStore.solarPanels)
     await filterSolarPanelByMaxSolarPanel(
       rennesApp,
