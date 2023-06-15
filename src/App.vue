@@ -41,8 +41,8 @@ onBeforeMount(() => {
   )
 })
 
-// Just for display the component to make the review. Remove after.
-installationsStore.canBeDisplayed = true
+// Just for display the component waiting the dynamic data.
+installationsStore.canBeDisplayed = false
 
 function isLeftPanelRetractable() {
   const retractableList = viewList['roof-selection']
