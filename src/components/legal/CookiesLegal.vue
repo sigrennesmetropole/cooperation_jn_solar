@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <div
     class="flex flex-col gap-12 w-[880px] h-fit bg-white rounded-xl px-8 py-16 mx-auto mt-32 mb-[87px]"
@@ -10,4 +11,3 @@
     <div class="text-base font-normal"></div>
   </div>
 </template>
-<script setup lang="ts"></script>
