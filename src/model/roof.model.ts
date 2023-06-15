@@ -58,7 +58,6 @@ export function oppositeAzimuth(azimuth: number) {
 }
 
 export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
-  console.log(geojson)
   const geoJSONFormat = new GeoJSON()
   const feature = geoJSONFormat.readFeature(geojson)
   return {
@@ -95,13 +94,15 @@ export function getDataBuilding() {
       all_values[i] += (surface.values[i] * surface.total) / 100
     }
   })
+
+  // Sometimes the size of the building does not correspond to the sum of the sizes of the different roofs
+  // It's related to the fact that some roofs don't have solar potential
+  // To correct this, one must make the difference between all_area_building and all_area_roof and add this difference to the solar non-potential
+  if (all_area_building != all_area_roof) {
+    all_values[0] = all_values[0] + (all_area_building - all_area_roof)
+  }
   for (let i = 0; i < 4; i++) {
-    if (all_area_building == all_area_roof) {
-      all_values[i] = (all_values[i] * 100) / all_area_building
-    } else {
-      const ratio = all_area_roof / all_area_building
-      all_values[i] = (all_values[i] * ratio * 100) / all_area_building
-    }
+    all_values[i] = (all_values[i] * 100) / all_area_building
   }
 
   return {

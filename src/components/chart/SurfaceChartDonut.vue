@@ -6,7 +6,6 @@ import type { BuildingSurfaceModel } from '@/model/roof.model'
 const props = defineProps<{
   buildingData: BuildingSurfaceModel
 }>()
-console.log('props.buildingData 2 ', props.buildingData)
 
 function favorablePercentage() {
   const favorablePercentage =
