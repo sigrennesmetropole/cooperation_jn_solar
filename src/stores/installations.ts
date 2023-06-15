@@ -3,6 +3,7 @@ import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Viewpoint } from '@vcmap/core'
 import type { Feature } from 'ol'
+import type { Geometry } from 'ol/geom'
 
 export const useInstallationsStore = defineStore('installations', () => {
   const installationName: Ref<string> = ref('')
@@ -10,6 +11,7 @@ export const useInstallationsStore = defineStore('installations', () => {
   const installationProduction: Ref<number> = ref(0)
   const numberHome: Ref<number> = ref(0)
   const installationPointFeature: Ref<Feature | null> = ref(null)
+  const currentFeatureInstallation: Ref<Feature<Geometry> | null> = ref(null)
   const previousViewPoint: Ref<Viewpoint | null> = ref(null)
   const newPointAbscissa: Ref<number> = ref(0)
   const newPointOrdinate: Ref<number> = ref(0)
@@ -66,6 +68,7 @@ export const useInstallationsStore = defineStore('installations', () => {
     installationProduction,
     numberHome,
     installationPointFeature,
+    currentFeatureInstallation,
     previousViewPoint,
     newPointAbscissa,
     newPointOrdinate,
