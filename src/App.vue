@@ -31,18 +31,7 @@ onBeforeMount(() => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
   apiConfigService.getConfig()
-
-  // While waiting to have the data dynamically
-  installationsStore.setInstallationInformations(
-    'Chaufferie Baud Chardonnet',
-    2017,
-    9,
-    3
-  )
 })
-
-// Just for display the component waiting the dynamic data.
-installationsStore.canBeDisplayed = false
 
 function isLeftPanelRetractable() {
   const retractableList = viewList['roof-selection']
@@ -65,7 +54,7 @@ const isDisplayAsideAndMap = computed(() => {
 const isDisplayFloatAndMap = computed(() => {
   return [viewList['roof-selection']].includes(viewStore.currentView!)
 })
-const isDisplayDistrictCheckbox = computed(() => {
+const isDisplayDistrictCheckboxAndInstallation = computed(() => {
   return [viewList['home'], viewList['roof-selection']].includes(
     viewStore.currentView!
   )
@@ -141,7 +130,10 @@ window.addEventListener('beforeunload', function (e) {
       ></SearchBar>
 
       <DistrictDisplayButton
-        v-if="isDisplayDistrictCheckbox && districtStore.canBeDisplayed"
+        v-if="
+          isDisplayDistrictCheckboxAndInstallation &&
+          districtStore.canBeDisplayed
+        "
         class="absolute z-9"
       ></DistrictDisplayButton>
 
@@ -150,7 +142,10 @@ window.addEventListener('beforeunload', function (e) {
       ></DistrictDataTooltip>
 
       <InstallationDataTooltip
-        v-if="isDisplayDistrictCheckbox && installationsStore.canBeDisplayed"
+        v-if="
+          isDisplayDistrictCheckboxAndInstallation &&
+          installationsStore.canBeDisplayed
+        "
       ></InstallationDataTooltip>
 
       <UiTooltipSunshine v-if="isDisplaySearchBar"></UiTooltipSunshine>

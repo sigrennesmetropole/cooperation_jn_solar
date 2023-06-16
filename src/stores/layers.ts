@@ -43,7 +43,7 @@ export const useLayersStore = defineStore('layers', () => {
     iris: false,
     customLayerDistrict: false,
     customLayerSearchAddress: true,
-    installations: false,
+    installations: true,
     customLayerInstallation: false,
   })
 
