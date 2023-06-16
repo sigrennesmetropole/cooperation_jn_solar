@@ -23,7 +23,7 @@ districtStore.$subscribe(async () => {
     >
       <template v-slot:text>
         <p class="font-dm-sans text-sm text-slate-900 mt-[3px]">
-          Les données du territoire
+          Données sur le territoire
         </p>
       </template>
     </CheckBox>

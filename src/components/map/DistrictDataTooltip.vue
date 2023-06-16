@@ -3,6 +3,8 @@ import iconDelete from '../../assets/icons/icon-delete.svg'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { computed } from 'vue'
 import { useInstallationsStore } from '@/stores/installations'
+import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+
 const districtStore = useDistrictStore()
 const installationsStore = useInstallationsStore()
 
@@ -61,7 +63,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
 
 <template>
   <div
-    class="min-w-[440px] h-[180px] transition-[height] absolute bg-white flex flex-col p-5 gap-3 rounded-lg"
+    class="min-w-[440px] h-[184px] transition-[height] absolute bg-white flex flex-col p-5 rounded-lg"
     :style="positionStyle"
     v-if="
       districtStore.districtName !== '' &&
@@ -69,7 +71,7 @@ function keepDecimals(float: number, numberOfDecimals: number) {
     "
   >
     <div class="flex flex-row justify-between">
-      <h2 class="font-dm-sans font-bold text-2xl max-w-[420px]">
+      <h2 class="font-dm-sans font-bold text-2xl max-w-[420px] mb-3">
         {{ removePartOfIrisName(districtStore.districtName) }}
       </h2>
       <img
@@ -113,5 +115,12 @@ function keepDecimals(float: number, numberOfDecimals: number) {
         </div>
       </div>
     </div>
+    <a
+      class="font-dm-sans text-xs font-normal underline mt-1"
+      href="https://data.enedis.fr/explore/dataset/production-electrique-par-filiere-a-la-maille-iris/information/"
+      target="_blank"
+    >
+      Détails<img :src="expand" class="inline-block ml-1 w-2 h-2" />
+    </a>
   </div>
 </template>
