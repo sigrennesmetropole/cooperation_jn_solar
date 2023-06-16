@@ -5,6 +5,7 @@ import { useDistrictStore } from '@/stores/districtInformations'
 import { useInstallationsStore } from '@/stores/installations'
 import { UiButtonWithTooltip } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
+import { computed } from 'vue'
 
 const installationsStore = useInstallationsStore()
 const districtStore = useDistrictStore()
@@ -12,11 +13,45 @@ const districtStore = useDistrictStore()
 function closeTooltip() {
   installationsStore.resetInstallationStore()
 }
+
+const positionStyle = computed(() => {
+  let style: string = ''
+  const tooltipWidth = 478
+  const tooltipHeight = 230
+  let leftPosition = null
+  let topPosition = null
+  if (installationsStore.newPointAbscissa + tooltipWidth > window.innerWidth) {
+    leftPosition = installationsStore.newPointAbscissa - tooltipWidth
+  } else {
+    leftPosition = installationsStore.newPointAbscissa
+  }
+
+  if (
+    installationsStore.newPointOrdinate + tooltipHeight >
+    window.innerHeight
+  ) {
+    topPosition = installationsStore.newPointOrdinate - tooltipHeight
+  } else {
+    topPosition = installationsStore.newPointOrdinate
+  }
+
+  if (
+    leftPosition + tooltipWidth > window.innerWidth ||
+    topPosition + tooltipHeight > window.innerHeight
+  ) {
+    style = 'display: none;'
+  } else if (leftPosition !== null && topPosition !== null) {
+    style = `left: ${leftPosition}px; top: ${topPosition}px;`
+  }
+
+  return style
+})
 </script>
 
 <template>
   <div
-    class="min-w-[478px] h-[230px] transition-[height] absolute bg-white flex flex-col p-5 rounded-lg right-40 top-40"
+    class="min-w-[478px] h-[230px] transition-[height] absolute bg-white flex flex-col p-5 rounded-lg"
+    :style="positionStyle"
     v-if="
       installationsStore.installationName !== '' &&
       districtStore.districtName == ''

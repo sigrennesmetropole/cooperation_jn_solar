@@ -13,6 +13,7 @@ export const RENNES_LAYER = {
   iris: 'iris',
   customLayerDistrict: 'customLayerDistrict',
   installations: 'installations',
+  customLayerInstallation: 'customLayerInstallation',
 }
 
 export const RENNES_LAYERNAMES = [
@@ -26,6 +27,7 @@ export const RENNES_LAYERNAMES = [
   RENNES_LAYER.iris,
   RENNES_LAYER.customLayerDistrict,
   RENNES_LAYER.installations,
+  RENNES_LAYER.customLayerInstallation,
 ] as const
 
 export type RennesLayer = (typeof RENNES_LAYERNAMES)[number]
@@ -42,6 +44,7 @@ export const useLayersStore = defineStore('layers', () => {
     customLayerDistrict: false,
     customLayerSearchAddress: true,
     installations: false,
+    customLayerInstallation: false,
   })
 
   function enableLayer(name: RennesLayer) {

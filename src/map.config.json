@@ -51,6 +51,12 @@
       }
     },
     {
+      "name": "customLayerDistrict",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 5
+    },
+    {
       "name": "installations",
       "url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=nrj_prod:photovoltaique_installations_publiques&outputFormat=application/json&srsName=EPSG:4326",
       "type": "GeoJSONLayer",
@@ -63,7 +69,7 @@
       }
     },
     {
-      "name": "customLayerDistrict",
+      "name": "customLayerInstallation",
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
       "zIndex": 5
