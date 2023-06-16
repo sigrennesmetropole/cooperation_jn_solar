@@ -15,7 +15,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         Bienvenue sur lien
         <a
           class="underline decoration-1 font-medium"
-          href="https://solaire.coopterr.rennesmetrople.fr/"
+          href="https://solaire.coopterr.rennesmetropole.fr/"
           target="_blank"
           >https://solaire.coopterr.rennesmetropole.fr/</a
         >
