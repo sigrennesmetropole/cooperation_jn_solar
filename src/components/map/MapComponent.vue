@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, inject } from 'vue'
-import { RennesApp } from '@/services/RennesApp'
+import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import {
   RENNES_LAYER,
