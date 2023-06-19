@@ -14,7 +14,7 @@ function favorablePercentage() {
 }
 
 const dataGraph = reactive({
-  colors: ['#334155', '#CBD5E1', '#FEF9C3', '#FEF08A'],
+  colors: ['#1D4ED8', '#5EEAD4', '#FDE047', '#EA580C'],
   labelTotal: 'de surface favorable',
 })
 </script>

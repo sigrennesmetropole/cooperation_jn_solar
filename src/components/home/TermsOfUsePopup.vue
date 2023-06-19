@@ -79,25 +79,25 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             la maquette 3D.
           </span>
           <div class="flex flex-row items-center gap-2">
-            <div class="w-10 h-6 bg-black"></div>
+            <div class="w-10 h-6 bg-blue-700"></div>
             <span class="text-sm font-normal">
               Inférieur ou égal à 800 kWh/m2/an
             </span>
           </div>
           <div class="flex flex-row items-center gap-2">
-            <div class="w-10 h-6 bg-slate-300"></div>
+            <div class="w-10 h-6 bg-teal-300"></div>
             <span class="text-sm font-normal">
               Entre 800 kWh/m2/an et 1000 kWh/m2/an
             </span>
           </div>
           <div class="flex flex-row items-center gap-2">
-            <div class="w-10 h-6 bg-yellow-100"></div>
+            <div class="w-10 h-6 bg-yellow-300"></div>
             <span class="text-sm font-normal">
               Entre 1000 kWh/m2/an et 1150 kWh/m2/an
             </span>
           </div>
           <div class="flex flex-row items-center gap-2">
-            <div class="w-10 h-6 bg-yellow-300"></div>
+            <div class="w-10 h-6 bg-orange-600"></div>
             <span class="text-sm font-normal">
               Supérieur ou égal à 1150 kWh/m2/an
             </span>
