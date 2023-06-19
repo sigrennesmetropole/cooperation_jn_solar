@@ -11,6 +11,7 @@ const roofSurface: RoofSurfaceModel = {
   total: 90,
   orientation: 'Sud',
   inclinaison: 47.9,
+  total_building: 100,
 }
 describe('#RoofAccordion', () => {
   it('renders', () => {

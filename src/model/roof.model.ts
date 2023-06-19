@@ -12,6 +12,7 @@ export type RoofSurfaceModel = {
   orientation?: string
   azimuth?: number
   inclinaison: number
+  total_building: number
 }
 
 export type BuildingSurfaceModel = {
@@ -72,27 +73,40 @@ export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
     orientation: azimuthToOrientation(feature.getProperty('azimuth')),
     azimuth: feature.getProperty('azimuth'),
     inclinaison: feature.getProperty('slope'),
+    total_building: roundResult(feature.getProperty('all_area')),
   }
 }
 
 export function getDataBuilding() {
-  let all_area = 0
+  let all_area_building = 0
+  let all_area_roof = 0
   let all_area_favorable = 0
   const all_values = [0, 0, 0, 0]
   const roofsStore = useRoofsStore()
   roofsStore.roofSurfacesList?.forEach((surface: RoofSurfaceModel) => {
-    all_area += surface.total
+    if (all_area_building === 0) {
+      all_area_building = surface.total_building
+    }
+    all_area_roof += surface.total
     all_area_favorable += surface.favorable
 
     for (let i = 0; i < 4; i++) {
       all_values[i] += (surface.values[i] * surface.total) / 100
     }
   })
-  for (let i = 0; i < 4; i++) {
-    all_values[i] = (all_values[i] * 100) / all_area
+
+  // Sometimes the size of the building does not correspond to the sum of the sizes of the different roofs
+  // It's related to the fact that some roofs don't have solar potential
+  // To correct this, one must make the difference between all_area_building and all_area_roof and add this difference to the solar non-potential
+  if (all_area_building != all_area_roof) {
+    all_values[0] = all_values[0] + (all_area_building - all_area_roof)
   }
+  for (let i = 0; i < 4; i++) {
+    all_values[i] = (all_values[i] * 100) / all_area_building
+  }
+
   return {
-    total: roundResult(all_area),
+    total: roundResult(all_area_building),
     favorable: roundResult(all_area_favorable),
     values: all_values,
   }

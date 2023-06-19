@@ -8,6 +8,7 @@ const props = defineProps<{
   labelTotalValue: number
   series: number[]
 }>()
+
 const chartOptions = ref({
   dataLabels: {
     enabled: false,

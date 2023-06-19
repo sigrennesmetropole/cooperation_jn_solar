@@ -49,6 +49,7 @@ describe('SetUpStep', () => {
           orientation: 'EST',
           azimuth: 92,
           inclinaison: 20,
+          total_building: 393,
         },
         {
           surface_id: '53290',
@@ -58,6 +59,7 @@ describe('SetUpStep', () => {
           orientation: 'OUEST',
           azimuth: 272,
           inclinaison: 20,
+          total_building: 388,
         },
       ]
       roofsStore.selectedRoofSurfaceId = '53291'
