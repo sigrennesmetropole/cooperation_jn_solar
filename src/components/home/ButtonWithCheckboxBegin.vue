@@ -52,7 +52,7 @@ homeRouter.$subscribe(async () => {
       @checkBoxChange="checkboxChange($event)"
     >
       <template v-slot:text>
-        <span class="font-dm-sans font-normal text-base leading-6 color-black"
+        <span class="font-dm-sans font-normal text-base color-black"
           >J'ai lu et j'accepte les
           <span
             tabindex="0"
@@ -77,7 +77,7 @@ homeRouter.$subscribe(async () => {
       </UiButton>
       <span
         v-if="displayError && !checked"
-        class="font-dm-sans text-sm font-normal my-auto"
+        class="font-dm-sans text-sm font-medium my-auto text-red-600"
       >
         Veuillez cocher la case ci-dessus pour accepter les conditions
       </span>
