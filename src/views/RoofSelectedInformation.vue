@@ -31,11 +31,14 @@ const rennesApp = inject('rennesApp') as RennesApp
 const buildingData = ref(getDataBuilding())
 const isEmptyData = ref(false)
 
-if (buildingData.value.total === 0) {
-  isEmptyData.value = true
-} else {
-  isEmptyData.value = false
+function changeIsEmptuDataFromBuildingData() {
+  if (buildingData.value.total === 0) {
+    isEmptyData.value = true
+  } else {
+    isEmptyData.value = false
+  }
 }
+changeIsEmptuDataFromBuildingData()
 
 async function newViewPoint() {
   if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
@@ -56,11 +59,7 @@ onBeforeMount(async () => {
 
 roofStore.$subscribe(async () => {
   buildingData.value = getDataBuilding()
-  if (buildingData.value.total === 0) {
-    isEmptyData.value = true
-  } else {
-    isEmptyData.value = false
-  }
+  changeIsEmptuDataFromBuildingData()
   newViewPoint()
 })
 </script>
