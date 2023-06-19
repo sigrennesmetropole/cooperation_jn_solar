@@ -1,5 +1,9 @@
 <script lang="ts" setup>
 import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
+
+const props = defineProps<{
+  activeButton: boolean
+}>()
 </script>
 
 <template>
@@ -11,6 +15,7 @@ import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
     <slot name="text"></slot>
     <UiButton
       class="mt-4 mb-6 ui-btn-primary gap-3 px-4 py-3 h-12 w-full"
+      :disabled="!props.activeButton"
       @click="$emit('buttonBoxAction')"
     >
       <slot name="buttonContent"></slot>

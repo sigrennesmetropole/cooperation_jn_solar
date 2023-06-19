@@ -62,90 +62,92 @@ roofStore.$subscribe(async () => {
   changeIsEmptuDataFromBuildingData()
   newViewPoint()
 })
+
+function buttonBoxAction() {
+  if (isEmptyData.value) {
+    return
+  }
+  router.push('/step-sunshine')
+}
 </script>
 
 <template>
-  <template v-if="!isEmptyData">
-    <div
-      class="mt-12 bg-white border border-slate-100 rounded relative font-dm-sans"
-    >
-      <UiButtonWithTooltip
-        widthButton="4"
-        heightButton="4"
-        zIndex="z-10"
-        text="La surface favorable correspond à un potentiel supérieur à 1000 kWh/m2/an."
-        widthBoxText="w-[300px]"
-      ></UiButtonWithTooltip>
-      <SurfaceNumber :buildingData="buildingData"></SurfaceNumber>
-    </div>
-
-    <UiDisclosure>
-      <template v-slot:title>
-        <span class="font-dm-sans font-medium text-base color-black">
-          Comprendre ses chiffres
-        </span>
-      </template>
-      <template v-slot:contents>
-        <div>
-          <span class="font-dm-sans font-bold text-sm text-slate-900"
-            >Qu’est-ce qu’une surface favorable ?</span
-          >
-          <p
-            class="font-dm-sans font-medium text-sm text-slate-600 text-justify"
-          >
-            La surface favorable est celle recevant suffisamment
-            d'ensoleillement pour accueillir des panneaux solaires soit dans
-            notre simulation un ensoleillement supérieur à 1 000 kWh/m2/an.
-          </p>
-          <br />
-          <span class="font-dm-sans font-bold text-sm text-slate-900"
-            >Comment est calculé l’ensoleillement ?</span
-          >
-          <p
-            class="font-dm-sans font-medium text-sm text-slate-600 text-justify"
-          >
-            L’ensoleillement ou irradiance est la quantité d’énergie solaire
-            reçue par le toit chaque année (en kWh/m2/an). Pour son calcul, la
-            course du soleil et l'ombrage, mais aussi les caractéristiques du
-            toit (orientation, inclinaison, surface) sont pris en compte. Les
-            obstacles comme les cheminées ne sont pas pris en compte à ce stade
-            (sauf les gros obstacles).
-            <a
-              class="underline cursor-pointer"
-              @click="popUpStore.displayTermsOfUse()"
-            >
-              Détails<img :src="expand" class="inline-block ml-1 w-2 h-2" />
-            </a>
-          </p>
-        </div>
-      </template>
-    </UiDisclosure>
-
-    <BoxStep @buttonBoxAction="router.push('/step-sunshine')">
-      <template v-slot:nameOfStep>
-        <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
-          Étape 2
-        </span>
-      </template>
-      <template v-slot:image>
-        <img class="w-15 h-15 mt-2" :src="iconInstallation" alt="" />
-      </template>
-      <template v-slot:text>
-        <span class="font-dm-sans font-bold text-lg text-center">
-          Quelle production d’électricité <br />
-          est envisageable ici ?
-        </span>
-      </template>
-      <template v-slot:buttonContent>
-        <span class="font-dm-sans text-white text-base font-medium">
-          Simuler une installation photovoltaïque
-        </span>
-      </template>
-    </BoxStep>
-    <TermsOfUsePopup
-      v-if="popUpStore.isDisplayTermsOfUse"
-      @close="popUpStore.closeTermsOfUse()"
-    />
-  </template>
+  <div
+    class="mt-12 bg-white border border-slate-100 rounded relative font-dm-sans"
+    v-if="!isEmptyData"
+  >
+    <UiButtonWithTooltip
+      widthButton="4"
+      heightButton="4"
+      zIndex="z-10"
+      text="La surface favorable correspond à un potentiel supérieur à 1000 kWh/m2/an."
+      widthBoxText="w-[300px]"
+    ></UiButtonWithTooltip>
+    <SurfaceNumber :buildingData="buildingData"></SurfaceNumber>
+  </div>
   <NoRoofOnBuilding v-else></NoRoofOnBuilding>
+
+  <UiDisclosure>
+    <template v-slot:title>
+      <span class="font-dm-sans font-medium text-base color-black">
+        Comprendre ses chiffres
+      </span>
+    </template>
+    <template v-slot:contents>
+      <div>
+        <span class="font-dm-sans font-bold text-sm text-slate-900"
+          >Qu’est-ce qu’une surface favorable ?</span
+        >
+        <p class="font-dm-sans font-medium text-sm text-slate-600 text-justify">
+          La surface favorable est celle recevant suffisamment d'ensoleillement
+          pour accueillir des panneaux solaires soit dans notre simulation un
+          ensoleillement supérieur à 1 000 kWh/m2/an.
+        </p>
+        <br />
+        <span class="font-dm-sans font-bold text-sm text-slate-900"
+          >Comment est calculé l’ensoleillement ?</span
+        >
+        <p class="font-dm-sans font-medium text-sm text-slate-600 text-justify">
+          L’ensoleillement ou irradiance est la quantité d’énergie solaire reçue
+          par le toit chaque année (en kWh/m2/an). Pour son calcul, la course du
+          soleil et l'ombrage, mais aussi les caractéristiques du toit
+          (orientation, inclinaison, surface) sont pris en compte. Les obstacles
+          comme les cheminées ne sont pas pris en compte à ce stade (sauf les
+          gros obstacles).
+          <a
+            class="underline cursor-pointer"
+            @click="popUpStore.displayTermsOfUse()"
+          >
+            Détails<img :src="expand" class="inline-block ml-1 w-2 h-2" />
+          </a>
+        </p>
+      </div>
+    </template>
+  </UiDisclosure>
+
+  <BoxStep @buttonBoxAction="buttonBoxAction()" :activeButton="!isEmptyData">
+    <template v-slot:nameOfStep>
+      <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
+        Étape 2
+      </span>
+    </template>
+    <template v-slot:image>
+      <img class="w-15 h-15 mt-2" :src="iconInstallation" alt="" />
+    </template>
+    <template v-slot:text>
+      <span class="font-dm-sans font-bold text-lg text-center">
+        Quelle production d’électricité <br />
+        est envisageable ici ?
+      </span>
+    </template>
+    <template v-slot:buttonContent>
+      <span class="font-dm-sans text-white text-base font-medium">
+        Simuler une installation photovoltaïque
+      </span>
+    </template>
+  </BoxStep>
+  <TermsOfUsePopup
+    v-if="popUpStore.isDisplayTermsOfUse"
+    @close="popUpStore.closeTermsOfUse()"
+  />
 </template>
