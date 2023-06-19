@@ -16,7 +16,7 @@ import * as turf from '@turf/turf'
 import { Feature } from 'ol'
 import { Point } from 'ol/geom'
 import { Style, Icon } from 'ol/style'
-import pinIconWhite from '@/assets/icons/pin-white.svg'
+import pinIcon from '@/assets/illustrations/pinsearch.png'
 import type { GeoJSONLayer } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 
@@ -105,8 +105,8 @@ export async function addPin(
   new_feature.setStyle(
     new Style({
       image: new Icon({
-        src: pinIconWhite,
-        scale: 2,
+        src: pinIcon,
+        scale: 0.75,
       }),
       zIndex: 10,
     })
