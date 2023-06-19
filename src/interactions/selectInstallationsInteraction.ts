@@ -5,6 +5,7 @@ import {
   GeoJSONLayer,
   ModificationKeyType,
   PointerKeyType,
+  vcsLayerName,
 } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 
@@ -53,32 +54,33 @@ class SelectInstallationsInteraction extends AbstractInteraction {
       const installationsStore = useInstallationsStore()
       const districtStore = useDistrictStore()
       const selectedInstallation = event.feature
-
-      if (selectedInstallation !== undefined) {
-        const installationName = selectedInstallation?.getProperty('nom')
-        const installationYear = selectedInstallation?.getProperty('an_mes')
-        const installationProduction = selectedInstallation?.getProperty(
-          'production_annuelle'
-        )
-        const installationHouse = selectedInstallation?.getProperty(
-          'consommation_equivalente_foyer'
-        )
-        installationsStore.setInstallationInformations(
-          installationName,
-          installationYear,
-          installationProduction,
-          installationHouse
-        )
-        await this._interactionInstallation(event)
-        updateInstallationPointCoordinates(this._rennesApp)
-        districtStore.resetDistrictStore()
-        addGenericListenerForUpdatePositions(this._rennesApp)
-        event.stopPropagation = true
-        installationsStore.setCanBeDisplayed(true)
-      } else {
-        installationsStore.resetInstallationStore()
-        installationsStore.setCanBeDisplayed(false)
-      }
+      if (event.feature?.[vcsLayerName] === RENNES_LAYER.installations) {
+        if (selectedInstallation !== undefined) {
+          const installationName = selectedInstallation?.getProperty('nom')
+          const installationYear = selectedInstallation?.getProperty('an_mes')
+          const installationProduction = selectedInstallation?.getProperty(
+            'production_annuelle'
+          )
+          const installationHouse = selectedInstallation?.getProperty(
+            'consommation_equivalente_foyer'
+          )
+          installationsStore.setInstallationInformations(
+            installationName,
+            installationYear,
+            installationProduction,
+            installationHouse
+          )
+          await this._interactionInstallation(event)
+          updateInstallationPointCoordinates(this._rennesApp)
+          districtStore.resetDistrictStore()
+          addGenericListenerForUpdatePositions(this._rennesApp)
+          event.stopPropagation = true
+          installationsStore.setCanBeDisplayed(true)
+        } else {
+          installationsStore.resetInstallationStore()
+          installationsStore.setCanBeDisplayed(false)
+        }
+      } else return event
     }
     return event
   }

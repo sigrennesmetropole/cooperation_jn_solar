@@ -6,6 +6,7 @@ import {
   ModificationKeyType,
   Projection,
   VcsEvent,
+  vcsLayerName,
   VectorStyleItem,
 } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
@@ -20,6 +21,7 @@ import {
   isInteractionPanRoof,
 } from '@/services/interactionUtils'
 import { useMapStore } from '@/stores/map'
+import { RENNES_LAYER } from '@/stores/layers'
 
 const highlightStyle = new VectorStyleItem({
   fill: { color: 'rgb(74,222,128)' },
@@ -94,43 +96,45 @@ class SelectRoofInteraction extends AbstractInteraction {
 
   async pipe(event: InteractionEvent) {
     if (event.type == EventType.CLICK) {
-      const selectedBuilding = event.feature
-      if (!selectedBuilding) {
-        return event
-      }
-
-      const selectedBuildingId =
-        selectedBuilding?.getProperty('attributes')['BUILDINGID']
-
-      if (isInteractionBuilding()) {
-        const mapStore = useMapStore()
-        mapStore.isLoadingMap = true
-        const buildingRoofs: GeoJSONFeatureCollection =
-          await roofWfsService.fetchRoofs(selectedBuildingId)
-        this._highglightRoofsOfTheBuilding(buildingRoofs)
-        await this._setLatitudeAndLongitude(event)
-        mapStore.isLoadingMap = false
-        this._goToNextStep(buildingRoofs, selectedBuildingId)
-      } else if (isInteractionPanRoof()) {
-        const roofStore = useRoofsStore()
-        if (selectedBuildingId !== roofStore.selectedBuildingId) {
+      if (event.feature?.[vcsLayerName] === RENNES_LAYER.roof3d) {
+        const selectedBuilding = event.feature
+        if (!selectedBuilding) {
           return event
         }
-        const idRoof = selectedBuilding.getProperty('id')
-        if (!idRoof) {
-          return event
-        }
-        let isRoofFeature = false
-        roofStore.roofsFeatures?.features?.forEach((f) => {
-          if (f.properties?.surface_id == idRoof) {
-            isRoofFeature = true
+
+        const selectedBuildingId =
+          selectedBuilding?.getProperty('attributes')['BUILDINGID']
+
+        if (isInteractionBuilding()) {
+          const mapStore = useMapStore()
+          mapStore.isLoadingMap = true
+          const buildingRoofs: GeoJSONFeatureCollection =
+            await roofWfsService.fetchRoofs(selectedBuildingId)
+          this._highglightRoofsOfTheBuilding(buildingRoofs)
+          await this._setLatitudeAndLongitude(event)
+          mapStore.isLoadingMap = false
+          this._goToNextStep(buildingRoofs, selectedBuildingId)
+        } else if (isInteractionPanRoof()) {
+          const roofStore = useRoofsStore()
+          if (selectedBuildingId !== roofStore.selectedBuildingId) {
+            return event
           }
-        })
-        if (!isRoofFeature) {
-          return event
+          const idRoof = selectedBuilding.getProperty('id')
+          if (!idRoof) {
+            return event
+          }
+          let isRoofFeature = false
+          roofStore.roofsFeatures?.features?.forEach((f) => {
+            if (f.properties?.surface_id == idRoof) {
+              isRoofFeature = true
+            }
+          })
+          if (!isRoofFeature) {
+            return event
+          }
+          roofStore.setSelectRoofSurfaceId(idRoof)
         }
-        roofStore.setSelectRoofSurfaceId(idRoof)
-      }
+      } else return event
     }
     return event
   }

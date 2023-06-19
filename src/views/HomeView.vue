@@ -14,7 +14,7 @@ const panelsStore = usePanelsStore()
 const viewStore = useViewsStore()
 const popUpStore = usePopUpStore()
 
-onMounted(async () => {
+onMounted(() => {
   viewStore.setCurrentView(viewList['home'])
   panelsStore.setTypePanelDisplay('left')
   panelsStore.isCompletelyHidden = false
