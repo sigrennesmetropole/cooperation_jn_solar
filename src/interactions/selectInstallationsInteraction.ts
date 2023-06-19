@@ -14,9 +14,9 @@ import { useInstallationsStore } from '@/stores/installations'
 import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
 import {
-  updateInstallationPointCoordinates,
+  updatePointCoordinates,
   addGenericListenerForUpdatePositions,
-} from '@/services/installationService'
+} from '@/services/AboveMapService'
 import { useDistrictStore } from '@/stores/districtInformations'
 
 class SelectInstallationsInteraction extends AbstractInteraction {
@@ -71,9 +71,9 @@ class SelectInstallationsInteraction extends AbstractInteraction {
             installationHouse
           )
           await this._interactionInstallation(event)
-          updateInstallationPointCoordinates(this._rennesApp)
+          updatePointCoordinates(this._rennesApp, 'installation')
           districtStore.resetDistrictStore()
-          addGenericListenerForUpdatePositions(this._rennesApp)
+          addGenericListenerForUpdatePositions(this._rennesApp, 'installation')
           event.stopPropagation = true
           installationsStore.setCanBeDisplayed(true)
         } else {

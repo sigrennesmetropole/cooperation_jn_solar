@@ -3,23 +3,39 @@ import { CesiumMap } from '@vcmap/core'
 import type { RennesApp } from './RennesApp'
 import { getCartesianPositionFromFeature } from '@/helpers/featureHelper'
 import type Feature from 'ol/Feature'
+import { useInstallationsStore } from '@/stores/installations'
 
-export function updateDistrictPointCoordinates(rennesApp: RennesApp) {
-  const districtStore = useDistrictStore()
-
-  if (districtStore.districtPointFeature !== null) {
+export function updatePointCoordinates(
+  rennesApp: RennesApp,
+  storeName: string
+) {
+  let store: any
+  if (storeName === 'district') {
+    store = useDistrictStore()
+  } else if (storeName === 'installation') {
+    store = useInstallationsStore()
+  }
+  if (store.pointFeature !== null) {
     const newCoordinates = getCartesianPositionFromFeature(
       rennesApp,
-      districtStore.districtPointFeature as Feature
+      store.pointFeature as Feature
     )
     if (newCoordinates !== undefined) {
-      districtStore.setNewCoordinates(newCoordinates.x, newCoordinates.y)
+      store.setNewCoordinates(newCoordinates.x, newCoordinates.y)
     }
   }
 }
 
-export function addGenericListenerForUpdatePositions(rennesApp: RennesApp) {
-  const districtStore = useDistrictStore()
+export function addGenericListenerForUpdatePositions(
+  rennesApp: RennesApp,
+  storeName: string
+) {
+  let store: any
+  if (storeName === 'district') {
+    store = useDistrictStore()
+  } else if (storeName === 'installation') {
+    store = useInstallationsStore()
+  }
   const map = rennesApp.maps.activeMap
   if (!(map instanceof CesiumMap)) {
     return
@@ -30,18 +46,15 @@ export function addGenericListenerForUpdatePositions(rennesApp: RennesApp) {
       return
     }
     if (
-      districtStore.previousViewPoint === null ||
-      districtStore.previousViewPoint === undefined
+      store.previousViewPoint === null ||
+      store.previousViewPoint === undefined
     ) {
-      districtStore.previousViewPoint = vp
+      store.previousViewPoint = vp
     }
     for (const i in vp.cameraPosition) {
-      if (
-        vp.cameraPosition[i] !==
-        districtStore.previousViewPoint.cameraPosition[i]
-      ) {
-        districtStore.previousViewPoint = vp
-        updateDistrictPointCoordinates(rennesApp)
+      if (vp.cameraPosition[i] !== store.previousViewPoint.cameraPosition[i]) {
+        store.previousViewPoint = vp
+        updatePointCoordinates(rennesApp, storeName)
         break
       }
     }

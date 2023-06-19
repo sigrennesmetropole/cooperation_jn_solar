@@ -9,7 +9,7 @@ export const useInstallationsStore = defineStore('installations', () => {
   const installationYear: Ref<number> = ref(0)
   const installationProduction: Ref<number> = ref(0)
   const numberHome: Ref<number> = ref(0)
-  const installationPointFeature: Ref<Feature | null> = ref(null)
+  const pointFeature: Ref<Feature | null> = ref(null)
   const previousViewPoint: Ref<Viewpoint | null> = ref(null)
   const newPointAbscissa: Ref<number> = ref(0)
   const newPointOrdinate: Ref<number> = ref(0)
@@ -44,7 +44,7 @@ export const useInstallationsStore = defineStore('installations', () => {
   }
 
   function setNewPointFeatureOnSelectedInstallation(newPointFeature: Feature) {
-    installationPointFeature.value = newPointFeature
+    pointFeature.value = newPointFeature
   }
 
   function setNewCoordinates(newAbscissa: number, newOrdinate: number) {
@@ -65,7 +65,7 @@ export const useInstallationsStore = defineStore('installations', () => {
     installationYear,
     installationProduction,
     numberHome,
-    installationPointFeature,
+    pointFeature,
     previousViewPoint,
     newPointAbscissa,
     newPointOrdinate,

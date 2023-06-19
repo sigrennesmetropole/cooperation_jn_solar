@@ -15,7 +15,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
   const districtConsumption: Ref<number> = ref(0)
   const districtProduction: Ref<number> = ref(0)
   const districtNumberInstallations: Ref<number> = ref(0)
-  const districtPointFeature: Ref<Feature | null> = ref(null)
+  const pointFeature: Ref<Feature | null> = ref(null)
   const previousViewPoint: Ref<Viewpoint | null> = ref(null)
   const newPointAbscissa: Ref<number> = ref(0)
   const newPointOrdinate: Ref<number> = ref(0)
@@ -59,7 +59,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
   }
 
   function setNewPointFeatureOnSelectedDistrict(newPointFeature: Feature) {
-    districtPointFeature.value = newPointFeature
+    pointFeature.value = newPointFeature
   }
 
   function setNewCoordinates(newAbscissa: number, newOrdinate: number) {
@@ -95,7 +95,7 @@ export const useDistrictStore = defineStore('districtInformations', () => {
     districtConsumption,
     districtProduction,
     districtNumberInstallations,
-    districtPointFeature,
+    pointFeature,
     previousViewPoint,
     newPointAbscissa,
     newPointOrdinate,
