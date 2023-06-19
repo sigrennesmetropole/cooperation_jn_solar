@@ -77,7 +77,7 @@ homeRouter.$subscribe(async () => {
       </UiButton>
       <span
         v-if="displayError && !checked"
-        class="font-dm-sans text-sm font-medium my-auto text-red-600"
+        class="font-dm-sans text-sm font-semibold my-auto text-red-600"
       >
         Veuillez cocher la case ci-dessus pour accepter les conditions
       </span>

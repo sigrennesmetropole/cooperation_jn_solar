@@ -117,10 +117,10 @@ function keepDecimals(float: number, numberOfDecimals: number) {
     </div>
     <a
       class="font-dm-sans text-xs font-normal underline mt-1"
-      href="https://data.enedis.fr/explore/dataset/production-electrique-par-filiere-a-la-maille-iris/information/"
+      href="https://data.enedis.fr/explore/?sort=modified&q=iris"
       target="_blank"
     >
-      Détails<img :src="expand" class="inline-block ml-1 w-2 h-2" />
+      Source ENEDIS<img :src="expand" class="inline-block ml-1 w-2 h-2" />
     </a>
   </div>
 </template>
