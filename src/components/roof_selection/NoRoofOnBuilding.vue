@@ -7,8 +7,8 @@ import noSolarPanel from '@/assets/illustrations/no-solar-panel.svg'
     <div class="flex flex-col justify-center items-center gap-6">
       <img class="w-[354px] h-[161px] mx-6" :src="noSolarPanel" alt="" />
       <span class="font-dm-sans font-normal text-sm text-center px-3">
-        Dans cette simulation, la surface favorable du pan de toit n'est pas
-        suffisante pour accueillir une installation photovoltaïque.
+        Dans cette simulation, la surface favorable du toit n'est pas suffisante
+        pour accueillir une installation photovoltaïque.
       </span>
     </div>
   </div>
