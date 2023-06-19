@@ -6,7 +6,7 @@ import iconInstallation from '@/assets/icons/installation.svg'
 <template>
   <Story title="BoxStep" group="simulation-step">
     <template #default>
-      <BoxStep>
+      <BoxStep :activeButton="true">
         <template v-slot:nameOfStep>
           <span class="mt-6 font-dm-sans font-normal text-xs text-neutral-500">
             Étape 2

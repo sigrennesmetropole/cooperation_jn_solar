@@ -23,6 +23,9 @@ describe('BoxStep', () => {
         text: '<p>Some text</p>',
         buttonContent: '<span>Click me</span>',
       },
+      props: {
+        activeButton: true,
+      },
     })
 
     const button = wrapper.find('button')
