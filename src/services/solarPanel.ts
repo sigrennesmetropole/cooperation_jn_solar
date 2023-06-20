@@ -192,3 +192,12 @@ function getSolarPanelGridCenter(
   const features = points(positions)
   return center(features)
 }
+
+export function getInclinaisonSolarPanelFromSelectedRoofInclinaison(
+  selectedRoofInclinaison: number
+) {
+  if (selectedRoofInclinaison <= 8) {
+    return getNumberFromConfig('solar_panel.inclinaison_on_flat_roof')
+  }
+  return selectedRoofInclinaison
+}

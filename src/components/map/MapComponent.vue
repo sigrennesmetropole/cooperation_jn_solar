@@ -29,6 +29,7 @@ import {
   filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
+  getInclinaisonSolarPanelFromSelectedRoofInclinaison,
 } from '@/services/solarPanel'
 import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
@@ -154,7 +155,9 @@ async function setupSolarPanel() {
     roofsStore.gridMatrix!,
     result.solarPanels,
     result.orientation,
-    selectedRoofModel.inclinaison,
+    getInclinaisonSolarPanelFromSelectedRoofInclinaison(
+      selectedRoofModel.inclinaison
+    ),
     selectedRoofModel.azimuth
   )
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
