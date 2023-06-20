@@ -8,7 +8,7 @@ export function installationStyle() {
     image: new Icon({
       opacity: 1,
       src: pinInstallation,
-      scale: 1,
+      scale: 0.7,
     }),
   })
 }

@@ -50,11 +50,16 @@ class SelectInstallationsInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
-    if (event.type & EventType.CLICK) {
+    const isInstallationLayer =
+      event.feature?.[vcsLayerName] === RENNES_LAYER.installations
+    if (event.type & EventType.CLICKMOVE) {
       const installationsStore = useInstallationsStore()
       const districtStore = useDistrictStore()
       const selectedInstallation = event.feature
-      if (event.feature?.[vcsLayerName] === RENNES_LAYER.installations) {
+      // console.log(isInstallationLayer)
+      // console.log(event.feature)
+      if (isInstallationLayer) {
+        document.body.style.cursor = 'pointer'
         if (selectedInstallation !== undefined) {
           const installationName = selectedInstallation?.getProperty('nom')
           const installationYear = selectedInstallation?.getProperty('an_mes')
