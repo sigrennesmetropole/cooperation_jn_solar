@@ -54,6 +54,11 @@ const DEFAULT_CONFIGURATION = {
     solar_panel_surface: 1.8,
     solar_panel_power: 0.35,
   },
+  grid: {
+    height_solar_panel: 2,
+    width_solar_panel: 4,
+    square_size: 475,
+  },
   link: {
     photovoltaique_link: 'https://www.photovoltaique.info/fr/',
     solar_coop_link: 'https://www.solarcoop.fr/',

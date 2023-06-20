@@ -41,6 +41,7 @@ import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
 import { useEnedisStore } from '@/stores/enedis'
+import { getNumberFromConfig } from '@/services/configService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -123,8 +124,13 @@ async function setupGridInstallation() {
       let roofSlope =
         useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
       mapStore.isLoadingMap = true
+      const squareSize = getNumberFromConfig('grid.square_size')
       worker
-        .send({ roofShape: JSON.stringify(roofShape), roofSlope: roofSlope })
+        .send({
+          roofShape: JSON.stringify(roofShape),
+          roofSlope: roofSlope,
+          squareSize: squareSize,
+        })
         .then((reply) => {
           mapStore.isLoadingMap = false
           roofsStore.gridGeom = reply.grid

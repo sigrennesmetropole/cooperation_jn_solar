@@ -21,6 +21,11 @@ type ConfigType = {
     solar_panel_surface: number
     solar_panel_power: number
   }
+  grid: {
+    height_solar_panel: number
+    width_solar_panel: number
+    square_size: number
+  }
   link: {
     photovoltaique_link: string
     solar_coop_link: string

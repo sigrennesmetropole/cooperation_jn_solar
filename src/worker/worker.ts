@@ -10,7 +10,13 @@ registerPromiseWorker(function ({ message }) {
   const roofShape = JSON.parse(message.roofShape) as GeoJSONFeatureCollection
   const roofSlope = message.roofSlope
   const bboxOnRoof = bboxRoof(roofShape)
-  const grid = generateRectangleGrid(roofShape, roofSlope, bboxOnRoof)
+  const squareSize = message.squareSize
+  const grid = generateRectangleGrid(
+    roofShape,
+    roofSlope,
+    bboxOnRoof,
+    squareSize
+  )
   const { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
     roofShape,
     grid
