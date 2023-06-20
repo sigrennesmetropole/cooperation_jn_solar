@@ -11,6 +11,7 @@ import type { Matrix } from './roofInteractionHelper'
 import { center, points } from '@turf/turf'
 import { getNumberFromConfig } from '@/services/configService'
 import type { Feature, Properties, Point, Position } from '@turf/turf'
+import { useRoofsStore } from '@/stores/roof'
 
 const HeightOffset = 0.2
 
@@ -168,12 +169,16 @@ export function solarPanelGridToSolarPanelModel(
     positions.push([solarPanelModel.x, solarPanelModel.y])
   }
 
+  let offset = HeightOffset
+  if (isRoofFlat()) {
+    offset += 0.2
+  }
   for (let i = 0; i < solarPanelModels.length; i++) {
     const newHeight = rennesApp.getHeight(
       solarPanelModels[i].x,
       solarPanelModels[i].y
     )
-    solarPanelModels[i].z = newHeight + HeightOffset
+    solarPanelModels[i].z = newHeight + offset
   }
 
   return solarPanelModels
@@ -193,11 +198,25 @@ function getSolarPanelGridCenter(
   return center(features)
 }
 
-export function getInclinaisonSolarPanelFromSelectedRoofInclinaison(
-  selectedRoofInclinaison: number
-) {
-  if (selectedRoofInclinaison <= 8) {
+function isRoofFlat() {
+  const roofsStore = useRoofsStore()
+  const anamorphos = roofsStore.getAnamorphosOfSelectedRoof()
+  if (!anamorphos) {
+    return false
+  }
+  return anamorphos >= 98
+}
+
+export function getInclinaisonSolarPanel(selectedRoofInclinaison: number) {
+  if (isRoofFlat()) {
     return getNumberFromConfig('solar_panel.inclinaison_on_flat_roof')
   }
   return selectedRoofInclinaison
+}
+
+export function getAzimuthSolarPanel(selectedRoofAzimuth: number) {
+  if (isRoofFlat()) {
+    return getNumberFromConfig('solar_panel.azimuth_on_flat_roof')
+  }
+  return selectedRoofAzimuth
 }

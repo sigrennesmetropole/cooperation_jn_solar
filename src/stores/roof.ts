@@ -101,6 +101,13 @@ export const useRoofsStore = defineStore('roofs', () => {
     previousGridMatrix.value = null
   }
 
+  function getAnamorphosOfSelectedRoof() {
+    const featureRoofSelected = roofsFeatures.value?.features?.find((f) => {
+      return f.properties?.surface_id == selectedRoofSurfaceId.value
+    })
+    return featureRoofSelected?.properties?.anamorphos
+  }
+
   return {
     roofsFeatures,
     selectedRoofSurfaceId,
@@ -121,5 +128,6 @@ export const useRoofsStore = defineStore('roofs', () => {
     restoreMatrixToClean,
     saveCleanMatrix,
     resetGridAndMatrix,
+    getAnamorphosOfSelectedRoof,
   }
 })

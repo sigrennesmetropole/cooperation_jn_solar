@@ -29,7 +29,8 @@ import {
   filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
-  getInclinaisonSolarPanelFromSelectedRoofInclinaison,
+  getInclinaisonSolarPanel,
+  getAzimuthSolarPanel,
 } from '@/services/solarPanel'
 import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
@@ -123,9 +124,16 @@ async function setupGridInstallation() {
       // Create a promise to handle the asynchronous behavior
       let roofSlope =
         useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+      const selectedRoofModel: RoofSurfaceModel =
+        roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
       mapStore.isLoadingMap = true
+      const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
       worker
-        .send({ roofShape: JSON.stringify(roofShape), roofSlope: roofSlope })
+        .send({
+          roofShape: JSON.stringify(roofShape),
+          roofSlope: roofSlope,
+          roofAzimuth: roofAzimuth,
+        })
         .then((reply) => {
           mapStore.isLoadingMap = false
           roofsStore.gridGeom = reply.grid
@@ -155,10 +163,8 @@ async function setupSolarPanel() {
     roofsStore.gridMatrix!,
     result.solarPanels,
     result.orientation,
-    getInclinaisonSolarPanelFromSelectedRoofInclinaison(
-      selectedRoofModel.inclinaison
-    ),
-    selectedRoofModel.azimuth
+    getInclinaisonSolarPanel(selectedRoofModel.inclinaison),
+    getAzimuthSolarPanel(selectedRoofModel.azimuth!)
   )
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
