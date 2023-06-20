@@ -14,7 +14,7 @@ import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
 import {
   addGenericListenerForUpdatePositions,
-  updateDistrictPointCoordinates,
+  updatePointCoordinates,
 } from '../services/AboveMapService'
 import { selectedDistrict } from '@/services/viewStyles'
 import { useInstallationsStore } from '@/stores/installations'
@@ -105,10 +105,10 @@ class SelectDistrictInteraction extends AbstractInteraction {
       this.currentIrisCode = irisCode
       this._highlight(selectedDistrict.getId()!)
       await this._interactionDistrict(event)
-      updateDistrictPointCoordinates(this._rennesApp)
+      updatePointCoordinates(this._rennesApp, 'district')
       installationsStore.resetInstallationStore()
       await this.getDistrictDatas(irisCode)
-      addGenericListenerForUpdatePositions(this._rennesApp)
+      addGenericListenerForUpdatePositions(this._rennesApp, 'district')
       event.stopPropagation = true
     }
     return event

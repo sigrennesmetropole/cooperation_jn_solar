@@ -48,7 +48,7 @@ export async function storeDataForEnedis() {
     districtConsumption: districtStore.districtConsumption,
     districtProduction: districtStore.districtProduction,
     districtNumberInstallations: districtStore.districtNumberInstallations,
-    districtPointFeature: districtStore.districtPointFeature,
+    districtPointFeature: districtStore.pointFeature,
     previousViewPoint: districtStore.previousViewPoint,
     newPointAbscissa: districtStore.newPointAbscissa,
     newPointOrdinate: districtStore.newPointOrdinate,
@@ -164,7 +164,7 @@ export function getDataFromLocalStorage() {
   districtStore.districtProduction = data.dataDistrict.districtProduction
   districtStore.districtNumberInstallations =
     data.dataDistrict.districtNumberInstallations
-  districtStore.districtPointFeature = data.dataDistrict.districtPointFeature
+  districtStore.pointFeature = data.dataDistrict.districtPointFeature
   districtStore.previousViewPoint = data.dataDistrict.previousViewPoint
   districtStore.newPointAbscissa = data.dataDistrict.newPointAbscissa
   districtStore.newPointOrdinate = data.dataDistrict.newPointOrdinate

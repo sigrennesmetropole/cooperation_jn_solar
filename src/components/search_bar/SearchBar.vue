@@ -22,6 +22,7 @@ import { createVPForTypeAddress, addPin } from '@/services/searchBarService'
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
 import { getNumberFromConfig } from '@/services/configService'
+import { useInstallationsStore } from '@/stores/installations'
 
 const props = defineProps({
   isRedirectOnSearch: {
@@ -161,6 +162,11 @@ const goToAddress = async (event: {
   item: AddressRva | AddressOrganization | AddressCommune | AddressStreet
   addr: string
 }) => {
+  const installationsStore = useInstallationsStore()
+
+  installationsStore.resetInstallationStore()
+  installationsStore.canBeDisplayed = false
+
   search.value = stripHTMLTags(event.addr)
   addressStore.setAddress(search.value)
 
