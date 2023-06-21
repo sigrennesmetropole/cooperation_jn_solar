@@ -40,7 +40,6 @@ import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import type { Geometry } from 'geojson'
 import { useRoofsStore } from '@/stores/roof'
 import type { Polygon } from 'ol/geom'
-
 import checkIcon from '@/assets/icons/checkicon.png'
 import { OlDragSquaresInteraction } from '@/interactions/olDragSquaresInteraction'
 import type { Vector as VectorLayer } from 'ol/layer'
@@ -93,6 +92,7 @@ export function bboxRoof(roofShape: GeoJSONFeatureCollection): BBox {
   const bboxRoofShape = bbox(roofShape)
   return bbox(transformScale(bboxPolygon(square(bboxRoofShape)), 1.5))
 }
+
 /**
  * Generate grid on the shape of the roof
  * create grid on all the bbox of the roof, then rotate
@@ -101,9 +101,9 @@ export function bboxRoof(roofShape: GeoJSONFeatureCollection): BBox {
 export function generateRectangleGrid(
   roofShape: GeoJSONFeatureCollection,
   roofSlope: number,
-  bboxOnRoof: BBox
+  bboxOnRoof: BBox,
+  roofAzimuth: number
 ): Grid {
-  const roofAzimut = roofShape.features[0].properties?.azimuth
   const squareSize = 475
   const cellWidth = squareSize
   const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
@@ -116,7 +116,7 @@ export function generateRectangleGrid(
       units: 'millimeters',
     }
   )
-  transformRotate(featureCollection, roofAzimut, { mutate: true })
+  transformRotate(featureCollection, roofAzimuth, { mutate: true })
   featureCollection.features.map(
     (f: Feature) => (f.properties!.center = center(f.geometry).geometry)
   )
