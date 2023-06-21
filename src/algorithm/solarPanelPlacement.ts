@@ -5,7 +5,7 @@ import type {
   Point,
   Polygon,
 } from '@turf/turf'
-
+import { getNumberFromConfig } from '@/services/configService'
 import { featureCollection, point, polygon } from '@turf/helpers'
 
 import type { Matrix } from '@/services/roofInteractionHelper'
@@ -43,9 +43,10 @@ function createSolarPanelGrid(
   horizontal: boolean = true
 ): SolarPanelGrid {
   const solarPanelGrid: SolarPanelGrid = []
-
-  const length = horizontal ? 4 : 2
-  const width = horizontal ? 2 : 4
+  const heightSolarPanel = getNumberFromConfig('grid.height_solar_panel')
+  const widthSolarPanel = getNumberFromConfig('grid.width_solar_panel')
+  const length = horizontal ? widthSolarPanel : heightSolarPanel
+  const width = horizontal ? heightSolarPanel : widthSolarPanel
 
   for (let i = 0; i < length; i++) {
     for (let j = 0; j < width; j++) {

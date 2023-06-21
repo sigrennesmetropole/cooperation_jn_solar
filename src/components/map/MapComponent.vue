@@ -43,6 +43,7 @@ import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
 import { useEnedisStore } from '@/stores/enedis'
+import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -128,11 +129,13 @@ async function setupGridInstallation() {
       const selectedRoofModel: RoofSurfaceModel =
         roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
       mapStore.isLoadingMap = true
+      const squareSize = getNumberFromConfig('grid.square_size')
       const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
       worker
         .send({
           roofShape: JSON.stringify(roofShape),
           roofSlope: roofSlope,
+          squareSize: squareSize,
           roofAzimuth: roofAzimuth,
         })
         .then((reply) => {

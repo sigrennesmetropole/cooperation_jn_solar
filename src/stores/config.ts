@@ -23,6 +23,11 @@ type ConfigType = {
     inclinaison_on_flat_roof: number
     azimuth_on_flat_roof: number
   }
+  grid: {
+    height_solar_panel: number
+    width_solar_panel: number
+    square_size: number
+  }
   link: {
     photovoltaique_link: string
     solar_coop_link: string

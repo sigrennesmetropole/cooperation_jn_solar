@@ -3,8 +3,19 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { Matrix } from '@/services/roofInteractionHelper'
+import { useConfigStore } from '@/stores/config'
+import configuration from '@/tests/config/configuration_test.json'
+import { createTestingPinia } from '@pinia/testing'
 
 describe('solar panel placement', () => {
+  let configStore
+
+  beforeEach(async () => {
+    const testingPinia = createTestingPinia()
+    configStore = useConfigStore(testingPinia)
+    configStore.config = configuration
+  })
+
   test('solar panel algorithm small roof', () => {
     // Read GeoJSON file
     const fileContents = fs.readFileSync(

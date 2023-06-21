@@ -102,9 +102,9 @@ export function generateRectangleGrid(
   roofShape: GeoJSONFeatureCollection,
   roofSlope: number,
   bboxOnRoof: BBox,
+  squareSize: number,
   roofAzimuth: number
 ): Grid {
-  const squareSize = 475
   const cellWidth = squareSize
   const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
 
