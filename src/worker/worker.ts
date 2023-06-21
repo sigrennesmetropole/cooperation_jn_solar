@@ -11,11 +11,13 @@ registerPromiseWorker(function ({ message }) {
   const roofSlope = message.roofSlope
   const bboxOnRoof = bboxRoof(roofShape)
   const squareSize = message.squareSize
+  const roofAzimuth = message.roofAzimuth
   const grid = generateRectangleGrid(
     roofShape,
     roofSlope,
     bboxOnRoof,
-    squareSize
+    squareSize,
+    roofAzimuth
   )
   const { grid: filterGeomGrid, matrix: gridMatrix } = filterGrid(
     roofShape,

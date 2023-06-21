@@ -53,6 +53,8 @@ const DEFAULT_CONFIGURATION = {
   solar_panel: {
     solar_panel_surface: 1.8,
     solar_panel_power: 0.35,
+    inclinaison_on_flat_roof: 20,
+    azimuth_on_flat_roof: 180,
   },
   grid: {
     height_solar_panel: 2,

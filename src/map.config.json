@@ -57,6 +57,24 @@
       "zIndex": 5
     },
     {
+      "name": "installations",
+      "url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=nrj_prod:photovoltaique_installations_publiques&outputFormat=application/json&srsName=EPSG:4326",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": false,
+      "zIndex": 4,
+      "vectorProperties": {
+        "altitudeMode": "relativeToGround",
+        "heightAboveGround": 5,
+        "eyeOffset": [0, 0, -100]
+      }
+    },
+    {
+      "name": "customLayerInstallation",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 5
+    },
+    {
       "type": "CesiumTilesetLayer",
       "name": "roof3d",
       "url": "https://rennes-coopterr-solaire-tiles.s3.fr-par.scw.cloud/fe157549-1c80-47f1-828a-f1a97bf92d80",

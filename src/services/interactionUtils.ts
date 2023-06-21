@@ -6,6 +6,7 @@ import SelectRoofInteraction from '@/interactions/selectRoofInteraction'
 import ForbidenClickInteraction from '@/interactions/forbidClickInteraction'
 import type { RennesApp } from '@/services/RennesApp'
 import SelectDistrictInteraction from '@/interactions/selectDistrictInteractions'
+import SelectInstallationsInteraction from '@/interactions/selectInstallationsInteraction'
 import { useSimulationStore } from '@/stores/simulations'
 import { useInteractionsStore } from '@/stores/interactions'
 import { useDistrictStore } from '@/stores/districtInformations'
@@ -16,6 +17,7 @@ type InteractionsTypes =
   | typeof SelectRoofInteraction
   | typeof ForbidenClickInteraction
   | typeof SelectDistrictInteraction
+  | typeof SelectInstallationsInteraction
 
 export function isInteractionBuilding() {
   const viewStore = useViewsStore()
@@ -86,6 +88,9 @@ function newTypeInteraction(
   if (typeInteraction === SelectDistrictInteraction) {
     return new SelectDistrictInteraction(rennesApp)
   }
+  if (typeInteraction === SelectInstallationsInteraction) {
+    return new SelectInstallationsInteraction(rennesApp)
+  }
   return undefined
 }
 
@@ -93,7 +98,14 @@ export function updateInteractionsStoreAfterViewChange(rennesApp: RennesApp) {
   const interactionsStore = useInteractionsStore()
   const viewStore = useViewsStore()
   const simulationStore = useSimulationStore()
-
+  if (
+    viewStore.currentView === viewList.home ||
+    viewStore.currentView === viewList['roof-selection']
+  ) {
+    interactionsStore.enableInteraction(SelectInstallationsInteraction)
+  } else {
+    interactionsStore.disableInteraction(SelectInstallationsInteraction)
+  }
   // disable ForbiddenClick elsewhere than home
   if (viewStore.currentView === viewList.home) {
     interactionsStore.enableInteraction(ForbidenClickInteraction)

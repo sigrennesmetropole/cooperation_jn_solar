@@ -29,6 +29,8 @@ import {
   filterSolarPanelByMaxSolarPanel,
   removeSolarPanel,
   zoomToSolarPanel,
+  getInclinaisonSolarPanel,
+  getAzimuthSolarPanel,
 } from '@/services/solarPanel'
 import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
@@ -42,6 +44,7 @@ import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
+import { applyInstallationStyle } from '@/services/installationService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -123,13 +126,17 @@ async function setupGridInstallation() {
       // Create a promise to handle the asynchronous behavior
       let roofSlope =
         useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+      const selectedRoofModel: RoofSurfaceModel =
+        roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
       mapStore.isLoadingMap = true
       const squareSize = getNumberFromConfig('grid.square_size')
+      const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
       worker
         .send({
           roofShape: JSON.stringify(roofShape),
           roofSlope: roofSlope,
           squareSize: squareSize,
+          roofAzimuth: roofAzimuth,
         })
         .then((reply) => {
           mapStore.isLoadingMap = false
@@ -160,8 +167,8 @@ async function setupSolarPanel() {
     roofsStore.gridMatrix!,
     result.solarPanels,
     result.orientation,
-    selectedRoofModel.inclinaison,
-    selectedRoofModel.azimuth
+    getInclinaisonSolarPanel(selectedRoofModel.inclinaison),
+    getAzimuthSolarPanel(selectedRoofModel.azimuth!)
   )
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
@@ -244,6 +251,15 @@ mapStore.$subscribe(async () => {
     if (mapStore.isInitializeMap) {
       await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
     }
+  }
+  if (
+    viewStore.currentView === 'home' ||
+    viewStore.currentView === 'roof-selection'
+  ) {
+    await applyInstallationStyle(rennesApp)
+  } else {
+    const installationLayer = await rennesApp.getLayerByKey('installations')
+    await installationLayer.deactivate()
   }
 })
 
