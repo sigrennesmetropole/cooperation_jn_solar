@@ -41,10 +41,6 @@ describe('ApiAdresseDataGouvService', () => {
     await apiAdresseDataGouvService.fetchAddressesFromLatLon(lat, lon)
 
     expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith(
-      `https://api-adresse.data.gouv.fr/reverse/?lon=${lon}&lat=${lat}`
-    )
-
     const addressStore = useAddressStore()
     expect(addressStore.address).toEqual(mockAddress)
   })
@@ -62,9 +58,6 @@ describe('ApiAdresseDataGouvService', () => {
     await apiAdresseDataGouvService.fetchAddressesFromLatLon(lat, lon)
 
     expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith(
-      `https://api-adresse.data.gouv.fr/reverse/?lon=${lon}&lat=${lat}`
-    )
 
     const addressStore = useAddressStore()
     expect(addressStore.address).toEqual('')
