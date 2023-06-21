@@ -204,7 +204,7 @@ function isRoofFlat() {
   if (!anamorphos) {
     return false
   }
-  return anamorphos >= 98
+  return anamorphos >= 99.5
 }
 
 export function getInclinaisonSolarPanel(selectedRoofInclinaison: number) {

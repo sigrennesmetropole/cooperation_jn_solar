@@ -26,7 +26,6 @@ class ApiPdfService {
       if (
         addressStore.latitude === 0 ||
         addressStore.longitude === 0 ||
-        addressStore.address === '' ||
         addressStore.screenshotAddress === null
       ) {
         return true
