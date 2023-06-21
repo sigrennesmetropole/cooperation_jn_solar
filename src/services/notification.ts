@@ -16,6 +16,7 @@ export class RennesNotification {
     notify({
       type: this.type,
       text: this.text,
+      duration: 3000,
     })
   }
 }
