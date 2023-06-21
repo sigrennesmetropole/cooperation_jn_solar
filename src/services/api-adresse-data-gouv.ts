@@ -6,52 +6,16 @@ class ApiAdresseDataGouvService {
   //Documention of API : https://adresse.data.gouv.fr/api-doc/adresse
 
   async fetchAddressesFromLatLon(lat: number, lon: number) {
+    const errorMessage =
+      "Récupération d'adresse échouée, mais position obtenue. Vous pouvez continuer la simulation."
     const data = await apiService.callApiGet(
-      `/api/address-reverse/${lat}/${lon}`
+      `/api/address-reverse/${lat}/${lon}`,
+      errorMessage
     )
     const addressStore = useAddressStore()
     addressStore.setAddress(data)
     return data
   }
-
-  //   async fetchAddressesFromLatLon(lat: number, lon: number) {
-  //     const baseUrl = 'https://api-adresse.data.gouv.fr/reverse/'
-  //     const url = baseUrl + `?lon=${lon}&lat=${lat}`
-  //     const errorMessage = 'Récupération d\'adresse échouée, mais position obtenue. Vous pouvez continuer la simulation.'
-
-  //     try {
-  //       return fetch(url).then(function (response) {
-  //         if (response.ok) {
-  //           return response.json().then(function (json) {
-  //             if (json.features !== undefined && json.features.length > 0) {
-  //               const addressStore = useAddressStore()
-  //               addressStore.setAddress(json.features[0].properties.label)
-  //             }
-  //           })
-  //         }
-  //         else {
-  //           const notif = new RennesNotification(
-  //             'error',
-  //             errorMessage
-  //           )
-  //           notif.displayNotification()
-  //         }
-  //       })
-  //       .catch(function (error) {
-  //         const notif = new RennesNotification(
-  //           'error',
-  //           errorMessage
-  //         )
-  //         notif.displayNotification()
-  //       });
-  //     } catch (error) {
-  //       const notif = new RennesNotification(
-  //         'error',
-  //         errorMessage
-  //       )
-  //       notif.displayNotification()
-  //     }
-  //   }
 }
 
 export const apiAdresseDataGouvService = new ApiAdresseDataGouvService()
