@@ -28,6 +28,15 @@ const panelStore = usePanelsStore()
 const mapStore = useMapStore()
 const simulationStore = useSimulationStore()
 
+function IsPanelVisibleOnStep() {
+  if (
+    (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 2) ||
+    (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 1) ||
+    (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2)
+  )
+    return true
+}
+
 async function zoom(out = false, zoomFactor = 2): Promise<void> {
   const activeMap = rennesApp.maps.activeMap
   const viewpoint = await activeMap?.getViewpoint()
@@ -35,7 +44,10 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
     .screenSpaceCameraController.maximumZoomDistance
   if (activeMap && viewpoint) {
     let distance = viewpoint.distance / zoomFactor
-    if ([viewList['step-sunshine']].includes(viewStore.currentView!)) {
+    if (
+      [viewList['step-sunshine']].includes(viewStore.currentView!) &&
+      IsPanelVisibleOnStep()
+    ) {
       distance = Math.max(viewpoint.distance / zoomFactor, 40)
     }
     if (out) {
