@@ -27,6 +27,9 @@ class SelectInstallationsInteraction extends AbstractInteraction {
   constructor(rennesApp: RennesApp) {
     super(EventType.CLICKMOVE, ModificationKeyType.NONE, PointerKeyType.ALL)
     this._rennesApp = rennesApp
+    this._rennesApp.maps.eventHandler.featureInteraction.setActive(
+      EventType.CLICKMOVE
+    )
     this.installationLayer = this._rennesApp.layers.getByKey(
       RENNES_LAYER.installations
     ) as GeoJSONLayer
@@ -50,11 +53,19 @@ class SelectInstallationsInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
+    const isInstallationLayer =
+      event.feature?.[vcsLayerName] === RENNES_LAYER.installations
+
+    if (event.type & EventType.MOVE) {
+      if (isInstallationLayer) {
+        document.body.style.cursor = 'pointer'
+      } else document.body.style.cursor = 'default'
+    }
     if (event.type & EventType.CLICK) {
       const installationsStore = useInstallationsStore()
       const districtStore = useDistrictStore()
       const selectedInstallation = event.feature
-      if (event.feature?.[vcsLayerName] === RENNES_LAYER.installations) {
+      if (isInstallationLayer) {
         if (selectedInstallation !== undefined) {
           const installationName = selectedInstallation?.getProperty('nom')
           const installationYear = selectedInstallation?.getProperty('an_mes')
