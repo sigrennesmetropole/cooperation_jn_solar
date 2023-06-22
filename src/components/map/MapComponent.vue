@@ -45,6 +45,7 @@ import worker from '@/worker'
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
+import { viewList } from '@/model/views.model'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -192,6 +193,20 @@ async function displaySolarPanelLayer() {
   await zoomToSolarPanel(rennesApp)
 }
 
+function IsPanelVisibleOnStep() {
+  if (
+    (simulationStore.currentStep == 2 && simulationStore.currentSubStep == 2) ||
+    (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 1) ||
+    (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2)
+  )
+    return true
+}
+
+function setMaxZoomIn() {
+  const cesiumMap = rennesApp.get3DMap()
+  cesiumMap.getScene().screenSpaceCameraController.minimumZoomDistance = 40
+}
+
 simulationStore.$subscribe(async () => {
   if (
     simulationStore.currentStep === 1 &&
@@ -225,6 +240,12 @@ simulationStore.$subscribe(async () => {
     RENNES_LAYER.solarPanel,
     simulationStore.shouldShowSolarPanelLayer()
   )
+  if (
+    [viewList['step-sunshine']].includes(viewStore.currentView!) &&
+    IsPanelVisibleOnStep()
+  ) {
+    setMaxZoomIn()
+  }
 })
 
 solarPanelStore.$subscribe(async () => {
