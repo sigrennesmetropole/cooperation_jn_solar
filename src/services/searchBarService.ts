@@ -100,6 +100,8 @@ export async function addPin(
   const new_feature = new Feature({
     olcs_altitudeMode: 'relativeToGround',
     olcs_heightAboveGround: 15,
+    //https://cesium.com/docs/cesiumjs-ref-doc/Billboard.html#eyeOffset
+    olcs_eyeOffset: [0, 0, -50],
   })
   new_feature.setGeometry(point)
   new_feature.setStyle(

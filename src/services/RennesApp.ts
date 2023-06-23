@@ -80,9 +80,16 @@ export class RennesApp extends VcsApp {
     return layer
   }
 
-  getHeight(x: number, y: number) {
+  async getHeight(x: number, y: number) {
     const cartographic = Cartographic.fromDegrees(x, y)
-    const height = this.get3DMap().getScene().sampleHeight(cartographic)
+    const result = await this.get3DMap()
+      .getScene()
+      .sampleHeightMostDetailed([cartographic])
+    if (result.length === 0) {
+      return 0
+    }
+    const height = result[0].height
+    console.log(height)
     return height
   }
 }
