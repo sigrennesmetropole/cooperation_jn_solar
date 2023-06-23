@@ -126,7 +126,7 @@ export function getPeakPower() {
   return Math.round(peakPower * 100) / 100
 }
 
-export function solarPanelGridToSolarPanelModel(
+export async function solarPanelGridToSolarPanelModel(
   rennesApp: RennesApp,
   matrixGrid: Matrix,
   solarPanelGrids: SolarPanelGrid[],
@@ -174,7 +174,7 @@ export function solarPanelGridToSolarPanelModel(
     offset += 0.2
   }
   for (let i = 0; i < solarPanelModels.length; i++) {
-    const newHeight = rennesApp.getHeight(
+    const newHeight = await rennesApp.getHeight(
       solarPanelModels[i].x,
       solarPanelModels[i].y
     )

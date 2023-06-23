@@ -162,7 +162,7 @@ async function setupSolarPanel() {
   // can be computed properly
   await rennesApp.maps.setActiveMap('cesium')
   mapStore.activate3d()
-  const solarPanelModels = solarPanelGridToSolarPanelModel(
+  const solarPanelModels = await solarPanelGridToSolarPanelModel(
     rennesApp,
     roofsStore.gridMatrix!,
     result.solarPanels,
