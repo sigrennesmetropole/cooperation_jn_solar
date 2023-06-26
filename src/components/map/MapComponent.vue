@@ -198,6 +198,8 @@ simulationStore.$subscribe(async () => {
     simulationStore.currentSubStep == 1
   ) {
     roofsStore.resetGridAndMatrix()
+    await disableOlInteraction()
+    mapStore.activate3d()
   } else if (
     simulationStore.currentStep === 2 &&
     simulationStore.currentSubStep == 1

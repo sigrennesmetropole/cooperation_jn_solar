@@ -89,7 +89,6 @@ export class RennesApp extends VcsApp {
       return 0
     }
     const height = result[0].height
-    console.log(height)
     return height
   }
 }
