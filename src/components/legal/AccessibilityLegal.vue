@@ -19,7 +19,7 @@
     <div class="text-base font-normal">
       <h2 class="text-2xl mb-2 font-bold">État de conformité</h2>
       <p>
-        Le site est <span class="font-bold">totalement conforme</span> avec le
+        Le site est <span class="font-bold">non conforme</span> avec le
         référentiel général d’amélioration de l’accessibilité (RGAA), version 4.
       </p>
     </div>
