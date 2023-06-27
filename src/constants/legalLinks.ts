@@ -19,7 +19,7 @@ export const legalList: LegalItem[] = [
   {
     link: '/legalnotice/accessibilite',
     slug: 'accessibilite',
-    name: 'Accessibilité: totalement conforme',
+    name: 'Accessibilité: non conforme',
   },
   {
     link: '/legalnotice/cookies',
