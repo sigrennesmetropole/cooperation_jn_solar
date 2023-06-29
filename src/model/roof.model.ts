@@ -22,7 +22,11 @@ export type BuildingSurfaceModel = {
 }
 
 function roundResult(num: number) {
-  return parseInt(num.toFixed(2))
+  num = num * 10
+  num = num + 1
+  num = parseInt(num.toFixed(3))
+  num = num / 10
+  return num
 }
 
 function calculateSurfaceFavorableOfRoofFeature(feature: Feature<Geometry>) {
@@ -106,8 +110,8 @@ export function getDataBuilding() {
   }
 
   return {
-    total: roundResult(all_area_building),
-    favorable: roundResult(all_area_favorable),
+    total: all_area_building,
+    favorable: all_area_favorable,
     values: all_values,
   }
 }
