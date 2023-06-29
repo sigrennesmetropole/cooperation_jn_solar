@@ -18,6 +18,10 @@ import { legalList } from '@/constants/legalLinks'
 import { useAutocalsolStore } from '@/stores/autocalsol'
 import { useRouter } from 'vue-router'
 import { usePanelsStore } from '@/stores/panels'
+import {
+  getInclinaisonSolarPanel,
+  getAzimuthSolarPanel,
+} from '@/services/solarPanel'
 
 const viewStore = useViewsStore()
 const addressStore = useAddressStore()
@@ -71,8 +75,9 @@ async function callAutocalsolApi() {
     return
   }
 
-  const slope = selectedRoof.inclinaison
-  const azimuth = selectedRoof.azimuth
+  const slope = getInclinaisonSolarPanel(selectedRoof.inclinaison)
+  const azimuth = getAzimuthSolarPanel(selectedRoof.azimuth)
+
   state.dataAutocalsol = {
     latitude: addressStore.latitude,
     longitude: addressStore.longitude,
