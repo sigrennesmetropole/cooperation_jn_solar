@@ -193,3 +193,19 @@ export function updateInteractionsOnMap(rennesApp: RennesApp) {
     disableUnusedInteraction(rennesApp, int)
   })
 }
+
+export function IsSolarPanelVisibleOnStep() {
+  const simulationStore = useSimulationStore()
+  const viewStore = useViewsStore()
+
+  if (
+    [viewList['step-sunshine']].includes(viewStore.currentView!) &&
+    ((simulationStore.currentStep == 2 &&
+      simulationStore.currentSubStep == 2) ||
+      (simulationStore.currentStep == 3 &&
+        simulationStore.currentSubStep == 1) ||
+      (simulationStore.currentStep == 3 && simulationStore.currentSubStep == 2))
+  ) {
+    return true
+  } else return false
+}
