@@ -11,6 +11,7 @@ import { viewList } from '@/model/views.model'
 import { useRoofsStore } from '@/stores/roof'
 import { VcsModule, GeoJSONLayer, OpenlayersMap } from '@vcmap/core'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import configuration from '@/tests/config/configuration_test.json'
 
 vi.mock('vue-router')
 vi.mock('@/services/roofInteractionHelper')
@@ -48,6 +49,9 @@ describe('#MapComponent', async () => {
             },
             interactions: {
               _activeInteractions: [],
+            },
+            configStore: {
+              config: configuration,
             },
           },
         }),
