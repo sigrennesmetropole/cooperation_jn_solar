@@ -20,6 +20,7 @@ import { usePanelsStore, PANEL_WIDTH } from '@/stores/panels'
 import { useMapStore } from '@/stores/map'
 import type { Viewpoint } from '@vcmap/core'
 import { useSimulationStore } from '@/stores/simulations'
+import { IsSolarPanelVisibleOnStep } from '@/services/interactionUtils'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const viewStore = useViewsStore()
@@ -35,6 +36,9 @@ async function zoom(out = false, zoomFactor = 2): Promise<void> {
     .screenSpaceCameraController.maximumZoomDistance
   if (activeMap && viewpoint) {
     let distance = viewpoint.distance / zoomFactor
+    if (IsSolarPanelVisibleOnStep()) {
+      distance = Math.max(viewpoint.distance / zoomFactor, 40)
+    }
     if (out) {
       distance = Math.min(viewpoint.distance * zoomFactor, maxZoom)
     }
