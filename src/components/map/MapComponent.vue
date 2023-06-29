@@ -45,7 +45,6 @@ import worker from '@/worker'
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
-import { viewList } from '@/model/views.model'
 import { IsSolarPanelVisibleOnStep } from '@/services/interactionUtils'
 
 const rennesApp = inject('rennesApp') as RennesApp
@@ -232,10 +231,7 @@ simulationStore.$subscribe(async () => {
     RENNES_LAYER.solarPanel,
     simulationStore.shouldShowSolarPanelLayer()
   )
-  if (
-    [viewList['step-sunshine']].includes(viewStore.currentView!) &&
-    IsSolarPanelVisibleOnStep()
-  ) {
+  if (IsSolarPanelVisibleOnStep()) {
     setMaxZoomIn()
   }
 })
