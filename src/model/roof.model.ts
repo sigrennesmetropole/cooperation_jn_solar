@@ -82,20 +82,24 @@ export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
 }
 
 export function getDataBuilding() {
-  let all_area_building = 0
-  let all_area_roof = 0
-  let all_area_favorable = 0
+  let all_area_building: number = 0
+  let all_area_roof: number = 0
+  let all_area_favorable: number = 0
   const all_values = [0, 0, 0, 0]
   const roofsStore = useRoofsStore()
   roofsStore.roofSurfacesList?.forEach((surface: RoofSurfaceModel) => {
     if (all_area_building === 0) {
       all_area_building = surface.total_building
     }
-    all_area_roof += surface.total
-    all_area_favorable += surface.favorable
+    all_area_roof = parseFloat((all_area_roof + surface.total).toFixed(2))
+    all_area_favorable = parseFloat(
+      (all_area_favorable + surface.favorable).toFixed(2)
+    )
 
     for (let i = 0; i < 4; i++) {
-      all_values[i] += (surface.values[i] * surface.total) / 100
+      all_values[i] += parseFloat(
+        ((surface.values[i] * surface.total) / 100).toFixed(2)
+      )
     }
   })
 
