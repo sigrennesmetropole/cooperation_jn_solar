@@ -27,10 +27,10 @@ const mapStore = useMapStore()
 const enedisStore = useEnedisStore()
 const installationsStore = useInstallationsStore()
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
-  apiConfigService.getConfig()
+  await apiConfigService.getConfig()
 })
 
 function isLeftPanelRetractable() {
