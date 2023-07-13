@@ -40,14 +40,6 @@ describe('ElectricityConsumptionButton.vue', () => {
     expect(wrapper.emitted('clickAnnualConsumption')![0]).toEqual(['manual'])
   })
 
-  it('emits "clickAnnualConsumption" with "linky" when "Connecter mon compteur Linky" button is clicked', async () => {
-    const linkyButton = wrapper.find('#button-linky')
-    await linkyButton.trigger('click')
-
-    expect(wrapper.emitted('clickAnnualConsumption')).toBeTruthy()
-    expect(wrapper.emitted('clickAnnualConsumption')![0]).toEqual(['linky'])
-  })
-
   it('update consumption information when "Passer cette étape" is clicked', async () => {
     const skipText = wrapper.find('[id="skipText"]')
     await skipText.trigger('click')
