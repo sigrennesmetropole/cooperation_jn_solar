@@ -32,7 +32,6 @@ function skipStep() {
     </div>
     <UiButton
       class="ui-btn-secondary mb-6 gap-3 px-4 py-3 justify-center flex flex-row"
-      @click="$emit('clickAnnualConsumption', 'linky')"
       id="button-linky"
     >
       <div class="text-black text-base font-medium flex flex-row gap-3">
