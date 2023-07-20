@@ -40,9 +40,9 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             est réputé avoir pris connaissance des présentes conditions
             générales, qui s'imposent à tout usager du présent site.
             L’Utilisateur garantit qu’il n’utilisera pas le site à des fins
-            illicites ou immorales ou contraire à leur utilisation initiale.
+            illicites ou immorales ou contraires à leur utilisation initiale.
             <br /><br />
-            Les équipements (ordinateurs, téléphone, moyens de
+            Les équipements (ordinateurs, téléphones, moyens de
             télécommunication…) permettant l'accès au site sont à la charge
             exclusive des Utilisateurs, de même que les frais de
             télécommunications induits par leur utilisation.
@@ -154,7 +154,7 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             panneau).
             <br /><br />
             Cette puissance installée, ainsi que la localisation, l'orientation
-            et l'inclinaison de la toiture sont alors utilisés par le logiciel
+            et l'inclinaison de la toiture sont alors utilisées par le logiciel
             AutoCalSol, développé par l ’Institut National de l’Énergie Solaire
             pour simuler la production d'énergie correspondant à l'installation
             testée.
