@@ -12,7 +12,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
     <p>Dernière mise à jour : 13 juin 2023</p>
     <div class="bg-neutral-50 p-8 border border-neutral-200">
       <p class="text-base font-normal">
-        Bienvenue sur lien
+        Bienvenue sur le lien
         <a
           class="underline decoration-1 font-medium"
           href="https://solaire.coopterr.rennesmetropole.fr/"
@@ -107,11 +107,9 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
           des panneaux photovoltaïques :
         </h3>
         <p class="text-base">
-          Ces données sont renseignées par l'utilisateur de la Plateforme ou,
-          pour la consommation électrique, si l'utilisateur le souhaite, obtenue
-          par connexion au service DataConnect d'Enedis. La surface
-          d'installation des panneaux est calculée automatiquement après que
-          l'utilisateur ait retiré les obstacles présents sur la toiture.
+          Ces données sont renseignées par l'utilisateur de la Plateforme. La
+          surface d'installation des panneaux est calculée automatiquement après
+          que l'utilisateur ait retiré les obstacles présents sur la toiture.
         </p>
       </div>
       <div class="font-normal">
@@ -130,15 +128,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
       </div>
       <div class="font-normal">
         <h3 class="text-xl font-bold mb-2">Cookies :</h3>
-        <p class="text-base">
-          Voir notre
-          <a
-            class="underline decoration-1 font-medium"
-            href="https://fabriquecitoyenne.fr/cookies-page"
-            target="_blank"
-            >Politique des cookies.</a
-          >
-        </p>
+        <p class="text-base">L'application n'utilise pas de cookie.</p>
       </div>
       <h2 class="text-2xl font-bold">
         Dans quels buts ces données sont-elles collectées ?
@@ -272,6 +262,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         à respecter les
         <a
           href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees/chapitre5"
+          target="_blank"
           class="underline"
           >dispositions</a
         >

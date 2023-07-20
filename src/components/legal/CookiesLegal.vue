@@ -8,6 +8,8 @@
     >
       Cookies
     </h1>
-    <div class="text-base font-normal"></div>
+    <div class="text-base font-normal">
+      <p>L'application n'utilise pas de cookie.</p>
+    </div>
   </div>
 </template>
