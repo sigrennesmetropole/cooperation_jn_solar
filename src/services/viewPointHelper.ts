@@ -45,9 +45,12 @@ export async function createCustomViewpointFromExtent(extent: BBox) {
   return computeViewPoint(turfPoint, vpJson)
 }
 
-export async function createViewpointFromRoofFeature(feature: GeoJSONFeature) {
-  if (feature.bbox === undefined) return undefined
-  let vp = Viewpoint.createViewpointFromExtent(feature.bbox)
+export async function createViewpointFromRoofFeature(
+  feature: GeoJSONFeature,
+  bbox: BBox
+) {
+  // if (feature.bbox === undefined) return undefined
+  let vp = Viewpoint.createViewpointFromExtent(bbox)
   const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
   vpJson.pitch = -45
   if (feature.properties === null) return undefined

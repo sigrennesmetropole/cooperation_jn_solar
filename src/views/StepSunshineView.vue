@@ -20,6 +20,8 @@ import { useSimulationStore } from '@/stores/simulations'
 import type { RennesApp } from '@/services/RennesApp'
 import { ref } from 'vue'
 import { useEnedisStore } from '@/stores/enedis'
+import type { Feature } from 'geojson'
+import { bbox, featureCollection } from '@turf/turf'
 
 const rennesApp = inject('rennesApp') as RennesApp
 
@@ -73,13 +75,19 @@ roofStore.$subscribe(async () => {
     simulationStore.shouldShowSolarPanelLayer()
   )
   let feature = null
+  let features: Feature[] = []
   roofStore.roofsFeatures?.features?.forEach((f) => {
     if (f.properties?.surface_id == roofStore.selectedRoofSurfaceId) {
       feature = f
+      features.push(f)
     }
   })
+
   if (feature !== null) {
-    const vp = await createViewpointFromRoofFeature(feature)
+    const vp = await createViewpointFromRoofFeature(
+      feature,
+      bbox(featureCollection(features))
+    )
     if (vp !== undefined) mapStore.viewPoint = vp
   }
 })
