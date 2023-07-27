@@ -17,7 +17,6 @@ import { useDistrictStore } from './stores/districtInformations'
 import UiSpinnerLoading from '@/components/ui/UiSpinnerLoading.vue'
 import { useMapStore } from '@/stores/map'
 import { useEnedisStore } from '@/stores/enedis'
-import { apiConfigService } from '@/services/api-config'
 import { useInstallationsStore } from './stores/installations'
 
 const viewStore = useViewsStore()
@@ -30,7 +29,6 @@ const installationsStore = useInstallationsStore()
 onBeforeMount(async () => {
   const rennesApp = new RennesApp(mapConfig)
   provide('rennesApp', rennesApp)
-  await apiConfigService.getConfig()
 })
 
 function isLeftPanelRetractable() {
