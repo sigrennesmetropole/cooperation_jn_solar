@@ -64,21 +64,23 @@ const filters = ref([
     active: true,
   },
 ])
-
-const size_begin_search = getNumberFromConfig('address.size_begin_search')
-const nb_addresses_rva = getNumberFromConfig('address.nb_addresses_rva')
-const nb_addresses_organization = getNumberFromConfig(
-  'address.nb_addresses_organization'
-)
-const nb_addresses_communes = getNumberFromConfig(
-  'address.nb_addresses_communes'
-)
-const nb_addresses_streets = getNumberFromConfig('address.nb_addresses_streets')
+let size_begin_search: number
+let nb_addresses_rva: number
+let nb_addresses_organization: number
+let nb_addresses_communes: number
+let nb_addresses_streets: number
 
 onMounted(() => {
   if (addressStore.address !== '') {
     search.value = addressStore.address
   }
+  size_begin_search = getNumberFromConfig('address.size_begin_search')
+  nb_addresses_rva = getNumberFromConfig('address.nb_addresses_rva')
+  nb_addresses_organization = getNumberFromConfig(
+    'address.nb_addresses_organization'
+  )
+  nb_addresses_communes = getNumberFromConfig('address.nb_addresses_communes')
+  nb_addresses_streets = getNumberFromConfig('address.nb_addresses_streets')
 })
 
 function searchFiltered() {
