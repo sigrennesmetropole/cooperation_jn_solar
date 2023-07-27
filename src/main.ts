@@ -9,6 +9,7 @@ import HighchartsVue from 'highcharts-vue'
 
 import './assets/main.css'
 import '@sigrennesmetropole/cooperation_jn_common_ui/dist/style.css'
+import { apiConfigService } from '@/services/api-config'
 
 declare global {
   interface Window {
@@ -18,11 +19,13 @@ declare global {
 window.CESIUM_BASE_URL = '/node_modules/@vcmap-cesium/engine/Build/'
 
 const app = createApp(App)
-
-app.use(createPinia())
+const pinia = createPinia()
+app.use(pinia)
 app.use(router)
 app.use(VueApexCharts)
 app.use(Notifications)
 // @ts-ignore
 app.use(HighchartsVue)
-app.mount('#app')
+apiConfigService.getConfig().then(() => {
+  app.mount('#app')
+})
