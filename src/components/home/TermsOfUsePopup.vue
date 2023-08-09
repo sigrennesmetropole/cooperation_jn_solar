@@ -58,9 +58,9 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             toitures du bâti métropolitain.
             <br /><br />
             La simulation d'ensoleillement est réalisée à partir d'un Modèle
-            Numérique de Surface datant de 2021 (résolution de 50 cm) à l'aide
-            de l'outil 'Rayonnement solaire zonal' de la suite ESRI&copy;. Les
-            résultats sont exprimés en kWh/m2/an.
+            Numérique de Surface (résolution de 50 cm) à l'aide de l'outil
+            'Rayonnement solaire zonal' de la suite ESRI&copy;. Les résultats
+            sont exprimés en kWh/m2/an.
             <br /><br />
             L'outil calcule le rayonnement à partir d’un modèle qui prend en
             compte la position du soleil tout au long de l’année et à
