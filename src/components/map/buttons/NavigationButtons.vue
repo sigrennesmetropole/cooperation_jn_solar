@@ -82,6 +82,14 @@ const heightClass = computed(() => {
     return ['h-[20rem]']
   }
 })
+
+const navigationText = computed(() => {
+  if (viewStore.currentView === 'step-sunshine') {
+    return 'Centrer sur mon toit'
+  } else {
+    return 'Réinitialiser le zoom'
+  }
+})
 </script>
 
 <template>
@@ -94,8 +102,8 @@ const heightClass = computed(() => {
       class="rounded-lg"
       @click="router.push('/roof-selection')"
       v-show="shouldDisplayHomeButton()"
-      ariaLabelButton="Réinitialiser"
-      titleButton="Réinitialiser"
+      ariaLabelButton="Réinitialiser la simulation"
+      titleButton="Réinitialiser la simulation"
       heightTitle="30"
       widthTitle="200"
       positionX="-210"
@@ -127,8 +135,8 @@ const heightClass = computed(() => {
       <UiIconButton
         class="rounded-b-lg"
         @click="() => resetZoom()"
-        ariaLabelButton="Réinitialiser le zoom"
-        titleButton="Réinitialiser le zoom"
+        :ariaLabelButton="navigationText"
+        :titleButton="navigationText"
         heightTitle="30"
         widthTitle="200"
         positionX="-210"

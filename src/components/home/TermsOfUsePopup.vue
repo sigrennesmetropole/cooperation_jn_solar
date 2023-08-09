@@ -3,7 +3,7 @@ import imgFinancePar from '@/assets/icons/finance-par.png'
 import deleteSquare from '@/assets/icons/delete-square.svg'
 </script>
 <template>
-  <div>
+  <div class="text-sm font-normal font-dm-sans">
     <div
       class="fixed top-0 left-0 w-full h-full z-[100]"
       style="background-color: rgba(0, 0, 0, 0.75)"
@@ -48,8 +48,52 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             télécommunications induits par leur utilisation.
           </p>
 
+          <p class="text-sm font-normal">
+            Pour une expérience optimale de l'application, vous trouverez
+            ci-dessous les prérequis techniques :
+          </p>
+          <ul class="list-disc pl-6">
+            <li>
+              Navigateur : Nous recommandons l'utilisation de Firefox, Chrome ou
+              Safari pour une compatibilité maximale.
+            </li>
+            <li>
+              WebGL : Assurez-vous que votre navigateur prend en charge WebGL,
+              une technologie graphique 3D utilisée par notre application.
+            </li>
+            <li>
+              Accélération matérielle : Pour des performances optimales,
+              vérifiez que votre appareil dispose d'un accélérateur graphique ou
+              GPU.
+            </li>
+            <li>
+              Version du navigateur : Nous vous recommandons d'utiliser la
+              dernière version stable de votre navigateur préféré pour
+              bénéficier des dernières améliorations et fonctionnalités de
+              compatibilité.
+            </li>
+            <li>
+              Suppression du cache : Pour éviter tout problème lié à des
+              versions précédentes de l'application en cache, nous vous
+              conseillons de vider régulièrement le cache de votre navigateur.
+            </li>
+            <li>
+              Pour garantir une expérience fluide et sans problèmes, nous vous
+              recommandons vivement de n'utiliser que les boutons de navigation
+              internes fournis dans notre application. Ces boutons sont
+              spécialement conçus pour maintenir la cohérence de l'interface
+              utilisateur et prévenir les erreurs.
+            </li>
+          </ul>
+          <p>
+            Pour profiter pleinement de l'expérience immersive offerte par notre
+            application basée sur Cesium et le jumeau numérique 3D de la
+            métropole de Rennes, veuillez vérifier ces prérequis techniques et
+            mettre à jour votre navigateur si nécessaire.
+          </p>
+
           <h4 class="text-xl font-bold">Services proposés aux utilisateurs</h4>
-          <li class="text-base font-bold">
+          <li class="text-sm font-bold">
             Estimation de l'ensoleillement (ou de l'exposition solaire ou
             irradiance) en kWh/m2/an
           </li>
@@ -119,7 +163,7 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             Transmission : 0.5
           </span>
 
-          <li class="text-base font-bold">
+          <li class="text-sm font-bold">
             Pré-dimensionnement d'une installation photovoltaïque
           </li>
           <span class="text-sm">
@@ -143,7 +187,7 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             1900 mm) pouvant être installés sur la surface restante.
           </span>
 
-          <li class="text-base font-bold">Production d'énergie en kWh</li>
+          <li class="text-sm font-bold">Production d'énergie en kWh</li>
           <span class="text-sm">
             L'Utilisateur peut ensuite obtenir une simulation de l'énergie
             produite par l'installation obtenue en kWh.
@@ -176,7 +220,7 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             unique résidentiel) obtenu via l'open data d'Enedis.
           </span>
 
-          <li class="text-base font-bold">Téléchargement d'un rapport</li>
+          <li class="text-sm font-bold">Téléchargement d'un rapport</li>
           <span class="text-sm">
             L'Utilisateur sera invité, à télécharger un rapport .pdf reprenant
             les contenus pédagogiques et indicateurs obtenus lors de sa
