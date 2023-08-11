@@ -107,9 +107,11 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
           des panneaux photovoltaïques :
         </h3>
         <p class="text-base">
-          Ces données sont renseignées par l'utilisateur de la Plateforme. La
-          surface d'installation des panneaux est calculée automatiquement après
-          que l'utilisateur ait retiré les obstacles présents sur la toiture.
+          Ces données sont renseignées par l'utilisateur de la Plateforme. Dans
+          une prochaine version, la consommation électrique pourra être obtenue
+          directement par connexion au service DatConnect d'Enedis. La surface
+          d'installation des panneaux est calculée automatiquement après que
+          l'utilisateur ait retiré les obstacles présents sur la toiture.
         </p>
       </div>
       <div class="font-normal">
@@ -128,7 +130,9 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
       </div>
       <div class="font-normal">
         <h3 class="text-xl font-bold mb-2">Cookies :</h3>
-        <p class="text-base">L'application n'utilise pas de cookie.</p>
+        <p class="text-base">
+          L'application cadastre solaire n'utilise pas de cookie.
+        </p>
       </div>
       <h2 class="text-2xl font-bold">
         Dans quels buts ces données sont-elles collectées ?
@@ -162,10 +166,6 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         communication des données personnelles). Le consentement peut être
         retiré à tout moment par l'utilisateur (voir la rubrique quels sont vos
         droits / comment les exercer).
-        <br /><br />
-        L'utilisateur a le droit de s'opposer au dépôt de ces cookies en
-        cliquant sur "refuser". Pour de plus amples informations sur les
-        cookies, vous pouvez consulter notre politique de gestion des cookies.
       </p>
     </div>
 
@@ -179,17 +179,15 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
       </p>
       <p class="mb-6">
         À l'issue de cette utilisation (étape de simulation), les données
-        personnelles pourront être anonymisées et conservées à des fins
-        statistiques. Sinon, elles feront l'objet d'une suppression définitive.
-        Nous pouvons publier, divulguer et utiliser les informations agrégées
-        (informations combinées de telle sorte que personne ne puisse plus être
-        identifié ou mentionné) et les informations non personnelles à des fins
+        personnelles pourront ne seront pas conservées. Elles feront l'objet
+        d'une suppression définitive systématique. Nous pouvons publier,
+        divulguer et utiliser les informations non personnelles à des fins
         d'analyse de l'utilisation de la Plateforme et pour aider à la
         planification énergétique du territoire.
       </p>
       <p>
         Vous pourrez conserver la trace des informations associées à votre
-        simulation en téléchargeant le rapport de synthèse accessible via un
+        simulation en téléchargeant le rapport de synthèse accessible via le
         bouton 'Télécharger le rapport .pdf' disponible sur la page Tableau de
         bord.
       </p>
@@ -199,11 +197,21 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
     </p>
     <div class="text-base font-normal">
       <p>
-        Dans les limites prévues par la loi, vous pouvez accéder et obtenir
+        Comme évoqué au paragraphe précédent, nous ne conservons aucune donnée
+        personelle.
+      </p>
+      <p>
+        Cependant, si la plateforme venait à évoluer, voici quels seraient vos
+        droits.
+      </p>
+      <br />
+      <p>
+        Dans les limites prévues par la loi, vous pourrez accéder et obtenir
         copie des données vous concernant, vous opposer au traitement de ces
-        données, les faire rectifier ou les faire effacer. Vous disposez
+        données, les faire rectifier ou les faire effacer. Vous disposerez
         également d'un droit à la limitation du traitement de vos données.
       </p>
+      <br />
       <p>
         Les demandes d'exercice de vos droits peuvent être adressées au
         responsable de traitement par voie postale&nbsp;:
