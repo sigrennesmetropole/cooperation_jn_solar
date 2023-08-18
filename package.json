@@ -29,7 +29,7 @@
   "dependencies": {
     "@kyvg/vue3-notification": "^2.9.0",
     "@pinia/testing": "^0.0.14",
-    "@sigrennesmetropole/cooperation_jn_common_ui": "0.0.30",
+    "@sigrennesmetropole/cooperation_jn_common_ui": "0.0.31",
     "@tailwindcss/forms": "^0.5.3",
     "@turf/boolean-intersects": "^6.5.0",
     "@turf/distance": "^6.5.0",
