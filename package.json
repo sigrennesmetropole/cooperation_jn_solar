@@ -37,7 +37,7 @@
     "@turf/rectangle-grid": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "@vcmap-cesium/engine": "~2.3.1",
-    "@vcmap/core": "5.0.0-rc.32",
+    "@vcmap/core": "5.0.0-rc.34",
     "apexcharts": "^3.37.0",
     "dompurify": "^3.0.3",
     "highcharts-vue": "^1.4.0",
