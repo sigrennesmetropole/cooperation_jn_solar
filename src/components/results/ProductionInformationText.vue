@@ -8,10 +8,11 @@ const props = defineProps<{
   currentNumSolarPanel: number
 }>()
 
-const currentSurface = computed(
-  () =>
+const currentSurface = computed(() =>
+  (
     props.currentNumSolarPanel *
     getNumberFromConfig('solar_panel.solar_panel_surface')
+  ).toFixed(2)
 )
 
 const currentPower = computed(() =>
