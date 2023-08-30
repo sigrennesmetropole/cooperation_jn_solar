@@ -1,5 +1,5 @@
 import { Viewpoint, type ViewpointOptions } from '@vcmap/core'
-import { destination, point } from '@turf/turf'
+import { point } from '@turf/turf'
 import type { BBox, Feature, Point, Properties } from '@turf/turf'
 import type { GeoJSONFeature } from 'ol/format/GeoJSON'
 import { oppositeAzimuth } from '@/model/roof.model'
@@ -10,20 +10,17 @@ export function computeViewPoint(
   turfPoint: Feature<Point, Properties>,
   vpJson: ViewpointOptions
 ) {
-  const target = destination(
-    turfPoint,
-    cameraDistance * (Math.SQRT2 / 2),
-    180,
-    {
-      units: 'meters',
-    }
-  )
-  vpJson.cameraPosition = [
-    target.geometry.coordinates[0],
-    target.geometry.coordinates[1],
-    cameraDistance,
+  // By setting the groudposition without the z-value, the pitch, the camera
+  // distance and set the camera position to undefined, the missing value
+  // will be computed internally in the map core considering the terrain also
+  // see: https://github.com/virtualcitySYSTEMS/map-core/blob/main/src/map/cesiumMap.ts#L816
+  vpJson.groundPosition = [
+    turfPoint.geometry.coordinates[0],
+    turfPoint.geometry.coordinates[1],
   ]
   vpJson.pitch = -45
+  vpJson.distance = cameraDistance
+  vpJson.cameraPosition = undefined
   return new Viewpoint(vpJson)
 }
 
