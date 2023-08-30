@@ -22,10 +22,6 @@ const props = defineProps({
   <footer class="flex flex-row justify-between font-dm-sans" id="footer">
     <div class="flex p-0 gap-6">
       <UiRennesLogo class="w-36 h-7"></UiRennesLogo>
-      <div class="font-normal text-xs">
-        Visualisez les données thématiques <br />du territoire sur sa maquette
-        3D.
-      </div>
     </div>
     <div
       class="flex flex-wrap items-end gap-[7px] pt-2 font-dm-sans font-normal text-xs leading-4 text-neutral-500 underline hover:cursor-pointer"
