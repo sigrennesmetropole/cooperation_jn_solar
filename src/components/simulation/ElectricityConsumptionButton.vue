@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import rectangle from '@/assets/icons/rectangle.svg'
-import expandArrow from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { useSimulationStore, getDefaultConsumption } from '@/stores/simulations'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
 import { UiButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
-import { ref } from 'vue'
 
 const simulationStore = useSimulationStore()
 const consumptionAndProductionStore = useConsumptionAndProductionStore()
@@ -13,8 +10,6 @@ function skipStep() {
   consumptionAndProductionStore.setAnnualConsumption(getDefaultConsumption())
   simulationStore.goToFinalView()
 }
-
-const displayTooltip = ref(true)
 </script>
 
 <template>
