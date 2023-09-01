@@ -97,6 +97,8 @@ export async function addPin(
     RENNES_LAYER.customLayerSearchAddress
   ) as DataSourceLayer
 
+  customLayer.entities.removeAll()
+
   // TODO: Many times failed to get the terrain height, due to 3d tile failed to load
   const terrainHeight = await rennesApp.getHeight(
     coordinates[0],
