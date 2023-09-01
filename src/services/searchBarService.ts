@@ -13,7 +13,6 @@ import {
 } from '@/services/viewPointHelper'
 import { lineString, bbox, distance } from '@turf/turf'
 import * as turf from '@turf/turf'
-import { Point } from 'ol/geom'
 import pinIcon from '@/assets/illustrations/pinsearch.png'
 import type { DataSourceLayer } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
@@ -71,11 +70,11 @@ export async function addPin(
   type: string,
   item: AddressRva | AddressOrganization | AddressCommune | AddressStreet
 ) {
-  let point = new Point([0, 0, 0])
-  const offsetHeight = 15
+  let coordinates = [0, 0]
+  const offsetHeight = 15 // TODO: The height from the terrain can be more (tall building)
   if (type === 'rva') {
     const itemFormatted = item as AddressRva
-    point = new Point([+itemFormatted.x, +itemFormatted.y, offsetHeight])
+    coordinates = [+itemFormatted.x, +itemFormatted.y]
   } else if (type === 'organization') {
     const itemFormatted = item as AddressOrganization
     const data_organization = await apiSitesorgService.fetchOrganizationById(
@@ -84,18 +83,13 @@ export async function addPin(
     const id_site = data_organization.sites[0].idSite.idSite
     const data_site = await apiSitesorgService.fetchSiteById(id_site)
     const feature_site = data_site.features[0]
-    const coordinates = feature_site.geometry.coordinates
-    const x = coordinates[0]
-    const y = coordinates[1]
-    point = new Point([x, y, offsetHeight])
+    coordinates = feature_site.geometry.coordinates
   } else if (type === 'communes') {
     const itemFormatted = item as AddressCommune
-    const coordinates = calculateBboxCenter(itemFormatted)
-    point = new Point([coordinates[0], coordinates[1], offsetHeight])
+    coordinates = calculateBboxCenter(itemFormatted)
   } else if (type === 'streets') {
     const itemFormatted = item as AddressStreet
-    const coordinates = calculateBboxCenter(itemFormatted)
-    point = new Point([coordinates[0], coordinates[1], offsetHeight])
+    coordinates = calculateBboxCenter(itemFormatted)
   }
 
   // https://groups.google.com/g/cesium-dev/c/GqueAzAkScg
@@ -103,15 +97,16 @@ export async function addPin(
     RENNES_LAYER.customLayerSearchAddress
   ) as DataSourceLayer
 
+  // TODO: Many times failed to get the terrain height, due to 3d tile failed to load
   const terrainHeight = await rennesApp.getHeight(
-    point.getCoordinates()[0],
-    point.getCoordinates()[1]
+    coordinates[0],
+    coordinates[1]
   )
   const entity = new CesiumEntity({
     position: Cartesian3.fromDegrees(
-      point.getCoordinates()[0],
-      point.getCoordinates()[1],
-      point.getCoordinates()[2] + terrainHeight
+      coordinates[0],
+      coordinates[1],
+      terrainHeight + offsetHeight
     ),
 
     billboard: {
@@ -121,15 +116,11 @@ export async function addPin(
     },
     polyline: {
       positions: [
+        Cartesian3.fromDegrees(coordinates[0], coordinates[1], 0),
         Cartesian3.fromDegrees(
-          point.getCoordinates()[0],
-          point.getCoordinates()[1],
-          0
-        ),
-        Cartesian3.fromDegrees(
-          point.getCoordinates()[0],
-          point.getCoordinates()[1],
-          point.getCoordinates()[2] + terrainHeight
+          coordinates[0],
+          coordinates[1],
+          terrainHeight + offsetHeight
         ),
       ],
       width: 5,
