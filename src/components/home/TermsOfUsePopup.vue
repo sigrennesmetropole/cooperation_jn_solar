@@ -40,9 +40,9 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             est réputé avoir pris connaissance des présentes conditions
             générales, qui s'imposent à tout usager du présent site.
             L’Utilisateur garantit qu’il n’utilisera pas le site à des fins
-            illicites ou immorales ou contraire à leur utilisation initiale.
+            illicites ou immorales ou contraires à leur utilisation initiale.
             <br /><br />
-            Les équipements (ordinateurs, téléphone, moyens de
+            Les équipements (ordinateurs, téléphones, moyens de
             télécommunication…) permettant l'accès au site sont à la charge
             exclusive des Utilisateurs, de même que les frais de
             télécommunications induits par leur utilisation.
@@ -102,9 +102,9 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             toitures du bâti métropolitain.
             <br /><br />
             La simulation d'ensoleillement est réalisée à partir d'un Modèle
-            Numérique de Surface datant de 2021 (résolution de 50 cm) à l'aide
-            de l'outil 'Rayonnement solaire zonal' de la suite ESRI&copy;. Les
-            résultats sont exprimés en kWh/m2/an.
+            Numérique de Surface (résolution de 50 cm) à l'aide de l'outil
+            'Rayonnement solaire zonal' de la suite ESRI&copy;. Les résultats
+            sont exprimés en kWh/m2/an.
             <br /><br />
             L'outil calcule le rayonnement à partir d’un modèle qui prend en
             compte la position du soleil tout au long de l’année et à
@@ -198,7 +198,7 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             panneau).
             <br /><br />
             Cette puissance installée, ainsi que la localisation, l'orientation
-            et l'inclinaison de la toiture sont alors utilisés par le logiciel
+            et l'inclinaison de la toiture sont alors utilisées par le logiciel
             AutoCalSol, développé par l ’Institut National de l’Énergie Solaire
             pour simuler la production d'énergie correspondant à l'installation
             testée.
