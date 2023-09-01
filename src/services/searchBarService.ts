@@ -72,9 +72,10 @@ export async function addPin(
   item: AddressRva | AddressOrganization | AddressCommune | AddressStreet
 ) {
   let point = new Point([0, 0, 0])
+  const offsetHeight = 15
   if (type === 'rva') {
     const itemFormatted = item as AddressRva
-    point = new Point([+itemFormatted.x, +itemFormatted.y, 150])
+    point = new Point([+itemFormatted.x, +itemFormatted.y, offsetHeight])
   } else if (type === 'organization') {
     const itemFormatted = item as AddressOrganization
     const data_organization = await apiSitesorgService.fetchOrganizationById(
@@ -86,15 +87,15 @@ export async function addPin(
     const coordinates = feature_site.geometry.coordinates
     const x = coordinates[0]
     const y = coordinates[1]
-    point = new Point([x, y, 150])
+    point = new Point([x, y, offsetHeight])
   } else if (type === 'communes') {
     const itemFormatted = item as AddressCommune
     const coordinates = calculateBboxCenter(itemFormatted)
-    point = new Point([coordinates[0], coordinates[1], 150])
+    point = new Point([coordinates[0], coordinates[1], offsetHeight])
   } else if (type === 'streets') {
     const itemFormatted = item as AddressStreet
     const coordinates = calculateBboxCenter(itemFormatted)
-    point = new Point([coordinates[0], coordinates[1], 150])
+    point = new Point([coordinates[0], coordinates[1], offsetHeight])
   }
 
   // https://groups.google.com/g/cesium-dev/c/GqueAzAkScg
@@ -102,12 +103,17 @@ export async function addPin(
     RENNES_LAYER.customLayerSearchAddress
   ) as DataSourceLayer
 
+  const terrainHeight = await rennesApp.getHeight(
+    point.getCoordinates()[0],
+    point.getCoordinates()[1]
+  )
   const entity = new CesiumEntity({
     position: Cartesian3.fromDegrees(
       point.getCoordinates()[0],
       point.getCoordinates()[1],
-      point.getCoordinates()[2] + 50
+      point.getCoordinates()[2] + terrainHeight
     ),
+
     billboard: {
       image: pinIcon,
       // [min distance, scale for min distance, max distance, scale when max distance]
@@ -123,7 +129,7 @@ export async function addPin(
         Cartesian3.fromDegrees(
           point.getCoordinates()[0],
           point.getCoordinates()[1],
-          point.getCoordinates()[2] + 50
+          point.getCoordinates()[2] + terrainHeight
         ),
       ],
       width: 5,
