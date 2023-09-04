@@ -125,10 +125,10 @@ export async function addPin(
           terrainHeight + offsetHeight
         ),
       ],
-      width: 5,
+      width: 3,
       // Minimum and maximum distance to be displaye
       distanceDisplayCondition: new DistanceDisplayCondition(0, 1000),
-      material: Color.fromBytes(255, 0, 0),
+      material: Color.fromBytes(224, 13, 40),
     },
   })
 
