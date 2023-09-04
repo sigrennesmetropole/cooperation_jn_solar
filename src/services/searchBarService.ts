@@ -71,7 +71,7 @@ export async function addPin(
   item: AddressRva | AddressOrganization | AddressCommune | AddressStreet
 ) {
   let coordinates = [0, 0]
-  const offsetHeight = 15 // TODO: The height from the terrain can be more (tall building)
+  const offsetHeight = 15
   if (type === 'rva') {
     const itemFormatted = item as AddressRva
     coordinates = [+itemFormatted.x, +itemFormatted.y]
@@ -99,7 +99,7 @@ export async function addPin(
 
   customLayer.entities.removeAll()
 
-  // TODO: Many times failed to get the terrain height, due to 3d tile failed to load
+  // TODO: Some times failed to get the terrain height, due to 3d tile failed to load
   const terrainHeight = await rennesApp.getHeight(
     coordinates[0],
     coordinates[1]
@@ -115,6 +115,7 @@ export async function addPin(
       image: pinIcon,
       // [min distance, scale for min distance, max distance, scale when max distance]
       scaleByDistance: new NearFarScalar(0, 1.0, 1000, 0.0),
+      eyeOffset: new Cartesian3(0, 0, -50),
     },
     polyline: {
       positions: [
