@@ -13,12 +13,14 @@ import {
 } from '@/services/viewPointHelper'
 import { lineString, bbox, distance } from '@turf/turf'
 import * as turf from '@turf/turf'
-import { Feature } from 'ol'
-import { Point } from 'ol/geom'
-import { Style, Icon } from 'ol/style'
 import pinIcon from '@/assets/illustrations/pinsearch.png'
-import type { GeoJSONLayer } from '@vcmap/core'
+import type { DataSourceLayer } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
+import { Entity as CesiumEntity } from '@vcmap-cesium/engine'
+import { Cartesian3 } from '@vcmap-cesium/engine'
+import { NearFarScalar } from '@vcmap-cesium/engine'
+import { DistanceDisplayCondition } from '@vcmap-cesium/engine'
+import { Color } from '@vcmap-cesium/engine'
 
 function extractCoordinatesFromItem(item: AddressCommune | AddressStreet) {
   let coordinates = item.upperCorner.split(' ')
@@ -57,10 +59,10 @@ function calculateBboxCenter(item: AddressCommune | AddressStreet) {
 }
 
 export async function hiddePin(rennesApp: RennesApp) {
-  const customLayer: GeoJSONLayer = await rennesApp.getLayerByKey(
+  const customLayer: DataSourceLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.customLayerSearchAddress
-  )
-  customLayer.removeAllFeatures()
+  ) as DataSourceLayer
+  customLayer.entities.removeAll()
 }
 
 export async function addPin(
@@ -68,10 +70,11 @@ export async function addPin(
   type: string,
   item: AddressRva | AddressOrganization | AddressCommune | AddressStreet
 ) {
-  let point = new Point([0, 0, 0])
+  let coordinates = [0, 0]
+  const offsetHeight = 15
   if (type === 'rva') {
     const itemFormatted = item as AddressRva
-    point = new Point([+itemFormatted.x, +itemFormatted.y, 150])
+    coordinates = [+itemFormatted.x, +itemFormatted.y]
   } else if (type === 'organization') {
     const itemFormatted = item as AddressOrganization
     const data_organization = await apiSitesorgService.fetchOrganizationById(
@@ -80,41 +83,57 @@ export async function addPin(
     const id_site = data_organization.sites[0].idSite.idSite
     const data_site = await apiSitesorgService.fetchSiteById(id_site)
     const feature_site = data_site.features[0]
-    const coordinates = feature_site.geometry.coordinates
-    const x = coordinates[0]
-    const y = coordinates[1]
-    point = new Point([x, y, 150])
+    coordinates = feature_site.geometry.coordinates
   } else if (type === 'communes') {
     const itemFormatted = item as AddressCommune
-    const coordinates = calculateBboxCenter(itemFormatted)
-    point = new Point([coordinates[0], coordinates[1], 150])
+    coordinates = calculateBboxCenter(itemFormatted)
   } else if (type === 'streets') {
     const itemFormatted = item as AddressStreet
-    const coordinates = calculateBboxCenter(itemFormatted)
-    point = new Point([coordinates[0], coordinates[1], 150])
+    coordinates = calculateBboxCenter(itemFormatted)
   }
 
-  const customLayer: GeoJSONLayer = await rennesApp.getLayerByKey(
+  // https://groups.google.com/g/cesium-dev/c/GqueAzAkScg
+  const customLayer: DataSourceLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.customLayerSearchAddress
+  ) as DataSourceLayer
+
+  customLayer.entities.removeAll()
+
+  // TODO: Some times failed to get the terrain height, due to 3d tile failed to load
+  const terrainHeight = await rennesApp.getHeight(
+    coordinates[0],
+    coordinates[1]
   )
-  const new_feature = new Feature({
-    olcs_altitudeMode: 'relativeToGround',
-    olcs_heightAboveGround: 15,
-    //https://cesium.com/docs/cesiumjs-ref-doc/Billboard.html#eyeOffset
-    olcs_eyeOffset: [0, 0, -50],
+  const entity = new CesiumEntity({
+    position: Cartesian3.fromDegrees(
+      coordinates[0],
+      coordinates[1],
+      terrainHeight + offsetHeight
+    ),
+
+    billboard: {
+      image: pinIcon,
+      // [min distance, scale for min distance, max distance, scale when max distance]
+      scaleByDistance: new NearFarScalar(0, 1.0, 1000, 0.0),
+      eyeOffset: new Cartesian3(0, 0, -50),
+    },
+    polyline: {
+      positions: [
+        Cartesian3.fromDegrees(coordinates[0], coordinates[1], 0),
+        Cartesian3.fromDegrees(
+          coordinates[0],
+          coordinates[1],
+          terrainHeight + offsetHeight
+        ),
+      ],
+      width: 3,
+      // Minimum and maximum distance to be displaye
+      distanceDisplayCondition: new DistanceDisplayCondition(0, 1000),
+      material: Color.fromBytes(224, 13, 40),
+    },
   })
-  new_feature.setGeometry(point)
-  new_feature.setStyle(
-    new Style({
-      image: new Icon({
-        src: pinIcon,
-        scale: 0.75,
-      }),
-      zIndex: 10,
-    })
-  )
-  customLayer.removeAllFeatures()
-  customLayer.addFeatures([new_feature])
+
+  customLayer.addEntity(entity)
 }
 
 export async function createVPForTypeAddress(
