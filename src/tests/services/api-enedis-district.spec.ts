@@ -2,6 +2,7 @@ import fetchMock from 'jest-fetch-mock'
 import { describe, it, expect } from 'vitest'
 import { apiEnedisDistrictService } from '@/services/api-enedis-district'
 import { getUrlBackOffice } from '@/services/env'
+
 fetchMock.enableMocks()
 describe('ApiEnedisDistrictService', () => {
   afterEach(() => {
