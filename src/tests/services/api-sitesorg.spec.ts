@@ -1,6 +1,7 @@
 import { apiSitesorgService } from '@/services/api-sitesorg'
 import fetchMock from 'jest-fetch-mock'
 import { describe, it, expect } from 'vitest'
+import { getUrlBackOffice } from '@/services/env'
 
 fetchMock.enableMocks()
 
@@ -22,13 +23,13 @@ describe('ApiSitesorgService', () => {
 
     // Assert
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
+
     expect(fetch).toHaveBeenCalledWith(
-      'https://api-sitesorg.sig.rennesmetropole.fr/v1/recherche?termes=some-search&termes_op=AND&types[]=organisme&offset=0&limit=3',
+      `${urlBackOffice}/api/siteorg/organizations?q=${search}`,
       {
         method: 'GET',
-        headers: {
-          'x-api-key': '025cc36fddfe4ae6bf013fbf0c9a623f',
-        },
+        credentials: 'include',
       }
     )
     expect(result).toEqual(mockOrganizations)
@@ -47,13 +48,13 @@ describe('ApiSitesorgService', () => {
 
     // Assert
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
+
     expect(fetch).toHaveBeenCalledWith(
-      'https://api-sitesorg.sig.rennesmetropole.fr/v1/organismes/123',
+      `${urlBackOffice}/api/siteorg/organization/${id}`,
       {
         method: 'GET',
-        headers: {
-          'x-api-key': '025cc36fddfe4ae6bf013fbf0c9a623f',
-        },
+        credentials: 'include',
       }
     )
     expect(result).toEqual(mockOrganization)
@@ -72,13 +73,13 @@ describe('ApiSitesorgService', () => {
 
     // Assert
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
+
     expect(fetch).toHaveBeenCalledWith(
-      'https://api-sitesorg.sig.rennesmetropole.fr/v1/sites/456/asGeoJson',
+      `${urlBackOffice}/api/siteorg/site/${id}`,
       {
         method: 'GET',
-        headers: {
-          'x-api-key': '025cc36fddfe4ae6bf013fbf0c9a623f',
-        },
+        credentials: 'include',
       }
     )
     expect(result).toEqual(mockSite)
