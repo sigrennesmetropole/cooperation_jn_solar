@@ -1,6 +1,7 @@
 import fetchMock from 'jest-fetch-mock'
 import { apiRvaService } from '@/services/api-rva'
 import { describe, afterEach, expect, it } from 'vitest'
+import { getUrlBackOffice } from '@/services/env'
 
 fetchMock.enableMocks()
 
@@ -12,55 +13,64 @@ describe('ApiRvaService', () => {
   it('fetchFullAddresses should return addresses when API response is valid', async () => {
     const search = 'some-search'
     const mockAddresses = [{ address: 'Address 1' }, { address: 'Address 2' }]
-
-    fetchMock.mockResponseOnce(
-      JSON.stringify({
-        rva: {
-          answer: {
-            status: {
-              code: 1,
-              message: 'ok',
-            },
-            addresses: mockAddresses,
+    const resultJSON = {
+      rva: {
+        answer: {
+          status: {
+            code: 1,
+            message: 'ok',
           },
+          addresses: mockAddresses,
         },
-      })
-    )
+      },
+    }
+
+    fetchMock.mockResponseOnce(JSON.stringify(resultJSON))
 
     const result = await apiRvaService.fetchFullAddresses(search)
 
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
+
     expect(fetch).toHaveBeenCalledWith(
-      `https://api-rva.sig.rennesmetropole.fr/?key=b44535986cf3abf2428d&version=1.0&format=json&epsg=4326&cmd=getfulladdresses&query=${search}`
+      `${urlBackOffice}/api/rva/fulladdress?q=${search}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
     )
-    expect(result).toEqual(mockAddresses)
+    expect(result).toEqual(resultJSON)
   })
 
   it('fetchStreets should return streets when API response is valid', async () => {
     const search = 'some-search'
     const mockStreets = [{ street: 'Street 1' }, { street: 'Street 2' }]
-
-    fetchMock.mockResponseOnce(
-      JSON.stringify({
-        rva: {
-          answer: {
-            status: {
-              code: 1,
-              message: 'ok',
-            },
-            lanes: mockStreets,
+    const resultJSON = {
+      rva: {
+        answer: {
+          status: {
+            code: 1,
+            message: 'ok',
           },
+          lanes: mockStreets,
         },
-      })
-    )
+      },
+    }
+
+    fetchMock.mockResponseOnce(JSON.stringify(resultJSON))
 
     const result = await apiRvaService.fetchStreets(search)
 
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
     expect(fetch).toHaveBeenCalledWith(
-      `https://api-rva.sig.rennesmetropole.fr/?key=b44535986cf3abf2428d&version=1.0&format=json&epsg=4326&cmd=getlanes&query=${search}&insee=all`
+      `${urlBackOffice}/api/rva/streets?q=${search}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
     )
-    expect(result).toEqual(mockStreets)
+    expect(result).toEqual(resultJSON)
   })
 
   it('fetchCommunes should return communes when API response is valid and search string is included in city names', async () => {
@@ -71,27 +81,31 @@ describe('ApiRvaService', () => {
       { name: 'Not Matching 1' },
       { name: 'Not Matching 2' },
     ]
-
-    fetchMock.mockResponseOnce(
-      JSON.stringify({
-        rva: {
-          answer: {
-            status: {
-              code: 1,
-              message: 'ok',
-            },
-            cities: mockCities,
+    const resultJSON = {
+      rva: {
+        answer: {
+          status: {
+            code: 1,
+            message: 'ok',
           },
+          cities: mockCities,
         },
-      })
-    )
+      },
+    }
+
+    fetchMock.mockResponseOnce(JSON.stringify(resultJSON))
 
     const result = await apiRvaService.fetchCommunes(search)
 
     expect(fetch).toHaveBeenCalledTimes(1)
+    const urlBackOffice = await getUrlBackOffice()
     expect(fetch).toHaveBeenCalledWith(
-      `https://api-rva.sig.rennesmetropole.fr/?key=b44535986cf3abf2428d&version=1.0&format=json&epsg=4326&cmd=getcities&query=${search}&insee=all`
+      `${urlBackOffice}/api/rva/communes?q=${search}`,
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
     )
-    expect(result).toEqual([{ name: 'City 1' }, { name: 'City 2' }])
+    expect(result).toEqual(resultJSON)
   })
 })
