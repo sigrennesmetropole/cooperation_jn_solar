@@ -8,6 +8,6 @@
     >
       Plan du site
     </h1>
-    <div class="text-base font-normal"></div>
+    <div class="text-xl font-normal">En construction</div>
   </div>
 </template>
