@@ -19,6 +19,7 @@ import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
+  displayRoofShape2d,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
@@ -42,10 +43,15 @@ import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
+import axios from 'axios'
+import proj4 from 'proj4'
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
 import { IsSolarPanelVisibleOnStep } from '@/services/interactionUtils'
+import type { Point } from '@turf/turf'
+import { bbox, buffer, center } from '@turf/turf'
+import type { AllGeoJSON, FeatureCollection } from '@turf/helpers'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -112,14 +118,36 @@ function displayGridAndAddInteractions() {
   rennesApp.getOpenlayerMap().getView().setMinZoom(21)
 }
 
+async function get2dRoofShapeFromWfs(xy: Point): Promise<FeatureCollection> {
+  let pointBuffer = buffer(xy, 1, { units: 'centimeters' })
+  let bboxAroundPointInit = bbox(pointBuffer)
+  proj4.defs(
+    'EPSG:3948',
+    '+proj=lcc +lat_0=48 +lon_0=3 +lat_1=47.25 +lat_2=48.75 +x_0=1700000 +y_0=7200000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs'
+  )
+  let x1y1 = proj4('EPSG:4326', 'EPSG:3948', [
+    bboxAroundPointInit[0],
+    bboxAroundPointInit[1],
+  ])
+  let x2y2 = proj4('EPSG:4326', 'EPSG:3948', [
+    bboxAroundPointInit[2],
+    bboxAroundPointInit[3],
+  ])
+
+  let baseUrl = `http://localhost:8600/geoserver/rennes/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=rennes%3Adonnees_gen.batiment_socle_toit&outputFormat=application/json&srsName=EPSG:4326&cql_filter=BBOX(the_geom,${x1y1[0]},${x1y1[1]},${x2y2[0]},${x2y2[1]})`
+  let response = await axios.get(baseUrl)
+  console.log(response.data)
+  return response.data as FeatureCollection
+}
+
 async function setupGridInstallation() {
   //force synchrone switch for adding openlayer interaction, update the store
   mapStore.viewPointPrevious = mapStore.viewPoint
   await rennesApp.maps.setActiveMap('ol')
-  await mapStore.activate2d()
+  mapStore.activate2d()
   if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
-    await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
-    await layerStore.enableLayer(RENNES_LAYER.roofShape)
+    layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
+    layerStore.enableLayer(RENNES_LAYER.roofShape)
     // avoid recompute everything when came back from solar placement
     if (!roofsStore.gridMatrix) {
       let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
@@ -130,13 +158,17 @@ async function setupGridInstallation() {
       const selectedRoofModel: RoofSurfaceModel =
         roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
       mapStore.isLoadingMap = true
-      const squareSize = getNumberFromConfig('grid.square_size')
       const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
+      let fc: FeatureCollection = await get2dRoofShapeFromWfs(
+        center(roofShape as AllGeoJSON).geometry
+      )
+      displayRoofShape2d(rennesApp, fc)
       worker
         .send({
-          roofShape: JSON.stringify(roofShape),
+          roofShape: JSON.stringify(fc),
           roofSlope: roofSlope,
-          squareSize: squareSize,
+          rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
+          rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
           roofAzimuth: roofAzimuth,
         })
         .then((reply) => {
@@ -270,7 +302,7 @@ mapStore.$subscribe(async () => {
     await applyInstallationStyle(rennesApp)
   } else {
     const installationLayer = await rennesApp.getLayerByKey('installations')
-    await installationLayer.deactivate()
+    installationLayer.deactivate()
   }
 })
 

@@ -3,7 +3,6 @@ import {
   bbox,
   bboxPolygon,
   booleanEqual,
-  booleanPointInPolygon,
   buffer,
   center,
   difference,
@@ -14,7 +13,11 @@ import {
   square,
   transformRotate,
   transformScale,
+  rhumbBearing,
+  rhumbDistance,
+  transformTranslate,
   union,
+  booleanContains,
 } from '@turf/turf'
 import type {
   AllGeoJSON,
@@ -23,7 +26,6 @@ import type {
   FeatureCollection,
   MultiPolygon,
   Point,
-  Polygon as turfPolygon,
   Properties,
 } from '@turf/helpers'
 // @ts-ignore
@@ -102,11 +104,13 @@ export function generateRectangleGrid(
   roofShape: GeoJSONFeatureCollection,
   roofSlope: number,
   bboxOnRoof: BBox,
-  squareSize: number,
+  rectangleWidth: number,
+  rectangleHeight: number,
   roofAzimuth: number
 ): Grid {
-  const cellWidth = squareSize
-  const cellHeight = squareSize * Math.cos(Number(roofSlope) * (Math.PI / 180))
+  const cellWidth = rectangleWidth
+  const cellHeight =
+    rectangleHeight * Math.cos(Number(roofSlope) * (Math.PI / 180))
 
   const { rows, columns, featureCollection } = rectangleGrid(
     bboxOnRoof,
@@ -143,12 +147,7 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
       matrix[y] = []
     }
     for (const roofShapeFeature of roofShape.features) {
-      if (
-        booleanPointInPolygon(
-          centerGridCase,
-          roofShapeFeature.geometry as turfPolygon
-        )
-      ) {
+      if (booleanContains(roofShapeFeature, f)) {
         isInside = true
       }
     }
@@ -170,6 +169,24 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
   return { grid, matrix }
 }
 
+export function centerGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
+  // @ts-ignore
+  const from = center(grid.featureCollection)
+  const to = center(featureCollection(roofShape.features) as AllGeoJSON)
+  //finds the bearing angle between the points
+  const bearing = rhumbBearing(from, to)
+  //calculates the distance between the points
+  const distance = rhumbDistance(from, to)
+  const translatedPoly = transformTranslate(
+    grid.featureCollection,
+    distance,
+    bearing
+  )
+
+  // @ts-ignore
+  grid.featureCollection = translatedPoly
+}
+
 export function displayGridOnMap(
   rennesApp: RennesApp,
   geojson: FeatureCollection
@@ -189,6 +206,18 @@ export function displayRoofShape(
 ) {
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     RENNES_LAYER.roofShape
+  ) as GeoJSONLayer
+  const format = new GeoJSON()
+  const marker = format.readFeatures(geojson)
+  roofLayer.addFeatures(marker)
+}
+
+export function displayRoofShape2d(
+  rennesApp: RennesApp,
+  geojson: GeoJSONFeatureCollection
+) {
+  const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
+    'roofShape2d'
   ) as GeoJSONLayer
   const format = new GeoJSON()
   const marker = format.readFeatures(geojson)

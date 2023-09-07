@@ -140,6 +140,15 @@
       }
     },
     {
+      "name": "roofShape2d",
+      "type": "GeoJSONLayer",
+      "activeOnStartup": true,
+      "zIndex": 1,
+      "projection": {
+        "epsg": "EPSG:4326"
+      }
+    },
+    {
       "name": "solarPanel",
       "type": "GeoJSONLayer",
       "activeOnStartup": false,
