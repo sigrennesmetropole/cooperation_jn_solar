@@ -81,8 +81,6 @@ export async function storeDataForEnedis() {
     roofSurfacesList: roofsStore.roofSurfacesList,
     selectedRoofSurfaceId: roofsStore.selectedRoofSurfaceId,
     gridGeom: roofsStore.gridGeom,
-    gridMatrix: roofsStore.gridMatrix,
-    previousGridMatrix: roofsStore.previousGridMatrix,
     previouslySelected: roofsStore.previouslySelected,
   }
 
@@ -187,8 +185,6 @@ export function getDataFromLocalStorage() {
   roofsStore.roofSurfacesList = data.dataRoof.roofSurfacesList
   roofsStore.selectedRoofSurfaceId = data.dataRoof.selectedRoofSurfaceId
   roofsStore.gridGeom = data.dataRoof.gridGeom
-  roofsStore.gridMatrix = data.dataRoof.gridMatrix
-  roofsStore.previousGridMatrix = data.dataRoof.previousGridMatrix
   roofsStore.previouslySelected = data.dataRoof.previouslySelected
 
   simulationStore.currentStep = data.dataSimulation.currentStep

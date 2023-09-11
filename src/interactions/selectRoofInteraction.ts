@@ -60,6 +60,7 @@ class SelectRoofInteraction extends AbstractInteraction {
   }
 
   _highglightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
+    console.log('Build to high', buildingRoofs)
     this.unhighlight()
     buildingRoofs.features.forEach((f) => {
       this._highlight(f.properties?.surface_id)
@@ -102,8 +103,9 @@ class SelectRoofInteraction extends AbstractInteraction {
           return event
         }
 
+        console.log('Selected Building: ', selectedBuilding)
         const selectedBuildingId =
-          selectedBuilding?.getProperty('attributes')['BUILDINGID']
+          selectedBuilding?.getProperty('attributes')['emprise_id_rm']
 
         if (isInteractionBuilding()) {
           const mapStore = useMapStore()

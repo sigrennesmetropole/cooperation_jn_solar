@@ -2,7 +2,6 @@ import { Fill, Icon, Stroke, Style } from 'ol/style'
 import {
   bbox,
   bboxPolygon,
-  booleanEqual,
   buffer,
   center,
   difference,
@@ -17,8 +16,8 @@ import {
   rhumbDistance,
   transformTranslate,
   union,
-  booleanContains,
 } from '@turf/turf'
+import booleanContains from '@turf/boolean-contains'
 import type {
   AllGeoJSON,
   BBox,
@@ -128,24 +127,19 @@ export function generateRectangleGrid(
 }
 
 export type Square = {
-  usable: boolean
+  id: string
   squareCenter: Point
 }
 
-export type Matrix = Square[][]
+export type Matrix = Square[]
 
 export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
-  let x = 0,
-    y = 0
-  const matrix: Matrix = []
+  const usableIds: Matrix = []
   const arrFeatures: Array<Feature<Geometry, Properties>> = []
   // @ts-ignore
   grid.featureCollection.features.forEach((f) => {
     let isInside: boolean = false
     const centerGridCase = center(f as AllGeoJSON)
-    if (x == 0) {
-      matrix[y] = []
-    }
     for (const roofShapeFeature of roofShape.features) {
       if (booleanContains(roofShapeFeature, f)) {
         isInside = true
@@ -153,20 +147,15 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
     }
     if (isInside) {
       arrFeatures.push(f as Feature<Geometry, Properties>)
-    }
-
-    matrix[y][x] = {
-      usable: isInside,
-      squareCenter: centerGridCase.geometry,
-    }
-    y = (y + 1) % grid.rows
-    if (y == 0) {
-      x = (x + 1) % grid.columns
+      usableIds.push({
+        id: f.id as string,
+        squareCenter: centerGridCase.geometry,
+      })
     }
   })
   // @ts-ignore
   grid.featureCollection = featureCollection(arrFeatures)
-  return { grid, matrix }
+  return { grid, usableIds }
 }
 
 export function centerGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
@@ -296,34 +285,22 @@ export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
   return res
 }
 
-export function substractSelectedSquaresFromGrid(squareGrid: Matrix) {
+export function savePreviousGrid() {
+  const selectedSquares = getSquaresOfInteraction()
+  const roofsStore = useRoofsStore()
+  roofsStore.previouslySelected = selectedSquares
+}
+export function substractSelectedSquares(usableIds: Matrix) {
   // @ts-ignore
   const selectedSquares = getSquaresOfInteraction()
   const roofsStore = useRoofsStore()
   roofsStore.previouslySelected = selectedSquares
-
-  let x, y
-  for (x = 0; x < squareGrid.length; x++) {
-    if (selectedSquares.length == 0) {
-      break
-    }
-    for (y = 0; y < squareGrid[x].length; y++) {
-      // Only check if the square is usable because we want to set the
-      // usable to false if it equals
-      if (squareGrid[x][y].usable) {
-        for (const selectedSquare of selectedSquares) {
-          const center = selectedSquare.getProperty('center') as Point
-          if (booleanEqual(center, squareGrid[x][y].squareCenter as Point)) {
-            squareGrid[x][y].usable = false
-            // Remove the already equals to save some comparison
-            const index = selectedSquares.indexOf(selectedSquare)
-            selectedSquares.splice(index, 1)
-            break
-          }
-        }
-      }
-    }
-  }
+  if (selectedSquares.length == 0) return
+  const res = usableIds.filter(
+    (s) => !selectedSquares.map((s) => s.getId()).includes(s.id)
+  )
+  roofsStore.usableIds = res
+  return res
 }
 
 export function removeRoofGrid(rennesApp: RennesApp) {
