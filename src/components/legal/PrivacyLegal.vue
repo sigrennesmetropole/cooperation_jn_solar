@@ -179,11 +179,11 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
       </p>
       <p class="mb-6">
         À l'issue de cette utilisation (étape de simulation), les données
-        personnelles pourront ne seront pas conservées. Elles feront l'objet
-        d'une suppression définitive systématique. Nous pouvons publier,
-        divulguer et utiliser les informations non personnelles à des fins
-        d'analyse de l'utilisation de la Plateforme et pour aider à la
-        planification énergétique du territoire.
+        personnelles ne seront pas conservées. Elles feront l'objet d'une
+        suppression définitive systématique. Nous pouvons publier, divulguer et
+        utiliser les informations non personnelles à des fins d'analyse de
+        l'utilisation de la Plateforme et pour aider à la planification
+        énergétique du territoire.
       </p>
       <p>
         Vous pourrez conserver la trace des informations associées à votre
