@@ -9,7 +9,6 @@ import RoofAccordionOptions from '@/components/simulation/RoofAccordionOptions.v
 import SetUpStep from '@/components/simulation/SetUpStep.vue'
 import SavingsStep from '@/components/simulation/SavingsStep.vue'
 import FooterButtons from '@/components/simulation/FooterButtons.vue'
-import { CesiumTilesetLayer, VectorStyleItem } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import { createViewpointFromRoofFeature } from '@/services/viewPointHelper'
 import { useRoofsStore } from '@/stores/roof'
@@ -49,20 +48,16 @@ onBeforeMount(async () => {
   panelsStore.isCompletelyHidden = false
   panelsStore.setTypePanelDisplay('right')
   if (mapStore.isInitializeMap) {
-    highlightSelectedRoofPan(
+    await highlightSelectedRoofPan(
       roofStore.selectedRoofSurfaceId!,
       simulationStore.shouldShowSolarPanelLayer()
     )
   }
 })
 
-const highlightStyle = new VectorStyleItem({
-  fill: { color: 'rgb(63,185,30)' },
-})
-
 mapStore.$subscribe(async () => {
   if (mapStore.isInitializeMap) {
-    highlightSelectedRoofPan(
+    await highlightSelectedRoofPan(
       roofStore.selectedRoofSurfaceId!,
       simulationStore.shouldShowSolarPanelLayer()
     )
@@ -88,7 +83,7 @@ roofStore.$subscribe(async () => {
       feature,
       bbox(featureCollection(features))
     )
-    if (vp !== undefined) mapStore.viewPoint = vp
+    if (vp !== undefined) mapStore.setViewpoint(vp)
   }
 })
 
@@ -98,12 +93,12 @@ async function highlightSelectedRoofPan(
 ) {
   isHighlightSelectedRoofPanCalled.value = true
   rennesApp.clearRoofsHighlight()
+  let surfaceIdFormat = `ID_${surfaceId}`
   if (!solarPanelShown) {
-    let roofLayer: CesiumTilesetLayer =
-      await rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d)
-    roofLayer.featureVisibility.highlight({
-      [surfaceId]: highlightStyle,
-    })
+    rennesApp.highlightByLayerNameAndFeatureId(
+      RENNES_LAYER.roof3d,
+      surfaceIdFormat
+    )
   }
 }
 

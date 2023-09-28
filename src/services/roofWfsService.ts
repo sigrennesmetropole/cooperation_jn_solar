@@ -2,6 +2,7 @@ import type { Feature, Geometry, GeoJsonProperties } from 'geojson'
 import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { useRoofsStore } from '@/stores/roof'
 import { mapRoofSurfaceModel, type RoofSurfaceModel } from '@/model/roof.model'
+import { getStringFromConfig } from '@/services/configService'
 
 class RoofWfsService {
   storeRoofsFeaturesGroupBySurfaceId(jsonResponse: GeoJSONFeatureCollection) {
@@ -25,10 +26,11 @@ class RoofWfsService {
   }
 
   async fetchRoofs(buildingId: string): Promise<GeoJSONFeatureCollection> {
-    const baseUrl = 'https://public.sig.rennesmetropole.fr/geoserver/ows?'
-    const baseParameters =
-      'service=WFS&request=getFeature&typename=cli_climat:photovolta%C3%AFque_potentiel_classif_2021&outputFormat=application/json&srsName=EPSG:4326'
-    const cqlFilter = "&cql_filter=buildingid='" + buildingId + "'"
+    const baseUrl = getStringFromConfig('ogcServices.baseUrl')
+    const layerPath = getStringFromConfig('ogcServices.potentialLayer')
+    const filterOn = getStringFromConfig('ogcServices.roofFilterOnAttribute')
+    const baseParameters = `service=WFS&request=getFeature&typename=${layerPath}&outputFormat=application/json&srsName=EPSG:4326`
+    const cqlFilter = `&cql_filter=${filterOn}='${buildingId}'`
     const response = await fetch(baseUrl + baseParameters + cqlFilter)
     const jsonResponse = (await response.json()) as GeoJSONFeatureCollection
 

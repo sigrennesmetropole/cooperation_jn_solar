@@ -6,13 +6,18 @@ import {
   OpenlayersMap,
   GeoJSONLayer,
   CesiumTilesetLayer,
+  VectorStyleItem,
 } from '@vcmap/core'
 import type Map from 'ol/Map.js'
 import { useMapStore } from '@/stores/map'
-import type { Layer } from 'ol/layer'
 import type { RennesLayer } from '@/stores/layers'
 import { RENNES_LAYER } from '@/stores/layers'
 import { Cartographic } from '@vcmap-cesium/engine'
+import type { Style } from 'ol/style'
+
+const defaultHighlightStyle = new VectorStyleItem({
+  fill: { color: 'rgb(74,222,128)' },
+})
 
 export class RennesApp extends VcsApp {
   readonly mapConfig
@@ -34,7 +39,7 @@ export class RennesApp extends VcsApp {
       cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
         homeViewPoint.distance
       mapStore.isInitializeMap = true
-      mapStore.viewPoint = homeViewPoint
+      mapStore.setViewpoint(homeViewPoint)
     }
   }
 
@@ -58,17 +63,34 @@ export class RennesApp extends VcsApp {
     return this.get3DMap().getViewpointSync()?.distance
   }
 
-  getRoofSquaresAreaLayer(): Layer {
-    return this.getOpenlayerMap()
-      .getAllLayers()
-      .find((l) => l.getProperties().name === 'roofSquaresArea')!
-  }
-
   clearRoofsHighlight() {
     const roofLayer: CesiumTilesetLayer = this.maps.layerCollection.getByKey(
       RENNES_LAYER.roof3d
     )
     roofLayer.featureVisibility.clearHighlighting()
+  }
+
+  highlightByLayerNameAndFeatureId(
+    layerName: string,
+    featureId: string,
+    highlightStyle?: VectorStyleItem | Style | null
+  ) {
+    const layer = this.maps.layerCollection.getByKey(layerName)
+    this.highlightByLayerAndFeatureId(
+      layer,
+      featureId,
+      highlightStyle ?? defaultHighlightStyle
+    )
+  }
+
+  highlightByLayerAndFeatureId(
+    layer: CesiumTilesetLayer | GeoJSONLayer,
+    featureId: string,
+    highlightStyle?: VectorStyleItem | Style
+  ) {
+    layer.featureVisibility.highlight({
+      [featureId]: highlightStyle ?? defaultHighlightStyle,
+    })
   }
 
   async getLayerByKey(key: RennesLayer) {

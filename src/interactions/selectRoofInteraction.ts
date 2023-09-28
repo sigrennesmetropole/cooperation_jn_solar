@@ -7,7 +7,6 @@ import {
   Projection,
   VcsEvent,
   vcsLayerName,
-  VectorStyleItem,
 } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
 import type { RennesApp } from '@/services/RennesApp'
@@ -22,10 +21,6 @@ import {
 } from '@/services/interactionUtils'
 import { useMapStore } from '@/stores/map'
 import { RENNES_LAYER } from '@/stores/layers'
-
-const highlightStyle = new VectorStyleItem({
-  fill: { color: 'rgb(74,222,128)' },
-})
 
 class SelectRoofInteraction extends AbstractInteraction {
   _featureClicked: VcsEvent<any> // eslint-disable-line
@@ -45,13 +40,6 @@ class SelectRoofInteraction extends AbstractInteraction {
     this._rennesApp = rennesApp
   }
 
-  _highlight(featureId: string) {
-    this._highlighted = true
-    this._selectableLayer.featureVisibility.highlight({
-      [featureId]: highlightStyle,
-    })
-  }
-
   unhighlight() {
     if (this._highlighted) {
       this._highlighted = false
@@ -59,11 +47,15 @@ class SelectRoofInteraction extends AbstractInteraction {
     }
   }
 
-  _highglightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
-    console.log('Build to high', buildingRoofs)
+  _highlightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
     this.unhighlight()
+    this._highlighted = true
     buildingRoofs.features.forEach((f) => {
-      this._highlight(f.properties?.surface_id)
+      const featureId = `ID_${f.properties?.surface_id}`
+      this._rennesApp.highlightByLayerAndFeatureId(
+        this._selectableLayer,
+        featureId
+      )
     })
   }
 
@@ -103,7 +95,6 @@ class SelectRoofInteraction extends AbstractInteraction {
           return event
         }
 
-        console.log('Selected Building: ', selectedBuilding)
         const selectedBuildingId =
           selectedBuilding?.getProperty('attributes')['emprise_id_rm']
 
@@ -112,7 +103,7 @@ class SelectRoofInteraction extends AbstractInteraction {
           mapStore.isLoadingMap = true
           const buildingRoofs: GeoJSONFeatureCollection =
             await roofWfsService.fetchRoofs(selectedBuildingId)
-          this._highglightRoofsOfTheBuilding(buildingRoofs)
+          this._highlightRoofsOfTheBuilding(buildingRoofs)
           await this._setLatitudeAndLongitude(event)
           mapStore.isLoadingMap = false
           this._goToNextStep(buildingRoofs, selectedBuildingId)

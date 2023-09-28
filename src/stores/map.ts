@@ -24,6 +24,12 @@ export const useMapStore = defineStore('map', () => {
     activeMap.value = 'cesium'
   }
 
+  function setViewpoint(vp: Viewpoint) {
+    if (vp === viewPoint.value) return
+    viewPointPrevious.value = viewPoint.value
+    viewPoint.value = vp
+  }
+
   return {
     isInitializeMap,
     viewPoint,
@@ -33,5 +39,6 @@ export const useMapStore = defineStore('map', () => {
     is3D,
     activate2d,
     activate3d,
+    setViewpoint,
   }
 })

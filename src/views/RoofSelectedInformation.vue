@@ -41,10 +41,10 @@ function changeIsEmptuDataFromBuildingData() {
 changeIsEmptuDataFromBuildingData()
 
 async function newViewPoint() {
+  console.log('come from viewpoint')
   if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
-    mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.roofsFeatures.bbox
-    )
+    let vp = await createCustomViewpointFromExtent(roofStore.roofsFeatures.bbox)
+    mapStore.setViewpoint(vp)
   }
 }
 
@@ -53,14 +53,15 @@ onBeforeMount(async () => {
   panelsStore.setTypePanelDisplay('left')
   mapStore.activate3d()
   panelsStore.isCompletelyHidden = false
-  newViewPoint()
-  hiddePin(rennesApp)
+  await newViewPoint()
+  await hiddePin(rennesApp)
 })
 
 roofStore.$subscribe(async () => {
+  console.log('Subscribe bro')
   buildingData.value = getDataBuilding()
   changeIsEmptuDataFromBuildingData()
-  newViewPoint()
+  await newViewPoint()
 })
 
 function buttonBoxAction() {

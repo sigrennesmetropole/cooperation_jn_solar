@@ -179,9 +179,8 @@ const goToAddress = async (event: {
   const newVp = await createVPForTypeAddress(rennesApp, event.type, event.item)
   if (newVp) {
     resetAutocompletion()
-    mapStore.viewPoint = newVp
-
-    addPin(rennesApp, event.type, event.item)
+    mapStore.setViewpoint(newVp)
+    await addPin(rennesApp, event.type, event.item)
   }
 }
 

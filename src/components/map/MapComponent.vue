@@ -126,6 +126,39 @@ async function get2dRoofShapeFromWfs(
   return response.data as FeatureCollection
 }
 
+async function computeOptimalGrid() {
+  let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
+  // Handle web worker messages
+  // Create a promise to handle the asynchronous behavior
+  let roofSlope =
+    useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+  const selectedRoofModel: RoofSurfaceModel =
+    roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
+  mapStore.isLoadingMap = true
+  const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
+  if (roofFavorableArea.features.length > 0) {
+    const surfaceId = roofFavorableArea.features[0].properties?.surface_id
+    let fc: FeatureCollection = await get2dRoofShapeFromWfs(surfaceId)
+    displayRoofShape2d(rennesApp, fc)
+    worker
+      .send({
+        roofShape: JSON.stringify(fc),
+        roofFavorableArea: JSON.stringify(roofFavorableArea),
+        roofSlope: roofSlope,
+        rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
+        rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
+        roofAzimuth: roofAzimuth,
+      })
+      .then((reply) => {
+        mapStore.isLoadingMap = false
+        roofsStore.gridGeom = reply.grid
+        roofsStore.usableIds = reply.usableIds
+        roofsStore.ori = reply.ori
+        displayGridAndAddInteractions()
+      })
+  }
+}
+
 async function setupGridInstallation() {
   //force synchrone switch for adding openlayer interaction, update the store
   mapStore.viewPointPrevious = mapStore.viewPoint
@@ -136,37 +169,7 @@ async function setupGridInstallation() {
     layerStore.enableLayer(RENNES_LAYER.roofShape)
     // avoid recompute everything when came back from solar placement
     if (!roofsStore.usableIds) {
-      let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
-      // Handle web worker messages
-      // Create a promise to handle the asynchronous behavior
-      let roofSlope =
-        useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
-      const selectedRoofModel: RoofSurfaceModel =
-        roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
-      mapStore.isLoadingMap = true
-      const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
-      console.log('Roofshape', roofFavorableArea)
-      if (roofFavorableArea.features.length > 0) {
-        const surfaceId = roofFavorableArea.features[0].properties?.surface_id
-        let fc: FeatureCollection = await get2dRoofShapeFromWfs(surfaceId)
-        displayRoofShape2d(rennesApp, fc)
-        worker
-          .send({
-            roofShape: JSON.stringify(fc),
-            roofFavorableArea: JSON.stringify(roofFavorableArea),
-            roofSlope: roofSlope,
-            rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
-            rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
-            roofAzimuth: roofAzimuth,
-          })
-          .then((reply) => {
-            mapStore.isLoadingMap = false
-            roofsStore.gridGeom = reply.grid
-            roofsStore.usableIds = reply.usableIds
-            roofsStore.ori = reply.ori
-            displayGridAndAddInteractions()
-          })
-      }
+      await computeOptimalGrid()
     } else {
       roofsStore.restoreMatrixToClean()
       roofsStore.restoreGridGeom()
