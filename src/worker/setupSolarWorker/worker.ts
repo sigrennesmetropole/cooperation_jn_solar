@@ -9,12 +9,7 @@ registerPromiseWorker(function ({ message }) {
     message.roofFavorableArea
   ) as GeoJSONFeatureCollection
   const ori = message.ori
-
-  console.log('Grid', grid)
-  console.log('roofFavorableArea', roofFavorableArea)
-
   const gridFilterByFavorableArea = filterGrid(roofFavorableArea, grid)
-
   // Send the result back to the main thread
   return {
     grid: gridFilterByFavorableArea.grid,

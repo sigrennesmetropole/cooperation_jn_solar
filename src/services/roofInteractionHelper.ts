@@ -2,12 +2,11 @@ import { Fill, Icon, Stroke, Style } from 'ol/style'
 import {
   bbox,
   bboxPolygon,
+  booleanPointInPolygon,
   buffer,
   center,
-  difference,
   featureCollection,
   point,
-  polygon,
   randomPolygon,
   square,
   transformRotate,
@@ -15,7 +14,6 @@ import {
   rhumbBearing,
   rhumbDistance,
   transformTranslate,
-  union,
 } from '@turf/turf'
 import booleanContains from '@turf/boolean-contains'
 import type {
@@ -23,8 +21,8 @@ import type {
   BBox,
   Feature,
   FeatureCollection,
-  MultiPolygon,
   Point,
+  Polygon as turfPolygon,
   Properties,
 } from '@turf/helpers'
 // @ts-ignore
@@ -158,6 +156,35 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
   return { grid, usableIds }
 }
 
+export function filterGridOnCenter(
+  roofShape: GeoJSONFeatureCollection
+): Matrix {
+  const usableIds: Matrix = []
+  const roofsStore = useRoofsStore()
+
+  // @ts-ignore
+  roofsStore.usableIds.forEach((s: Square) => {
+    let isInside: boolean = false
+    for (const roofShapeFeature of roofShape.features) {
+      if (
+        booleanPointInPolygon(
+          s.squareCenter,
+          roofShapeFeature.geometry as turfPolygon
+        )
+      ) {
+        isInside = true
+      }
+    }
+    if (isInside) {
+      usableIds.push({
+        id: s.id as string,
+        squareCenter: s.squareCenter,
+      })
+    }
+  })
+  return usableIds
+}
+
 export function centerGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
   // @ts-ignore
   const from = center(grid.featureCollection)
@@ -203,7 +230,7 @@ export function displayRoofShape(
 
 export function displayRoofShape2d(
   rennesApp: RennesApp,
-  geojson: GeoJSONFeatureCollection
+  geojson: FeatureCollection
 ) {
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     'roofShape2d'
@@ -258,38 +285,6 @@ export function getSquaresOfInteraction() {
   return features
 }
 
-export function unionAllRoofPan(roofPans: GeoJSONFeatureCollection) {
-  // @ts-ignore
-  let res: Feature<Polygon | MultiPolygon, Properties> | null =
-    roofPans.features[0]!
-  roofPans.features.forEach((f, idx) => {
-    if (res && idx > 0) {
-      // @ts-ignore
-      res = union(res, f.geometry)
-    }
-  })
-  return res
-}
-
-export function substractSquareFromRoofPanUnion(roofPans: Feature<Geometry>) {
-  // @ts-ignore
-  let res: Feature<Polygon | MultiPolygon> | null = roofPans
-  const squares = getSquaresOfInteraction()
-  squares.forEach((square) => {
-    const r = square.getGeometry()?.getCoordinates()!
-    if (res) {
-      // @ts-ignore
-      res = difference(res, polygon(r))
-    }
-  })
-  return res
-}
-
-export function savePreviousGrid() {
-  const selectedSquares = getSquaresOfInteraction()
-  const roofsStore = useRoofsStore()
-  roofsStore.previouslySelected = selectedSquares
-}
 export function substractSelectedSquares(usableIds: Matrix) {
   // @ts-ignore
   const selectedSquares = getSquaresOfInteraction()

@@ -125,18 +125,20 @@ function isDisplayNextButton() {
   </div>
   <div class="mb-[120px]"></div>
   <StepTitle :step="simulationStore.currentStep"></StepTitle>
-  <StepDescription
-    :step="simulationStore.currentStep"
-    :substep="simulationStore.currentSubStep"
-  ></StepDescription>
-  <RoofAccordionOptions
-    v-if="simulationStore.currentStep === 1"
-  ></RoofAccordionOptions>
-  <!-- SetUpStep contain all the substep for step 2 -->
-  <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
-  <!-- SavingsStep contain all the substep for step 3 -->
-  <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
-  <div class="h-full"></div>
-  <div class="mb-[70px]"></div>
-  <FooterButtons :isDisplayNextButton="isDisplayNextButton()"></FooterButtons>
+  <div v-if="!mapStore.isLoadingMap">
+    <StepDescription
+      :step="simulationStore.currentStep"
+      :substep="simulationStore.currentSubStep"
+    ></StepDescription>
+    <RoofAccordionOptions
+      v-if="simulationStore.currentStep === 1"
+    ></RoofAccordionOptions>
+    <!-- SetUpStep contain all the substep for step 2 -->
+    <SetUpStep v-else-if="simulationStore.currentStep === 2"></SetUpStep>
+    <!-- SavingsStep contain all the substep for step 3 -->
+    <SavingsStep v-else-if="simulationStore.currentStep === 3"></SavingsStep>
+    <div class="h-full"></div>
+    <div class="mb-[70px]"></div>
+    <FooterButtons :isDisplayNextButton="isDisplayNextButton()"></FooterButtons>
+  </div>
 </template>

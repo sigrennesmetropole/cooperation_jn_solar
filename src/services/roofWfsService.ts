@@ -3,6 +3,8 @@ import type { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { useRoofsStore } from '@/stores/roof'
 import { mapRoofSurfaceModel, type RoofSurfaceModel } from '@/model/roof.model'
 import { getStringFromConfig } from '@/services/configService'
+import type { FeatureCollection } from '@turf/helpers'
+import axios from 'axios'
 
 class RoofWfsService {
   storeRoofsFeaturesGroupBySurfaceId(jsonResponse: GeoJSONFeatureCollection) {
@@ -12,9 +14,19 @@ class RoofWfsService {
     const surfaceIds: string[] = []
     jsonResponse.features.forEach((f) => {
       if (f.properties) {
-        if (!surfaceIds.includes(f.properties['surface_id'])) {
+        if (
+          !surfaceIds.includes(
+            f.properties[
+              getStringFromConfig('ogcServices.potentialSurfaceIdAttribute')
+            ]
+          )
+        ) {
           removeDuplicateJsonResponse.push(f)
-          surfaceIds.push(f.properties['surface_id'])
+          surfaceIds.push(
+            f.properties[
+              getStringFromConfig('ogcServices.potentialSurfaceIdAttribute')
+            ]
+          )
         }
       }
     })
@@ -28,7 +40,9 @@ class RoofWfsService {
   async fetchRoofs(buildingId: string): Promise<GeoJSONFeatureCollection> {
     const baseUrl = getStringFromConfig('ogcServices.baseUrl')
     const layerPath = getStringFromConfig('ogcServices.potentialLayer')
-    const filterOn = getStringFromConfig('ogcServices.roofFilterOnAttribute')
+    const filterOn = getStringFromConfig(
+      'ogcServices.potentialFilterOnAttribute'
+    )
     const baseParameters = `service=WFS&request=getFeature&typename=${layerPath}&outputFormat=application/json&srsName=EPSG:4326`
     const cqlFilter = `&cql_filter=${filterOn}='${buildingId}'`
     const response = await fetch(baseUrl + baseParameters + cqlFilter)
@@ -39,6 +53,19 @@ class RoofWfsService {
     this.storeRoofsFeaturesGroupBySurfaceId(jsonResponse)
 
     return jsonResponse
+  }
+
+  async fetch2dRoofShapeFromWfs(
+    surface_id: string
+  ): Promise<FeatureCollection> {
+    const baseUrl = getStringFromConfig('ogcServices.baseUrl')
+    const layerPath = getStringFromConfig('ogcServices.roofLayer')
+    const filterOn = getStringFromConfig('ogcServices.roofFilterOnAttribute')
+    const baseParameters = `service=WFS&request=getFeature&typename=${layerPath}&outputFormat=application/json&srsName=EPSG:4326`
+    const cqlFilter = `&cql_filter=${filterOn}='${surface_id}'`
+
+    const response = await axios.get(baseUrl + baseParameters + cqlFilter)
+    return response.data as FeatureCollection
   }
 }
 

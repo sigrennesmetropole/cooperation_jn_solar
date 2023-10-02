@@ -20,7 +20,7 @@ import {
   addRoofInteractionOn2dMap,
   displayGridOnMap,
   displayRoofShape2d,
-  filterGrid,
+  filterGridOnCenter,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
@@ -43,12 +43,12 @@ import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
-import axios from 'axios'
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
 import { IsSolarPanelVisibleOnStep } from '@/services/interactionUtils'
 import type { FeatureCollection } from '@turf/helpers'
+import { roofWfsService } from '@/services/roofWfsService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -115,17 +115,6 @@ function displayGridAndAddInteractions() {
   rennesApp.getOpenlayerMap().getView().setMinZoom(21)
 }
 
-//TODO: Manage true api call when data is ready
-async function get2dRoofShapeFromWfs(
-  surface_id: string
-): Promise<FeatureCollection> {
-  let baseUrl = `http://localhost:8600/geoserver/rennes-toits/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=rennes-toits:toit&outputFormat=application/json&srsName=EPSG:4326&cql_filter=surface_id=${surface_id}`
-
-  let response = await axios.get(baseUrl)
-  console.log(response.data)
-  return response.data as FeatureCollection
-}
-
 async function computeOptimalGrid() {
   let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
   // Handle web worker messages
@@ -138,7 +127,9 @@ async function computeOptimalGrid() {
   const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
   if (roofFavorableArea.features.length > 0) {
     const surfaceId = roofFavorableArea.features[0].properties?.surface_id
-    let fc: FeatureCollection = await get2dRoofShapeFromWfs(surfaceId)
+    let fc: FeatureCollection = await roofWfsService.fetch2dRoofShapeFromWfs(
+      surfaceId
+    )
     displayRoofShape2d(rennesApp, fc)
     worker
       .send({
@@ -182,13 +173,10 @@ async function setupSolarPanel() {
   mapStore.isLoadingMap = true
   roofsStore.saveGridGeom()
   roofsStore.saveCleanMatrix()
+
   let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
-  const gridFilterByFavorableArea = filterGrid(
-    roofFavorableArea,
-    roofsStore.gridGeom!
-  )
-  roofsStore.gridGeom = gridFilterByFavorableArea.grid
-  roofsStore.usableIds = gridFilterByFavorableArea.usableIds
+  const filterUsableIds = filterGridOnCenter(roofFavorableArea)
+  roofsStore.usableIds = filterUsableIds
 
   substractSelectedSquares(roofsStore.usableIds!)
   const selectedRoofModel: RoofSurfaceModel =

@@ -10,7 +10,6 @@ export function computeViewPoint(
   turfPoint: Feature<Point, Properties>,
   vpJson: ViewpointOptions
 ) {
-  console.log('New vp computed')
   // By setting the groudposition without the z-value, the pitch, the camera
   // distance and set the camera position to undefined, the missing value
   // will be computed internally in the map core considering the terrain also
@@ -40,7 +39,6 @@ export async function createCustomViewpointFromExtent(extent: BBox) {
   const vp = Viewpoint.createViewpointFromExtent(extent)
   const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
   const turfPoint = point(vp.groundPosition)
-  console.log('I come from extent')
   return computeViewPoint(turfPoint, vpJson)
 }
 

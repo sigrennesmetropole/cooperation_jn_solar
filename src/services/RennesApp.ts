@@ -16,7 +16,7 @@ import { Cartographic } from '@vcmap-cesium/engine'
 import type { Style } from 'ol/style'
 
 const defaultHighlightStyle = new VectorStyleItem({
-  fill: { color: 'rgb(74,222,128)' },
+  fill: { color: 'rgb(61,222,93)' },
 })
 
 export class RennesApp extends VcsApp {

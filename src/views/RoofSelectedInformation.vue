@@ -38,10 +38,8 @@ function changeIsEmptuDataFromBuildingData() {
     isEmptyData.value = false
   }
 }
-changeIsEmptuDataFromBuildingData()
 
 async function newViewPoint() {
-  console.log('come from viewpoint')
   if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
     let vp = await createCustomViewpointFromExtent(roofStore.roofsFeatures.bbox)
     mapStore.setViewpoint(vp)
