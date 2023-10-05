@@ -20,8 +20,6 @@ type ConfigType = {
   solar_panel: {
     solar_panel_surface: number
     solar_panel_power: number
-    inclinaison_on_flat_roof: number
-    azimuth_on_flat_roof: number
   }
   grid: {
     height_solar_panel: number

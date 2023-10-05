@@ -184,15 +184,9 @@ function isRoofFlat() {
 }
 
 export function getInclinaisonSolarPanel(selectedRoofInclinaison: number) {
-  if (isRoofFlat()) {
-    return getNumberFromConfig('solar_panel.inclinaison_on_flat_roof')
-  }
   return selectedRoofInclinaison
 }
 
 export function getAzimuthSolarPanel(selectedRoofAzimuth: number) {
-  if (isRoofFlat()) {
-    return getNumberFromConfig('solar_panel.azimuth_on_flat_roof')
-  }
   return selectedRoofAzimuth
 }

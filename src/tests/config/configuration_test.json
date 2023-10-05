@@ -15,9 +15,7 @@
   },
   "solar_panel": {
     "solar_panel_surface": 1.8,
-    "solar_panel_power": 0.4,
-    "inclinaison_on_flat_roof": 0,
-    "azimuth_on_flat_roof": 180
+    "solar_panel_power": 0.4
   },
   "grid": {
     "height_solar_panel": 2,
