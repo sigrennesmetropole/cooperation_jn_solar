@@ -117,7 +117,9 @@ export function generateRectangleGrid(
       units: 'millimeters',
     }
   )
-  transformRotate(featureCollection, roofAzimuth, { mutate: true })
+  if (rows > 0 && columns > 0) {
+    transformRotate(featureCollection, roofAzimuth, { mutate: true })
+  }
   featureCollection.features.map(
     (f: Feature) => (f.properties!.center = center(f.geometry).geometry)
   )
