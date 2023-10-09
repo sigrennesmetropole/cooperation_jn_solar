@@ -188,5 +188,5 @@ export function getInclinaisonSolarPanel(selectedRoofInclinaison: number) {
 }
 
 export function getAzimuthSolarPanel(selectedRoofAzimuth: number) {
-  return selectedRoofAzimuth
+  return selectedRoofAzimuth - 3.47
 }

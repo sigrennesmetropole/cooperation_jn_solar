@@ -11,13 +11,14 @@ import {
   updateInteractionsOnMap,
   updateInteractionsStoreAfterViewChange,
 } from '@/services/interactionUtils'
-import type { Layer } from '@vcmap/core'
+import type { Layer, Viewpoint } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import { useAddressStore } from '@/stores/address'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
+  cleanRoofShape2d,
   displayGridOnMap,
   displayRoofShape2d,
   filterGridOnCenter,
@@ -60,6 +61,8 @@ const mapStore = useMapStore()
 const viewStore = useViewsStore()
 const interactionsStore = useInteractionsStore()
 const enedisStore = useEnedisStore()
+
+let previousVp: Viewpoint | null = null
 
 onMounted(async () => {
   if (
@@ -170,6 +173,7 @@ async function setupGridInstallation() {
 }
 
 async function setupSolarPanel() {
+  cleanRoofShape2d(rennesApp)
   mapStore.isLoadingMap = true
   roofsStore.saveGridGeom()
   roofsStore.saveCleanMatrix()
@@ -280,8 +284,12 @@ mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
   }
-  if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
+  if (
+    previousVp !== mapStore.viewPoint &&
+    rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!
+  ) {
     if (mapStore.isInitializeMap) {
+      previousVp = mapStore.viewPoint!
       await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
     }
   }

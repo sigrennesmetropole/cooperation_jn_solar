@@ -232,12 +232,20 @@ export function displayRoofShape2d(
   rennesApp: RennesApp,
   geojson: FeatureCollection
 ) {
+  cleanRoofShape2d(rennesApp)
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
     'roofShape2d'
   ) as GeoJSONLayer
   const format = new GeoJSON()
   const marker = format.readFeatures(geojson)
   roofLayer.addFeatures(marker)
+}
+
+export function cleanRoofShape2d(rennesApp: RennesApp) {
+  const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
+    'roofShape2d'
+  ) as GeoJSONLayer
+  roofLayer.removeAllFeatures()
 }
 
 export function addRoofInteractionOn2dMap(

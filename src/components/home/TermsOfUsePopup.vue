@@ -41,13 +41,33 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
             générales, qui s'imposent à tout usager du présent site.
             L’Utilisateur garantit qu’il n’utilisera pas le site à des fins
             illicites ou immorales ou contraires à leur utilisation initiale.
-            <br /><br />
-            Les équipements (ordinateurs, téléphones, moyens de
-            télécommunication…) permettant l'accès au site sont à la charge
-            exclusive des Utilisateurs, de même que les frais de
-            télécommunications induits par leur utilisation.
           </p>
-
+          <p class="text-sm font-normal">
+            La première des démarches à effectuer avant de monter un projet
+            photovoltaïque est de contacter la mairie, de façon à :
+          </p>
+          <ul class="list-disc pl-6">
+            <li>
+              connaître les éventuelles contraintes urbanistiques du site
+              photovoltaïque et les réglementations locales telles que le PLU ;
+            </li>
+            <li>
+              obtenir le document d'urbanisme exigé par le gestionnaire du
+              réseau pour la complétude de la demande de raccordement.
+            </li>
+          </ul>
+          Il reste également conseillé, dans les périmètres concernés, de
+          contacter en amont les Architectes des Bâtiments de France (ABF) pour
+          leur soumettre le projet et l'adapter, le cas échéant, avant
+          soumission officielle de la demande.
+          <br />
+          La mairie est le point d'entrée pour tous les projets, c'est auprès
+          d'elle qui faut déposer son dossier.
+          <br /><br />
+          Les équipements (ordinateurs, téléphones, moyens de
+          télécommunication…) permettant l'accès au site sont à la charge
+          exclusive des Utilisateurs, de même que les frais de
+          télécommunications induits par leur utilisation.
           <p class="text-sm font-normal">
             Pour une expérience optimale de l'application, vous trouverez
             ci-dessous les prérequis techniques :

@@ -3,6 +3,7 @@ import { point } from '@turf/turf'
 import type { BBox, Feature, Point, Properties } from '@turf/turf'
 import type { GeoJSONFeature } from 'ol/format/GeoJSON'
 import { oppositeAzimuth } from '@/model/roof.model'
+import { getAzimuthSolarPanel } from '@/services/solarPanel'
 
 const cameraDistance = 150
 
@@ -51,7 +52,9 @@ export async function createViewpointFromRoofFeature(
   const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
   vpJson.pitch = -45
   if (feature.properties === null) return undefined
-  vpJson.heading = oppositeAzimuth(feature.properties.azimuth)
+  vpJson.heading = oppositeAzimuth(
+    getAzimuthSolarPanel(feature.properties.azimuth)
+  )
   vpJson.distance = cameraDistance * (Math.SQRT2 / 2)
   vp = new Viewpoint(vpJson)
   return vp
