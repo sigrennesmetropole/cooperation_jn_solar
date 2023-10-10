@@ -30,7 +30,7 @@
     "@camptocamp/ogc-client": "^1.0.0",
     "@kyvg/vue3-notification": "^2.9.0",
     "@pinia/testing": "^0.1.3",
-    "@sigrennesmetropole/cooperation_jn_common_ui": "0.0.31",
+    "@sigrennesmetropole/cooperation_jn_common_ui": "0.0.32",
     "@tailwindcss/forms": "^0.5.6",
     "@turf/boolean-contains": "^7.0.0-alpha.1",
     "@turf/boolean-intersects": "^6.5.0",
