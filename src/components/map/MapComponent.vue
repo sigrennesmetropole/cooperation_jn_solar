@@ -83,7 +83,7 @@ onMounted(async () => {
 })
 
 async function updateActiveMap() {
-  await mapStore.activate3d()
+  mapStore.activate3d()
 }
 
 async function updateLayersVisibility() {
@@ -103,7 +103,7 @@ async function setLayerVisible(layerName: string, visible: boolean) {
 
 async function disableOlInteraction() {
   if (mapStore.activeMap === 'ol') {
-    await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
     removeSolarPanel(rennesApp)
     removeRoofInteractionOn2dMap(rennesApp)
     removeRoofGrid(rennesApp)
@@ -134,22 +134,18 @@ async function computeOptimalGrid() {
       surfaceId
     )
     displayRoofShape2d(rennesApp, fc)
-    worker
-      .send({
-        roofShape: JSON.stringify(fc),
-        roofFavorableArea: JSON.stringify(roofFavorableArea),
-        roofSlope: roofSlope,
-        rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
-        rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
-        roofAzimuth: roofAzimuth,
-      })
-      .then((reply) => {
-        mapStore.isLoadingMap = false
-        roofsStore.gridGeom = reply.grid
-        roofsStore.usableIds = reply.usableIds
-        roofsStore.ori = reply.ori
-        displayGridAndAddInteractions()
-      })
+    let reply = await worker.send({
+      roofShape: JSON.stringify(fc),
+      roofFavorableArea: JSON.stringify(roofFavorableArea),
+      roofSlope: roofSlope,
+      rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
+      rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
+      roofAzimuth: roofAzimuth,
+    })
+    mapStore.isLoadingMap = false
+    roofsStore.gridGeom = reply.grid
+    roofsStore.usableIds = reply.usableIds
+    roofsStore.ori = reply.ori
   }
 }
 
@@ -167,8 +163,8 @@ async function setupGridInstallation() {
     } else {
       roofsStore.restoreMatrixToClean()
       roofsStore.restoreGridGeom()
-      displayGridAndAddInteractions()
     }
+    displayGridAndAddInteractions()
   }
 }
 

@@ -11,16 +11,24 @@
     "typeConsommateur": "res1",
     "typeCompteur": 1,
     "tarifVente": 0.15,
-    "date_prod_conso": "05-09"
+    "date_prod_conso": "2012-07-26"
   },
   "solar_panel": {
     "solar_panel_surface": 1.8,
     "solar_panel_power": 0.4
   },
   "grid": {
-    "height_solar_panel": 2,
-    "width_solar_panel": 4,
-    "square_size": 475
+    "rectangle_height": 1900,
+    "rectangle_width": 950
+  },
+  "ogcServices": {
+    "baseUrl": "https://public.sig.rennesmetropole.fr/geoserver/ows?",
+    "potentialLayer": "cli_climat:photovolta%C3%AFque_potentiel_classif_2021",
+    "potentialFilterOnAttribute": "buildingid",
+    "potentialSurfaceIdAttribute": "surface_id",
+    "roofLayer": "app:coopterr_solaire_toits",
+    "roofFilterOnAttribute": "id",
+    "roofSurfaceIdAttribute": "emprise_id_rm"
   },
   "link": {
     "photovoltaique_link": "https://www.photovoltaique.info/fr/",

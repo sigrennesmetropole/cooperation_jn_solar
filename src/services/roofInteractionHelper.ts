@@ -218,18 +218,6 @@ export function displayGridOnMap(
   gridLayer.setStyle(gridStyle)
 }
 
-export function displayRoofShape(
-  rennesApp: RennesApp,
-  geojson: GeoJSONFeatureCollection
-) {
-  const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
-    RENNES_LAYER.roofShape
-  ) as GeoJSONLayer
-  const format = new GeoJSON()
-  const marker = format.readFeatures(geojson)
-  roofLayer.addFeatures(marker)
-}
-
 export function displayRoofShape2d(
   rennesApp: RennesApp,
   geojson: FeatureCollection
