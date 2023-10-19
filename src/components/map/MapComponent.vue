@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, inject } from 'vue'
+import { inject, onMounted } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import {
@@ -8,6 +8,7 @@ import {
   useLayersStore,
 } from '@/stores/layers'
 import {
+  IsSolarPanelVisibleOnStep,
   updateInteractionsOnMap,
   updateInteractionsStoreAfterViewChange,
 } from '@/services/interactionUtils'
@@ -21,21 +22,20 @@ import {
   cleanRoofShape2d,
   displayGridOnMap,
   displayRoofShape2d,
-  filterGridOnCenter,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
   substractSelectedSquares,
 } from '@/services/roofInteractionHelper'
 import {
-  initializeSolarPanelLayer,
   filterSolarPanelByMaxSolarPanel,
-  removeSolarPanel,
-  zoomToSolarPanel,
-  getInclinaisonSolarPanel,
   getAzimuthSolarPanel,
+  getInclinaisonSolarPanel,
+  initializeSolarPanelLayer,
+  removeSolarPanel,
+  solarPanelGridToSolarPanelModel,
+  zoomToSolarPanel,
 } from '@/services/solarPanel'
-import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
@@ -44,10 +44,11 @@ import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
+import centerFilterWorker from '@/worker/centerFilterWorker'
+
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
-import { IsSolarPanelVisibleOnStep } from '@/services/interactionUtils'
 import type { FeatureCollection } from '@turf/helpers'
 import { roofWfsService } from '@/services/roofWfsService'
 
@@ -119,6 +120,7 @@ function displayGridAndAddInteractions() {
 }
 
 async function computeOptimalGrid() {
+  cleanRoofShape2d(rennesApp)
   let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
   // Handle web worker messages
   // Create a promise to handle the asynchronous behavior
@@ -169,15 +171,15 @@ async function setupGridInstallation() {
 }
 
 async function setupSolarPanel() {
-  cleanRoofShape2d(rennesApp)
   mapStore.isLoadingMap = true
   roofsStore.saveGridGeom()
   roofsStore.saveCleanMatrix()
 
   let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
-  const filterUsableIds = filterGridOnCenter(roofFavorableArea)
-  roofsStore.usableIds = filterUsableIds
-
+  roofsStore.usableIds = await centerFilterWorker.send({
+    roofFavorableArea: JSON.stringify(roofFavorableArea),
+    usableIds: JSON.stringify(roofsStore.usableIds),
+  })
   substractSelectedSquares(roofsStore.usableIds!)
   const selectedRoofModel: RoofSurfaceModel =
     roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
@@ -192,6 +194,7 @@ async function setupSolarPanel() {
     getInclinaisonSolarPanel(selectedRoofModel.inclinaison),
     getAzimuthSolarPanel(selectedRoofModel.azimuth!)
   )
+
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
   mapStore.isLoadingMap = false

@@ -8,6 +8,7 @@ export const RENNES_LAYER = {
   customLayerSearchAddress: 'customLayerSearchAddress',
   roofSquaresArea: 'roofSquaresArea',
   roofShape: 'roofShape',
+  roofShape2d: 'roofShape2d',
   solarPanel: 'solarPanel',
   roof3d: 'roof3d',
   iris: 'iris',

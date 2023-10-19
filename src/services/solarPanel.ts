@@ -8,7 +8,6 @@ import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { Matrix } from './roofInteractionHelper'
 import { getNumberFromConfig } from '@/services/configService'
-import { useRoofsStore } from '@/stores/roof'
 
 const HeightOffset = 0.2
 
@@ -133,10 +132,7 @@ export async function solarPanelGridToSolarPanelModel(
   const solarPanelModels: SolarPanelModel[] = []
   const positions: number[][] = []
   let index: number = 0
-  let offset = HeightOffset
-  if (isRoofFlat()) {
-    offset += 0.2
-  }
+  const offset = HeightOffset
 
   for (let i = 0; i < usableIds.length; i++) {
     let pitch
@@ -174,19 +170,11 @@ export async function solarPanelGridToSolarPanelModel(
   return solarPanelModels
 }
 
-function isRoofFlat() {
-  const roofsStore = useRoofsStore()
-  const anamorphos = roofsStore.getAnamorphosOfSelectedRoof()
-  if (!anamorphos) {
-    return false
-  }
-  return anamorphos >= 99.5
-}
-
 export function getInclinaisonSolarPanel(selectedRoofInclinaison: number) {
   return selectedRoofInclinaison
 }
 
 export function getAzimuthSolarPanel(selectedRoofAzimuth: number) {
+  // fix for angle reproj on the fly: average diff on Rennes between 3857-3948
   return selectedRoofAzimuth - 3.47
 }

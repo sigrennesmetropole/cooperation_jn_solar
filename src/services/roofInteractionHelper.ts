@@ -159,13 +159,11 @@ export function filterGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
 }
 
 export function filterGridOnCenter(
-  roofShape: GeoJSONFeatureCollection
+  roofShape: GeoJSONFeatureCollection,
+  usableIds: Matrix
 ): Matrix {
-  const usableIds: Matrix = []
-  const roofsStore = useRoofsStore()
-
   // @ts-ignore
-  roofsStore.usableIds.forEach((s: Square) => {
+  usableIds.forEach((s: Square) => {
     let isInside: boolean = false
     for (const roofShapeFeature of roofShape.features) {
       if (
@@ -224,7 +222,7 @@ export function displayRoofShape2d(
 ) {
   cleanRoofShape2d(rennesApp)
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
-    'roofShape2d'
+    RENNES_LAYER.roofShape2d
   ) as GeoJSONLayer
   const format = new GeoJSON()
   const marker = format.readFeatures(geojson)
@@ -233,7 +231,7 @@ export function displayRoofShape2d(
 
 export function cleanRoofShape2d(rennesApp: RennesApp) {
   const roofLayer: GeoJSONLayer = rennesApp.layers.getByKey(
-    'roofShape2d'
+    RENNES_LAYER.roofShape2d
   ) as GeoJSONLayer
   roofLayer.removeAllFeatures()
 }
