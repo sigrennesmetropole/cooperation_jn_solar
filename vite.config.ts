@@ -4,8 +4,6 @@ import { defineConfig, type UserConfig, type Plugin } from 'vite'
 import importMetaEnv from '@import-meta-env/unplugin'
 import vue from '@vitejs/plugin-vue'
 import rollupPluginStripPragma from 'rollup-plugin-strip-pragma'
-import path from 'path'
-import fs from 'fs'
 import { determineHostFromArgv } from './build/determineHost.js'
 
 type stripPragmas = (options: { pragmas: string[] }) => Plugin
@@ -42,51 +40,6 @@ export default defineConfig(({ command }) => {
           (rollupPluginStripPragma as stripPragmas)({
             pragmas: ['debug'],
           }),
-          {
-            name: 'Rename Cesium',
-            transform(source, sid) {
-              if (/src[/\\]main.ts/.test(sid)) {
-                return source.replace(
-                  '/node_modules/@vcmap-cesium/engine/Build',
-                  './assets/cesium/'
-                )
-              }
-              return source
-            },
-          },
-          {
-            name: 'Copy Cesium',
-            async closeBundle() {
-              const cesiumPath = path.join(
-                process.cwd(),
-                'node_modules',
-                '@vcmap-cesium',
-                'engine'
-              )
-              const buildPath = path.join(
-                process.cwd(),
-                'dist',
-                'assets',
-                'cesium'
-              )
-              await Promise.all([
-                fs.promises.cp(
-                  path.join(cesiumPath, 'Source', 'Assets'),
-                  path.join(buildPath, 'Assets'),
-                  {
-                    recursive: true,
-                  }
-                ),
-                fs.promises.cp(
-                  path.join(cesiumPath, 'Build', 'Workers'),
-                  path.join(buildPath, 'Workers'),
-                  {
-                    recursive: true,
-                  }
-                ),
-              ])
-            },
-          },
         ],
       },
     }
