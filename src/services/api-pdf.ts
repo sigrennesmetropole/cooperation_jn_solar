@@ -3,7 +3,7 @@ import { useRoofsStore } from '@/stores/roof'
 import { useAddressStore } from '@/stores/address'
 import { azimuthForAutocalsol } from '@/model/autocalsol.model'
 import { useConsumptionAndProductionStore } from '@/stores/consumptionAndProduction'
-import { getPeakPower } from '@/services/solarPanel'
+import { getAzimuthSolarPanel, getPeakPower } from '@/services/solarPanel'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { AutocalsolResult as AutocalsolResultType } from '@/model/autocalsol.model'
 
@@ -51,7 +51,7 @@ class ApiPdfService {
     })
 
     const slope = selectedRoof!.inclinaison
-    const azimuth = selectedRoof!.azimuth
+    const azimuth = getAzimuthSolarPanel(selectedRoof!.azimuth!)
     const data = {
       selectedRoof: selectedRoof,
       address: addressStore.address,

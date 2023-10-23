@@ -26,8 +26,11 @@ export const useRoofsStore = defineStore('roofs', () => {
   const selectedRoofSurfaceId: Ref<string | null> = ref(null)
 
   const gridGeom: Ref<Grid | null> = ref(null)
-  const gridMatrix: Ref<Matrix | null> = ref(null)
-  const previousGridMatrix: Ref<Matrix | null> = ref(null)
+  const previousGridGeom: Ref<Grid | null> = ref(null)
+
+  const usableIds: Ref<Matrix | null> = ref(null)
+  const previousUsableIds: Ref<Matrix | null> = ref(null)
+  const ori: Ref<'horizontal' | 'vertical'> = ref('horizontal')
 
   const previouslySelected: Ref<olFeature<olGeometry>[] | null> = ref(null)
 
@@ -61,21 +64,26 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
 
   function saveCleanMatrix() {
-    previousGridMatrix.value = []
-    for (let x = 0; x < gridMatrix.value!.length; x++) {
-      previousGridMatrix.value[x] = []
-      for (let y = 0; y < gridMatrix.value![x].length; y++) {
-        previousGridMatrix.value[x][y] = { ...gridMatrix.value![x][y] }
-      }
+    previousUsableIds.value = []
+    for (let x = 0; x < usableIds.value!.length; x++) {
+      // @ts-ignore
+      previousUsableIds.value[x] = { ...usableIds.value![x] }
     }
   }
 
+  function saveGridGeom() {
+    previousGridGeom.value = { ...gridGeom.value! }
+  }
+
+  function restoreGridGeom() {
+    gridGeom.value = { ...previousGridGeom.value! }
+  }
+
   function restoreMatrixToClean() {
-    if (gridMatrix.value && previousGridMatrix.value) {
-      for (let x = 0; x < previousGridMatrix.value!.length; x++) {
-        for (let y = 0; y < previousGridMatrix.value![x].length; y++) {
-          gridMatrix.value[x][y].usable = previousGridMatrix.value![x][y].usable
-        }
+    if (usableIds.value && previousUsableIds.value) {
+      usableIds.value = []
+      for (let x = 0; x < previousUsableIds.value!.length; x++) {
+        usableIds.value[x] = { ...previousUsableIds.value![x] }
       }
     }
   }
@@ -96,9 +104,9 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
 
   function resetGridAndMatrix() {
-    gridMatrix.value = null
+    usableIds.value = null
     previouslySelected.value = null
-    previousGridMatrix.value = null
+    previousUsableIds.value = null
   }
 
   function getAnamorphosOfSelectedRoof() {
@@ -114,9 +122,10 @@ export const useRoofsStore = defineStore('roofs', () => {
     roofSurfacesList,
     selectedBuildingId,
     gridGeom,
-    gridMatrix,
+    previousGridGeom,
+    usableIds,
+    ori,
     previouslySelected,
-    previousGridMatrix,
     setRoofsFeatures,
     setSelectRoofSurfaceId,
     setSelectedBuildingId,
@@ -127,6 +136,8 @@ export const useRoofsStore = defineStore('roofs', () => {
     resetRoofStore,
     restoreMatrixToClean,
     saveCleanMatrix,
+    saveGridGeom,
+    restoreGridGeom,
     resetGridAndMatrix,
     getAnamorphosOfSelectedRoof,
   }

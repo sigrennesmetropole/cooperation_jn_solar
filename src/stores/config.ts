@@ -20,13 +20,19 @@ type ConfigType = {
   solar_panel: {
     solar_panel_surface: number
     solar_panel_power: number
-    inclinaison_on_flat_roof: number
-    azimuth_on_flat_roof: number
   }
   grid: {
-    height_solar_panel: number
-    width_solar_panel: number
-    square_size: number
+    rectangle_height: number
+    rectangle_width: number
+  }
+  ogcServices: {
+    baseUrl: string
+    potentialLayer: string
+    potentialFilterOnAttribute: string
+    potentialSurfaceIdAttribute: string
+    roofLayer: string
+    roofFilterOnAttribute: string
+    roofSurfaceIdAttribute: string
   }
   link: {
     photovoltaique_link: string

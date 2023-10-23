@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, inject } from 'vue'
+import { inject, onMounted } from 'vue'
 import type { RennesApp } from '@/services/RennesApp'
 import UiMap from '@/components/ui/UiMap.vue'
 import {
@@ -8,44 +8,48 @@ import {
   useLayersStore,
 } from '@/stores/layers'
 import {
+  IsSolarPanelVisibleOnStep,
   updateInteractionsOnMap,
   updateInteractionsStoreAfterViewChange,
 } from '@/services/interactionUtils'
-import type { Layer } from '@vcmap/core'
+import type { Layer, Viewpoint } from '@vcmap/core'
 import NavigationButtons from '@/components/map/buttons/NavigationButtons.vue'
 import { useSimulationStore } from '@/stores/simulations'
 import { useAddressStore } from '@/stores/address'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import {
   addRoofInteractionOn2dMap,
+  cleanRoofShape2d,
   displayGridOnMap,
+  displayRoofShape2d,
   removeRoof2dShape,
   removeRoofGrid,
   removeRoofInteractionOn2dMap,
-  substractSelectedSquaresFromGrid,
+  substractSelectedSquares,
 } from '@/services/roofInteractionHelper'
 import {
-  initializeSolarPanelLayer,
   filterSolarPanelByMaxSolarPanel,
-  removeSolarPanel,
-  zoomToSolarPanel,
-  getInclinaisonSolarPanel,
   getAzimuthSolarPanel,
+  getInclinaisonSolarPanel,
+  initializeSolarPanelLayer,
+  removeSolarPanel,
+  solarPanelGridToSolarPanelModel,
+  zoomToSolarPanel,
 } from '@/services/solarPanel'
-import { solarPanelGridToSolarPanelModel } from '@/services/solarPanel'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
 import { useInteractionsStore } from '@/stores/interactions'
-import { solarPanelPlacement } from '@/algorithm/solarPanelPlacement'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
+
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
-import { IsSolarPanelVisibleOnStep } from '@/services/interactionUtils'
+import type { FeatureCollection } from '@turf/helpers'
+import { roofWfsService } from '@/services/roofWfsService'
 
 const rennesApp = inject('rennesApp') as RennesApp
 const layerStore = useLayersStore()
@@ -57,6 +61,8 @@ const mapStore = useMapStore()
 const viewStore = useViewsStore()
 const interactionsStore = useInteractionsStore()
 const enedisStore = useEnedisStore()
+
+let previousVp: Viewpoint | null = null
 
 onMounted(async () => {
   if (
@@ -77,7 +83,7 @@ onMounted(async () => {
 })
 
 async function updateActiveMap() {
-  await mapStore.activate3d()
+  mapStore.activate3d()
 }
 
 async function updateLayersVisibility() {
@@ -97,7 +103,7 @@ async function setLayerVisible(layerName: string, visible: boolean) {
 
 async function disableOlInteraction() {
   if (mapStore.activeMap === 'ol') {
-    await layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
+    layerStore.disableLayer(RENNES_LAYER.roofSquaresArea)
     removeSolarPanel(rennesApp)
     removeRoofInteractionOn2dMap(rennesApp)
     removeRoofGrid(rennesApp)
@@ -112,51 +118,70 @@ function displayGridAndAddInteractions() {
   rennesApp.getOpenlayerMap().getView().setMinZoom(21)
 }
 
+async function computeOptimalGrid() {
+  cleanRoofShape2d(rennesApp)
+  let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
+  // Handle web worker messages
+  // Create a promise to handle the asynchronous behavior
+  let roofSlope =
+    useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
+  const selectedRoofModel: RoofSurfaceModel =
+    roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
+  mapStore.isLoadingMap = true
+  const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
+  if (roofFavorableArea.features.length > 0) {
+    const surfaceId = roofFavorableArea.features[0].properties?.surface_id
+    let fc: FeatureCollection = await roofWfsService.fetch2dRoofShapeFromWfs(
+      surfaceId
+    )
+    displayRoofShape2d(rennesApp, fc)
+    let reply = await worker.send({
+      type: 'compute-grid',
+      roofShape: JSON.stringify(fc),
+      roofFavorableArea: JSON.stringify(roofFavorableArea),
+      roofSlope: roofSlope,
+      rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
+      rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
+      roofAzimuth: roofAzimuth,
+    })
+    mapStore.isLoadingMap = false
+    roofsStore.gridGeom = reply.grid
+    roofsStore.usableIds = reply.usableIds
+    roofsStore.ori = reply.ori
+  }
+}
+
 async function setupGridInstallation() {
   //force synchrone switch for adding openlayer interaction, update the store
   mapStore.viewPointPrevious = mapStore.viewPoint
   await rennesApp.maps.setActiveMap('ol')
-  await mapStore.activate2d()
+  mapStore.activate2d()
   if (addressStore.latitude !== 0 && addressStore.longitude !== 0) {
-    await layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
-    await layerStore.enableLayer(RENNES_LAYER.roofShape)
+    layerStore.enableLayer(RENNES_LAYER.roofSquaresArea)
+    layerStore.enableLayer(RENNES_LAYER.roofShape)
     // avoid recompute everything when came back from solar placement
-    if (!roofsStore.gridMatrix) {
-      let roofShape = roofsStore.getFeaturesOfSelectedPanRoof()
-      // Handle web worker messages
-      // Create a promise to handle the asynchronous behavior
-      let roofSlope =
-        useRoofsStore().getRoofSurfaceModelOfSelectedPanRoof()?.inclinaison
-      const selectedRoofModel: RoofSurfaceModel =
-        roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
-      mapStore.isLoadingMap = true
-      const squareSize = getNumberFromConfig('grid.square_size')
-      const roofAzimuth = getAzimuthSolarPanel(selectedRoofModel.azimuth!)
-      worker
-        .send({
-          roofShape: JSON.stringify(roofShape),
-          roofSlope: roofSlope,
-          squareSize: squareSize,
-          roofAzimuth: roofAzimuth,
-        })
-        .then((reply) => {
-          mapStore.isLoadingMap = false
-          roofsStore.gridGeom = reply.grid
-          roofsStore.gridMatrix = reply.matrix
-          displayGridAndAddInteractions()
-        })
+    if (!roofsStore.usableIds) {
+      await computeOptimalGrid()
     } else {
       roofsStore.restoreMatrixToClean()
-      displayGridAndAddInteractions()
+      roofsStore.restoreGridGeom()
     }
+    displayGridAndAddInteractions()
   }
 }
 
 async function setupSolarPanel() {
   mapStore.isLoadingMap = true
+  roofsStore.saveGridGeom()
   roofsStore.saveCleanMatrix()
-  substractSelectedSquaresFromGrid(roofsStore.gridMatrix!)
-  const result = solarPanelPlacement(roofsStore.gridMatrix!)
+
+  let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
+  roofsStore.usableIds = await worker.send({
+    type: 'center-filter',
+    roofFavorableArea: JSON.stringify(roofFavorableArea),
+    usableIds: JSON.stringify(roofsStore.usableIds),
+  })
+  substractSelectedSquares(roofsStore.usableIds!)
   const selectedRoofModel: RoofSurfaceModel =
     roofsStore.getRoofSurfaceModelOfSelectedPanRoof()!
   // Make sure the active map is the 3D one sot hat the height of solar panel
@@ -165,15 +190,16 @@ async function setupSolarPanel() {
   mapStore.activate3d()
   const solarPanelModels = await solarPanelGridToSolarPanelModel(
     rennesApp,
-    roofsStore.gridMatrix!,
-    result.solarPanels,
-    result.orientation,
+    roofsStore.usableIds!,
+    roofsStore.ori,
     getInclinaisonSolarPanel(selectedRoofModel.inclinaison),
     getAzimuthSolarPanel(selectedRoofModel.azimuth!)
   )
+
   solarPanelStore.currentNumberSolarPanel = solarPanelModels.length
   solarPanelStore.solarPanels = solarPanelModels
   mapStore.isLoadingMap = false
+  return
 }
 
 async function displaySolarPanelLayer() {
@@ -258,8 +284,12 @@ mapStore.$subscribe(async () => {
   if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
   }
-  if (rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!) {
+  if (
+    previousVp !== mapStore.viewPoint &&
+    rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!
+  ) {
     if (mapStore.isInitializeMap) {
+      previousVp = mapStore.viewPoint!
       await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
     }
   }
@@ -270,7 +300,7 @@ mapStore.$subscribe(async () => {
     await applyInstallationStyle(rennesApp)
   } else {
     const installationLayer = await rennesApp.getLayerByKey('installations')
-    await installationLayer.deactivate()
+    installationLayer.deactivate()
   }
 })
 

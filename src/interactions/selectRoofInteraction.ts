@@ -7,7 +7,6 @@ import {
   Projection,
   VcsEvent,
   vcsLayerName,
-  VectorStyleItem,
 } from '@vcmap/core'
 import { roofWfsService } from '@/services/roofWfsService'
 import type { RennesApp } from '@/services/RennesApp'
@@ -22,10 +21,7 @@ import {
 } from '@/services/interactionUtils'
 import { useMapStore } from '@/stores/map'
 import { RENNES_LAYER } from '@/stores/layers'
-
-const highlightStyle = new VectorStyleItem({
-  fill: { color: 'rgb(74,222,128)' },
-})
+import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 
 class SelectRoofInteraction extends AbstractInteraction {
   _featureClicked: VcsEvent<any> // eslint-disable-line
@@ -45,11 +41,17 @@ class SelectRoofInteraction extends AbstractInteraction {
     this._rennesApp = rennesApp
   }
 
-  _highlight(featureId: string) {
-    this._highlighted = true
-    this._selectableLayer.featureVisibility.highlight({
-      [featureId]: highlightStyle,
-    })
+  async _clickOnBuilding(selectedBuildingId: string, event: InteractionEvent) {
+    const mapStore = useMapStore()
+    mapStore.isLoadingMap = true
+    const buildingRoofs: GeoJSONFeatureCollection =
+      await roofWfsService.fetchRoofs(selectedBuildingId)
+    const vp = await createCustomViewpointFromExtent(buildingRoofs.bbox!)
+    mapStore.setViewpoint(vp)
+    this._highlightRoofsOfTheBuilding(buildingRoofs)
+    await this._setLatitudeAndLongitude(event)
+    mapStore.isLoadingMap = false
+    this._goToNextStep(selectedBuildingId)
   }
 
   unhighlight() {
@@ -59,21 +61,25 @@ class SelectRoofInteraction extends AbstractInteraction {
     }
   }
 
-  _highglightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
+  _highlightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
     this.unhighlight()
+    this._highlighted = true
     buildingRoofs.features.forEach((f) => {
-      this._highlight(f.properties?.surface_id)
+      const featureId = `ID_${f.properties?.surface_id}`
+      this._rennesApp.highlightByLayerAndFeatureId(
+        this._selectableLayer,
+        featureId
+      )
     })
   }
 
-  _goToNextStep(
-    buildingRoofs: GeoJSONFeatureCollection,
-    selectedBuildingId: string
-  ) {
+  _goToNextStep(selectedBuildingId: string) {
     const roofStore = useRoofsStore()
+    const currentRouteName = router.currentRoute.value.name
+    if (currentRouteName !== 'roof-selected-information') {
+      router.push({ name: 'roof-selected-information' })
+    }
     roofStore.setSelectedBuildingId(selectedBuildingId)
-
-    router.push({ name: 'roof-selected-information' })
   }
 
   async _setLatitudeAndLongitude(event: InteractionEvent) {
@@ -103,17 +109,10 @@ class SelectRoofInteraction extends AbstractInteraction {
         }
 
         const selectedBuildingId =
-          selectedBuilding?.getProperty('attributes')['BUILDINGID']
+          selectedBuilding?.getProperty('attributes')['emprise_id_rm']
 
         if (isInteractionBuilding()) {
-          const mapStore = useMapStore()
-          mapStore.isLoadingMap = true
-          const buildingRoofs: GeoJSONFeatureCollection =
-            await roofWfsService.fetchRoofs(selectedBuildingId)
-          this._highglightRoofsOfTheBuilding(buildingRoofs)
-          await this._setLatitudeAndLongitude(event)
-          mapStore.isLoadingMap = false
-          this._goToNextStep(buildingRoofs, selectedBuildingId)
+          await this._clickOnBuilding(selectedBuildingId, event)
         } else if (isInteractionPanRoof()) {
           const roofStore = useRoofsStore()
           if (selectedBuildingId !== roofStore.selectedBuildingId) {

@@ -52,7 +52,8 @@ export function rectangleGrid(
             [currentX, currentY],
           ],
         ],
-        options.properties
+        options.properties,
+        { id: `${column}:${row}` }
       )
       if (options.mask) {
         if (intersect(options.mask, cellPoly)) {

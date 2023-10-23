@@ -11,7 +11,6 @@ import iconInstallation from '@/assets/icons/installation.svg'
 import { useRouter } from 'vue-router'
 import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
-import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import expand from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import { usePopUpStore } from '@/stores/popUpStore'
 import TermsOfUsePopup from '@/components/home/TermsOfUsePopup.vue'
@@ -38,29 +37,18 @@ function changeIsEmptuDataFromBuildingData() {
     isEmptyData.value = false
   }
 }
-changeIsEmptuDataFromBuildingData()
-
-async function newViewPoint() {
-  if (roofStore.roofsFeatures && roofStore.roofsFeatures.bbox) {
-    mapStore.viewPoint = await createCustomViewpointFromExtent(
-      roofStore.roofsFeatures.bbox
-    )
-  }
-}
 
 onBeforeMount(async () => {
   viewStore.setCurrentView(viewList['roof-selected-information'])
   panelsStore.setTypePanelDisplay('left')
   mapStore.activate3d()
   panelsStore.isCompletelyHidden = false
-  newViewPoint()
-  hiddePin(rennesApp)
+  await hiddePin(rennesApp)
 })
 
 roofStore.$subscribe(async () => {
   buildingData.value = getDataBuilding()
   changeIsEmptuDataFromBuildingData()
-  newViewPoint()
 })
 
 function buttonBoxAction() {

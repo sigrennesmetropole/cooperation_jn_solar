@@ -109,7 +109,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         <p class="text-base">
           Ces données sont renseignées par l'utilisateur de la Plateforme. Dans
           une prochaine version, la consommation électrique pourra être obtenue
-          directement par connexion au service DatConnect d'Enedis. La surface
+          directement par connexion au service DataConnect d'Enedis. La surface
           d'installation des panneaux est calculée automatiquement après que
           l'utilisateur ait retiré les obstacles présents sur la toiture.
         </p>
@@ -198,7 +198,7 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
     <div class="text-base font-normal">
       <p>
         Comme évoqué au paragraphe précédent, nous ne conservons aucune donnée
-        personelle.
+        personnelle.
       </p>
       <p>
         Cependant, si la plateforme venait à évoluer, voici quels seraient vos
@@ -230,9 +230,9 @@ import iconCheckGreen from '@/assets/icons/icon-check-green.svg'
         >
       </p>
       <p>
-        Si vous estimez après nous avoir contacté que les droits sur vos données
-        n’ont pas été respectés, vous pouvez introduire une réclamation auprès
-        de la CNIL.
+        Si vous estimez après nous avoir contactés que les droits sur vos
+        données n’ont pas été respectés, vous pouvez introduire une réclamation
+        auprès de la CNIL.
       </p>
       <p>
         <a

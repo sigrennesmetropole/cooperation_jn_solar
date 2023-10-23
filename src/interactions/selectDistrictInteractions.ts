@@ -68,6 +68,11 @@ class SelectDistrictInteraction extends AbstractInteraction {
 
   _highlight(featureId: string | number) {
     this._unhighlight()
+    this._rennesApp.highlightByLayerAndFeatureId(
+      this.irisLayer,
+      featureId.toString(),
+      selectedDistrict
+    )
     this.irisLayer.featureVisibility.highlight({
       [featureId]: selectedDistrict,
     })
