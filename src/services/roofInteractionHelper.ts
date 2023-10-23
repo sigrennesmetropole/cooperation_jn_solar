@@ -162,6 +162,7 @@ export function filterGridOnCenter(
   roofShape: GeoJSONFeatureCollection,
   usableIds: Matrix
 ): Matrix {
+  const res: Matrix = []
   // @ts-ignore
   usableIds.forEach((s: Square) => {
     let isInside: boolean = false
@@ -176,13 +177,13 @@ export function filterGridOnCenter(
       }
     }
     if (isInside) {
-      usableIds.push({
+      res.push({
         id: s.id as string,
         squareCenter: s.squareCenter,
       })
     }
   })
-  return usableIds
+  return res
 }
 
 export function centerGrid(roofShape: GeoJSONFeatureCollection, grid: Grid) {
