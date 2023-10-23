@@ -4,9 +4,9 @@ import { defineConfig, type UserConfig, type Plugin } from 'vite'
 import importMetaEnv from '@import-meta-env/unplugin'
 import vue from '@vitejs/plugin-vue'
 import rollupPluginStripPragma from 'rollup-plugin-strip-pragma'
-import { determineHostFromArgv } from './build/determineHost.js'
 import path from 'path'
 import fs from 'fs'
+import { determineHostFromArgv } from './build/determineHost.js'
 
 type stripPragmas = (options: { pragmas: string[] }) => Plugin
 
@@ -18,9 +18,6 @@ export default defineConfig(({ command }) => {
   }
 
   const base: UserConfig = {
-    worker: {
-      format: 'es',
-    },
     plugins: [
       vue(),
       importMetaEnv.vite({
@@ -72,18 +69,12 @@ export default defineConfig(({ command }) => {
                 'assets',
                 'cesium'
               )
-              await fs.promises.rm(path.join(process.cwd(), buildPath), {
-                force: true,
-                recursive: true,
-              })
               await Promise.all([
                 fs.promises.cp(
                   path.join(cesiumPath, 'Source', 'Assets'),
                   path.join(buildPath, 'Assets'),
                   {
                     recursive: true,
-                    errorOnExist: false,
-                    force: false,
                   }
                 ),
                 fs.promises.cp(
@@ -91,8 +82,6 @@ export default defineConfig(({ command }) => {
                   path.join(buildPath, 'Workers'),
                   {
                     recursive: true,
-                    errorOnExist: false,
-                    force: false,
                   }
                 ),
               ])

@@ -43,8 +43,7 @@ import { useInteractionsStore } from '@/stores/interactions'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
-import centerFilterWorker from '@/solarWorkers/centerFilterWorker'
-import computeGridWorker from '@/solarWorkers/computeGridWorker'
+import worker from '@/worker'
 
 import { useEnedisStore } from '@/stores/enedis'
 import { getNumberFromConfig } from '@/services/configService'
@@ -136,7 +135,8 @@ async function computeOptimalGrid() {
       surfaceId
     )
     displayRoofShape2d(rennesApp, fc)
-    let reply = await computeGridWorker.sendComputeGrid({
+    let reply = await worker.send({
+      type: 'compute-grid',
       roofShape: JSON.stringify(fc),
       roofFavorableArea: JSON.stringify(roofFavorableArea),
       roofSlope: roofSlope,
@@ -176,7 +176,8 @@ async function setupSolarPanel() {
   roofsStore.saveCleanMatrix()
 
   let roofFavorableArea = roofsStore.getFeaturesOfSelectedPanRoof()
-  roofsStore.usableIds = await centerFilterWorker.sendCenterFilterGrid({
+  roofsStore.usableIds = await worker.send({
+    type: 'center-filter',
     roofFavorableArea: JSON.stringify(roofFavorableArea),
     usableIds: JSON.stringify(roofsStore.usableIds),
   })

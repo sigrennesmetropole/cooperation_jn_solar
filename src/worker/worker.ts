@@ -3,7 +3,9 @@ import {
   bboxRoof,
   centerGrid,
   filterGrid,
+  filterGridOnCenter,
   generateRectangleGrid,
+  Matrix,
 } from '@/services/roofInteractionHelper'
 import registerPromiseWorker from 'promise-worker/register'
 import type { FeatureCollection } from '@turf/helpers'
@@ -23,6 +25,24 @@ function centerAndFilterGrid(
 }
 
 registerPromiseWorker(function ({ message }) {
+  if (message.type === 'center-filter') {
+    return centerFilter(message)
+  } else if (message.type === 'compute-grid') {
+    return computeGrid(message)
+  }
+})
+
+function centerFilter(message: any) {
+  const roofFavorableArea = JSON.parse(
+    message.roofFavorableArea
+  ) as GeoJSONFeatureCollection
+  const usableIds = JSON.parse(message.usableIds) as Matrix
+
+  // Send the result back to the main thread
+  return filterGridOnCenter(roofFavorableArea, usableIds)
+}
+
+function computeGrid(message: any) {
   const roofShape = JSON.parse(message.roofShape) as GeoJSONFeatureCollection
 
   const roofSlope = message.roofSlope
@@ -64,4 +84,4 @@ registerPromiseWorker(function ({ message }) {
 
   // Send the result back to the main thread
   return { grid: biggestGrid.grid, usableIds: biggestGrid.usableIds, ori: ori }
-})
+}
