@@ -5,6 +5,8 @@ import importMetaEnv from '@import-meta-env/unplugin'
 import vue from '@vitejs/plugin-vue'
 import rollupPluginStripPragma from 'rollup-plugin-strip-pragma'
 import { determineHostFromArgv } from './build/determineHost.js'
+import path from 'path'
+import fs from 'fs'
 
 type stripPragmas = (options: { pragmas: string[] }) => Plugin
 
@@ -16,6 +18,9 @@ export default defineConfig(({ command }) => {
   }
 
   const base: UserConfig = {
+    worker: {
+      format: 'es',
+    },
     plugins: [
       vue(),
       importMetaEnv.vite({
@@ -40,6 +45,59 @@ export default defineConfig(({ command }) => {
           (rollupPluginStripPragma as stripPragmas)({
             pragmas: ['debug'],
           }),
+          {
+            name: 'Rename Cesium',
+            transform(source, sid) {
+              if (/src[/\\]main.ts/.test(sid)) {
+                return source.replace(
+                  '/node_modules/@vcmap-cesium/engine/Build',
+                  './assets/cesium/'
+                )
+              }
+              return source
+            },
+          },
+          {
+            name: 'Copy Cesium',
+            async closeBundle() {
+              const cesiumPath = path.join(
+                process.cwd(),
+                'node_modules',
+                '@vcmap-cesium',
+                'engine'
+              )
+              const buildPath = path.join(
+                process.cwd(),
+                'dist',
+                'assets',
+                'cesium'
+              )
+              await fs.promises.rm(path.join(process.cwd(), buildPath), {
+                force: true,
+                recursive: true,
+              })
+              await Promise.all([
+                fs.promises.cp(
+                  path.join(cesiumPath, 'Source', 'Assets'),
+                  path.join(buildPath, 'Assets'),
+                  {
+                    recursive: true,
+                    errorOnExist: false,
+                    force: false,
+                  }
+                ),
+                fs.promises.cp(
+                  path.join(cesiumPath, 'Build', 'Workers'),
+                  path.join(buildPath, 'Workers'),
+                  {
+                    recursive: true,
+                    errorOnExist: false,
+                    force: false,
+                  }
+                ),
+              ])
+            },
+          },
         ],
       },
     }
