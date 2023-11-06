@@ -8,6 +8,29 @@
     >
       Plan du site
     </h1>
-    <div class="text-xl font-normal">En construction</div>
+    <a
+      class="text-xl font-bold mb-2"
+      href="https://home.coopterr.rennesmetropole.fr"
+    >
+      COOPTERR
+    </a>
+    <a
+      class="text-xl font-bold mb-2"
+      href="https://solaire.coopterr.rennesmetropole.fr"
+    >
+      Cadastre Solaire
+    </a>
+    <a
+      class="text-xl font-bold mb-2"
+      href="https://ondes.coopterr.rennesmetropole.fr"
+    >
+      Ondes & Mesures
+    </a>
+    <a
+      class="text-xl font-bold mb-2"
+      href="https://trambus.coopterr.rennesmetropole.fr"
+    >
+      Réseau Trambus
+    </a>
   </div>
 </template>

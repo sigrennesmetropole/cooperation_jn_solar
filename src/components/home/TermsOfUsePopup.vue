@@ -62,7 +62,7 @@ import deleteSquare from '@/assets/icons/delete-square.svg'
           soumission officielle de la demande.
           <br />
           La mairie est le point d'entrée pour tous les projets, c'est auprès
-          d'elle qui faut déposer son dossier.
+          d'elle qu'il faut déposer son dossier.
           <br /><br />
           Les équipements (ordinateurs, téléphones, moyens de
           télécommunication…) permettant l'accès au site sont à la charge
