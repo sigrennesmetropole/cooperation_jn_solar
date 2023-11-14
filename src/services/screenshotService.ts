@@ -9,8 +9,8 @@ import { useAddressStore } from '@/stores/address'
  */
 
 function prepareCesiumMap(map: CesiumMap, scale: number) {
-  const viewer = map.getCesiumWidget()
-  const { resolutionScale } = viewer
+  const viewer = map.getCesiumWidget()!
+  const resolutionScale = viewer?.resolutionScale
   viewer.resolutionScale = scale
 
   return function resetCesiumMap() {
@@ -19,7 +19,7 @@ function prepareCesiumMap(map: CesiumMap, scale: number) {
 }
 
 async function getImageFromCesium(map: CesiumMap) {
-  const { scene } = map.getCesiumWidget()
+  const scene = map.getCesiumWidget()?.scene!
 
   return new Promise((resolve) => {
     const removePreListener = scene.preUpdate.addEventListener(() => {

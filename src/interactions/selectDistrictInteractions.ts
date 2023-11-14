@@ -95,17 +95,19 @@ class SelectDistrictInteraction extends AbstractInteraction {
   async pipe(event: InteractionEvent) {
     const districtStore = useDistrictStore()
     const installationsStore = useInstallationsStore()
-    const selectedDistrict = event.feature
-
+    const selectedDistrict = event.feature!
+    // @ts-ignore
+    const layerName = selectedDistrict[vcsLayerName]
     if (
       selectedDistrict === undefined ||
-      selectedDistrict[vcsLayerName] !== this.irisLayer.name
+      layerName !== this.irisLayer.name ||
+      !(selectedDistrict instanceof Feature)
     ) {
       districtStore.resetDistrictStore()
       this._unhighlight()
       return event
     }
-    const irisCode = selectedDistrict?.getProperty('code_iris')
+    const irisCode = selectedDistrict?.getProperties()['code_iris']
     if (irisCode !== this.currentIrisCode) {
       this.currentIrisCode = irisCode
       this._highlight(selectedDistrict.getId()!)

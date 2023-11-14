@@ -10,7 +10,7 @@ export function clearLayerAndApplyStyle(
   layerName: string,
   style: Style | StyleFunction | undefined
 ) {
-  const layer = rennesApp.layers.getByKey(layerName) as FeatureLayer
+  const layer = rennesApp.layers.getByKey(layerName) as FeatureLayer<any>
   layer.clearStyle()
   if (style) {
     layer.setStyle(style)

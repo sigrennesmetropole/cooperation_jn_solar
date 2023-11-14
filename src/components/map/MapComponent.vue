@@ -93,7 +93,7 @@ async function updateLayersVisibility() {
 }
 
 async function setLayerVisible(layerName: string, visible: boolean) {
-  const layer: Layer = rennesApp.maps.layerCollection.getByKey(layerName)
+  const layer: Layer = rennesApp.maps.layerCollection.getByKey(layerName)!
   if (visible) {
     await layer?.activate()
   } else {
@@ -221,7 +221,7 @@ async function displaySolarPanelLayer() {
 
 function setMaxZoomIn() {
   const cesiumMap = rennesApp.get3DMap()
-  cesiumMap.getScene().screenSpaceCameraController.minimumZoomDistance = 40
+  cesiumMap.getScene()!.screenSpaceCameraController.minimumZoomDistance = 40
 }
 
 simulationStore.$subscribe(async () => {
@@ -281,16 +281,16 @@ viewStore.$subscribe(async () => {
 })
 
 mapStore.$subscribe(async () => {
-  if (rennesApp.maps.activeMap.name !== mapStore.activeMap) {
+  if (rennesApp.maps.activeMap!.name !== mapStore.activeMap) {
     await rennesApp.maps.setActiveMap(mapStore.activeMap)
   }
   if (
     previousVp !== mapStore.viewPoint &&
-    rennesApp.maps.activeMap.getViewpointSync() !== mapStore.viewPoint!
+    rennesApp.maps.activeMap!.getViewpointSync() !== mapStore.viewPoint!
   ) {
     if (mapStore.isInitializeMap) {
       previousVp = mapStore.viewPoint!
-      await rennesApp.maps.activeMap.gotoViewpoint(mapStore.viewPoint!)
+      await rennesApp.maps.activeMap!.gotoViewpoint(mapStore.viewPoint!)
     }
   }
   if (

@@ -11,13 +11,13 @@ import { RENNES_LAYER } from '@/stores/layers'
 
 import type { InteractionEvent } from '@vcmap/core'
 import { useInstallationsStore } from '@/stores/installations'
-import Feature from 'ol/Feature'
 import { Point } from 'ol/geom'
 import {
   updatePointCoordinates,
   addGenericListenerForUpdatePositions,
 } from '@/services/AboveMapService'
 import { useDistrictStore } from '@/stores/districtInformations'
+import { Feature } from 'ol'
 
 class SelectInstallationsInteraction extends AbstractInteraction {
   private _rennesApp: RennesApp
@@ -53,8 +53,9 @@ class SelectInstallationsInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
-    const isInstallationLayer =
-      event.feature?.[vcsLayerName] === RENNES_LAYER.installations
+    // @ts-ignore
+    const featureElement = event.feature?.[vcsLayerName]
+    const isInstallationLayer = featureElement === RENNES_LAYER.installations
 
     if (event.type & EventType.MOVE) {
       if (isInstallationLayer) {
@@ -64,34 +65,35 @@ class SelectInstallationsInteraction extends AbstractInteraction {
     if (event.type & EventType.CLICK) {
       const installationsStore = useInstallationsStore()
       const districtStore = useDistrictStore()
-      const selectedInstallation = event.feature
+      const selectedInstallation = event.feature!
+      if (!selectedInstallation || !(selectedInstallation instanceof Feature)) {
+        return event
+      }
       if (isInstallationLayer) {
-        if (selectedInstallation !== undefined) {
-          const installationName = selectedInstallation?.getProperty('nom')
-          const installationYear = selectedInstallation?.getProperty('an_mes')
-          const installationProduction = selectedInstallation?.getProperty(
-            'production_annuelle'
-          )
-          const installationHouse = selectedInstallation?.getProperty(
+        const installationName = selectedInstallation?.getProperties()['nom']
+        const installationYear = selectedInstallation?.getProperties()['an_mes']
+        const installationProduction =
+          selectedInstallation?.getProperties()['production_annuelle']
+        const installationHouse =
+          selectedInstallation?.getProperties()[
             'consommation_equivalente_foyer'
-          )
-          installationsStore.setInstallationInformations(
-            installationName,
-            installationYear,
-            installationProduction,
-            installationHouse
-          )
-          await this._interactionInstallation(event)
-          updatePointCoordinates(this._rennesApp, 'installation')
-          districtStore.resetDistrictStore()
-          addGenericListenerForUpdatePositions(this._rennesApp, 'installation')
-          event.stopPropagation = true
-          installationsStore.setCanBeDisplayed(true)
-        } else {
-          installationsStore.resetInstallationStore()
-          installationsStore.setCanBeDisplayed(false)
-        }
-      } else return event
+          ]
+        installationsStore.setInstallationInformations(
+          installationName,
+          installationYear,
+          installationProduction,
+          installationHouse
+        )
+        await this._interactionInstallation(event)
+        updatePointCoordinates(this._rennesApp, 'installation')
+        districtStore.resetDistrictStore()
+        addGenericListenerForUpdatePositions(this._rennesApp, 'installation')
+        event.stopPropagation = true
+        installationsStore.setCanBeDisplayed(true)
+      } else {
+        installationsStore.resetInstallationStore()
+        installationsStore.setCanBeDisplayed(false)
+      }
     }
     return event
   }

@@ -31,8 +31,8 @@ function roundResult(num: number) {
 
 function calculateSurfaceFavorableOfRoofFeature(feature: Feature<Geometry>) {
   const percentageFavorable =
-    feature.getProperty('rang_3') + feature.getProperty('rang_4')
-  const total_surface = feature.getProperty('pan_area')
+    feature.getProperties()['rang_3'] + feature.getProperties()['rang_4']
+  const total_surface = feature.getProperties()['pan_area']
   return (percentageFavorable * total_surface) / 100
 }
 
@@ -65,19 +65,19 @@ export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
   const geoJSONFormat = new GeoJSON()
   const feature = geoJSONFormat.readFeature(geojson)
   return {
-    surface_id: feature.getProperty('surface_id'),
+    surface_id: feature.getProperties()['surface_id'],
     values: [
-      feature.getProperty('rang_1'),
-      feature.getProperty('rang_2'),
-      feature.getProperty('rang_3'),
-      feature.getProperty('rang_4'),
+      feature.getProperties()['rang_1'],
+      feature.getProperties()['rang_2'],
+      feature.getProperties()['rang_3'],
+      feature.getProperties()['rang_4'],
     ],
     favorable: roundResult(calculateSurfaceFavorableOfRoofFeature(feature)),
-    total: roundResult(feature.getProperty('pan_area')),
-    orientation: azimuthToOrientation(feature.getProperty('azimuth')),
-    azimuth: feature.getProperty('azimuth'),
-    inclinaison: feature.getProperty('slope'),
-    total_building: roundResult(feature.getProperty('all_area')),
+    total: roundResult(feature.getProperties()['pan_area']),
+    orientation: azimuthToOrientation(feature.getProperties()['azimuth']),
+    azimuth: feature.getProperties()['azimuth'],
+    inclinaison: feature.getProperties()['slope'],
+    total_building: roundResult(feature.getProperties()['all_area']),
   }
 }
 

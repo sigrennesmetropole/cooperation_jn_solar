@@ -40,7 +40,9 @@ export class OlDragSquaresInteraction extends PointerInteraction {
         .getSource()
         ?.getFeatures()
         .forEach((f) => {
-          if (feature.getProperty('center') === f.getProperty('center')) {
+          if (
+            feature.getProperties()['center'] === f.getProperties()['center']
+          ) {
             this.persistingSelectedMap.set(getUid(f), f)
             this.applySelectedStyle_(f)
           }

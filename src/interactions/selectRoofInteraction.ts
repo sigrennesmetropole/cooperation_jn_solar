@@ -22,6 +22,7 @@ import {
 import { useMapStore } from '@/stores/map'
 import { RENNES_LAYER } from '@/stores/layers'
 import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
+import { Cesium3DTileFeature } from '@vcmap-cesium/engine'
 
 class SelectRoofInteraction extends AbstractInteraction {
   _featureClicked: VcsEvent<any> // eslint-disable-line
@@ -102,9 +103,13 @@ class SelectRoofInteraction extends AbstractInteraction {
 
   async pipe(event: InteractionEvent) {
     if (event.type == EventType.CLICK) {
+      // @ts-ignore
       if (event.feature?.[vcsLayerName] === RENNES_LAYER.roof3d) {
         const selectedBuilding = event.feature
-        if (!selectedBuilding) {
+        if (
+          !selectedBuilding ||
+          !(selectedBuilding instanceof Cesium3DTileFeature)
+        ) {
           return event
         }
 

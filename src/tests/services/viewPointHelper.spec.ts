@@ -18,9 +18,12 @@ describe('ViewPointHelper', () => {
 
       expect(res.distance).toBeCloseTo(150)
       expect(res.cameraPosition).toBeNull()
-      expect(res.groundPosition[0]).toBeCloseTo(0)
-      expect(res.groundPosition[1]).toBeCloseTo(0)
-      expect(res.groundPosition[2]).toBeUndefined()
+      expect(res.groundPosition).toBeDefined()
+      if (res.groundPosition) {
+        expect(res.groundPosition[0]).toBeCloseTo(0)
+        expect(res.groundPosition[1]).toBeCloseTo(0)
+        expect(res.groundPosition[2]).toBeUndefined()
+      }
       expect(res.pitch).toBeCloseTo(-45)
     })
   })
@@ -36,9 +39,12 @@ describe('ViewPointHelper', () => {
       if (res) {
         expect(res.distance).toBeCloseTo(150)
         expect(res.cameraPosition).toBeNull()
-        expect(res.groundPosition[0]).toBeCloseTo(15)
-        expect(res.groundPosition[1]).toBeCloseTo(15)
-        expect(res.groundPosition[2]).toBeUndefined()
+        expect(res.groundPosition).toBeDefined()
+        if (res.groundPosition) {
+          expect(res.groundPosition[0]).toBeCloseTo(15)
+          expect(res.groundPosition[1]).toBeCloseTo(15)
+          expect(res.groundPosition[2]).toBeUndefined()
+        }
         expect(res.pitch).toBeCloseTo(-45)
       }
     })
@@ -55,9 +61,12 @@ describe('ViewPointHelper', () => {
       expect(res).toBeDefined()
       expect(res.distance).toBe(150)
       expect(res.cameraPosition).toBeNull()
-      expect(res.groundPosition[0]).toBeCloseTo(32.5)
-      expect(res.groundPosition[1]).toBeCloseTo(40)
-      expect(res.groundPosition[2]).toBeUndefined()
+      expect(res.groundPosition).toBeDefined()
+      if (res.groundPosition) {
+        expect(res.groundPosition[0]).toBeCloseTo(32.5)
+        expect(res.groundPosition[1]).toBeCloseTo(40)
+        expect(res.groundPosition[2]).toBeUndefined()
+      }
       expect(res.pitch).toBeCloseTo(-45)
     })
   })
@@ -115,10 +124,12 @@ describe('ViewPointHelper', () => {
       const res = await createViewpointFromRoofFeature(feature, bbox(feature))
       expect(res).toBeDefined()
       if (res) {
-        expect(res.groundPosition[0]).toBeCloseTo(-1.652381)
-        expect(res.groundPosition[1]).toBeCloseTo(48.093195)
-        expect(res.cameraPosition).toBeNull()
         expect(res.groundPosition).toBeDefined()
+        if (res.groundPosition) {
+          expect(res.groundPosition[0]).toBeCloseTo(-1.652381)
+          expect(res.groundPosition[1]!).toBeCloseTo(48.093195)
+        }
+        expect(res.cameraPosition).toBeNull()
         expect(res.pitch).toBeCloseTo(-45)
       }
     })

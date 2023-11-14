@@ -39,7 +39,7 @@ export function createNewViewpointFromAddress(
 export async function createCustomViewpointFromExtent(extent: BBox) {
   const vp = Viewpoint.createViewpointFromExtent(extent)
   const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
-  const turfPoint = point(vp.groundPosition)
+  const turfPoint = point(vp?.groundPosition!)
   return computeViewPoint(turfPoint, vpJson)
 }
 
