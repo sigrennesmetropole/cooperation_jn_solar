@@ -40,7 +40,7 @@
     "@turf/turf": "^6.5.0",
     "@types/proj4": "^2.5.2",
     "@vcmap-cesium/engine": "~4.0.3",
-    "@vcmap/core": "5.0.2",
+    "@vcmap/core": "5.0.3",
     "apexcharts": "^3.44.0",
     "dompurify": "^3.0.3",
     "highcharts-vue": "^1.4.0",
