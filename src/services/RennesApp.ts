@@ -34,10 +34,10 @@ export class RennesApp extends VcsApp {
     const cesiumMap = this.get3DMap()
     await cesiumMap?.initialize()
     if (cesiumMap) {
-      cesiumMap.getScene().globe.maximumScreenSpaceError = 1
+      cesiumMap.getScene()!.globe.maximumScreenSpaceError = 1
       const homeViewPoint = this.viewpoints.getByKey('rennes') as Viewpoint
-      cesiumMap.getScene().screenSpaceCameraController.maximumZoomDistance =
-        homeViewPoint.distance
+      cesiumMap.getScene()!.screenSpaceCameraController.maximumZoomDistance =
+        homeViewPoint.distance!
       mapStore.isInitializeMap = true
       mapStore.setViewpoint(homeViewPoint)
     }
@@ -66,7 +66,7 @@ export class RennesApp extends VcsApp {
   clearRoofsHighlight() {
     const roofLayer: CesiumTilesetLayer = this.maps.layerCollection.getByKey(
       RENNES_LAYER.roof3d
-    )
+    ) as CesiumTilesetLayer
     roofLayer.featureVisibility.clearHighlighting()
   }
 
@@ -75,7 +75,9 @@ export class RennesApp extends VcsApp {
     featureId: string,
     highlightStyle?: VectorStyleItem | Style | null
   ) {
-    const layer = this.maps.layerCollection.getByKey(layerName)
+    const layer = this.maps.layerCollection.getByKey(layerName)! as
+      | GeoJSONLayer
+      | CesiumTilesetLayer
     this.highlightByLayerAndFeatureId(
       layer,
       featureId,
@@ -105,7 +107,7 @@ export class RennesApp extends VcsApp {
   async getHeight(x: number, y: number) {
     const cartographic = Cartographic.fromDegrees(x, y)
     const result = await this.get3DMap()
-      .getScene()
+      .getScene()!
       .sampleHeightMostDetailed([cartographic])
     if (result.length === 0) {
       return 0

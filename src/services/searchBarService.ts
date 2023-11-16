@@ -141,7 +141,7 @@ export async function createVPForTypeAddress(
   type: string,
   item: AddressRva | AddressOrganization | AddressCommune | AddressStreet
 ) {
-  const currentVp = await rennesApp.maps?.activeMap.getViewpoint()
+  const currentVp = await rennesApp.maps?.activeMap!.getViewpoint()
   let newVp
   if (type === 'rva') {
     const itemFormatted = item as AddressRva

@@ -40,7 +40,7 @@ export function addGenericListenerForUpdatePositions(
   if (!(map instanceof CesiumMap)) {
     return
   }
-  map.getScene().postRender.addEventListener(() => {
+  map.getScene()!.postRender.addEventListener(() => {
     const vp = map.getViewpointSync()
     if (vp === null || vp === undefined) {
       return
@@ -51,8 +51,12 @@ export function addGenericListenerForUpdatePositions(
     ) {
       store.previousViewPoint = vp
     }
+
     for (const i in vp.cameraPosition) {
-      if (vp.cameraPosition[i] !== store.previousViewPoint.cameraPosition[i]) {
+      if (
+        vp.cameraPosition[Number(i)] !==
+        store.previousViewPoint.cameraPosition[i]
+      ) {
         store.previousViewPoint = vp
         updatePointCoordinates(rennesApp, storeName)
         break

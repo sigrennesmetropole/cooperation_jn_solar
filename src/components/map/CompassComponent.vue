@@ -34,26 +34,26 @@ function syncCompass(map: VcsMap) {
 }
 
 const headingMap = async (event: { angle: number; animate: boolean }) => {
-  const vp = await rennesApp.maps?.activeMap.getViewpoint()
+  const vp = await rennesApp.maps.activeMap!.getViewpoint()
   if (vp) {
     const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
     vpJson.heading = event.angle
     vpJson.animate = event.animate
     vpJson.cameraPosition = undefined
     const newVp = new Viewpoint(vpJson)
-    rennesApp.maps?.activeMap.gotoViewpoint(newVp)
+    await rennesApp.maps.activeMap!.gotoViewpoint(newVp)
   }
 }
 
 const tiltingMap = async (event: { tilt: number }) => {
-  const vp = await rennesApp.maps?.activeMap.getViewpoint()
+  const vp = await rennesApp.maps.activeMap!.getViewpoint()
   if (vp && event.tilt) {
     const vpJson: ViewpointOptions = vp?.toJSON() as ViewpointOptions
     // Set the camera position to null to force its position recalculation
     vpJson.cameraPosition = undefined
     vpJson.pitch = event.tilt
     const newVp = new Viewpoint(vpJson)
-    rennesApp.maps?.activeMap.gotoViewpoint(newVp)
+    await rennesApp.maps.activeMap!.gotoViewpoint(newVp)
   }
 }
 </script>

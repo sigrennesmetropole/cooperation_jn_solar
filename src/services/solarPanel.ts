@@ -4,10 +4,11 @@ import { GeoJSONLayer, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
-import solarPanel3D from '@/assets/3d/Solarmodul__LOW_Solarmodul_Dachmontage.glb'
+import solarPanel3D from '@/assets/3d/solarPanel3d.glb'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { Matrix } from './roofInteractionHelper'
 import { getNumberFromConfig } from '@/services/configService'
+import type { Point } from 'ol/geom'
 
 const HeightOffset = 0.2
 
@@ -26,6 +27,8 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
       olcs_modelPitch: solarPanel.pitch,
       olcs_modelRoll: solarPanel.roll,
       olcs_modelHeading: solarPanel.heading,
+      olcs_altitudeMode: 'absolute',
+
       // The size of the 3d model is 1900x1000, the real solar panel is 1900x950
       // We need to scale by 0.95 for the widht (y-axis)
       olcs_modelScaleY: 0.95,
@@ -47,13 +50,11 @@ export function generateSolarPanel(solarPanels: SolarPanelModel[]) {
 
   solarPanels.forEach((sp) => {
     const spObject = solarPanelModelToDict(sp)
-    solarPanelJSON.features.push(spObject)
+    solarPanelJSON.features.push(spObject as unknown as Point)
   })
 
   const geojsonFormat = new GeoJSON()
-  const geojson = geojsonFormat.readFeatures(solarPanelJSON)
-
-  return geojson
+  return geojsonFormat.readFeatures(solarPanelJSON)
 }
 
 export async function initializeSolarPanelLayer(
@@ -81,9 +82,11 @@ export async function zoomToSolarPanel(rennesApp: RennesApp) {
   const extent = solarPanel.getZoomToExtent()
   if (extent) {
     const viewpoint = Viewpoint.createViewpointFromExtent(extent!)
-    const newExtent = cloneViewPointAndResetCameraPosition(viewpoint, 100)
-    newExtent.pitch = -45
-    rennesApp.maps.activeMap.gotoViewpoint(newExtent)
+    if (viewpoint) {
+      const newExtent = cloneViewPointAndResetCameraPosition(viewpoint, 100)
+      newExtent.pitch = -45
+      await rennesApp.maps.activeMap!.gotoViewpoint(newExtent)
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import type { AbstractInteraction } from '@vcmap/core'
+import type { AbstractInteraction, CesiumTilesetLayer } from '@vcmap/core'
 import { viewList } from '@/model/views.model'
 import { useViewsStore } from '@/stores/views'
 import { RENNES_LAYER } from '@/stores/layers'
@@ -78,7 +78,9 @@ function newTypeInteraction(
 ): AbstractInteraction | undefined {
   if (typeInteraction === SelectRoofInteraction) {
     return new SelectRoofInteraction(
-      rennesApp.maps.layerCollection.getByKey(RENNES_LAYER.roof3d),
+      rennesApp.maps.layerCollection.getByKey(
+        RENNES_LAYER.roof3d
+      )! as CesiumTilesetLayer,
       rennesApp
     )
   }
@@ -158,7 +160,7 @@ export function manageSelectAndIrisDependingOnZoom(rennesApp: RennesApp) {
   if (mapStore.isInitializeMap) {
     rennesApp
       .get3DMap()
-      .getScene()
+      .getScene()!
       .postRender.addEventListener(() => {
         const cameraDistance = rennesApp.getCurrentDistance()!
         // @ts-ignore

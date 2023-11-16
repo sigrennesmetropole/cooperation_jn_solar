@@ -32,15 +32,15 @@ const simulationStore = useSimulationStore()
 async function zoom(out = false, zoomFactor = 2): Promise<void> {
   const activeMap = rennesApp.maps.activeMap
   const viewpoint = await activeMap?.getViewpoint()
-  const maxZoom = rennesApp.get3DMap().getScene()
-    .screenSpaceCameraController.maximumZoomDistance
+  const maxZoom = rennesApp.get3DMap().getScene()!.screenSpaceCameraController
+    .maximumZoomDistance
   if (activeMap && viewpoint) {
-    let distance = viewpoint.distance / zoomFactor
+    let distance = viewpoint.distance! / zoomFactor
     if (IsSolarPanelVisibleOnStep()) {
-      distance = Math.max(viewpoint.distance / zoomFactor, 40)
+      distance = Math.max(viewpoint.distance! / zoomFactor, 40)
     }
     if (out) {
-      distance = Math.min(viewpoint.distance * zoomFactor, maxZoom)
+      distance = Math.min(viewpoint.distance! * zoomFactor, maxZoom)
     }
 
     const newVp = cloneViewPointAndResetCameraPosition(viewpoint, distance)
@@ -60,11 +60,14 @@ async function resetZoom() {
     newVp = rennesApp.getHomeViewpoint()
   } else {
     newVp = mapStore.viewPoint as Viewpoint
-    if (mapStore.viewPointPrevious !== null && !newVp.groundPosition[2]) {
+    if (
+      mapStore.viewPointPrevious !== null &&
+      (!newVp.groundPosition || !newVp.groundPosition[2])
+    ) {
       newVp = mapStore.viewPointPrevious
     }
   }
-  await rennesApp.maps?.activeMap.gotoViewpoint(newVp)
+  await rennesApp.maps.activeMap!.gotoViewpoint(newVp)
 }
 
 const shouldDisplayHomeButton = () => {
