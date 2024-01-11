@@ -29,9 +29,19 @@
     {
       "name": "terrain",
       "type": "TerrainLayer",
-      "url": "https://rennes3d-dev-tiles.s3.fr-par.scw.cloud/b3ef17bf-fdde-4979-8f05-8b4db5811c43/",
+      "url": "https://rennes-coopterr-tiles.s3.fr-par.scw.cloud/terrain_2023/",
       "activeOnStartup": true,
       "requestVertexNormals": true,
+      "zIndex": 1
+    },
+    {
+      "type": "CesiumTilesetLayer",
+      "name": "roof3d",
+      "url": "https://rennes-coopterr-solaire-tiles-dev.s3.fr-par.scw.cloud/rennes3d-s3-solar",
+      "activeOnStartup": true,
+      "allowPicking": true,
+      "screenSpaceError": 16,
+      "screenSpaceErrorMobile": 32,
       "zIndex": 1
     },
     {
@@ -74,16 +84,6 @@
       "type": "GeoJSONLayer",
       "activeOnStartup": true,
       "zIndex": 5
-    },
-    {
-      "type": "CesiumTilesetLayer",
-      "name": "roof3d",
-      "url": "https://rennes-coopterr-solaire-tiles-dev.s3.fr-par.scw.cloud/rennes3d-s3-solar",
-      "activeOnStartup": true,
-      "allowPicking": true,
-      "screenSpaceError": 16,
-      "screenSpaceErrorMobile": 32,
-      "zIndex": 1
     },
     {
       "name": "rennesOrtho",
