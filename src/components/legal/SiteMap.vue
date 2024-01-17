@@ -1,36 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useConfigStore } from '@/stores/config'
+import { UiSiteMap } from '@sigrennesmetropole/cooperation_jn_common_ui'
+
+let configStore = useConfigStore()
+</script>
 <template>
-  <div
-    class="flex flex-col gap-12 w-[880px] h-fit bg-white rounded-xl px-8 py-16 mx-auto mt-32 mb-[87px]"
+  <UiSiteMap
+    :coopterr_url="configStore.config?.link.coopterr_link"
+    :ondes_url="configStore.config?.link.ondes_link"
+    :solaire_url="configStore.config?.link.solar_link"
+    :trambus_url="configStore.config?.link.trambus_link"
   >
-    <h1
-      class="flex flex-column align-start text-[44px] leading-[48px] lmb-12 font-bold"
-    >
-      Plan du site
-    </h1>
-    <a
-      class="text-xl font-bold mb-2"
-      href="https://home.coopterr.rennesmetropole.fr"
-    >
-      COOPTERR
-    </a>
-    <a
-      class="text-xl font-bold mb-2"
-      href="https://solaire.coopterr.rennesmetropole.fr"
-    >
-      Cadastre Solaire
-    </a>
-    <a
-      class="text-xl font-bold mb-2"
-      href="https://ondes.coopterr.rennesmetropole.fr"
-    >
-      Ondes & Mesures
-    </a>
-    <a
-      class="text-xl font-bold mb-2"
-      href="https://trambus.coopterr.rennesmetropole.fr"
-    >
-      Réseau Trambus
-    </a>
-  </div>
+  </UiSiteMap>
 </template>
