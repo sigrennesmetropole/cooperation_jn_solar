@@ -35,7 +35,11 @@ type ConfigType = {
     roofSurfaceIdAttribute: string
   }
   link: {
-    photovoltaique_link: string
+    coopterr_link: string
+    solar_link: string
+    trambus_link: string
+    ondes_link: string
+    contact_link: string
     solar_coop_link: string
     energies_link: string
     vilaine_link: string

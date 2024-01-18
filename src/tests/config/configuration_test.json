@@ -23,6 +23,7 @@
   },
   "ogcServices": {
     "baseUrl": "https://public.sig.rennesmetropole.fr/geoserver/ows?",
+    "irisLayer": "dem_stats:iris",
     "potentialLayer": "cli_climat:photovolta%C3%AFque_potentiel_classif_2021",
     "potentialFilterOnAttribute": "buildingid",
     "potentialSurfaceIdAttribute": "surface_id",
@@ -31,7 +32,12 @@
     "roofSurfaceIdAttribute": "emprise_id_rm"
   },
   "link": {
-    "photovoltaique_link": "https://www.photovoltaique.info/fr/",
+    "coopterr_link": "https://coopterr.rennesmetropole.fr",
+    "solar_link": "https://dev-solar.apps.gs-fr-prod.camptocamp.com/",
+    "trambus_link": "https://vcmap-demo.apps.gs-fr-prod.camptocamp.com/",
+    "ondes_link": "https://dev-wave.apps.gs-fr-prod.camptocamp.com/",
+    "contact_link": "https://metropole.rennes.fr/contact",
+    "photovoltaique_link": "https://www.photovolt aique.info/fr/",
     "solar_coop_link": "https://www.solarcoop.fr/",
     "energies_link": "https://energiesdupaysderennes.fr/",
     "vilaine_link": "https://soleilsurvilaine.centralesvillageoises.fr/",
@@ -50,5 +56,14 @@
   },
   "consumption": {
     "default_consumption": 0
+  },
+  "trambus": {
+    "projectPlanningBaseMapUrl": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
+    "projectPlanningLayerUrl": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=trp_coll:trambus_lignes_planification&outputFormat=application/json&srsName=EPSG:4326",
+    "fabriqueCitoyenneCGUUrl": "https://fabriquecitoyenne.fr/"
+  },
+  "wave": {
+    "carte_ondes_url": "https://carte_ondes_url",
+    "carto_radio_url": "https://carto_radio_url"
   }
 }
