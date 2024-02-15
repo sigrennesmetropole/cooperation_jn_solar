@@ -4,7 +4,7 @@ import { GeoJSONLayer, Viewpoint } from '@vcmap/core'
 import { RENNES_LAYER } from '@/stores/layers'
 import type { SolarPanelModel } from '@/model/solarPanel.model'
 import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper'
-import solarPanel3D from '@/assets/3d/solarPanel.glb'
+import solarPanel3D from '@/assets/3d/panneau.glb'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { Matrix } from './roofInteractionHelper'
 import { getNumberFromConfig } from '@/services/configService'
@@ -31,7 +31,8 @@ function solarPanelModelToDict(solarPanel: SolarPanelModel) {
 
       // The size of the 3d model is 1900x1000, the real solar panel is 1900x950
       // We need to scale by 0.95 for the widht (y-axis)
-      olcs_modelScaleY: 0.95,
+      olcs_modelScaleY: 0.88,
+      olcs_modelScaleX: 0.99,
     },
     vcsMeta: {},
   }

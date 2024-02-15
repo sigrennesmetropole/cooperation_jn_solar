@@ -32,7 +32,7 @@ export default defineConfig(({ command }) => {
       },
       dedupe: ['vue'],
     },
-    assetsInclude: ['**/*.glb'],
+    assetsInclude: ['**/*.glb', '**/*.gltf'],
   }
 
   if (command === 'build') {
