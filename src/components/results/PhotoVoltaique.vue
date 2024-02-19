@@ -2,9 +2,10 @@
 import photoVoltaique from '@/assets/illustrations/photo_voltaique.svg'
 import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
-import { getStringFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
-const photovoltaique_link = getStringFromConfig('link.photovoltaique_link')
+const configStore = useConfigStore()
+const photovoltaique_link = configStore.config?.solar.links.photovoltaique_link
 
 function goToPhotovoltaiqueInfo() {
   window.open(photovoltaique_link, '_blank')
@@ -33,8 +34,7 @@ function goToPhotovoltaiqueInfo() {
         regroupe l’essentiel des informations techniques et réglementaires sur
         le photovoltaïque.
       </p>
-
-      <ButtonVisitWebsite :link="photovoltaique_link" />
+      <ButtonVisitWebsite :link="photovoltaique_link!" />
     </div>
   </div>
 </template>

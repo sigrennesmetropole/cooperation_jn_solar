@@ -11,6 +11,7 @@ import type { Matrix } from '@/services/roofInteractionHelper'
 import type { Grid } from '@/helpers/rectangleGrid'
 import type olFeature from 'ol/Feature'
 import type olGeometry from 'ol/geom/Geometry'
+import { useConfigStore } from '@/stores/config'
 
 export const useRoofsStore = defineStore('roofs', () => {
   // id of the selected building
@@ -55,8 +56,16 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
   function getFeaturesOfSelectedPanRoof(): GeoJSONFeatureCollection {
     const features: GeoJSONFeature[] = []
+    const configStore = useConfigStore()
+    const potentialSurfaceIdAttribute =
+      configStore.config?.solar.ogcServices.potentialSurfaceIdAttribute!
+
     roofsFeatures.value?.features?.forEach((f) => {
-      if (f.properties?.surface_id === selectedRoofSurfaceId.value) {
+      if (
+        f.properties &&
+        f.properties[potentialSurfaceIdAttribute] ===
+          selectedRoofSurfaceId.value
+      ) {
         features.push(f)
       }
     })
@@ -110,8 +119,14 @@ export const useRoofsStore = defineStore('roofs', () => {
   }
 
   function getAnamorphosOfSelectedRoof() {
+    const configStore = useConfigStore()
+    const potentialSurfaceIdAttribute =
+      configStore.config?.solar.ogcServices.potentialSurfaceIdAttribute!
     const featureRoofSelected = roofsFeatures.value?.features?.find((f) => {
-      return f.properties?.surface_id == selectedRoofSurfaceId.value
+      return (
+        f.properties &&
+        f.properties[potentialSurfaceIdAttribute] == selectedRoofSurfaceId.value
+      )
     })
     return featureRoofSelected?.properties?.anamorphos
   }

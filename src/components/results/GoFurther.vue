@@ -6,10 +6,13 @@ import qualitenr from '@/assets/illustrations/qualitEnR.png'
 import qualibat from '@/assets/illustrations/qualibat.avif'
 import qualifelec from '@/assets/illustrations/qualifelec.png'
 import profitability from '@/assets/illustrations/profitability.svg'
-import { getStringFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
-const url_signe_qualite = getStringFromConfig('link.url_signe_qualite')
-const url_choisir_modele_eco = getStringFromConfig('link.choisir_modele_eco')
+const configStore = useConfigStore()
+
+const url_signe_qualite = configStore.config?.solar.links.url_signe_qualite
+const url_choisir_modele_eco =
+  configStore.config?.solar.links.choisir_modele_eco
 </script>
 
 <template>
@@ -21,7 +24,7 @@ const url_choisir_modele_eco = getStringFromConfig('link.choisir_modele_eco')
     </h2>
     <PhotoVoltaique></PhotoVoltaique>
     <div class="flex flex-row gap-8">
-      <LabelsProfitability :link="url_signe_qualite">
+      <LabelsProfitability :link="url_signe_qualite!">
         <template v-slot:img>
           <img :src="qualiLabels" />
         </template>
@@ -41,7 +44,7 @@ const url_choisir_modele_eco = getStringFromConfig('link.choisir_modele_eco')
           </div>
         </template>
       </LabelsProfitability>
-      <LabelsProfitability :link="url_choisir_modele_eco">
+      <LabelsProfitability :link="url_choisir_modele_eco!">
         <template v-slot:img>
           <img :src="profitability" />
         </template>

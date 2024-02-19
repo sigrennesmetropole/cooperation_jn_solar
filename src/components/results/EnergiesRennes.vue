@@ -4,10 +4,12 @@ import goToBlack from '@/assets/icons/expand-small-bigger-retract-smaller-big.sv
 import information from '@/assets/icons/icon-information-grey.svg'
 import energies from '@/assets/illustrations/energies.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
-import { getStringFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
-const energies_link = getStringFromConfig('link.energies_link')
-const vilaine_link = getStringFromConfig('link.vilaine_link')
+const configStore = useConfigStore()
+
+const energies_link = configStore.config?.solar.links.energies_link
+const vilaine_link = configStore.config?.solar.links.vilaine_link
 
 function goToEnergiesInfo() {
   window.open(energies_link, '_blank')
@@ -49,7 +51,7 @@ function goToVilaineInfo() {
           est une association citoyenne pour le développement du solaire
           photovoltaïque sur Rennes et sa région.
         </p>
-        <ButtonVisitWebsite id="energiesButton" :link="energies_link" />
+        <ButtonVisitWebsite id="energiesButton" :link="energies_link!" />
       </div>
     </div>
     <div

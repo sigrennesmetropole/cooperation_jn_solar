@@ -11,7 +11,7 @@ import { useSimulationStore } from '@/stores/simulations'
 import { useInteractionsStore } from '@/stores/interactions'
 import { useDistrictStore } from '@/stores/districtInformations'
 import { useMapStore } from '@/stores/map'
-import { getNumberFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
 type InteractionsTypes =
   | typeof SelectRoofInteraction
@@ -153,9 +153,9 @@ export function manageSelectAndIrisDependingOnZoom(rennesApp: RennesApp) {
   const interactionsStore = useInteractionsStore()
   const districtStore = useDistrictStore()
   const mapStore = useMapStore()
-  const distance_max_for_selection = getNumberFromConfig(
-    'distance.distance_max_for_selection'
-  )
+  const configStore = useConfigStore()
+  const distance_max_for_selection =
+    configStore.config?.solar.distance.distance_max_for_selection!
 
   if (mapStore.isInitializeMap) {
     rennesApp

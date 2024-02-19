@@ -2,10 +2,11 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import router from '@/router'
-import { getNumberFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
 export function getDefaultConsumption() {
-  return getNumberFromConfig('consumption.default_consumption')
+  const configStore = useConfigStore()
+  return configStore.config?.solar.consumption.default_consumption!
 }
 
 export const useSimulationStore = defineStore('simulation', () => {

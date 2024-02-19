@@ -1,69 +1,81 @@
 {
-  "statistics": {
-    "diduknow_year": 2030,
-    "diduknow_more_energy": 3,
-    "diduknow_more_power": 6
+  "common": {
+    "links": {
+      "coopterr_link": "https://coopterr.rennesmetropole.fr",
+      "solar_link": "https://dev-solar.apps.gs-fr-prod.camptocamp.com/",
+      "trambus_link": "https://vcmap-demo.apps.gs-fr-prod.camptocamp.com/",
+      "ondes_link": "https://dev-wave.apps.gs-fr-prod.camptocamp.com/",
+      "contact_link": "https://metropole.rennes.fr/contact"
+    },
+    "address": {
+      "size_begin_search": 4,
+      "nb_addresses_rva": 5,
+      "nb_addresses_organization": 3,
+      "nb_addresses_communes": 2,
+      "nb_addresses_streets": 5
+    },
+    "ogcBaseUrl": "https://public.sig.rennesmetropole.fr/geoserver/ows?"
   },
-  "autocalsol": {
-    "pr": 0.85,
-    "tech": "crystSi",
-    "integration": "free",
-    "typeConsommateur": "res1",
-    "typeCompteur": 1,
-    "tarifVente": 0.15,
-    "date_prod_conso": "2012-07-26"
-  },
-  "solar_panel": {
-    "solar_panel_surface": 1.8,
-    "solar_panel_power": 0.4
-  },
-  "grid": {
-    "rectangle_height": 1900,
-    "rectangle_width": 950
-  },
-  "ogcServices": {
-    "baseUrl": "https://public.sig.rennesmetropole.fr/geoserver/ows?",
-    "irisLayer": "dem_stats:iris",
-    "potentialLayer": "cli_climat:photovolta%C3%AFque_potentiel_classif_2021",
-    "potentialFilterOnAttribute": "buildingid",
-    "potentialSurfaceIdAttribute": "surface_id",
-    "roofLayer": "app:coopterr_solaire_toits",
-    "roofFilterOnAttribute": "id",
-    "roofSurfaceIdAttribute": "emprise_id_rm"
-  },
-  "link": {
-    "coopterr_link": "https://coopterr.rennesmetropole.fr",
-    "solar_link": "https://dev-solar.apps.gs-fr-prod.camptocamp.com/",
-    "trambus_link": "https://vcmap-demo.apps.gs-fr-prod.camptocamp.com/",
-    "ondes_link": "https://dev-wave.apps.gs-fr-prod.camptocamp.com/",
-    "contact_link": "https://metropole.rennes.fr/contact",
-    "photovoltaique_link": "https://www.photovolt aique.info/fr/",
-    "solar_coop_link": "https://www.solarcoop.fr/",
-    "energies_link": "https://energiesdupaysderennes.fr/",
-    "vilaine_link": "https://soleilsurvilaine.centralesvillageoises.fr/",
-    "url_signe_qualite": "https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite",
-    "choisir_modele_eco": "https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/"
-  },
-  "address": {
-    "size_begin_search": 4,
-    "nb_addresses_rva": 5,
-    "nb_addresses_organization": 3,
-    "nb_addresses_communes": 2,
-    "nb_addresses_streets": 5
-  },
-  "distance": {
-    "distance_max_for_selection": 800
-  },
-  "consumption": {
-    "default_consumption": 0
+  "solar": {
+    "links": {
+      "photovoltaique_link": "https://www.photovoltaique.info/fr/",
+      "solar_coop_link": "https://www.solarcoop.fr/",
+      "energies_link": "https://energiesdupaysderennes.fr/",
+      "vilaine_link": "https://soleilsurvilaine.centralesvillageoises.fr/",
+      "url_signe_qualite": "https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-installateur/#signes_de_qualite",
+      "choisir_modele_eco": "https://www.photovoltaique.info/fr/preparer-un-projet/quelles-demarches-realiser/choisir-son-modele-economique/"
+    },
+    "statistics": {
+      "diduknow_year": 2030,
+      "diduknow_more_energy": 3,
+      "diduknow_more_power": 6
+    },
+    "autocalsol": {
+      "pr": 0.85,
+      "tech": "crystSi",
+      "integration": "free",
+      "typeConsommateur": "res1",
+      "typeCompteur": 1,
+      "tarifVente": 0.15,
+      "date_prod_conso": "2012-07-26"
+    },
+    "solar_panel": {
+      "solar_panel_surface": 1.8,
+      "solar_panel_power": 0.4
+    },
+    "grid": {
+      "rectangle_height": 1900,
+      "rectangle_width": 950
+    },
+    "ogcServices": {
+      "irisLayer": "dem_stats:iris",
+      "potentialLayer": "cli_climat:photovolta%C3%AFque_potentiel_classif_2021",
+      "potentialFilterOnAttribute": "buildingid",
+      "potentialSurfaceIdAttribute": "surface_id",
+      "roofLayer": "app:coopterr_solaire_toits",
+      "roofFilterOnAttribute": "id",
+      "roofSurfaceIdAttribute": "emprise_id_rm"
+    },
+    "distance": {
+      "distance_max_for_selection": 800
+    },
+    "consumption": {
+      "default_consumption": 0
+    }
   },
   "trambus": {
-    "projectPlanningBaseMapUrl": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
-    "projectPlanningLayerUrl": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=trp_coll:trambus_lignes_planification&outputFormat=application/json&srsName=EPSG:4326",
-    "fabriqueCitoyenneCGUUrl": "https://fabriquecitoyenne.fr/"
+    "links": {
+      "fabrique_citoyenne_CGU_url": "https://fabriquecitoyenne.fr/"
+    },
+    "ogc": {
+      "project_planning_base_map_url": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
+      "project_planning_layer_url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=trp_coll:trambus_lignes_planification&outputFormat=application/json&srsName=EPSG:4326"
+    }
   },
   "wave": {
-    "carte_ondes_url": "https://carte_ondes_url",
-    "carto_radio_url": "https://carto_radio_url"
+    "links": {
+      "carte_ondes_url": "https://www.observatoiredesondes.com/fr/carte-des-ondes/",
+      "carto_radio_url": "https://www.cartoradio.fr/"
+    }
   }
 }

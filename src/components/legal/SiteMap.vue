@@ -6,10 +6,10 @@ let configStore = useConfigStore()
 </script>
 <template>
   <UiSiteMap
-    :coopterr_url="configStore.config?.link.coopterr_link"
-    :ondes_url="configStore.config?.link.ondes_link"
-    :solaire_url="configStore.config?.link.solar_link"
-    :trambus_url="configStore.config?.link.trambus_link"
+    :coopterr_url="configStore.config?.common.links.coopterr_link!"
+    :ondes_url="configStore.config?.common.links.ondes_link!"
+    :solaire_url="configStore.config?.common.links.solar_link!"
+    :trambus_url="configStore.config?.common.links.trambus_link!"
   >
   </UiSiteMap>
 </template>
