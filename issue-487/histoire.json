@@ -1,0 +1,438 @@
+{
+  "stories": [
+    {
+      "id": "src-components-home-buttonwithcheckboxbegin-story-vue",
+      "title": "ButtonWithCheckboxBegin",
+      "group": "homepage",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/home/ButtonWithCheckboxBegin.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "ButtonWithCheckboxBegin"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-roof-selection-figurekeynumber-story-vue",
+      "title": "Figure Key",
+      "group": "pcaetpage",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/roof_selection/FigureKeyNumber.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Figure Key"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-roof-selection-textdidyouknow-story-vue",
+      "title": "TextDidYouKnow",
+      "group": "pcaetpage",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/roof_selection/TextDidYouKnow.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "TextDidYouKnow"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-roof-selection-uisurfacenumber-story-vue",
+      "title": "Surface Number",
+      "group": "roof-selected-information",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/roof_selection/UiSurfaceNumber.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Surface Number"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-simulation-boxstep-story-vue",
+      "title": "BoxStep",
+      "group": "simulation-step",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/simulation/BoxStep.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "BoxStep"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-simulation-roofaccordion-story-vue",
+      "title": "Roof Accordion",
+      "group": "simulation-step",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/simulation/RoofAccordion.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Roof Accordion"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-simulation-simulationresult-story-vue",
+      "title": "Simulation Result",
+      "group": "simulation-step",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/simulation/SimulationResult.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Simulation Result"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-simulation-simulationsteps-story-vue",
+      "title": "Simulation Steps",
+      "group": "simulation-step",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/simulation/SimulationSteps.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Simulation Steps"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-simulation-stepillustration-story-vue",
+      "title": "Simulation Illustration Step",
+      "group": "simulation-step",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/simulation/StepIllustration.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Simulation Illustration Step"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-ui-uichartdonut-story-vue",
+      "title": "UiChartDonut",
+      "group": "ui-base",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/ui/UiChartDonut.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "UiChartDonut"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-ui-uidisclosure-story-vue",
+      "title": "UiDisclosure",
+      "group": "ui-base",
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/ui/UiDisclosure.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "UiDisclosure"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-ui-uiexplanationtooltip-story-vue",
+      "title": "UiExplanationTooltip",
+      "group": null,
+      "layout": {
+        "type": "single",
+        "iframe": true
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "src-components-ui-uiexplanationtooltip-story-vue-0",
+          "title": "UiExplanationTooltip with button",
+          "icon": null,
+          "iconColor": null
+        },
+        {
+          "id": "src-components-ui-uiexplanationtooltip-story-vue-1",
+          "title": "UiExplanationTooltip without button",
+          "icon": null,
+          "iconColor": null
+        }
+      ],
+      "relativePath": "src/components/ui/UiExplanationTooltip.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "UiExplanationTooltip"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "src-components-ui-uiheaderfullscreen-story-vue",
+      "title": "Header Full Screen",
+      "group": null,
+      "layout": {
+        "type": "grid",
+        "width": 700
+      },
+      "icon": null,
+      "iconColor": null,
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "_default",
+          "title": "default"
+        }
+      ],
+      "relativePath": "src/components/ui/UiHeaderFullScreen.story.vue",
+      "supportPluginId": "vue3",
+      "treePath": [
+        "Header Full Screen"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    },
+    {
+      "id": "tailwind",
+      "title": "Tailwind",
+      "group": "design-system",
+      "layout": {
+        "type": "single",
+        "iframe": false
+      },
+      "icon": "mdi:tailwind",
+      "docsOnly": false,
+      "variants": [
+        {
+          "id": "background-color",
+          "title": "Background Color",
+          "icon": "carbon:color-palette"
+        },
+        {
+          "id": "text-color",
+          "title": "Text Color",
+          "icon": "carbon:text-color"
+        },
+        {
+          "id": "border-color",
+          "title": "Border Color",
+          "icon": "carbon:color-palette"
+        },
+        {
+          "id": "padding",
+          "title": "Padding",
+          "icon": "carbon:area"
+        },
+        {
+          "id": "margin",
+          "title": "Margin",
+          "icon": "carbon:area"
+        },
+        {
+          "id": "font-size",
+          "title": "Font Size",
+          "icon": "carbon:text-font"
+        },
+        {
+          "id": "font-weight",
+          "title": "Font Weight",
+          "icon": "carbon:text-font"
+        },
+        {
+          "id": "font-family",
+          "title": "Font Family",
+          "icon": "carbon:text-font"
+        },
+        {
+          "id": "letter-spacing",
+          "title": "Letter Spacing",
+          "icon": "carbon:text-font"
+        },
+        {
+          "id": "line-height",
+          "title": "Line Height",
+          "icon": "carbon:text-font"
+        },
+        {
+          "id": "drop-shadow",
+          "title": "Drop Shadow",
+          "icon": "carbon:shape-except"
+        },
+        {
+          "id": "border-radius",
+          "title": "Border Radius",
+          "icon": "carbon:condition-wait-point"
+        },
+        {
+          "id": "border-width",
+          "title": "Border Width",
+          "icon": "carbon:checkbox"
+        },
+        {
+          "id": "width",
+          "title": "Width",
+          "icon": "carbon:pan-horizontal"
+        },
+        {
+          "id": "height",
+          "title": "Height",
+          "icon": "carbon:pan-vertical"
+        },
+        {
+          "id": "full-config",
+          "title": "Full Config",
+          "icon": "carbon:code"
+        }
+      ],
+      "relativePath": "/home/runner/work/cooperation_jn_solar/cooperation_jn_solar/node_modules/.histoire/plugins/builtin_tailwind-tokens/Tailwind.story.js",
+      "supportPluginId": "vanilla",
+      "treePath": [
+        "Tailwind"
+      ],
+      "virtual": false,
+      "markdownFile": null
+    }
+  ],
+  "markdownFiles": []
+}
