@@ -93,7 +93,7 @@ async function highlightSelectedRoofPan(
 ) {
   isHighlightSelectedRoofPanCalled.value = true
   rennesApp.clearRoofsHighlight()
-  let surfaceIdFormat = `ID_${surfaceId}`
+  let surfaceIdFormat = `${surfaceId}`
   if (!solarPanelShown) {
     rennesApp.highlightByLayerNameAndFeatureId(
       RENNES_LAYER.roof3d,

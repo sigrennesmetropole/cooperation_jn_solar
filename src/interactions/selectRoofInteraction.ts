@@ -70,7 +70,7 @@ class SelectRoofInteraction extends AbstractInteraction {
     this._highlighted = true
     buildingRoofs.features.forEach((f) => {
       if (f.properties) {
-        const featureId = `ID_${
+        const featureId = `${
           f.properties[
             configStore.config?.solar.ogcServices.potentialSurfaceIdAttribute!
           ]
