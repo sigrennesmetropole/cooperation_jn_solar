@@ -3,6 +3,7 @@ import PhotoVoltaique from '@/components/results/PhotoVoltaique.vue'
 import { createTestingPinia } from '@pinia/testing'
 import { useConfigStore } from '@/stores/config'
 import configuration from '@/tests/config/configuration_test.json'
+import { beforeEach } from 'vitest'
 
 describe('PhotoVoltaique.vue', () => {
   let wrapper: VueWrapper

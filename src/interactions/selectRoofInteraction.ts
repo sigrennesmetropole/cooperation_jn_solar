@@ -23,6 +23,7 @@ import { useMapStore } from '@/stores/map'
 import { RENNES_LAYER } from '@/stores/layers'
 import { createCustomViewpointFromExtent } from '@/services/viewPointHelper'
 import { Cesium3DTileFeature } from '@vcmap-cesium/engine'
+import { useConfigStore } from '@/stores/config'
 
 class SelectRoofInteraction extends AbstractInteraction {
   _featureClicked: VcsEvent<any> // eslint-disable-line
@@ -63,14 +64,22 @@ class SelectRoofInteraction extends AbstractInteraction {
   }
 
   _highlightRoofsOfTheBuilding(buildingRoofs: GeoJSONFeatureCollection) {
+    const configStore = useConfigStore()
+
     this.unhighlight()
     this._highlighted = true
     buildingRoofs.features.forEach((f) => {
-      const featureId = `ID_${f.properties?.surface_id}`
-      this._rennesApp.highlightByLayerAndFeatureId(
-        this._selectableLayer,
-        featureId
-      )
+      if (f.properties) {
+        const featureId = `${
+          f.properties[
+            configStore.config?.solar.ogcServices.potentialSurfaceIdAttribute!
+          ]
+        }`
+        this._rennesApp.highlightByLayerAndFeatureId(
+          this._selectableLayer,
+          featureId
+        )
+      }
     })
   }
 
@@ -102,6 +111,8 @@ class SelectRoofInteraction extends AbstractInteraction {
   }
 
   async pipe(event: InteractionEvent) {
+    const configStore = useConfigStore()
+
     if (event.type == EventType.CLICK) {
       // @ts-ignore
       if (event.feature?.[vcsLayerName] === RENNES_LAYER.roof3d) {
@@ -129,7 +140,13 @@ class SelectRoofInteraction extends AbstractInteraction {
           }
           let isRoofFeature = false
           roofStore.roofsFeatures?.features?.forEach((f) => {
-            if (f.properties?.surface_id == idRoof) {
+            if (
+              f.properties &&
+              f.properties[
+                configStore.config?.solar.ogcServices
+                  .potentialSurfaceIdAttribute!
+              ] == idRoof
+            ) {
               isRoofFeature = true
             }
           })

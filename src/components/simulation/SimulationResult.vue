@@ -3,8 +3,9 @@ import { UiIconButton } from '@sigrennesmetropole/cooperation_jn_common_ui'
 import solarPanel from '@/assets/icons/solar-panel.svg'
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { computed } from 'vue'
-import { getNumberFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
+const configStore = useConfigStore()
 const props = defineProps<{
   roofSurface: RoofSurfaceModel | undefined
   maxNumSolarPanel: number
@@ -27,14 +28,14 @@ const updateCurrentNumSolarPanel = (solarPanelChanges: number) => {
 const currentSurface = computed(() => {
   return (
     props.currentNumSolarPanel *
-    getNumberFromConfig('solar_panel.solar_panel_surface')
+    configStore.config?.solar.solar_panel.solar_panel_surface!
   ).toFixed(2)
 })
 
 const currentPower = computed(() =>
   (
     props.currentNumSolarPanel *
-    getNumberFromConfig('solar_panel.solar_panel_power')
+    configStore.config?.solar.solar_panel.solar_panel_power!
   ).toFixed(2)
 )
 </script>

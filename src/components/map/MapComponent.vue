@@ -40,13 +40,14 @@ import { useRoofsStore } from '@/stores/roof'
 import { useMapStore } from '@/stores/map'
 import { useViewsStore } from '@/stores/views'
 import { useInteractionsStore } from '@/stores/interactions'
+import { useConfigStore } from '@/stores/config'
+
 import type { RoofSurfaceModel } from '@/model/roof.model'
 import { saveScreenShot } from '@/services/screenshotService'
 import ResetGridButton from '@/components/map/buttons/ResetGridButton.vue'
 import worker from '@/worker'
 
 import { useEnedisStore } from '@/stores/enedis'
-import { getNumberFromConfig } from '@/services/configService'
 import { applyInstallationStyle } from '@/services/installationService'
 import type { FeatureCollection } from '@turf/helpers'
 import { roofWfsService } from '@/services/roofWfsService'
@@ -61,6 +62,7 @@ const mapStore = useMapStore()
 const viewStore = useViewsStore()
 const interactionsStore = useInteractionsStore()
 const enedisStore = useEnedisStore()
+const configStore = useConfigStore()
 
 let previousVp: Viewpoint | null = null
 
@@ -140,8 +142,8 @@ async function computeOptimalGrid() {
       roofShape: JSON.stringify(fc),
       roofFavorableArea: JSON.stringify(roofFavorableArea),
       roofSlope: roofSlope,
-      rectangleWidth: getNumberFromConfig('grid.rectangle_width'),
-      rectangleHeight: getNumberFromConfig('grid.rectangle_height'),
+      rectangleWidth: configStore.config?.solar.grid.rectangle_width!,
+      rectangleHeight: configStore.config?.solar.grid.rectangle_height!,
       roofAzimuth: roofAzimuth,
     })
     mapStore.isLoadingMap = false

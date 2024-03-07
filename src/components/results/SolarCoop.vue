@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import solarCoop from '@/assets/illustrations/solar-coop.svg'
 import ButtonVisitWebsite from '@/components/results/ButtonVisitWebsite.vue'
-import { getStringFromConfig } from '@/services/configService'
+import { useConfigStore } from '@/stores/config'
 
-const solar_coop_link = getStringFromConfig('link.solar_coop_link')
+const configStore = useConfigStore()
+const solar_coop_link = configStore.config?.solar.links.solar_coop_link!
 
 function goToSolarCoopInfo() {
   window.open(solar_coop_link, '_blank')

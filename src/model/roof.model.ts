@@ -3,6 +3,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import type { Feature } from 'ol'
 import type { Geometry } from 'ol/geom'
 import { useRoofsStore } from '@/stores/roof'
+import { useConfigStore } from '@/stores/config'
 
 export type RoofSurfaceModel = {
   surface_id: string
@@ -62,10 +63,14 @@ export function oppositeAzimuth(azimuth: number) {
 }
 
 export function mapRoofSurfaceModel(geojson: GeoJSONFeature): RoofSurfaceModel {
+  const configStore = useConfigStore()
   const geoJSONFormat = new GeoJSON()
   const feature = geoJSONFormat.readFeature(geojson)
   return {
-    surface_id: feature.getProperties()['surface_id'],
+    surface_id:
+      feature.getProperties()[
+        configStore.config?.solar.ogcServices.potentialSurfaceIdAttribute!
+      ],
     values: [
       feature.getProperties()['rang_1'],
       feature.getProperties()['rang_2'],

@@ -21,8 +21,10 @@ import InputSearch from '@/components/search_bar/InputSearch.vue'
 import { createVPForTypeAddress, addPin } from '@/services/searchBarService'
 // @ts-ignore : Could not find a declaration file for module 'dompurify'
 import DOMPurify from 'dompurify'
-import { getNumberFromConfig } from '@/services/configService'
 import { useInstallationsStore } from '@/stores/installations'
+import { useConfigStore } from '@/stores/config'
+
+const configStore = useConfigStore()
 
 const props = defineProps({
   isRedirectOnSearch: {
@@ -74,13 +76,14 @@ onMounted(() => {
   if (addressStore.address !== '') {
     search.value = addressStore.address
   }
-  size_begin_search = getNumberFromConfig('address.size_begin_search')
-  nb_addresses_rva = getNumberFromConfig('address.nb_addresses_rva')
-  nb_addresses_organization = getNumberFromConfig(
-    'address.nb_addresses_organization'
-  )
-  nb_addresses_communes = getNumberFromConfig('address.nb_addresses_communes')
-  nb_addresses_streets = getNumberFromConfig('address.nb_addresses_streets')
+  size_begin_search = configStore.config?.common.address.size_begin_search!
+  nb_addresses_rva = configStore.config?.common.address.nb_addresses_rva!
+  nb_addresses_organization =
+    configStore.config?.common.address.nb_addresses_organization!
+  nb_addresses_communes =
+    configStore.config?.common.address.nb_addresses_communes!
+  nb_addresses_streets =
+    configStore.config?.common.address.nb_addresses_streets!
 })
 
 function searchFiltered() {

@@ -78,7 +78,7 @@ function buttonBoxAction() {
   <UiDisclosure>
     <template v-slot:title>
       <span class="font-dm-sans font-medium text-base color-black">
-        Comprendre ses chiffres
+        Comprendre ces chiffres
       </span>
     </template>
     <template v-slot:contents>

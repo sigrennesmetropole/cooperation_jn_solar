@@ -7,8 +7,8 @@ import { cloneViewPointAndResetCameraPosition } from '@/services/viewPointHelper
 import solarPanel3D from '@/assets/3d/panneau.glb'
 import { useSolarPanelStore } from '@/stores/solarPanels'
 import type { Matrix } from './roofInteractionHelper'
-import { getNumberFromConfig } from '@/services/configService'
 import type { Point } from 'ol/geom'
+import { useConfigStore } from '@/stores/config'
 
 const HeightOffset = 0.2
 
@@ -119,10 +119,11 @@ export async function filterSolarPanelByMaxSolarPanel(
 
 export function getPeakPower() {
   const solarPanelStore = useSolarPanelStore()
+  const configStore = useConfigStore()
   // @ts-ignore
   const peakPower =
     solarPanelStore.currentNumberSolarPanel *
-    getNumberFromConfig('solar_panel.solar_panel_power')
+    configStore.config?.solar.solar_panel.solar_panel_power!
   return Math.round(peakPower * 100) / 100
 }
 

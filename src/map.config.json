@@ -37,7 +37,7 @@
     {
       "type": "CesiumTilesetLayer",
       "name": "roof3d",
-      "url": "https://rennes-coopterr-solaire-tiles-dev.s3.fr-par.scw.cloud/rennes3d-s3-solar",
+      "url": "https://rennes-coopterr-solaire-tiles.s3.fr-par.scw.cloud/irradiance_2024/",
       "activeOnStartup": true,
       "allowPicking": true,
       "screenSpaceError": 16,
