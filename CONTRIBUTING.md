@@ -1,3 +1,5 @@
+# Contributing to this repository
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
@@ -16,3 +18,7 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Code review guidelines
+
+We follow a fixed version of the [C2C iso guideslines](https://github.com/camptocamp/c2c_iso_guidelines/blob/c63b957/geospatial/code_review.md).
