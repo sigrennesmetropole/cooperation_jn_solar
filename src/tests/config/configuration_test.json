@@ -70,6 +70,9 @@
     "ogc": {
       "project_planning_base_map_url": "https://public.sig.rennesmetropole.fr/geowebcache/service/wmts",
       "project_planning_layer_url": "https://public.sig.rennesmetropole.fr/geoserver/ows?service=WFS&request=getFeature&typename=trp_coll:trambus_lignes_planification&outputFormat=application/json&srsName=EPSG:4326"
+    },
+    "misc": {
+      "cycling_distance": 1000
     }
   },
   "wave": {
