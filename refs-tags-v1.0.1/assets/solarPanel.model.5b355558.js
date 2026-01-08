@@ -1,0 +1,6 @@
+const SOLAR_PANEL_SURFACE = 1.8;
+const SOLAR_PANEL_POWER = 0.35;
+export {
+  SOLAR_PANEL_SURFACE as S,
+  SOLAR_PANEL_POWER as a
+};
